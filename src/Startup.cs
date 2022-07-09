@@ -14,6 +14,14 @@ public class Startup
     {
         services.AddHttpClient().AddControllers().AddNewtonsoftJson();
 
+        services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "DentallApi", Version = "v1" });
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            options.IncludeXmlComments(xmlPath);
+        });
+
         // Create the Bot Framework Authentication to be used with the Bot Adapter.
         services.AddSingleton<BotFrameworkAuthentication, ConfigurationBotFrameworkAuthentication>();
 
@@ -37,10 +45,15 @@ public class Startup
             .UseWebSockets()
             .UseRouting()
             .UseAuthorization()
+            .UseSwagger()
+            .UseSwaggerUI(options =>
+             {
+                options.SwaggerEndpoint("v1/swagger.json", "DentallApi V1");
+             })
             .UseEndpoints(endpoints =>
-            {
+             {
                 endpoints.MapControllers();
-            });
+             });
 
         // app.UseHttpsRedirection();
     }

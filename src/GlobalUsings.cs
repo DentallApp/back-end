@@ -7,6 +7,7 @@ global using System.Threading;
 global using System.Threading.Tasks;
 global using System.IO;
 global using System.Linq;
+global using System.Reflection;
 
 global using Microsoft.Bot.Builder;
 global using Microsoft.Bot.Builder.Integration.AspNet.Core;
@@ -25,6 +26,8 @@ global using Microsoft.Extensions.Hosting;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;
+
+global using Microsoft.OpenApi.Models;
 
 global using Newtonsoft.Json.Linq;
 global using Newtonsoft.Json;
