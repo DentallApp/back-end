@@ -43,6 +43,7 @@ public class Startup
         app.UseDefaultFiles()
             .UseStaticFiles()
             .UseWebSockets()
+            .UsePathBase(new PathString("/api"))
             .UseRouting()
             .UseAuthorization()
             .UseSwagger()
