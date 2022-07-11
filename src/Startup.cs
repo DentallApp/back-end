@@ -14,10 +14,14 @@ public class Startup
     {
         new EnvLoader().Load();
         var settings = new EnvBinder().Bind<AppSettings>();
-        var cs = settings.ConnectionString;
         services.AddSingleton<AppSettings>(settings);
 
         services.AddHttpClient().AddControllers().AddNewtonsoftJson();
+
+        var cs = settings.ConnectionString;
+        services.AddDbContext<AppDbContext>(
+            options => options.UseMySql(cs, ServerVersion.AutoDetect(cs))
+        );
 
         services.AddSwaggerGen(options =>
         {

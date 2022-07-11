@@ -1,5 +1,6 @@
 global using DentallApp.Features.Chatbot;
 global using DentallApp.Configuration;
+global using DentallApp.DataAccess;
 
 global using System;
 global using System.Collections.Generic;
@@ -34,3 +35,4 @@ global using Newtonsoft.Json.Linq;
 global using Newtonsoft.Json;
 
 global using DotEnv.Core;
+global using Microsoft.EntityFrameworkCore;
