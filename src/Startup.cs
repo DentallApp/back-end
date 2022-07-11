@@ -49,6 +49,13 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseCors(options =>
+        {
+            options.AllowAnyOrigin();
+            options.AllowAnyMethod();
+            options.AllowAnyHeader();
+        });
+
         app.UseDefaultFiles()
             .UseStaticFiles()
             .UseWebSockets()
