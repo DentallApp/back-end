@@ -4,6 +4,7 @@ global using DentallApp.Features.GeneralTreatments;
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
 global using DentallApp.Models;
+global using DentallApp.Repositories;
 
 global using System;
 global using System.Collections.Generic;
