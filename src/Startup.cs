@@ -19,9 +19,11 @@ public class Startup
         services.AddHttpClient().AddControllers().AddNewtonsoftJson();
 
         var cs = settings.ConnectionString;
-        services.AddDbContext<AppDbContext>(
-            options => options.UseMySql(cs, ServerVersion.AutoDetect(cs))
-        );
+        services.AddDbContext<AppDbContext>(options =>
+        {
+            options.UseMySql(cs, ServerVersion.AutoDetect(cs))
+                   .UseSnakeCaseNamingConvention();
+        });
 
         services.AddSwaggerGen(options =>
         {
