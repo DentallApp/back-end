@@ -14,7 +14,9 @@ public class Startup
     {
         new EnvLoader().Load();
         var settings = new EnvBinder().Bind<AppSettings>();
-        services.AddSingleton<AppSettings>(settings);
+
+        services.AddSingleton(settings)
+                .AddAutoMapper(typeof(MappingProfile));
 
         services.AddHttpClient().AddControllers().AddNewtonsoftJson();
 

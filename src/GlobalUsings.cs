@@ -5,6 +5,7 @@ global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
 global using DentallApp.Models;
 global using DentallApp.Repositories;
+global using DentallApp.Helpers;
 
 global using System;
 global using System.Collections.Generic;
@@ -40,3 +41,4 @@ global using Newtonsoft.Json;
 
 global using DotEnv.Core;
 global using Microsoft.EntityFrameworkCore;
+global using AutoMapper;
