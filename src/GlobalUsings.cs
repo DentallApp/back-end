@@ -18,6 +18,7 @@ global using DentallApp.Features.Authentication.DTOs;
 global using DentallApp.Features.EmailSending;
 global using DentallApp.Features.PasswordHasher;
 global using DentallApp.Features.EmailVerification;
+global using DentallApp.Features.EmailVerification.DTOs;
 
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
