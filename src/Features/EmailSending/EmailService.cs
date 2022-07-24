@@ -28,7 +28,7 @@ public class EmailService : IEmailService
 
     public async Task<bool> SendEmailForVerificationAsync(string recipientEmail, string recipientName, string token)
     {
-        var confirmationLink = $"{_settings.BaseUrl}?token={token}";
+        var confirmationLink = $"{_settings.EmailVerificationUrl}?token={token}";
         var subject = $"Bienvenido {recipientName}!";
         var body = await _emailTemplate.LoadTemplateForEmailVerification(confirmationLink, recipientName);
         return await SendEmailAsync(recipientEmail, recipientName, subject, body);
