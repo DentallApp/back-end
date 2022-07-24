@@ -12,12 +12,17 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddServices();
+        services.AddRepositories();
+
         new EnvLoader().Load();
         var settings = new EnvBinder().Bind<AppSettings>();
 
         services.AddSingleton(settings);
 
-        services.AddHttpClient().AddControllers().AddNewtonsoftJson();
+        services.AddHttpClient()
+                .AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
+                .AddNewtonsoftJson();
 
         var cs = settings.ConnectionString;
         services.AddDbContext<AppDbContext>(options =>
@@ -26,6 +31,7 @@ public class Startup
                    .UseSnakeCaseNamingConvention();
         });
 
+        services.AddSendGrid(options => options.ApiKey = settings.SendGridApiKey);
         services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "DentallApi", Version = "v1" });
@@ -33,6 +39,28 @@ public class Startup
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             options.IncludeXmlComments(xmlPath);
         });
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.AccessTokenKey)),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+        });
+
+        services.AddAuthorization();
 
         // Create the Bot Framework Authentication to be used with the Bot Adapter.
         services.AddSingleton<BotFrameworkAuthentication, ConfigurationBotFrameworkAuthentication>();
@@ -64,6 +92,7 @@ public class Startup
             .UseWebSockets()
             .UsePathBase(new PathString("/api"))
             .UseRouting()
+            .UseAuthentication()
             .UseAuthorization()
             .UseSwagger()
             .UseSwaggerUI(options =>
