@@ -1,0 +1,16 @@
+﻿namespace DentallApp.UnitOfWork;
+
+public partial class UnitOfWorkEFCore
+{
+    private IUserRepository _userRepository;
+    public IUserRepository UserRepository 
+        => _userRepository ??= new UserRepository(_context);
+
+    private IUserRoleRepository _userRoleRepository;
+    public IUserRoleRepository UserRoleRepository 
+        => _userRoleRepository ??= new UserRoleRepository(_context);
+
+    private IPersonRepository _personRepository;
+    public IPersonRepository PersonRepository 
+        => _personRepository ??= new PersonRepository(_context);
+}
