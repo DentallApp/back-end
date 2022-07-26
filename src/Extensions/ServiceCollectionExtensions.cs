@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmailTemplateService, EmailTemplateService>()
                 .AddTransient<IEmailService, EmailService>()
                 .AddTransient<IGeneralTreatmentService, GeneralTreatmentService>()
+                .AddTransient<IPasswordResetService, PasswordResetService>()
                 .AddTransient<ITokenService, TokenService>();
     }
 

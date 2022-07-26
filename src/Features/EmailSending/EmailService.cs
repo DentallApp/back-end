@@ -33,4 +33,12 @@ public class EmailService : IEmailService
         var body = await _emailTemplate.LoadTemplateForEmailVerification(confirmationLink, recipientName);
         return await SendEmailAsync(recipientEmail, recipientName, subject, body);
     }
+
+    public async Task<bool> SendEmailForResetPasswordAsync(string recipientEmail, string recipientName, string token)
+    {
+        var confirmationLink = $"{_settings.PasswordResetUrl}?token={token}";
+        var subject = $"Restablecimiento de contraseña";
+        var body = await _emailTemplate.LoadTemplateForResetPassword(confirmationLink, recipientName);
+        return await SendEmailAsync(recipientEmail, recipientName, subject, body);
+    }
 }

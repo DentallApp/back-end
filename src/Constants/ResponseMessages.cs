@@ -16,9 +16,13 @@ public class ResponseMessages
     public const string UsernameNotFoundMessage = "Usuario no encontrado.";
     public const string AccessTokenInvalidMessage = "El token de acceso es inválido.";
     public const string EmailVerificationTokenInvalidMessage = "El token de verificación email es inválido.";
+    public const string PasswordResetTokenInvalidMessage = "El token de restablecimiento de contraseña es inválido.";
     public const string RefreshTokenInvalidMessage = "Refresh-token es inválido.";
     public const string RefreshTokenExpiredMessage = "Refresh-token ha expirado.";
     public const string UpdatedAccessTokenMessage = "Access-token se ha actualizado con éxito.";
     public const string RevokeTokenMessage = "Refresh token ha sido revocado.";
     public const string HasNoRefreshTokenMessage = "No tienes un refresh-token para revocar.";
+    public const string SendPasswordResetLinkMessage = "El correo electrónico se envió con éxito para restablecer la contraseña del usuario.";
+    public const string PasswordSuccessfullyResetMessage = "La contraseña se ha restablecido con éxito.";
+    public const string MissingClaimMessage = "Reclamación (claim) faltante en el token: {0}";
 }

@@ -28,6 +28,9 @@ public class TokenService : ITokenService
     public ClaimsPrincipal ValidateEmailVerificationToken(string token)
         => ValidateJwt(token, _settings.EmailVerificationTokenKey);
 
+    public ClaimsPrincipal ValidatePasswordResetToken(string token, string passwordHash)
+        => ValidateJwt(token, key: passwordHash);
+
     public string CreateAccessToken(IEnumerable<Claim> claims)
         => CreateJwt(claims, DateTime.UtcNow.AddMinutes(_settings.AccessTokenExpires), _settings.AccessTokenKey);
 
@@ -39,6 +42,17 @@ public class TokenService : ITokenService
 
     public string CreateEmailVerificationToken(UserClaims userClaims)
         => CreateEmailVerificationToken(CreateClaims(userClaims));
+
+    public string CreatePasswordResetToken(int userid, string username, string passwordHash)
+    {
+        var claims = new List<Claim>
+        {
+            new (CustomClaimsType.UserId, userid.ToString()),
+            new (CustomClaimsType.UserName, username),
+         };
+        var expires = DateTime.UtcNow.AddHours(_settings.PasswordResetTokenExpires);
+        return CreateJwt(claims, expires, key: passwordHash);
+    }
 
     public IEnumerable<Claim> CreateClaims(UserClaims userClaims)
     {
@@ -69,4 +83,16 @@ public class TokenService : ITokenService
                      .WithIssuerSigningKey(_settings.AccessTokenKey)
                      .IgnoreValidateLifetime()
                      .Decode(token);
+
+    public ClaimsIdentity GetClaimsIdentity(string token)
+    {
+        try
+        {
+            return new (new JwtSecurityToken(token).Claims);
+        }
+        catch(ArgumentException)
+        {
+            return null;
+        }
+    }
 }
