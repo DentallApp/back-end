@@ -48,7 +48,7 @@ public class AuthService : IAuthService
         var user = await _userRepository.GetByIdAsync(claimPrincipal.GetUserId());
         if (user is null)
             return new Response<TokenDto>(UsernameNotFoundMessage);
-        var auth = claimPrincipal.Identity.IsAuthenticated;
+
         if (user.RefreshToken != tokenDto.RefreshToken)
             return new Response<TokenDto>(RefreshTokenInvalidMessage);
 

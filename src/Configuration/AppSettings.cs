@@ -20,6 +20,12 @@ public class AppSettings
     [EnvKey("EMAIL_VERIFICATION_URL")]
     public string EmailVerificationUrl { get; set; }
 
+    [EnvKey("PASSWORD_RESET_TOKEN_EXPIRES")]
+    public double PasswordResetTokenExpires { get; set; }
+
+    [EnvKey("PASSWORD_RESET_URL")]
+    public string PasswordResetUrl { get; set; }
+
     [EnvKey("REFRESH_TOKEN_EXPIRES")]
     public double RefreshTokenExpires { get; set; }
 

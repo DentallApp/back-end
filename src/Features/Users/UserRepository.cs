@@ -28,4 +28,17 @@ public class UserRepository : Repository<User>, IUserRepository
         var user = await GetUserByName(username);
         return user is not null;
     }
+
+    public async Task<UserResetPasswordDto> GetUserForResetPassword(string username)
+        => await _context.Set<User>()
+                         .Include(user => user.Person)
+                         .Where(user => user.UserName == username)
+                         .Select(user => new UserResetPasswordDto()
+                         {
+                             UserId = user.Id,
+                             UserName = user.UserName,
+                             Name = user.Person.Names,
+                             Password = user.Password
+                         })
+                         .FirstOrDefaultAsync();
 }

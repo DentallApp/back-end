@@ -33,13 +33,13 @@ public static class UserMapper
         };
 
     public static UserClaims MapToUserClaims(this UserInsertDto userInsertDto, int userId)
-    => new()
-    {
-        UserId = userId,
-        UserName = userInsertDto.UserName,
-        FullName = $"{userInsertDto.LastNames} {userInsertDto.Names}",
-        Roles = new List<string> { RolesName.Unverified }
-    };
+        => new()
+        {
+            UserId = userId,
+            UserName = userInsertDto.UserName,
+            FullName = $"{userInsertDto.LastNames} {userInsertDto.Names}",
+            Roles = new List<string> { RolesName.Unverified }
+        };
 
     public static Person MapToPerson(this UserInsertDto userInsertDto)
         => new()
@@ -54,9 +54,18 @@ public static class UserMapper
         };
 
     public static User MapToUser(this UserInsertDto userInsertDto)
-    => new()
-    {
-        UserName = userInsertDto.UserName,
-        Password = userInsertDto.Password
-    };
+        => new()
+        {
+            UserName = userInsertDto.UserName,
+            Password = userInsertDto.Password
+        };
+
+    public static UserResetPasswordDto MapToUserResetPasswordDto(this User user)
+        => new()
+        {
+            UserId = user.Id,
+            UserName = user.UserName,
+            Name = user.Person.Names,
+            Password = user.Password
+        };
 }
