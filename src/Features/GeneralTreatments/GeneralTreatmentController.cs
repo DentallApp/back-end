@@ -13,12 +13,12 @@ public class GeneralTreatmentController : ControllerBase
 
     [HttpGet]
     public async Task<IEnumerable<GeneralTreatmentGetDto>> Get()
-        => await _service.GetTreatments();
+        => await _service.GetTreatmentsAsync();
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Response<GeneralTreatmentGetDto>>> Get(int id)
     {
-        var response = await _service.GetTreatmentById(id);
+        var response = await _service.GetTreatmentByIdAsync(id);
         if (response.Success)
             return Ok(response);
 

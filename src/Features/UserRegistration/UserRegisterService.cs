@@ -37,7 +37,7 @@ public class UserRegisterService : IUserRegisterService
 
     public async Task<Response> CreateBasicUserAccountAsync(UserInsertDto userInsertDto)
     {
-        if (await _unitOfWork.UserRepository.UserExists(userInsertDto.UserName))
+        if (await _unitOfWork.UserRepository.UserExistsAsync(userInsertDto.UserName))
             return new Response(UsernameAlreadyExistsMessage);
 
         var user = CreateUserAccount(userInsertDto, RolesId.Unverified);

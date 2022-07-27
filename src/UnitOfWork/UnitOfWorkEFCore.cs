@@ -12,6 +12,6 @@ public partial class UnitOfWorkEFCore : IUnitOfWork
     public async Task<int> SaveChangesAsync()
         => await _context.SaveChangesAsync();
 
-    public async Task Rollback()
+    public async Task RollbackAsync()
         => await _context.Database.RollbackTransactionAsync();
 }

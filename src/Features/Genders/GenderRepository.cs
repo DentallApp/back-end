@@ -9,7 +9,7 @@ public class GenderRepository : Repository<Gender>, IGenderRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<GenderGetDto>> GetGenders()
+    public async Task<IEnumerable<GenderGetDto>> GetGendersAsync()
         => await _context.Set<Gender>()
                          .Select(gender => gender.MapToGenderGetDto())
                          .ToListAsync();

@@ -47,7 +47,7 @@ public class PasswordResetService : IPasswordResetService
 
     public async Task<Response> SendPasswordResetLinkAsync(string email)
     {
-        var user = await _userRepository.GetUserForResetPassword(email);
+        var user = await _userRepository.GetUserForResetPasswordAsync(email);
         if (user is null)
             return new Response(UsernameNotFoundMessage);
 

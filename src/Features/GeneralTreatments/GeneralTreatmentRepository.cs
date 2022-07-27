@@ -9,7 +9,7 @@ public class GeneralTreatmentRepository : Repository<GeneralTreatment>, IGeneral
         _context = context;
     }
 
-    public async Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatments()
+    public async Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync()
         => await _context.Set<GeneralTreatment>()
                          .Select(treatment => treatment.MapToGeneralTreatmentGetDto())
                          .ToListAsync();

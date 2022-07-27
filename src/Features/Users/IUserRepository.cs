@@ -2,8 +2,8 @@
 
 public interface IUserRepository : IRepository<User>
 {
-    Task<User> GetFullUserProfile(string username);
-    Task<User> GetUserByName(string username);
-    Task<bool> UserExists(string username);
-    Task<UserResetPasswordDto> GetUserForResetPassword(string username);
+    Task<User> GetFullUserProfileAsync(string username);
+    Task<User> GetUserByNameAsync(string username);
+    Task<bool> UserExistsAsync(string username);
+    Task<UserResetPasswordDto> GetUserForResetPasswordAsync(string username);
 }

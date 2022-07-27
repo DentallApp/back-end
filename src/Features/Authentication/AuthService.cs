@@ -17,7 +17,7 @@ public class AuthService : IAuthService
 
     public async Task<Response> LoginAsync(string username, string password)
     {
-        var user = await _userRepository.GetFullUserProfile(username);
+        var user = await _userRepository.GetFullUserProfileAsync(username);
         if (user is null || !_passwordHasher.Verify(text: password, passwordHash: user.Password))
             return new Response(EmailOrPasswordIncorrectMessage);
 

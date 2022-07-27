@@ -2,6 +2,6 @@
 
 public interface IEmailTemplateService
 {
-    Task<string> LoadTemplateForEmailVerification(string url, string recipientName);
-    Task<string> LoadTemplateForResetPassword(string url, string recipientName);
+    Task<string> LoadTemplateForEmailVerificationAsync(string url, string recipientName);
+    Task<string> LoadTemplateForResetPasswordAsync(string url, string recipientName);
 }

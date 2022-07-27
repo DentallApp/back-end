@@ -9,10 +9,10 @@ public class GeneralTreatmentService : IGeneralTreatmentService
         _repository = repository;
     }
 
-    public async Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatments()
-        => await _repository.GetTreatments();
+    public async Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync()
+        => await _repository.GetTreatmentsAsync();
 
-    public async Task<Response<GeneralTreatmentGetDto>> GetTreatmentById(int id)
+    public async Task<Response<GeneralTreatmentGetDto>> GetTreatmentByIdAsync(int id)
     {
         var treatment = await _repository.GetByIdAsync(id);
         if (treatment is null)

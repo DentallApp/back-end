@@ -2,5 +2,5 @@
 
 public interface IGeneralTreatmentRepository : IRepository<GeneralTreatment>
 {
-    Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatments();
+    Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync();
 }

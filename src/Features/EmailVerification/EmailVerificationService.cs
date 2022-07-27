@@ -17,7 +17,7 @@ public class EmailVerificationService : IEmailVerificationService
         if (claimPrincipal is null)
             return new Response<UserLoginDto>(EmailVerificationTokenInvalidMessage);
 
-        var user = await _userRepository.GetFullUserProfile(claimPrincipal.GetUserName());
+        var user = await _userRepository.GetFullUserProfileAsync(claimPrincipal.GetUserName());
         if (user is null)
             return new Response<UserLoginDto>(UsernameNotFoundMessage);
 

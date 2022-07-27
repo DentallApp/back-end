@@ -9,7 +9,7 @@ public class UserRepository : Repository<User>, IUserRepository
         _context = context;
     }
 
-    public async Task<User> GetFullUserProfile(string username)
+    public async Task<User> GetFullUserProfileAsync(string username)
         => await _context.Set<User>()
                          .Include(user => user.Person)
                             .ThenInclude(person => person.Gender)
@@ -18,18 +18,18 @@ public class UserRepository : Repository<User>, IUserRepository
                          .Where(user => user.UserName == username)
                          .FirstOrDefaultAsync();
 
-    public async Task<User> GetUserByName(string username)
+    public async Task<User> GetUserByNameAsync(string username)
         => await _context.Set<User>()
                          .Where(user => user.UserName == username)
                          .FirstOrDefaultAsync();
 
-    public async Task<bool> UserExists(string username)
+    public async Task<bool> UserExistsAsync(string username)
     {
-        var user = await GetUserByName(username);
+        var user = await GetUserByNameAsync(username);
         return user is not null;
     }
 
-    public async Task<UserResetPasswordDto> GetUserForResetPassword(string username)
+    public async Task<UserResetPasswordDto> GetUserForResetPasswordAsync(string username)
         => await _context.Set<User>()
                          .Include(user => user.Person)
                          .Where(user => user.UserName == username)

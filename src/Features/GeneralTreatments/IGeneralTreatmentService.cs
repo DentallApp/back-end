@@ -2,6 +2,6 @@
 
 public interface IGeneralTreatmentService
 {
-    Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatments();
-    Task<Response<GeneralTreatmentGetDto>> GetTreatmentById(int id);
+    Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync();
+    Task<Response<GeneralTreatmentGetDto>> GetTreatmentByIdAsync(int id);
 }
