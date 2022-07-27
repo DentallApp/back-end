@@ -13,11 +13,11 @@ public class UserRegisterController : ControllerBase
 
     [Route("basic-user")]
     [HttpPost]
-    public async Task<ActionResult<Response>> CreateBasicUserAccountAsync([FromBody]UserInsertDto userInsertDto)
+    public async Task<ActionResult<Response>> CreateBasicUserAccount([FromBody]UserInsertDto userInsertDto)
     {
         var response = await _userRegisterService.CreateBasicUserAccountAsync(userInsertDto);
         if (response.Success)
-            return CreatedAtAction(nameof(UserRegisterController.CreateBasicUserAccountAsync), response);
+            return CreatedAtAction(nameof(UserRegisterController.CreateBasicUserAccount), response);
 
         return BadRequest(response);
     }

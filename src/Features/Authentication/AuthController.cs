@@ -12,7 +12,7 @@ public class AuthController : ControllerBase
 
     [Route("login")]
     [HttpPost]
-    public async Task<ActionResult<Response>> LoginAsync([FromBody]AuthPostDto authPostDto)
+    public async Task<ActionResult<Response>> Login([FromBody]AuthPostDto authPostDto)
     {
         var response = await _authService.LoginAsync(authPostDto.UserName, authPostDto.Password);
         if(response.Success)
@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
 
     [Route("token/refresh")]
     [HttpPost]
-    public async Task<ActionResult<Response<TokenDto>>> RefreshTokenAsync([FromBody] TokenDto tokenDto)
+    public async Task<ActionResult<Response<TokenDto>>> RefreshToken([FromBody] TokenDto tokenDto)
     {
         var response = await _authService.RefreshTokenAsync(tokenDto);
         if (response.Success)
@@ -34,7 +34,7 @@ public class AuthController : ControllerBase
 
     [Route("token/revoke")]
     [HttpPost, Authorize]
-    public async Task<ActionResult<Response>> RevokeTokenAsync()
+    public async Task<ActionResult<Response>> RevokeToken()
     {
         var response = await _authService.RevokeRefreshTokenAsync(User.GetUserId());
         if (response.Success)

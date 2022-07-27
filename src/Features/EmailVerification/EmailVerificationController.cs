@@ -12,7 +12,7 @@ public class EmailVerificationController : ControllerBase
 
     [Route("email-verification")]
     [HttpPost]
-    public async Task<ActionResult<Response<UserLoginDto>>> VerifyEmailAsync([FromBody]EmailVerificationDto emailDto)
+    public async Task<ActionResult<Response<UserLoginDto>>> VerifyEmail([FromBody]EmailVerificationDto emailDto)
     {
         var response = await _service.VerifyEmailAsync(emailDto.Token);
         if (response.Success)
