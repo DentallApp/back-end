@@ -10,6 +10,7 @@ public static class UserMapper
         userProfile.CellPhone   = user.Person.CellPhone;
         userProfile.DateBirth   = user.Person.DateBirth;
         userProfile.GenderName  = user.Person.Gender.Name;
+        userProfile.GenderId    = user.Person.GenderId;
         userProfile.UserId      = user.Id;
         userProfile.UserName    = user.UserName;
         userProfile.Roles       = user.UserRoles.Select(role => role.Role.Name);
