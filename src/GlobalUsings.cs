@@ -3,6 +3,7 @@ global using DentallApp.Features.StatusManager;
 global using DentallApp.Features.GeneralTreatments;
 global using DentallApp.Features.GeneralTreatments.DTOs;
 global using DentallApp.Features.Persons;
+global using DentallApp.Features.Persons.DTOs;
 global using DentallApp.Features.Genders;
 global using DentallApp.Features.Genders.DTOs;
 global using DentallApp.Features.Users;

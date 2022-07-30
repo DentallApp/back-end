@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Users.DTOs;
 
-public class FullUserProfileDto : UserDto
+public class FullUserProfileDto : PersonDto
 {
     public int UserId { get; set; }
     public string UserName { get; set; }
