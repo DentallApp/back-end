@@ -24,10 +24,14 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : ModelBas
         _entities.Add(entity);
     }
 
-    public virtual void Update(TEntity entity)
+    public virtual void Update(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
     {
         entity.UpdatedAt = DateTime.UtcNow;
-        _entities.Update(entity);
+        var db = _context.Entry(entity);
+        foreach (var property in properties)
+        {
+            db.Property(property).IsModified = true;
+        }
     }
 
     public virtual void Delete(TEntity entity)
