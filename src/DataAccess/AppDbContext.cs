@@ -9,6 +9,8 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Role> Roles { get; set; }
+    public DbSet<Dependent> Dependents { get; set; }
+    public DbSet<Kinship> Kinships { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
@@ -21,5 +23,6 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new GeneralTreatmentConfiguration());
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
         modelBuilder.ApplyConfiguration(new GenderConfiguration());
+        modelBuilder.ApplyConfiguration(new KinshipConfiguration());
     }
 }

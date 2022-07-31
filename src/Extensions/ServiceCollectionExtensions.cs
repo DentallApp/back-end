@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmailService, EmailService>()
                 .AddTransient<IGeneralTreatmentService, GeneralTreatmentService>()
                 .AddTransient<IPasswordResetService, PasswordResetService>()
+                .AddTransient<IDependentService, DependentService>()
                 .AddTransient<ITokenService, TokenService>();
 
         return services;
@@ -22,6 +23,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddTransient<IUnitOfWork, UnitOfWorkEFCore>();
         services.AddTransient<IUserRepository, UserRepository>()
+                .AddTransient<IKinshipRepository, KinshipRepository>()
                 .AddTransient<IGenderRepository, GenderRepository>()
                 .AddTransient<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 

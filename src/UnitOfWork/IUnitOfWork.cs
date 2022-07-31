@@ -7,4 +7,5 @@ public interface IUnitOfWork
     IUserRepository UserRepository { get; }
     IUserRoleRepository UserRoleRepository { get; }
     IPersonRepository PersonRepository { get; }
+    IDependentRepository DependentRepository { get; }
 }

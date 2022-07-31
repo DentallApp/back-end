@@ -2,8 +2,12 @@
 
 public class ResponseMessages
 {
+    public const string CreateResourceMessage = "El recurso se creó con éxito.";
+    public const string UpdateResourceMessage = "El recurso se actualizó con éxito.";
+    public const string DeleteResourceMessage = "El recurso se eliminó con éxito.";
     public const string GetResourceMessage = "Recurso obtenido con éxito.";
     public const string ResourceNotFoundMessage = "Recurso no encontrado.";
+    public const string ResourceFromAnotherUserMessage = "El recurso es de otro usuario.";
 
     public const string EmailSuccessfullyVerifiedMessage = "Correo electrónico verificado con éxito.";
     public const string SuccessfulLoginMessage = "Ha iniciado la sesión con éxito.";
