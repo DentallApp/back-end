@@ -17,7 +17,7 @@ public class UserRegisterController : ControllerBase
     {
         var response = await _userRegisterService.CreateBasicUserAccountAsync(userInsertDto);
         if (response.Success)
-            return CreatedAtAction(nameof(UserRegisterController.CreateBasicUserAccount), response);
+            return CreatedAtAction(nameof(CreateBasicUserAccount), response);
 
         return BadRequest(response);
     }

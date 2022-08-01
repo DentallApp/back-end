@@ -10,4 +10,5 @@ public class User : ModelBase
     public int PersonId { get; set; }
     public Person Person { get; set; }
     public ICollection<UserRole> UserRoles { get; set; }
+    public ICollection<Dependent> Dependents { get; set; }
 }
