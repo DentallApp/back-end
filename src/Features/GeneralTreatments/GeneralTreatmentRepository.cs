@@ -2,15 +2,10 @@
 
 public class GeneralTreatmentRepository : Repository<GeneralTreatment>, IGeneralTreatmentRepository
 {
-    private readonly AppDbContext _context;
-
-    public GeneralTreatmentRepository(AppDbContext context) : base(context)
-    {
-        _context = context;
-    }
+    public GeneralTreatmentRepository(AppDbContext context) : base(context) { }
 
     public async Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync()
-        => await _context.Set<GeneralTreatment>()
-                         .Select(treatment => treatment.MapToGeneralTreatmentGetDto())
-                         .ToListAsync();
+        => await Context.Set<GeneralTreatment>()
+                        .Select(treatment => treatment.MapToGeneralTreatmentGetDto())
+                        .ToListAsync();
 }

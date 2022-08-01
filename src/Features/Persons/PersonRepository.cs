@@ -2,9 +2,5 @@
 
 public class PersonRepository : Repository<Person>, IPersonRepository
 {
-
-    public PersonRepository(AppDbContext context) : base(context)
-    {
-
-    }
+    public PersonRepository(AppDbContext context) : base(context) { }
 }

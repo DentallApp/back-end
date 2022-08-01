@@ -2,15 +2,10 @@
 
 public class KinshipRepository : Repository<Kinship>, IKinshipRepository
 {
-    private readonly AppDbContext _context;
-
-    public KinshipRepository(AppDbContext context) : base(context)
-    {
-        _context = context;        
-    }
+    public KinshipRepository(AppDbContext context) : base(context) { }
 
     public async Task<IEnumerable<KinshipGetDto>> GetKinshipsAsync()
-        => await _context.Set<Kinship>()
-                         .Select(kinship => kinship.MapToKinshipGetDto())
-                         .ToListAsync();
+        => await Context.Set<Kinship>()
+                        .Select(kinship => kinship.MapToKinshipGetDto())
+                        .ToListAsync();
 }

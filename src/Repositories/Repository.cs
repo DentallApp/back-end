@@ -5,6 +5,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : ModelBas
     private readonly AppDbContext _context;
     private readonly DbSet<TEntity> _entities;
 
+    protected AppDbContext Context => _context;
+
     public Repository(AppDbContext context)
     {
         _context = context;
