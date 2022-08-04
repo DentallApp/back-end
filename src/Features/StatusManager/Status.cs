@@ -4,4 +4,5 @@ public class Status : ModelBase
 {
     public string Name { get; set; }
     public ICollection<GeneralTreatment> GeneralTreatments { get; set; }
+    public ICollection<Dependent> Dependents { get; set; }
 }

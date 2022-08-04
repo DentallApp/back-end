@@ -38,8 +38,7 @@ public class DependentService : IDependentService
         if (dependent.UserId != userId)
             return new Response(ResourceFromAnotherUserMessage);
 
-        _unitOfWork.DependentRepository.Delete(dependent);
-        _unitOfWork.PersonRepository.Delete(new Person { Id = dependent.PersonId });
+        dependent.StatusId = StatusId.Inactive;
         await _unitOfWork.SaveChangesAsync();
 
         return new Response

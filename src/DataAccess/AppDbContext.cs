@@ -24,5 +24,6 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
         modelBuilder.ApplyConfiguration(new GenderConfiguration());
         modelBuilder.ApplyConfiguration(new KinshipConfiguration());
+        modelBuilder.ApplyConfiguration(new DependentConfiguration());
     }
 }

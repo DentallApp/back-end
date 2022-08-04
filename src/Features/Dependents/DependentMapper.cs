@@ -17,7 +17,8 @@ public static class DependentMapper
     public static Dependent MapToDependent(this DependentInsertDto dependentDto)
         => new()
         {
-            KinshipId = dependentDto.KinshipId
+            KinshipId = dependentDto.KinshipId,
+            StatusId = StatusId.Active
         };
 
     public static DependentGetDto MapToDependentGetDto(this Dependent dependent)
