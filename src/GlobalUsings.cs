@@ -26,6 +26,8 @@ global using DentallApp.Features.EmailVerification;
 global using DentallApp.Features.EmailVerification.DTOs;
 global using DentallApp.Features.PasswordReset;
 global using DentallApp.Features.PasswordReset.DTOs;
+global using DentallApp.Features.Employees;
+global using DentallApp.Features.Offices;
 
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;

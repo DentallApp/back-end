@@ -11,6 +11,8 @@ public class AppDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<Dependent> Dependents { get; set; }
     public DbSet<Kinship> Kinships { get; set; }
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<Office> Offices { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
