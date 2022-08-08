@@ -1,0 +1,29 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.3",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Servicios dentales",
+      "wrap": true,
+      "size": "Medium",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "choices": [],
+      "isRequired": true,
+      "separator": true,
+      "id": "dentalServiceId",
+      "errorMessage": "Error. Escoja un servicio dental",
+      "label": "Seleccione un servicio dental"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Enviar"
+    }
+  ]
+}
