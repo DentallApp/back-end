@@ -13,6 +13,8 @@ public class AppDbContext : DbContext
     public DbSet<Kinship> Kinships { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Office> Offices { get; set; }
+    public DbSet<Appoinment> Appoinments { get; set; }
+    public DbSet<AppoinmentStatus> AppoinmentsStatus { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
@@ -27,5 +29,8 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new GenderConfiguration());
         modelBuilder.ApplyConfiguration(new KinshipConfiguration());
         modelBuilder.ApplyConfiguration(new DependentConfiguration());
+        modelBuilder.ApplyConfiguration(new OfficeConfiguration());
+        modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+        modelBuilder.ApplyConfiguration(new AppoinmentStatusConfiguration());
     }
 }

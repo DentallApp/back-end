@@ -1,4 +1,8 @@
 global using DentallApp.Features.Chatbot;
+global using DentallApp.Features.Chatbot.Dialogs;
+global using DentallApp.Features.Chatbot.Factories;
+global using DentallApp.Features.Chatbot.Helpers;
+global using DentallApp.Features.Chatbot.Models;
 global using DentallApp.Features.StatusManager;
 global using DentallApp.Features.GeneralTreatments;
 global using DentallApp.Features.GeneralTreatments.DTOs;
@@ -27,7 +31,11 @@ global using DentallApp.Features.EmailVerification.DTOs;
 global using DentallApp.Features.PasswordReset;
 global using DentallApp.Features.PasswordReset.DTOs;
 global using DentallApp.Features.Employees;
+global using DentallApp.Features.Employees.DTOs;
 global using DentallApp.Features.Offices;
+global using DentallApp.Features.Offices.DTOs;
+global using DentallApp.Features.Appoinments;
+global using DentallApp.Features.AppoinmentsStatus;
 
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
