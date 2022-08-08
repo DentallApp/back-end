@@ -12,6 +12,7 @@ public static class UserMapper
         userProfile.GenderName  = user.Person.Gender.Name;
         userProfile.GenderId    = user.Person.GenderId;
         userProfile.UserId      = user.Id;
+        userProfile.PersonId    = user.PersonId;
         userProfile.UserName    = user.UserName;
         userProfile.Roles       = user.UserRoles.Select(role => role.Role.Name);
         return userProfile;
