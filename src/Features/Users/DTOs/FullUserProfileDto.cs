@@ -3,6 +3,7 @@
 public class FullUserProfileDto : PersonDto
 {
     public int UserId { get; set; }
+    public int PersonId { get; set; }
     public string UserName { get; set; }
     public IEnumerable<string> Roles { get; set; }
     public string GenderName { get; set; }
