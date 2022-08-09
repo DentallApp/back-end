@@ -21,6 +21,7 @@ public static class DependentMapper
             StatusId = StatusId.Active
         };
 
+    [Decompile]
     public static DependentGetDto MapToDependentGetDto(this Dependent dependent)
         => new()
         {

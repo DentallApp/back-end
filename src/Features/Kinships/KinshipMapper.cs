@@ -2,6 +2,7 @@
 
 public static class KinshipMapper
 {
+    [Decompile]
     public static KinshipGetDto MapToKinshipGetDto(this Kinship kinship)
         => new()
         {

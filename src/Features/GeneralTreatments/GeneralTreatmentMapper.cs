@@ -2,6 +2,7 @@
 
 public static class GeneralTreatmentMapper
 {
+    [Decompile]
     public static GeneralTreatmentGetDto MapToGeneralTreatmentGetDto(this GeneralTreatment treatment)
         => new()
         {

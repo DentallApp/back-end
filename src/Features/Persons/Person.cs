@@ -14,6 +14,7 @@ public class Person : ModelBase
     public Employee Employee { get; set; }
     public Dependent Dependent { get; set; }
 
+    [Decompile]
     [NotMapped]
     public string FullName => Names + " " + LastNames;
 }

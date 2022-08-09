@@ -62,6 +62,7 @@ public static class UserMapper
             Password = userInsertDto.Password
         };
 
+    [Decompile]
     public static UserResetPasswordDto MapToUserResetPasswordDto(this User user)
         => new()
         {
