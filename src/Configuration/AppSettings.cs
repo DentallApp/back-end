@@ -2,6 +2,8 @@ namespace DentallApp.Configuration;
 
 public class AppSettings
 {
+    public const string MaxDateInDateInput = "MAX_DATE_IN_DATE_INPUT";
+
     [EnvKey("CONNECTION_STRING")]
     public string ConnectionString { get; set; }
 
