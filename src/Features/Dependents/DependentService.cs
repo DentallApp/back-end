@@ -38,7 +38,7 @@ public class DependentService : IDependentService
         if (dependent.UserId != userId)
             return new Response(ResourceFromAnotherUserMessage);
 
-        dependent.StatusId = StatusId.Inactive;
+        dependent.IsDeleted = true;
         await _unitOfWork.SaveChangesAsync();
 
         return new Response

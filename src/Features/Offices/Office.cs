@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Offices;
 
-public class Office : ModelWithStatus
+public class Office : ModelWithSoftDelete
 {
     public string Name { get; set; }
     public string Address { get; set; }
