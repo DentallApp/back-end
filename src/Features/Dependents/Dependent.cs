@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Dependents;
 
-public class Dependent : ModelWithStatus
+public class Dependent : ModelWithSoftDelete
 {
     public int UserId { get; set; }
     public User User { get; set; }

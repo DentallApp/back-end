@@ -3,7 +3,6 @@ namespace DentallApp.DataAccess;
 public class AppDbContext : DbContext
 {
     public DbSet<GeneralTreatment> GeneralTreatments { get; set; }
-    public DbSet<Status> Status { get; set; }
     public DbSet<Person> Persons { get; set; }
     public DbSet<Gender> Genders { get; set; }
     public DbSet<User> Users { get; set; }
@@ -28,7 +27,6 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new StatusConfiguration());
         modelBuilder.ApplyConfiguration(new GeneralTreatmentConfiguration());
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
         modelBuilder.ApplyConfiguration(new GenderConfiguration());

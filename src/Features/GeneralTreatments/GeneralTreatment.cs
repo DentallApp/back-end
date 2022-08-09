@@ -1,6 +1,6 @@
 namespace DentallApp.Features.GeneralTreatments;
 
-public class GeneralTreatment : ModelWithStatus
+public class GeneralTreatment : ModelWithSoftDelete
 {
     public string Name { get; set; }
     public string Description { get; set; }
