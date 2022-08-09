@@ -4,7 +4,7 @@ public class GeneralTreatmentConfiguration : IEntityTypeConfiguration<GeneralTre
 {
     public void Configure(EntityTypeBuilder<GeneralTreatment> builder)
     {
-        builder.HasQueryFilter(treatment => treatment.StatusId == StatusId.Active);
+        builder.HasQueryFilterSoftDelete();
         builder.HasData(
              new GeneralTreatment
              {
