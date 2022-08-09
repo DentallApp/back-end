@@ -94,3 +94,5 @@ global using DotEnv.Core;
 global using SendGrid;
 global using SendGrid.Helpers.Mail;
 global using SendGrid.Extensions.DependencyInjection;
+
+global using DelegateDecompiler;
