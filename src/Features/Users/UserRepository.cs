@@ -28,12 +28,6 @@ public class UserRepository : Repository<User>, IUserRepository
         => await Context.Set<User>()
                         .Include(user => user.Person)
                         .Where(user => user.UserName == username)
-                        .Select(user => new UserResetPasswordDto()
-                        {
-                            UserId = user.Id,
-                            UserName = user.UserName,
-                            Name = user.Person.Names,
-                            Password = user.Password
-                        })
+                        .Select(user => user.MapToUserResetPasswordDto())
                         .FirstOrDefaultAsync();
 }
