@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Chatbot.Factories;
 
-public class RepositoriesFactory
+public class RepositoriesFactory : IRepositoriesFactory
 {
     private readonly AppDbContext _context;
 

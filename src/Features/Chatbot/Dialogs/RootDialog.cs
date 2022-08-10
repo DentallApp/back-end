@@ -2,9 +2,9 @@
 
 public partial class RootDialog : ComponentDialog
 {
-    private readonly RepositoriesFactory _repositories;
+    private readonly IRepositoriesFactory _repositories;
 
-    public RootDialog(RepositoriesFactory repositories) : base(nameof(RootDialog))
+    public RootDialog(IRepositoriesFactory repositories) : base(nameof(RootDialog))
     {
         _repositories = repositories;
 
