@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(conversationState);
 
         services.AddTransient<RootDialog>();
-        services.AddTransient<RepositoriesFactory>();
+        services.AddTransient<IRepositoriesFactory, RepositoriesFactory>();
 
         // Create the Bot Framework Authentication to be used with the Bot Adapter.
         services.AddSingleton<BotFrameworkAuthentication, ConfigurationBotFrameworkAuthentication>();
