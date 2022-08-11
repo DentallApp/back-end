@@ -2,11 +2,11 @@
 
 public partial class RootDialog : ComponentDialog
 {
-    private readonly IRepositoriesFactory _repositories;
+    private readonly IAppoinmentBotService _botService;
 
-    public RootDialog(IRepositoriesFactory repositories) : base(nameof(RootDialog))
+    public RootDialog(IAppoinmentBotService botService) : base(nameof(RootDialog))
     {
-        _repositories = repositories;
+        _botService = botService;
 
         var waterfallSteps = new WaterfallStep[]
         {
@@ -24,7 +24,7 @@ public partial class RootDialog : ComponentDialog
     private async Task<DialogTurnResult> ShowNameOfPatients(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
         var userProfile = stepContext.CreateUserProfile();
-        var choicesTask  = _repositories.CreateBotQueryRepository().GetPatientsAsync(userProfile);
+        var choicesTask  = _botService.GetPatientsAsync(userProfile);
         var cardJsonTask = TemplateCardLoader.LoadPatientCardAsync();
         var choices  = await choicesTask;
         var cardJson = await cardJsonTask;
@@ -37,7 +37,7 @@ public partial class RootDialog : ComponentDialog
 
     private async Task<DialogTurnResult> ShowNameOfOffices(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
-        var choicesTask = _repositories.CreateBotQueryRepository().GetOfficesAsync();
+        var choicesTask = _botService.GetOfficesAsync();
         var cardJsonTask = TemplateCardLoader.LoadOfficeCardAsync();
         var choices = await choicesTask;
         var cardJson = await cardJsonTask;
@@ -52,7 +52,7 @@ public partial class RootDialog : ComponentDialog
     {
         var value = JObject.Parse(stepContext.Context.Activity.Value.ToString());
         stepContext.Values["officeId"] = (string)value["officeId"];
-        var choicesTask = _repositories.CreateBotQueryRepository().GetDentalServicesAsync();
+        var choicesTask = _botService.GetDentalServicesAsync();
         var cardJsonTask = TemplateCardLoader.LoadDentalServiceCardAsync();
         var choices = await choicesTask;
         var cardJson = await cardJsonTask;
@@ -66,7 +66,7 @@ public partial class RootDialog : ComponentDialog
     private async Task<DialogTurnResult> ShowNameOfDentists(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
         int officeId = int.Parse(stepContext.Values["officeId"].ToString());
-        var choicesTask = _repositories.CreateBotQueryRepository().GetDentistsByOfficeIdAsync(officeId);
+        var choicesTask = _botService.GetDentistsByOfficeIdAsync(officeId);
         var cardJsonTask = TemplateCardLoader.LoadDentistCardAsync();
         var choices = await choicesTask;
         var cardJson = await cardJsonTask;
