@@ -20,10 +20,4 @@ public partial class RootDialog : ComponentDialog
         AddDialog(new WaterfallDialog(nameof(WaterfallDialog), waterfallSteps));
         AddDialog(new AdaptiveCardPrompt(nameof(AdaptiveCardPrompt), DialogValidator.ValidateChoiceSet));
     }
-
-    private async Task<DialogTurnResult> ShowAppointmentData(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-    {
-        await stepContext.Context.SendActivityAsync("Bot en construcción... Lo siento...", cancellationToken: cancellationToken);
-        return await stepContext.EndDialogAsync(cancellationToken: cancellationToken);
-    }
 }
