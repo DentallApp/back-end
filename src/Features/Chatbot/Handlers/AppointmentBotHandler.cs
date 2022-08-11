@@ -1,14 +1,14 @@
-﻿namespace DentallApp.Features.Chatbot;
+﻿namespace DentallApp.Features.Chatbot.Handlers;
 
-public class AppointmentBot<T> : ActivityHandler where T : Dialog
+public class AppointmentBotHandler<T> : ActivityHandler where T : Dialog
 {
     private readonly Dialog _dialog;
     private readonly BotState _conversationState;
     private readonly ILogger _logger;
 
-    public AppointmentBot(T dialog, 
-                          ConversationState conversationState,
-                          ILogger<AppointmentBot<T>> logger)
+    public AppointmentBotHandler(T dialog, 
+                                 ConversationState conversationState,
+                                 ILogger<AppointmentBotHandler<T>> logger)
     {
         _dialog = dialog;
         _conversationState = conversationState;

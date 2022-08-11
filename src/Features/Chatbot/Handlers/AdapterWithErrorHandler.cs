@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Chatbot;
+﻿namespace DentallApp.Features.Chatbot.Handlers;
 
 public class AdapterWithErrorHandler : CloudAdapter
 {
