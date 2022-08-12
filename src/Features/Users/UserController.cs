@@ -21,4 +21,15 @@ public class UserController : ControllerBase
 
         return BadRequest(response);
     }
+
+    [Route("password")]
+    [HttpPut]
+    public async Task<ActionResult<Response>> Put([FromBody]UserUpdatePasswordDto userUpdatePasswordDto)
+    {
+        var response = await _userService.ChangePasswordAsync(User.GetUserId(), userUpdatePasswordDto);
+        if (response.Success)
+            return Ok(response);
+
+        return BadRequest(response);
+    }
 }

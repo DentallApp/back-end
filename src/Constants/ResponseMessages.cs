@@ -13,6 +13,7 @@ public class ResponseMessages
     public const string SuccessfulLoginMessage = "Ha iniciado la sesión con éxito.";
     public const string CouldNotSendEmailMessage = "No se ha podido enviar el correo electrónico.";
     public const string EmailOrPasswordIncorrectMessage = "El correo electrónico o la contraseña son incorrectos.";
+    public const string OldPasswordIncorrectMessage = "La contraseña antigua es incorrecta.";
     public const string EmailNotConfirmedMessage = "El correo electrónico no está confirmado.";
     public const string CreateBasicUserAccountMessage = "La cuenta de usuario básico se ha creado con éxito. Por favor, confirme su dirección de correo electrónico.";
     public const string UsernameAlreadyExistsMessage = "El correo electrónico que ingresó está siendo usado por otro usuario.";
