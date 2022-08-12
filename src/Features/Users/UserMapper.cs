@@ -29,6 +29,7 @@ public static class UserMapper
         => new()
         {
             UserId = userLoginDto.UserId,
+            PersonId = userLoginDto.PersonId,
             UserName = userLoginDto.UserName,
             FullName = $"{userLoginDto.LastNames} {userLoginDto.Names}",
             Roles = userLoginDto.Roles
@@ -71,4 +72,14 @@ public static class UserMapper
             Name = user.Person.Names,
             Password = user.Password
         };
+
+    public static void MapToPerson(this UserUpdateDto userUpdateDto, Person person)
+    {
+        person.Names = userUpdateDto.Names;
+        person.LastNames = userUpdateDto.LastNames;
+        person.CellPhone = userUpdateDto.CellPhone;
+        person.DateBirth = userUpdateDto.DateBirth;
+        person.GenderId = userUpdateDto.GenderId;
+        person.UpdatedAt = DateTime.UtcNow;
+    }
 }

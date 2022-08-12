@@ -59,6 +59,7 @@ public class TokenService : ITokenService
         var claims = new List<Claim>
         {
             new (CustomClaimsType.UserId, userClaims.UserId.ToString()),
+            new (CustomClaimsType.PersonId, userClaims.PersonId.ToString()),
             new (CustomClaimsType.UserName, userClaims.UserName),
             new (CustomClaimsType.FullName, userClaims.FullName)
          };
