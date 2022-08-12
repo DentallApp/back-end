@@ -18,6 +18,6 @@ public partial class RootDialog : ComponentDialog
         };
 
         AddDialog(new WaterfallDialog(nameof(WaterfallDialog), waterfallSteps));
-        AddDialog(new AdaptiveCardPrompt(nameof(AdaptiveCardPrompt), DialogValidator.ValidateChoiceSet));
+        AddDialog(new AdaptiveCardPrompt(nameof(AdaptiveCardPrompt), ValidateChoiceSet));
     }
 }
