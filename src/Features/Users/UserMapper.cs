@@ -35,10 +35,11 @@ public static class UserMapper
             Roles = userLoginDto.Roles
         };
 
-    public static UserClaims MapToUserClaims(this UserInsertDto userInsertDto, int userId)
+    public static UserClaims MapToUserClaims(this UserInsertDto userInsertDto, User user)
         => new()
         {
-            UserId = userId,
+            UserId = user.Id,
+            PersonId = user.PersonId,
             UserName = userInsertDto.UserName,
             FullName = $"{userInsertDto.LastNames} {userInsertDto.Names}",
             Roles = new List<string> { RolesName.Unverified }
