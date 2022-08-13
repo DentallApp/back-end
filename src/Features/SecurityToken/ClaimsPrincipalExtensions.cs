@@ -14,6 +14,9 @@ public static class ClaimsPrincipalExtensions
     public static int GetOfficeId(this ClaimsPrincipal claims)
         => int.Parse(claims.FindFirstValue(CustomClaimsType.OfficeId));
 
+    public static int GetEmployeeId(this ClaimsPrincipal claims)
+        => int.Parse(claims.FindFirstValue(CustomClaimsType.EmployeeId));
+
     public static bool IsAdmin(this ClaimsPrincipal claims)
         => claims.IsInRole(RolesName.Admin);
 }

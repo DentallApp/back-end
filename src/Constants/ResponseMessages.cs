@@ -21,6 +21,7 @@ public class ResponseMessages
     public const string UsernameAlreadyExistsMessage = "El correo electrónico que ingresó está siendo usado por otro usuario.";
     public const string AccountAlreadyVerifiedMessage = "La cuenta de usuario ya fue verificada.";
     public const string UsernameNotFoundMessage = "Usuario no encontrado.";
+    public const string EmployeeNotFoundMessage = "Empleado no encontrado.";
     public const string AccessTokenInvalidMessage = "El token de acceso es inválido.";
     public const string EmailVerificationTokenInvalidMessage = "El token de verificación email es inválido.";
     public const string PasswordResetTokenInvalidMessage = "El token de restablecimiento de contraseña es inválido.";
@@ -33,4 +34,5 @@ public class ResponseMessages
     public const string PasswordSuccessfullyResetMessage = "La contraseña se ha restablecido con éxito.";
     public const string MissingClaimMessage = "Reclamación (claim) faltante en el token: {0}";
     public const string OfficeNotAssignedMessage = "No puedes gestionar los recursos de una sucursal a la que no ha sido asignada.";
+    public const string CannotRemoveSuperadminMessage = "Lo siento, no se puede eliminar a un SuperAdministrador.";
 }

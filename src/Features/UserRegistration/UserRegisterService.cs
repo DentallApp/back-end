@@ -53,12 +53,12 @@ public class UserRegisterService : IUserRegisterService
         };
     }
 
-    public async Task<Response> CreateEmployeeAccountAsync(ClaimsPrincipal claims, EmployeeInsertDto employeeInsertDto)
+    public async Task<Response> CreateEmployeeAccountAsync(ClaimsPrincipal currentEmployee, EmployeeInsertDto employeeInsertDto)
     {
         if (await _unitOfWork.UserRepository.UserExistsAsync(employeeInsertDto.UserName))
             return new Response(UsernameAlreadyExistsMessage);
 
-        if (claims.IsAdmin() && claims.GetOfficeId() != employeeInsertDto.OfficeId)
+        if (currentEmployee.IsAdmin() && currentEmployee.GetOfficeId() != employeeInsertDto.OfficeId)
             return new Response(OfficeNotAssignedMessage);
 
         var user = CreateUserAccount(employeeInsertDto, employeeInsertDto.Roles.RemoveDuplicates());

@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IPasswordResetService, PasswordResetService>()
                 .AddTransient<IDependentService, DependentService>()
                 .AddTransient<ITokenRefreshService, TokenRefreshService>()
+                .AddTransient<IEmployeeService, EmployeeService>()
                 .AddTransient<ITokenService, TokenService>();
 
         return services;

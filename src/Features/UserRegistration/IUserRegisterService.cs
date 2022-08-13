@@ -3,5 +3,5 @@
 public interface IUserRegisterService
 {
     Task<Response> CreateBasicUserAccountAsync(UserInsertDto userInsertDto);
-    Task<Response> CreateEmployeeAccountAsync(ClaimsPrincipal claims, EmployeeInsertDto employeeInsertDto);
+    Task<Response> CreateEmployeeAccountAsync(ClaimsPrincipal currentEmployee, EmployeeInsertDto employeeInsertDto);
 }

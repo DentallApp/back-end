@@ -30,4 +30,24 @@ public static class EmployeeMapper
             PostgradeUniversity = employeeInsertDto.PostgradeUniversity,
             PregradeUniversity  = employeeInsertDto.PregradeUniversity
         };
+
+    [Decompile]
+    public static EmployeeGetDto MapToEmployeeGetDto(this Employee employee)
+        => new()
+        {
+            EmployeeId              = employee.Id,
+            OfficeId                = employee.OfficeId,
+            OfficeName              = employee.Office.Name,
+            PostgradeUniversity     = employee.PostgradeUniversity,
+            PregradeUniversity      = employee.PregradeUniversity,
+            Document                = employee.Person.Document,
+            Names                   = employee.Person.Names,
+            LastNames               = employee.Person.LastNames,
+            Email                   = employee.Person.Email,
+            CellPhone               = employee.Person.CellPhone,
+            DateBirth               = employee.Person.DateBirth,
+            GenderName              = employee.Person.Gender.Name,
+            GenderId                = employee.Person.Gender.Id,
+            Roles                   = employee.User.UserRoles.Select(role => role.Role.Name)
+        };
 }

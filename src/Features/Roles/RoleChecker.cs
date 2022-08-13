@@ -11,4 +11,8 @@ public static class RoleChecker
     public static bool IsBasicUser(this User user)
         => user.UserRoles.Select(userRole => userRole.RoleId)
                          .Contains(RolesId.BasicUser);
+
+    public static bool IsSuperAdmin(this Employee employee)
+        => employee.User.UserRoles.Select(userRole => userRole.RoleId)
+                                  .Contains(RolesId.Superadmin);
 }
