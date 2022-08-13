@@ -22,4 +22,12 @@ public static class EmployeeMapper
         employeeLoginDto.PostgradeUniversity = employee.PostgradeUniversity;
         employeeLoginDto.PregradeUniversity  = employee.PregradeUniversity;
     }
+
+    public static Employee MapToEmployee(this EmployeeInsertDto employeeInsertDto)
+        => new()
+        {
+            OfficeId            = employeeInsertDto.OfficeId,
+            PostgradeUniversity = employeeInsertDto.PostgradeUniversity,
+            PregradeUniversity  = employeeInsertDto.PregradeUniversity
+        };
 }

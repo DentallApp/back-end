@@ -52,4 +52,26 @@ public class UserRegisterService : IUserRegisterService
             Message = CreateBasicUserAccountMessage
         };
     }
+
+    public async Task<Response> CreateEmployeeAccountAsync(ClaimsPrincipal claims, EmployeeInsertDto employeeInsertDto)
+    {
+        if (await _unitOfWork.UserRepository.UserExistsAsync(employeeInsertDto.UserName))
+            return new Response(UsernameAlreadyExistsMessage);
+
+        if (claims.IsInRole(RolesName.Admin) && claims.GetOfficeId() != employeeInsertDto.OfficeId)
+            return new Response(OfficeNotAssigned);
+
+        var user = CreateUserAccount(employeeInsertDto, employeeInsertDto.Roles);
+        var employee = employeeInsertDto.MapToEmployee();
+        _unitOfWork.EmployeeRepository.Insert(employee);
+        employee.User = user;
+        employee.Person = user.Person;
+        await _unitOfWork.SaveChangesAsync();
+
+        return new Response
+        {
+            Success = true,
+            Message = CreateEmployeeAccountMessage
+        };
+    }
 }

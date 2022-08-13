@@ -8,4 +8,5 @@ public interface IUnitOfWork
     IUserRoleRepository UserRoleRepository { get; }
     IPersonRepository PersonRepository { get; }
     IDependentRepository DependentRepository { get; }
+    IEmployeeRepository EmployeeRepository { get; }
 }

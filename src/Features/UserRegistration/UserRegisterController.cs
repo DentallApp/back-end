@@ -21,4 +21,16 @@ public class UserRegisterController : ControllerBase
 
         return BadRequest(response);
     }
+
+    [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
+    [Route("employee")]
+    [HttpPost]
+    public async Task<ActionResult<Response>> CreateEmployeeAccount([FromBody]EmployeeInsertDto employeeInsertDto)
+    {
+        var response = await _userRegisterService.CreateEmployeeAccountAsync(User, employeeInsertDto);
+        if (response.Success)
+            return CreatedAtAction(nameof(CreateEmployeeAccount), response);
+
+        return BadRequest(response);
+    }
 }

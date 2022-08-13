@@ -17,6 +17,7 @@ public class ResponseMessages
     public const string OldPasswordIncorrectMessage = "La contraseña antigua es incorrecta.";
     public const string EmailNotConfirmedMessage = "El correo electrónico no está confirmado.";
     public const string CreateBasicUserAccountMessage = "La cuenta de usuario básico se ha creado con éxito. Por favor, confirme su dirección de correo electrónico.";
+    public const string CreateEmployeeAccountMessage = "La cuenta del empleado se ha creado con éxito.";
     public const string UsernameAlreadyExistsMessage = "El correo electrónico que ingresó está siendo usado por otro usuario.";
     public const string AccountAlreadyVerifiedMessage = "La cuenta de usuario ya fue verificada.";
     public const string UsernameNotFoundMessage = "Usuario no encontrado.";
@@ -31,4 +32,5 @@ public class ResponseMessages
     public const string SendPasswordResetLinkMessage = "El correo electrónico se envió con éxito para restablecer la contraseña del usuario.";
     public const string PasswordSuccessfullyResetMessage = "La contraseña se ha restablecido con éxito.";
     public const string MissingClaimMessage = "Reclamación (claim) faltante en el token: {0}";
+    public const string OfficeNotAssigned = "No puedes gestionar los recursos de una sucursal a la que no ha sido asignada.";
 }
