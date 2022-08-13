@@ -58,7 +58,7 @@ public class UserRegisterService : IUserRegisterService
         if (await _unitOfWork.UserRepository.UserExistsAsync(employeeInsertDto.UserName))
             return new Response(UsernameAlreadyExistsMessage);
 
-        if (claims.IsInRole(RolesName.Admin) && claims.GetOfficeId() != employeeInsertDto.OfficeId)
+        if (claims.IsAdmin() && claims.GetOfficeId() != employeeInsertDto.OfficeId)
             return new Response(OfficeNotAssignedMessage);
 
         var user = CreateUserAccount(employeeInsertDto, employeeInsertDto.Roles.RemoveDuplicates());
