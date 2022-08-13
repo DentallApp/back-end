@@ -44,7 +44,7 @@ public class AuthService : IAuthService
             };
         }
 
-        var employee = await _employeeRepository.GetEmployeeByUserId(user.Id);
+        var employee = await _employeeRepository.GetEmployeeByUserIdAsync(user.Id);
         if (employee is null)
             return new Response(InactiveUserAccountMessage);
         var employeeLoginDto = user.MapToEmployeeLoginDto();

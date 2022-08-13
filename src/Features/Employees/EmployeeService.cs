@@ -9,14 +9,14 @@ public class EmployeeService : IEmployeeService
         _employeeRepository = employeeRepository;
     }
 
-    public Task<IEnumerable<EmployeeGetDto>> GetEmployees(ClaimsPrincipal currentEmployee)
+    public Task<IEnumerable<EmployeeGetDto>> GetEmployeesAsync(ClaimsPrincipal currentEmployee)
         =>  currentEmployee.IsAdmin() 
-               ? _employeeRepository.GetFullEmployeesProfileByOfficeId(currentEmployee.GetEmployeeId(), currentEmployee.GetOfficeId())
-               : _employeeRepository.GetFullEmployeesProfile(currentEmployee.GetEmployeeId());
+               ? _employeeRepository.GetFullEmployeesProfileByOfficeIdAsync(currentEmployee.GetEmployeeId(), currentEmployee.GetOfficeId())
+               : _employeeRepository.GetFullEmployeesProfileAsync(currentEmployee.GetEmployeeId());
 
     public async Task<Response> RemoveEmployeeAsync(int id, ClaimsPrincipal currentEmployee)
     {
-        var employee = await _employeeRepository.GetEmployeeById(id);
+        var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
         if (employee is null)
             return new Response(EmployeeNotFoundMessage);
 

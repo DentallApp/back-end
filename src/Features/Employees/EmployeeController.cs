@@ -28,5 +28,5 @@ public class EmployeeController : ControllerBase
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
     [HttpGet]
     public async Task<IEnumerable<EmployeeGetDto>> Get()
-        => await _employeeService.GetEmployees(User);
+        => await _employeeService.GetEmployeesAsync(User);
 }

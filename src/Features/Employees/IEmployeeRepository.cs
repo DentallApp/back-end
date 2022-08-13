@@ -2,8 +2,8 @@
 
 public interface IEmployeeRepository : IRepository<Employee>
 {
-    Task<Employee> GetEmployeeByUserId(int userId);
-    Task<Employee> GetEmployeeById(int id);
-    Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfile(int currentEmployeeId);
-    Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileByOfficeId(int currentEmployeeId, int officeId);
+    Task<Employee> GetEmployeeByUserIdAsync(int userId);
+    Task<Employee> GetEmployeeByIdAsync(int id);
+    Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileAsync(int currentEmployeeId);
+    Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileByOfficeIdAsync(int currentEmployeeId, int officeId);
 }
