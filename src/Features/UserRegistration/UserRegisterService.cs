@@ -18,7 +18,7 @@ public class UserRegisterService : IUserRegisterService
         _passwordHasher = passwordHasher;
     }
 
-    private User CreateUserAccount(UserInsertDto userInsertDto, params int[] rolesId)
+    private User CreateUserAccount(UserInsertDto userInsertDto, IEnumerable<int> rolesId)
     {
         var person = userInsertDto.MapToPerson();
         _unitOfWork.PersonRepository.Insert(person);
@@ -40,7 +40,7 @@ public class UserRegisterService : IUserRegisterService
         if (await _unitOfWork.UserRepository.UserExistsAsync(userInsertDto.UserName))
             return new Response(UsernameAlreadyExistsMessage);
 
-        var user = CreateUserAccount(userInsertDto, RolesId.Unverified);
+        var user = CreateUserAccount(userInsertDto, new[] { RolesId.Unverified });
         await _unitOfWork.SaveChangesAsync();
 
         var emailVerificationToken = _tokenService.CreateEmailVerificationToken(userInsertDto.MapToUserClaims(user));
@@ -61,7 +61,7 @@ public class UserRegisterService : IUserRegisterService
         if (claims.IsInRole(RolesName.Admin) && claims.GetOfficeId() != employeeInsertDto.OfficeId)
             return new Response(OfficeNotAssignedMessage);
 
-        var user = CreateUserAccount(employeeInsertDto, employeeInsertDto.Roles);
+        var user = CreateUserAccount(employeeInsertDto, employeeInsertDto.Roles.RemoveDuplicates());
         var employee = employeeInsertDto.MapToEmployee();
         _unitOfWork.EmployeeRepository.Insert(employee);
         employee.User = user;
