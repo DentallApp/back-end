@@ -31,6 +31,7 @@ global using DentallApp.Features.EmailVerification.DTOs;
 global using DentallApp.Features.PasswordReset;
 global using DentallApp.Features.PasswordReset.DTOs;
 global using DentallApp.Features.Employees;
+global using DentallApp.Features.Employees.DTOs;
 global using DentallApp.Features.Offices;
 global using DentallApp.Features.Appoinments;
 global using DentallApp.Features.AppoinmentsStatus;

@@ -23,6 +23,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddTransient<IUnitOfWork, UnitOfWorkEFCore>();
         services.AddTransient<IUserRepository, UserRepository>()
+                .AddTransient<IEmployeeRepository, EmployeeRepository>()
                 .AddTransient<IKinshipRepository, KinshipRepository>()
                 .AddTransient<IGenderRepository, GenderRepository>()
                 .AddTransient<IGeneralTreatmentRepository, GeneralTreatmentRepository>();

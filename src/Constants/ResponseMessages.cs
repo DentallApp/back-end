@@ -9,6 +9,7 @@ public class ResponseMessages
     public const string ResourceNotFoundMessage = "Recurso no encontrado.";
     public const string ResourceFromAnotherUserMessage = "El recurso es de otro usuario.";
 
+    public const string InactiveUserAccountMessage = "Cuenta de usuario inactiva.";
     public const string EmailSuccessfullyVerifiedMessage = "Correo electrónico verificado con éxito.";
     public const string SuccessfulLoginMessage = "Ha iniciado la sesión con éxito.";
     public const string CouldNotSendEmailMessage = "No se ha podido enviar el correo electrónico.";

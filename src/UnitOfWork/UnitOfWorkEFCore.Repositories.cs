@@ -17,4 +17,8 @@ public partial class UnitOfWorkEFCore
     private IDependentRepository _dependentRepository;
     public IDependentRepository DependentRepository
         => _dependentRepository ??= new DependentRepository(_context);
+
+    private IEmployeeRepository _employeeRepository;
+    public IEmployeeRepository EmployeeRepository
+        => _employeeRepository ??= new EmployeeRepository(_context);
 }

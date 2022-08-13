@@ -7,4 +7,8 @@ public static class RoleChecker
 
     public static bool IsVerified(this User user)
         => !IsUnverified(user);
+
+    public static bool IsBasicUser(this User user)
+        => user.UserRoles.Select(userRole => userRole.RoleId)
+                         .Contains(RolesId.BasicUser);
 }

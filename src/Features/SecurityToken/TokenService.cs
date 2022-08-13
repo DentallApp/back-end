@@ -37,6 +37,9 @@ public class TokenService : ITokenService
     public string CreateAccessToken(UserClaims userClaims)
         => CreateAccessToken(CreateClaims(userClaims));
 
+    public string CreateAccessToken(EmployeeClaims employeeClaims)
+        => CreateAccessToken(CreateClaims(employeeClaims));
+
     public string CreateEmailVerificationToken(IEnumerable<Claim> claims)
         => CreateJwt(claims, DateTime.UtcNow.AddHours(_settings.EmailVerificationTokenExpires), _settings.EmailVerificationTokenKey);
 
@@ -67,6 +70,14 @@ public class TokenService : ITokenService
         foreach (var role in userClaims.Roles)
             claims.Add(new(ClaimTypes.Role, role));
 
+        return claims;
+    }
+
+    public IEnumerable<Claim> CreateClaims(EmployeeClaims employeeClaims)
+    {
+        var claims = CreateClaims((UserClaims)employeeClaims) as List<Claim>;
+        claims.Add(new (CustomClaimsType.EmployeeId, employeeClaims.EmployeeId.ToString()));
+        claims.Add(new (CustomClaimsType.OfficeId, employeeClaims.OfficeId.ToString()));
         return claims;
     }
 
