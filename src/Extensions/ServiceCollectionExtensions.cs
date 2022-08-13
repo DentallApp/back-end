@@ -14,6 +14,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IGeneralTreatmentService, GeneralTreatmentService>()
                 .AddTransient<IPasswordResetService, PasswordResetService>()
                 .AddTransient<IDependentService, DependentService>()
+                .AddTransient<ITokenRefreshService, TokenRefreshService>()
                 .AddTransient<ITokenService, TokenService>();
 
         return services;

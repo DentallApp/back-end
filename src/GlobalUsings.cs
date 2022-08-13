@@ -22,6 +22,7 @@ global using DentallApp.Features.UserRoles;
 global using DentallApp.Features.UserRoles.DTOs;
 global using DentallApp.Features.SecurityToken;
 global using DentallApp.Features.SecurityToken.DTOs;
+global using DentallApp.Features.TokenRefresh;
 global using DentallApp.Features.Authentication;
 global using DentallApp.Features.Authentication.DTOs;
 global using DentallApp.Features.EmailSending;
