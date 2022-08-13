@@ -15,5 +15,5 @@ public class EmployeeGetDto
     public DateTime? DateBirth { get; set; }
     public int GenderId { get; set; }
     public string GenderName { get; set; }
-    public IEnumerable<string> Roles { get; set; }
+    public IEnumerable<RoleGetDto> Roles { get; set; }
 }

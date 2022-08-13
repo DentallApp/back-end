@@ -48,6 +48,6 @@ public static class EmployeeMapper
             DateBirth               = employee.Person.DateBirth,
             GenderName              = employee.Person.Gender.Name,
             GenderId                = employee.Person.Gender.Id,
-            Roles                   = employee.User.UserRoles.Select(role => role.Role.Name)
+            Roles                   = employee.User.UserRoles.Select(role => new RoleGetDto { Id = role.Role.Id, Name = role.Role.Name})
         };
 }
