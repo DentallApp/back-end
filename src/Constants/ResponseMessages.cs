@@ -32,5 +32,5 @@ public class ResponseMessages
     public const string SendPasswordResetLinkMessage = "El correo electrónico se envió con éxito para restablecer la contraseña del usuario.";
     public const string PasswordSuccessfullyResetMessage = "La contraseña se ha restablecido con éxito.";
     public const string MissingClaimMessage = "Reclamación (claim) faltante en el token: {0}";
-    public const string OfficeNotAssigned = "No puedes gestionar los recursos de una sucursal a la que no ha sido asignada.";
+    public const string OfficeNotAssignedMessage = "No puedes gestionar los recursos de una sucursal a la que no ha sido asignada.";
 }

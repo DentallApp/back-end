@@ -59,7 +59,7 @@ public class UserRegisterService : IUserRegisterService
             return new Response(UsernameAlreadyExistsMessage);
 
         if (claims.IsInRole(RolesName.Admin) && claims.GetOfficeId() != employeeInsertDto.OfficeId)
-            return new Response(OfficeNotAssigned);
+            return new Response(OfficeNotAssignedMessage);
 
         var user = CreateUserAccount(employeeInsertDto, employeeInsertDto.Roles);
         var employee = employeeInsertDto.MapToEmployee();
