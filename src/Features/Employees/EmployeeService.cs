@@ -20,7 +20,7 @@ public class EmployeeService : IEmployeeService
         if (employee is null)
             return new Response(EmployeeNotFoundMessage);
 
-        if (currentEmployee.IsAdmin() && currentEmployee.GetOfficeId() != employee.OfficeId)
+        if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employee.OfficeId))
             return new Response(OfficeNotAssignedMessage);
 
         if (employee.IsSuperAdmin())
@@ -59,17 +59,22 @@ public class EmployeeService : IEmployeeService
         if (employee is null)
             return new Response(EmployeeNotFoundMessage);
 
-        if (currentEmployee.IsAdmin() && currentEmployee.GetOfficeId() != employee.OfficeId)
-            return new Response(OfficeNotAssignedMessage);
-
         if (employee.IsSuperAdmin())
             return new Response(CannotEditSuperadminMessage);
+
+        if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employee.OfficeId))
+            return new Response(OfficeNotAssignedMessage);
+
+        if (currentEmployee.HasNotPermissions(employeeUpdateDto.Roles))
+            return new Response(PermitsNotGrantedMessage);
 
         employeeUpdateDto.MapToEmployee(employee);
 
 
         var userRoles = employee.User.UserRoles.OrderBy(userRole => userRole.RoleId);
-        var rolesId   = employeeUpdateDto.Roles.OrderBy(roleId => roleId);
+        var rolesId   = employeeUpdateDto.Roles
+                                         .RemoveDuplicates()
+                                         .OrderBy(roleId => roleId);
         _unitOfWork.UserRoleRepository.UpdateUserRoles(employee.UserId, userRoles, rolesId);
         await _unitOfWork.SaveChangesAsync();
 

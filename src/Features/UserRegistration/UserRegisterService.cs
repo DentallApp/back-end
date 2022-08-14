@@ -58,8 +58,11 @@ public class UserRegisterService : IUserRegisterService
         if (await _unitOfWork.UserRepository.UserExistsAsync(employeeInsertDto.UserName))
             return new Response(UsernameAlreadyExistsMessage);
 
-        if (currentEmployee.IsAdmin() && currentEmployee.GetOfficeId() != employeeInsertDto.OfficeId)
+        if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employeeInsertDto.OfficeId))
             return new Response(OfficeNotAssignedMessage);
+
+        if (currentEmployee.HasNotPermissions(employeeInsertDto.Roles))
+            return new Response(PermitsNotGrantedMessage);
 
         var user = CreateUserAccount(employeeInsertDto, employeeInsertDto.Roles.RemoveDuplicates());
         var employee = employeeInsertDto.MapToEmployee();

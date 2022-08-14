@@ -36,4 +36,5 @@ public class ResponseMessages
     public const string OfficeNotAssignedMessage = "No puedes gestionar los recursos de una sucursal a la que no ha sido asignada.";
     public const string CannotRemoveSuperadminMessage = "Lo siento, no se puede eliminar a un SuperAdministrador.";
     public const string CannotEditSuperadminMessage = "Lo siento, no se puede editar los datos de un SuperAdministrador.";
+    public const string PermitsNotGrantedMessage = "No tienes permisos para otorgar esos roles.";
 }
