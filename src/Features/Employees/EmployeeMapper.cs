@@ -55,12 +55,7 @@ public static class EmployeeMapper
     {
         employee.PregradeUniversity     = employeeUpdateDto.PregradeUniversity;
         employee.PostgradeUniversity    = employeeUpdateDto.PostgradeUniversity;
-        employee.Person.Names           = employeeUpdateDto.Names;
-        employee.Person.LastNames       = employeeUpdateDto.LastNames;
-        employee.Person.CellPhone       = employeeUpdateDto.CellPhone;
-        employee.Person.DateBirth       = employeeUpdateDto.DateBirth;
-        employee.Person.GenderId        = employeeUpdateDto.GenderId;
-        employee.Person.UpdatedAt       = DateTime.UtcNow;
         employee.UpdatedAt              = DateTime.UtcNow;
+        employeeUpdateDto.MapToPerson(employee.Person);
     }
 }
