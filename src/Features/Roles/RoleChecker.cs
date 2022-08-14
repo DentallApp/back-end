@@ -9,10 +9,8 @@ public static class RoleChecker
         => !IsUnverified(user);
 
     public static bool IsBasicUser(this User user)
-        => user.UserRoles.Select(userRole => userRole.RoleId)
-                         .Contains(RolesId.BasicUser);
+        => user.UserRoles.Any(userRole => userRole.RoleId == RolesId.BasicUser);
 
     public static bool IsSuperAdmin(this Employee employee)
-        => employee.User.UserRoles.Select(userRole => userRole.RoleId)
-                                  .Contains(RolesId.Superadmin);
+        => employee.User.UserRoles.Any(userRole => userRole.RoleId == RolesId.Superadmin);
 }
