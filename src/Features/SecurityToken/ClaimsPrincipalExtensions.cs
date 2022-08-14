@@ -29,17 +29,11 @@ public static class ClaimsPrincipalExtensions
     public static bool HasNotPermissions(this ClaimsPrincipal claims, IEnumerable<int> rolesId)
     {
         if(claims.IsInRole(RolesName.Admin))
-        {
-            foreach (int roleId in rolesId)
-                if (roleId < RolesId.Secretary || roleId > RolesId.Dentist)
-                    return true;
-        }
+            return rolesId.Where(roleId => roleId < RolesId.Secretary || roleId > RolesId.Dentist).Count() > 0;
+
         else if(claims.IsInRole(RolesName.Superadmin))
-        {
-            foreach (int roleId in rolesId)
-                if (roleId < RolesId.Secretary || roleId > RolesId.Admin)
-                    return true;
-        }
+            return rolesId.Where(roleId => roleId < RolesId.Secretary || roleId > RolesId.Admin).Count() > 0;
+
         return false;
     }
 }
