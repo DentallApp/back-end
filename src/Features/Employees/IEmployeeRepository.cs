@@ -6,4 +6,5 @@ public interface IEmployeeRepository : IRepository<Employee>
     Task<Employee> GetEmployeeByIdAsync(int id);
     Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileAsync(int currentEmployeeId);
     Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileByOfficeIdAsync(int currentEmployeeId, int officeId);
+    Task<Employee> GetDataByIdForCurrentEmployee(int id);
 }

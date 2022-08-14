@@ -37,4 +37,10 @@ public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
                         .Where(employee => employee.OfficeId == officeId && employee.Id != currentEmployeeId)
                         .Select(employee => employee.MapToEmployeeGetDto())
                         .ToListAsync();
+
+    public async Task<Employee> GetDataByIdForCurrentEmployee(int id)
+        => await Context.Set<Employee>()
+                        .Include(employee => employee.Person)
+                        .Where(employee => employee.Id == id)
+                        .FirstOrDefaultAsync();
 }

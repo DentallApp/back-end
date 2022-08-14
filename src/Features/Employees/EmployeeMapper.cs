@@ -50,4 +50,17 @@ public static class EmployeeMapper
             GenderId                = employee.Person.Gender.Id,
             Roles                   = employee.User.UserRoles.Select(role => new RoleGetDto { Id = role.Role.Id, Name = role.Role.Name})
         };
+
+    public static void MapToEmployee(this EmployeeUpdateDto employeeUpdateDto, Employee employee)
+    {
+        employee.PregradeUniversity     = employeeUpdateDto.PregradeUniversity;
+        employee.PostgradeUniversity    = employeeUpdateDto.PostgradeUniversity;
+        employee.Person.Names           = employeeUpdateDto.Names;
+        employee.Person.LastNames       = employeeUpdateDto.LastNames;
+        employee.Person.CellPhone       = employeeUpdateDto.CellPhone;
+        employee.Person.DateBirth       = employeeUpdateDto.DateBirth;
+        employee.Person.GenderId        = employeeUpdateDto.GenderId;
+        employee.Person.UpdatedAt       = DateTime.UtcNow;
+        employee.UpdatedAt              = DateTime.UtcNow;
+    }
 }

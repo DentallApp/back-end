@@ -29,4 +29,15 @@ public class EmployeeController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<EmployeeGetDto>> Get()
         => await _employeeService.GetEmployeesAsync(User);
+
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
+    [HttpPut]
+    public async Task<ActionResult<Response>> Put([FromBody]EmployeeUpdateDto employeeUpdateDto)
+    { 
+        var response = await _employeeService.EditProfileByCurrentEmployeeAsync(User.GetEmployeeId(), employeeUpdateDto);
+        if (response.Success)
+            return Ok(response);
+
+        return BadRequest(response);
+    }
 }
