@@ -40,4 +40,18 @@ public class EmployeeController : ControllerBase
 
         return BadRequest(response);
     }
+
+    [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
+    [HttpPut("{id}")]
+    public async Task<ActionResult<Response>> Put(int id, [FromBody]EmployeeUpdateByAdminDto employeeUpdateDto)
+    {
+        if (id == User.GetEmployeeId())
+            return Unauthorized();
+
+        var response = await _employeeService.EditProfileByAdminAsync(id, User, employeeUpdateDto);
+        if (response.Success)
+            return Ok(response);
+
+        return BadRequest(response);
+    }
 }

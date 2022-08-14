@@ -52,4 +52,26 @@ public class EmployeeService : IEmployeeService
             Message = UpdateResourceMessage
         };
     }
+
+    public async Task<Response> EditProfileByAdminAsync(int employeeId, ClaimsPrincipal currentEmployee, EmployeeUpdateByAdminDto employeeUpdateDto)
+    {
+        var employee = await _employeeRepository.GetDataByIdForAdmin(employeeId);
+        if (employee is null)
+            return new Response(EmployeeNotFoundMessage);
+
+        if (currentEmployee.IsAdmin() && currentEmployee.GetOfficeId() != employee.OfficeId)
+            return new Response(OfficeNotAssignedMessage);
+
+        if (employee.IsSuperAdmin())
+            return new Response(CannotEditSuperadminMessage);
+
+        employeeUpdateDto.MapToEmployee(employee);
+        await _employeeRepository.SaveAsync();
+
+        return new Response
+        {
+            Success = true,
+            Message = UpdateResourceMessage
+        };
+    }
 }

@@ -58,4 +58,13 @@ public static class EmployeeMapper
         employee.UpdatedAt              = DateTime.UtcNow;
         employeeUpdateDto.MapToPerson(employee.Person);
     }
+
+    public static void MapToEmployee(this EmployeeUpdateByAdminDto employeeUpdateDto, Employee employee)
+    {
+        MapToEmployee((EmployeeUpdateDto)employeeUpdateDto, employee);
+        employee.OfficeId           = employeeUpdateDto.OfficeId;
+        employee.Person.Document    = employeeUpdateDto.Document;
+        employee.Person.Email       = employeeUpdateDto.Email;
+        employee.User.UserName      = employeeUpdateDto.Email;
+    }
 }

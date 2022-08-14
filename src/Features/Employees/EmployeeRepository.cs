@@ -43,4 +43,11 @@ public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
                         .Include(employee => employee.Person)
                         .Where(employee => employee.Id == id)
                         .FirstOrDefaultAsync();
+
+    public async Task<Employee> GetDataByIdForAdmin(int id)
+        => await Context.Set<Employee>()
+                        .Include(employee => employee.Person)
+                        .Include(employee => employee.User.UserRoles)
+                        .Where(employee => employee.Id == id)
+                        .FirstOrDefaultAsync();
 }
