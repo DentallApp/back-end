@@ -1,6 +1,6 @@
 namespace DentallApp.DataAccess;
 
-public class AppDbContext : DbContext
+public class AppDbContext : CustomDbContext
 {
     public DbSet<GeneralTreatment> GeneralTreatments { get; set; }
     public DbSet<Person> Persons { get; set; }

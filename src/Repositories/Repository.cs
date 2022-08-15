@@ -21,14 +21,11 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : ModelBas
 
     public virtual void Insert(TEntity entity)
     {
-        entity.CreatedAt = DateTime.UtcNow;
-        entity.UpdatedAt = entity.CreatedAt;
         _entities.Add(entity);
     }
 
     public virtual void Update(TEntity entity)
     {
-        entity.UpdatedAt = DateTime.UtcNow;
         _entities.Update(entity);
     }
 

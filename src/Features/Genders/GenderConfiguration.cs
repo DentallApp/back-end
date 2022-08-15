@@ -4,20 +4,16 @@ public class GenderConfiguration : IEntityTypeConfiguration<Gender>
 {
     public void Configure(EntityTypeBuilder<Gender> builder)
     {
-        builder.HasData(
+        builder.AddSeedData(
             new Gender
             {
                 Id = GendersId.Male,
-                Name = GendersName.Male,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = GendersName.Male
             },
             new Gender
             {
                 Id = GendersId.Female,
-                Name = GendersName.Female,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = GendersName.Female
             }
         );
     }
