@@ -43,7 +43,7 @@ public class UserRegisterService : IUserRegisterService
         var user = CreateUserAccount(userInsertDto, RolesId.Unverified);
         await _unitOfWork.SaveChangesAsync();
 
-        var emailVerificationToken = _tokenService.CreateEmailVerificationToken(userInsertDto.MapToUserClaims(user.Id));
+        var emailVerificationToken = _tokenService.CreateEmailVerificationToken(userInsertDto.MapToUserClaims(user));
         await _emailService.SendEmailForVerificationAsync(userInsertDto.UserName, userInsertDto.Names, emailVerificationToken);
 
         return new Response
