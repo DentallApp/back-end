@@ -64,4 +64,20 @@ public class GeneralTreatmentService : IGeneralTreatmentService
             Message = UpdateResourceMessage
         };
     }
+
+    public async Task<Response> RemoveTreatmentAsync(int id)
+    {
+        var treatment = await _repository.GetByIdAsync(id);
+        if (treatment is null)
+            return new Response(ResourceNotFoundMessage);
+
+        treatment.IsDeleted = true;
+        await _repository.SaveAsync();
+
+        return new Response
+        {
+            Success = true,
+            Message = DeleteResourceMessage
+        };
+    }
 }

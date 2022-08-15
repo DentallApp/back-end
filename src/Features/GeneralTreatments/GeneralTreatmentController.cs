@@ -50,4 +50,15 @@ public class GeneralTreatmentController : ControllerBase
 
         return NotFound(response);
     }
+
+    [AuthorizeByRole(RolesName.Superadmin)]
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Response>> Delete(int id)
+    {
+        var response = await _service.RemoveTreatmentAsync(id);
+        if (response.Success)
+            return Ok(response);
+
+        return NotFound(response);
+    }
 }
