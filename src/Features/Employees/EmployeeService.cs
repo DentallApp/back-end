@@ -27,7 +27,6 @@ public class EmployeeService : IEmployeeService
             return new Response(CannotRemoveSuperadminMessage);
 
         employee.IsDeleted = true;
-        employee.UpdatedAt = DateTime.UtcNow;
         await _unitOfWork.SaveChangesAsync();
 
         return new Response

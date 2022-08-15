@@ -84,6 +84,5 @@ public static class UserMapper
         person.CellPhone = userUpdateDto.CellPhone;
         person.DateBirth = userUpdateDto.DateBirth;
         person.GenderId = userUpdateDto.GenderId;
-        person.UpdatedAt = DateTime.UtcNow;
     }
 }

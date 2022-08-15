@@ -55,7 +55,6 @@ public static class EmployeeMapper
     {
         employee.PregradeUniversity     = employeeUpdateDto.PregradeUniversity;
         employee.PostgradeUniversity    = employeeUpdateDto.PostgradeUniversity;
-        employee.UpdatedAt              = DateTime.UtcNow;
         employeeUpdateDto.MapToPerson(employee.Person);
     }
 

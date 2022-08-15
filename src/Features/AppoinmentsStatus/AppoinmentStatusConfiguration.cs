@@ -4,48 +4,36 @@ public class AppoinmentStatusConfiguration : IEntityTypeConfiguration<Appoinment
 {
     public void Configure(EntityTypeBuilder<AppoinmentStatus> builder)
     {
-        builder.HasData(
+        builder.AddSeedData(
             new AppoinmentStatus
             {
                 Id = AppoinmentStatusId.Scheduled,
-                Name = AppoinmentStatusName.Scheduled,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = AppoinmentStatusName.Scheduled
             },
             new AppoinmentStatus
             {
                 Id = 2,
-                Name = "En proceso",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = "En proceso"
             },
             new AppoinmentStatus
             {
                 Id = 3,
-                Name = "No asistida",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = "No asistida"
             },
             new AppoinmentStatus
             {
                 Id = 4,
-                Name = "En consulta",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = "En consulta"
             },
             new AppoinmentStatus
             {
                 Id = 5,
-                Name = "Asistida",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = "Asistida"
             },
             new AppoinmentStatus
             {
                 Id = 6,
-                Name = "Cancelada",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = "Cancelada"
             }
         );
     }

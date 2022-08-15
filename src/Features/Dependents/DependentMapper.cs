@@ -45,12 +45,10 @@ public static class DependentMapper
         person.DateBirth = dependentDto.DateBirth;
         person.GenderId  = dependentDto.GenderId;
         person.Email     = dependentDto.Email;
-        person.UpdatedAt = DateTime.UtcNow;
     }
 
     public static void MapToDependent(this DependentUpdateDto dependentDto, Dependent dependent)
     {
         dependent.KinshipId = dependentDto.KinshipId;
-        dependent.UpdatedAt = DateTime.UtcNow;
     }
 }
