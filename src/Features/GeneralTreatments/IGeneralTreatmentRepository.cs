@@ -3,4 +3,5 @@
 public interface IGeneralTreatmentRepository : IRepository<GeneralTreatment>
 {
     Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync();
+    Task<IEnumerable<GeneralTreatmentShowDto>> GetTreatmentsWithoutImageUrlAsync();
 }
