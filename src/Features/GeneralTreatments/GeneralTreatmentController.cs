@@ -24,4 +24,15 @@ public class GeneralTreatmentController : ControllerBase
 
         return NotFound(response);
     }
+
+    [AuthorizeByRole(RolesName.Superadmin)]
+    [HttpPost]
+    public async Task<ActionResult<Response>> Post([FromForm]GeneralTreatmentInsertDto treatmentInsertDto)
+    {
+        var response = await _service.CreateTreatmentAsync(treatmentInsertDto);
+        if (response.Success)
+            return CreatedAtAction(nameof(Post), response);
+
+        return BadRequest(response);
+    }
 }

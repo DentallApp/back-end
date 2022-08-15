@@ -4,4 +4,5 @@ public interface IGeneralTreatmentService
 {
     Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync();
     Task<Response<GeneralTreatmentGetDto>> GetTreatmentByIdAsync(int id);
+    Task<Response> CreateTreatmentAsync(GeneralTreatmentInsertDto treatmentInsertDto);
 }

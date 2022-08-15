@@ -25,4 +25,18 @@ public class GeneralTreatmentService : IGeneralTreatmentService
             Message = GetResourceMessage
         };
     }
+
+    public async Task<Response> CreateTreatmentAsync(GeneralTreatmentInsertDto treatmentInsertDto)
+    {
+        var treatment = treatmentInsertDto.MapToGeneralTreatmentInsertDto();
+        _repository.Insert(treatment);
+        await treatmentInsertDto.Image.WriteAsync(treatment.ImageUrl);
+        await _repository.SaveAsync();
+
+        return new Response
+        {
+            Success = true,
+            Message = CreateResourceMessage
+        };
+    }
 }

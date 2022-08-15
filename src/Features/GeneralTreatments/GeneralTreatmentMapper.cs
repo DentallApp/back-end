@@ -11,4 +11,13 @@ public static class GeneralTreatmentMapper
             Description = treatment.Description,
             ImageUrl = treatment.ImageUrl
         };
+
+    public static GeneralTreatment MapToGeneralTreatmentInsertDto(this GeneralTreatmentInsertDto treatmentInsertDto)
+        => new()
+        {
+            Name = treatmentInsertDto.Name,
+            Description = treatmentInsertDto.Description,
+            Duration = treatmentInsertDto.Duration,
+            ImageUrl = treatmentInsertDto.Image.GetNewPathForDentalServiceImage()
+        };
 }

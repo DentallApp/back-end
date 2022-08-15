@@ -3,6 +3,7 @@ namespace DentallApp.Configuration;
 public class AppSettings
 {
     public const string MaxDateInDateInput = "MAX_DATE_IN_DATE_INPUT";
+    public const string DentalServicesImagesPath = "DENTAL_SERVICES_IMAGES_PATH";
 
     [EnvKey("CONNECTION_STRING")]
     public string ConnectionString { get; set; }
