@@ -9,6 +9,9 @@ public class GeneralTreatmentService : IGeneralTreatmentService
         _repository = repository;
     }
 
+    public async Task<IEnumerable<GeneralTreatmentShowDto>> GetTreatmentsWithoutImageUrlAsync()
+        => await _repository.GetTreatmentsWithoutImageUrlAsync();
+
     public async Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync()
         => await _repository.GetTreatmentsAsync();
 
@@ -28,7 +31,7 @@ public class GeneralTreatmentService : IGeneralTreatmentService
 
     public async Task<Response> CreateTreatmentAsync(GeneralTreatmentInsertDto treatmentInsertDto)
     {
-        var treatment = treatmentInsertDto.MapToGeneralTreatmentInsertDto();
+        var treatment = treatmentInsertDto.MapToGeneralTreatment();
         _repository.Insert(treatment);
         await treatmentInsertDto.Image.WriteAsync(treatment.ImageUrl);
         await _repository.SaveAsync();
@@ -37,6 +40,28 @@ public class GeneralTreatmentService : IGeneralTreatmentService
         {
             Success = true,
             Message = CreateResourceMessage
+        };
+    }
+
+    public async Task<Response> UpdateTreatmentAsync(int id, GeneralTreatmentUpdateDto treatmentUpdateDto)
+    {
+        var treatment = await _repository.GetByIdAsync(id);
+        if (treatment is null)
+            return new Response(ResourceNotFoundMessage);
+
+        var oldImageUrl = treatment.ImageUrl;
+        treatmentUpdateDto.MapToGeneralTreatment(treatment);
+        if (treatmentUpdateDto.Image is not null)
+        {
+            File.Delete(oldImageUrl);
+            await treatmentUpdateDto.Image.WriteAsync(treatment.ImageUrl);
+        }
+        await _repository.SaveAsync();
+
+        return new Response
+        {
+            Success = true,
+            Message = UpdateResourceMessage
         };
     }
 }
