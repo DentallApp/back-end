@@ -1,8 +1,6 @@
 namespace DentallApp.Models;
 
-public class ModelBase
+public class ModelBase : CustomBaseEntity
 {
     public int Id { get; set; }
-    public DateTime? CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
 }
