@@ -25,13 +25,16 @@ public static class UserMapper
     public static UserLoginDto MapToUserLoginDto(this User user)
         => MapToFullUserProfileDto(new UserLoginDto(), user) as UserLoginDto;
 
+    public static EmployeeLoginDto MapToEmployeeLoginDto(this User user)
+        => MapToFullUserProfileDto(new EmployeeLoginDto(), user) as EmployeeLoginDto;
+
     public static UserClaims MapToUserClaims(this UserLoginDto userLoginDto)
         => new()
         {
             UserId = userLoginDto.UserId,
             PersonId = userLoginDto.PersonId,
             UserName = userLoginDto.UserName,
-            FullName = $"{userLoginDto.LastNames} {userLoginDto.Names}",
+            FullName = userLoginDto.FullName,
             Roles = userLoginDto.Roles
         };
 
@@ -41,7 +44,7 @@ public static class UserMapper
             UserId = user.Id,
             PersonId = user.PersonId,
             UserName = userInsertDto.UserName,
-            FullName = $"{userInsertDto.LastNames} {userInsertDto.Names}",
+            FullName = userInsertDto.FullName,
             Roles = new List<string> { RolesName.Unverified }
         };
 
