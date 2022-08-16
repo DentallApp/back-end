@@ -23,6 +23,13 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : ModelBas
     public virtual void Insert(TEntity entity)
         => _entities.Add(entity);
 
+    public virtual void Update(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
+    {
+        var entityEntry = _context.Entry(entity);
+        foreach (var property in properties)
+            entityEntry.Property(property).IsModified = true;
+    }
+    
     public virtual void Update(TEntity entity)
         => _entities.Update(entity);
 
