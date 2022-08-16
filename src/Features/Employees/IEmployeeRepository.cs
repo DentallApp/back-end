@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Employees;
 
-public interface IEmployeeRepository : IRepository<Employee>
+public interface IEmployeeRepository : ISoftDeleteRepository<Employee>
 {
     Task<Employee> GetEmployeeByUserIdAsync(int userId);
     Task<Employee> GetEmployeeByIdAsync(int id);

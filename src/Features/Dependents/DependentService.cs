@@ -38,7 +38,7 @@ public class DependentService : IDependentService
         if (dependent.UserId != userId)
             return new Response(ResourceFromAnotherUserMessage);
 
-        dependent.IsDeleted = true;
+        _unitOfWork.DependentRepository.Delete(dependent);
         await _unitOfWork.SaveChangesAsync();
 
         return new Response

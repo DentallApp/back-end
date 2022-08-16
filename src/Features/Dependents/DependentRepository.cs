@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Dependents;
 
-public class DependentRepository : Repository<Dependent>, IDependentRepository
+public class DependentRepository : SoftDeleteRepository<Dependent>, IDependentRepository
 {
     public DependentRepository(AppDbContext context) : base(context) { }
 
