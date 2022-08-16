@@ -3,10 +3,12 @@
 public class GeneralTreatmentService : IGeneralTreatmentService
 {
     private readonly IGeneralTreatmentRepository _repository;
+    private readonly string _basePath;
 
-    public GeneralTreatmentService(IGeneralTreatmentRepository repository)
+    public GeneralTreatmentService(IGeneralTreatmentRepository repository, AppSettings settings)
     {
         _repository = repository;
+        _basePath = settings.DentalServicesImagesPath;
     }
 
     public async Task<IEnumerable<GeneralTreatmentShowDto>> GetTreatmentsWithoutImageUrlAsync()
@@ -33,7 +35,7 @@ public class GeneralTreatmentService : IGeneralTreatmentService
     {
         var treatment = treatmentInsertDto.MapToGeneralTreatment();
         _repository.Insert(treatment);
-        await treatmentInsertDto.Image.WriteAsync(treatment.ImageUrl);
+        await treatmentInsertDto.Image.WriteAsync(Path.Combine(_basePath, treatment.ImageUrl));
         await _repository.SaveAsync();
 
         return new Response
@@ -53,8 +55,8 @@ public class GeneralTreatmentService : IGeneralTreatmentService
         treatmentUpdateDto.MapToGeneralTreatment(treatment);
         if (treatmentUpdateDto.Image is not null)
         {
-            File.Delete(oldImageUrl);
-            await treatmentUpdateDto.Image.WriteAsync(treatment.ImageUrl);
+            File.Delete(Path.Combine(_basePath, oldImageUrl));
+            await treatmentUpdateDto.Image.WriteAsync(Path.Combine(_basePath, treatment.ImageUrl));
         }
         await _repository.SaveAsync();
 
