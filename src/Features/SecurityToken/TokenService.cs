@@ -28,11 +28,17 @@ public class TokenService : ITokenService
     public ClaimsPrincipal ValidateEmailVerificationToken(string token)
         => ValidateJwt(token, _settings.EmailVerificationTokenKey);
 
+    public ClaimsPrincipal ValidatePasswordResetToken(string token, string passwordHash)
+        => ValidateJwt(token, key: passwordHash);
+
     public string CreateAccessToken(IEnumerable<Claim> claims)
         => CreateJwt(claims, DateTime.UtcNow.AddMinutes(_settings.AccessTokenExpires), _settings.AccessTokenKey);
 
     public string CreateAccessToken(UserClaims userClaims)
         => CreateAccessToken(CreateClaims(userClaims));
+
+    public string CreateAccessToken(EmployeeClaims employeeClaims)
+        => CreateAccessToken(CreateClaims(employeeClaims));
 
     public string CreateEmailVerificationToken(IEnumerable<Claim> claims)
         => CreateJwt(claims, DateTime.UtcNow.AddHours(_settings.EmailVerificationTokenExpires), _settings.EmailVerificationTokenKey);
@@ -40,11 +46,23 @@ public class TokenService : ITokenService
     public string CreateEmailVerificationToken(UserClaims userClaims)
         => CreateEmailVerificationToken(CreateClaims(userClaims));
 
+    public string CreatePasswordResetToken(int userid, string username, string passwordHash)
+    {
+        var claims = new List<Claim>
+        {
+            new (CustomClaimsType.UserId, userid.ToString()),
+            new (CustomClaimsType.UserName, username),
+         };
+        var expires = DateTime.UtcNow.AddHours(_settings.PasswordResetTokenExpires);
+        return CreateJwt(claims, expires, key: passwordHash);
+    }
+
     public IEnumerable<Claim> CreateClaims(UserClaims userClaims)
     {
         var claims = new List<Claim>
         {
             new (CustomClaimsType.UserId, userClaims.UserId.ToString()),
+            new (CustomClaimsType.PersonId, userClaims.PersonId.ToString()),
             new (CustomClaimsType.UserName, userClaims.UserName),
             new (CustomClaimsType.FullName, userClaims.FullName)
          };
@@ -52,6 +70,14 @@ public class TokenService : ITokenService
         foreach (var role in userClaims.Roles)
             claims.Add(new(ClaimTypes.Role, role));
 
+        return claims;
+    }
+
+    public IEnumerable<Claim> CreateClaims(EmployeeClaims employeeClaims)
+    {
+        var claims = CreateClaims((UserClaims)employeeClaims) as List<Claim>;
+        claims.Add(new (CustomClaimsType.EmployeeId, employeeClaims.EmployeeId.ToString()));
+        claims.Add(new (CustomClaimsType.OfficeId, employeeClaims.OfficeId.ToString()));
         return claims;
     }
 
@@ -69,4 +95,16 @@ public class TokenService : ITokenService
                      .WithIssuerSigningKey(_settings.AccessTokenKey)
                      .IgnoreValidateLifetime()
                      .Decode(token);
+
+    public ClaimsIdentity GetClaimsIdentity(string token)
+    {
+        try
+        {
+            return new (new JwtSecurityToken(token).Claims);
+        }
+        catch(ArgumentException)
+        {
+            return null;
+        }
+    }
 }

@@ -2,5 +2,5 @@
 
 public interface IGenderRepository : IRepository<Gender>
 {
-    Task<IEnumerable<GenderGetDto>> GetGenders();
+    Task<IEnumerable<GenderGetDto>> GetGendersAsync();
 }

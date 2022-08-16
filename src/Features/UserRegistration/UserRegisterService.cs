@@ -18,7 +18,7 @@ public class UserRegisterService : IUserRegisterService
         _passwordHasher = passwordHasher;
     }
 
-    private User CreateUserAccount(UserInsertDto userInsertDto, params int[] rolesId)
+    private User CreateUserAccount(UserInsertDto userInsertDto, IEnumerable<int> rolesId)
     {
         var person = userInsertDto.MapToPerson();
         _unitOfWork.PersonRepository.Insert(person);
@@ -37,19 +37,44 @@ public class UserRegisterService : IUserRegisterService
 
     public async Task<Response> CreateBasicUserAccountAsync(UserInsertDto userInsertDto)
     {
-        if (await _unitOfWork.UserRepository.UserExists(userInsertDto.UserName))
+        if (await _unitOfWork.UserRepository.UserExistsAsync(userInsertDto.UserName))
             return new Response(UsernameAlreadyExistsMessage);
 
-        var user = CreateUserAccount(userInsertDto, RolesId.Unverified);
+        var user = CreateUserAccount(userInsertDto, new[] { RolesId.Unverified });
         await _unitOfWork.SaveChangesAsync();
 
-        var emailVerificationToken = _tokenService.CreateEmailVerificationToken(userInsertDto.MapToUserClaims(user.Id));
+        var emailVerificationToken = _tokenService.CreateEmailVerificationToken(userInsertDto.MapToUserClaims(user));
         await _emailService.SendEmailForVerificationAsync(userInsertDto.UserName, userInsertDto.Names, emailVerificationToken);
 
         return new Response
         {
             Success = true,
             Message = CreateBasicUserAccountMessage
+        };
+    }
+
+    public async Task<Response> CreateEmployeeAccountAsync(ClaimsPrincipal currentEmployee, EmployeeInsertDto employeeInsertDto)
+    {
+        if (await _unitOfWork.UserRepository.UserExistsAsync(employeeInsertDto.UserName))
+            return new Response(UsernameAlreadyExistsMessage);
+
+        if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employeeInsertDto.OfficeId))
+            return new Response(OfficeNotAssignedMessage);
+
+        if (currentEmployee.HasNotPermissions(employeeInsertDto.Roles))
+            return new Response(PermitsNotGrantedMessage);
+
+        var user = CreateUserAccount(employeeInsertDto, employeeInsertDto.Roles.RemoveDuplicates());
+        var employee = employeeInsertDto.MapToEmployee();
+        _unitOfWork.EmployeeRepository.Insert(employee);
+        employee.User = user;
+        employee.Person = user.Person;
+        await _unitOfWork.SaveChangesAsync();
+
+        return new Response
+        {
+            Success = true,
+            Message = CreateEmployeeAccountMessage
         };
     }
 }

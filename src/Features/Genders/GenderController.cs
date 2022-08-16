@@ -13,5 +13,5 @@ public class GenderController : ControllerBase
 
     [HttpGet]
     public async Task<IEnumerable<GenderGetDto>> Get()
-        => await _repository.GetGenders();
+        => await _repository.GetGendersAsync();
 }

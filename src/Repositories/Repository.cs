@@ -5,6 +5,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : ModelBas
     private readonly AppDbContext _context;
     private readonly DbSet<TEntity> _entities;
 
+    protected AppDbContext Context => _context;
+    protected DbSet<TEntity> Entities => _entities;
+
     public Repository(AppDbContext context)
     {
         _context = context;
@@ -18,21 +21,17 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : ModelBas
         => await _entities.Where(entity => entity.Id == id).FirstOrDefaultAsync();
 
     public virtual void Insert(TEntity entity)
-    {
-        entity.CreatedAt = DateTime.UtcNow;
-        entity.UpdatedAt = entity.CreatedAt;
-        _entities.Add(entity);
-    }
+        => _entities.Add(entity);
 
     public virtual void Update(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
     {
-        entity.UpdatedAt = DateTime.UtcNow;
-        var db = _context.Entry(entity);
+        var entityEntry = _context.Entry(entity);
         foreach (var property in properties)
-        {
-            db.Property(property).IsModified = true;
-        }
+            entityEntry.Property(property).IsModified = true;
     }
+    
+    public virtual void Update(TEntity entity)
+        => _entities.Update(entity);
 
     public virtual void Delete(TEntity entity)
         => _entities.Remove(entity);

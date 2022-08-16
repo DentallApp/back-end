@@ -2,6 +2,7 @@
 
 public static class GenderMapper
 {
+    [Decompile]
     public static GenderGetDto MapToGenderGetDto(this Gender gender)
         => new()
         {

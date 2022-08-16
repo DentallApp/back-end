@@ -2,8 +2,8 @@ namespace DentallApp.Configuration;
 
 public class AppSettings
 {
-    [EnvKey("BASE_URL")]
-    public string BaseUrl { get; set; }
+    public const string MaxDateInDateInput = "MAX_DATE_IN_DATE_INPUT";
+    public const string DentalServicesImagesPath = "DENTAL_SERVICES_IMAGES_PATH";
 
     [EnvKey("CONNECTION_STRING")]
     public string ConnectionString { get; set; }
@@ -19,6 +19,15 @@ public class AppSettings
 
     [EnvKey("EMAIL_VERIFICATION_TOKEN_EXPIRES")]
     public double EmailVerificationTokenExpires { get; set; }
+
+    [EnvKey("EMAIL_VERIFICATION_URL")]
+    public string EmailVerificationUrl { get; set; }
+
+    [EnvKey("PASSWORD_RESET_TOKEN_EXPIRES")]
+    public double PasswordResetTokenExpires { get; set; }
+
+    [EnvKey("PASSWORD_RESET_URL")]
+    public string PasswordResetUrl { get; set; }
 
     [EnvKey("REFRESH_TOKEN_EXPIRES")]
     public double RefreshTokenExpires { get; set; }

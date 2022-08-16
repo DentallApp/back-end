@@ -3,8 +3,10 @@
 public interface IUnitOfWork
 {
     Task<int> SaveChangesAsync();
-    Task Rollback();
+    Task RollbackAsync();
     IUserRepository UserRepository { get; }
     IUserRoleRepository UserRoleRepository { get; }
     IPersonRepository PersonRepository { get; }
+    IDependentRepository DependentRepository { get; }
+    IEmployeeRepository EmployeeRepository { get; }
 }

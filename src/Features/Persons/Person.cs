@@ -11,4 +11,10 @@ public class Person : ModelBase
     public int? GenderId { get; set; }
     public Gender Gender { get; set; }
     public User User { get; set; }
+    public Employee Employee { get; set; }
+    public Dependent Dependent { get; set; }
+
+    [Decompile]
+    [NotMapped]
+    public string FullName => Names + " " + LastNames;
 }

@@ -19,7 +19,7 @@ public class BotController : ControllerBase
 
     [HttpPost]
     [HttpGet]
-    public async Task PostAsync()
+    public async Task Post()
     {
         // Delegate the processing of the HTTP POST to the adapter.
         // The adapter will invoke the bot.

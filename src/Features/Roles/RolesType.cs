@@ -19,3 +19,9 @@ public class RolesName
     public const string Admin             = "Administrador";
     public const string Superadmin        = "Superadministrador";
 }
+
+public class NumberRoles
+{
+    public const int MinRole = 1;
+    public const int MaxRole = 3;
+}

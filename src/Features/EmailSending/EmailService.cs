@@ -28,9 +28,17 @@ public class EmailService : IEmailService
 
     public async Task<bool> SendEmailForVerificationAsync(string recipientEmail, string recipientName, string token)
     {
-        var confirmationLink = $"{_settings.BaseUrl}?token={token}";
+        var confirmationLink = $"{_settings.EmailVerificationUrl}?token={token}";
         var subject = $"Bienvenido {recipientName}!";
-        var body = await _emailTemplate.LoadTemplateForEmailVerification(confirmationLink, recipientName);
+        var body = await _emailTemplate.LoadTemplateForEmailVerificationAsync(confirmationLink, recipientName);
+        return await SendEmailAsync(recipientEmail, recipientName, subject, body);
+    }
+
+    public async Task<bool> SendEmailForResetPasswordAsync(string recipientEmail, string recipientName, string token)
+    {
+        var confirmationLink = $"{_settings.PasswordResetUrl}?token={token}";
+        var subject = $"Restablecimiento de contraseña";
+        var body = await _emailTemplate.LoadTemplateForResetPasswordAsync(confirmationLink, recipientName);
         return await SendEmailAsync(recipientEmail, recipientName, subject, body);
     }
 }

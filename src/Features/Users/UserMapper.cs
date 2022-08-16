@@ -10,7 +10,9 @@ public static class UserMapper
         userProfile.CellPhone   = user.Person.CellPhone;
         userProfile.DateBirth   = user.Person.DateBirth;
         userProfile.GenderName  = user.Person.Gender.Name;
+        userProfile.GenderId    = user.Person.GenderId;
         userProfile.UserId      = user.Id;
+        userProfile.PersonId    = user.PersonId;
         userProfile.UserName    = user.UserName;
         userProfile.Roles       = user.UserRoles.Select(role => role.Role.Name);
         return userProfile;
@@ -23,23 +25,28 @@ public static class UserMapper
     public static UserLoginDto MapToUserLoginDto(this User user)
         => MapToFullUserProfileDto(new UserLoginDto(), user) as UserLoginDto;
 
+    public static EmployeeLoginDto MapToEmployeeLoginDto(this User user)
+        => MapToFullUserProfileDto(new EmployeeLoginDto(), user) as EmployeeLoginDto;
+
     public static UserClaims MapToUserClaims(this UserLoginDto userLoginDto)
         => new()
         {
             UserId = userLoginDto.UserId,
+            PersonId = userLoginDto.PersonId,
             UserName = userLoginDto.UserName,
-            FullName = $"{userLoginDto.LastNames} {userLoginDto.Names}",
+            FullName = userLoginDto.FullName,
             Roles = userLoginDto.Roles
         };
 
-    public static UserClaims MapToUserClaims(this UserInsertDto userInsertDto, int userId)
-    => new()
-    {
-        UserId = userId,
-        UserName = userInsertDto.UserName,
-        FullName = $"{userInsertDto.LastNames} {userInsertDto.Names}",
-        Roles = new List<string> { RolesName.Unverified }
-    };
+    public static UserClaims MapToUserClaims(this UserInsertDto userInsertDto, User user)
+        => new()
+        {
+            UserId = user.Id,
+            PersonId = user.PersonId,
+            UserName = userInsertDto.UserName,
+            FullName = userInsertDto.FullName,
+            Roles = new List<string> { RolesName.Unverified }
+        };
 
     public static Person MapToPerson(this UserInsertDto userInsertDto)
         => new()
@@ -54,9 +61,28 @@ public static class UserMapper
         };
 
     public static User MapToUser(this UserInsertDto userInsertDto)
-    => new()
+        => new()
+        {
+            UserName = userInsertDto.UserName,
+            Password = userInsertDto.Password
+        };
+
+    [Decompile]
+    public static UserResetPasswordDto MapToUserResetPasswordDto(this User user)
+        => new()
+        {
+            UserId = user.Id,
+            UserName = user.UserName,
+            Name = user.Person.Names,
+            Password = user.Password
+        };
+
+    public static void MapToPerson(this UserUpdateDto userUpdateDto, Person person)
     {
-        UserName = userInsertDto.UserName,
-        Password = userInsertDto.Password
-    };
+        person.Names = userUpdateDto.Names;
+        person.LastNames = userUpdateDto.LastNames;
+        person.CellPhone = userUpdateDto.CellPhone;
+        person.DateBirth = userUpdateDto.DateBirth;
+        person.GenderId = userUpdateDto.GenderId;
+    }
 }

@@ -2,30 +2,32 @@
 
 public class UserRepository : Repository<User>, IUserRepository
 {
-    private readonly AppDbContext _context;
+    public UserRepository(AppDbContext context) : base(context) { }
 
-    public UserRepository(AppDbContext context) : base(context)
+    public async Task<User> GetFullUserProfileAsync(string username)
+        => await Context.Set<User>()
+                        .Include(user => user.Person)
+                           .ThenInclude(person => person.Gender)
+                        .Include(user => user.UserRoles)
+                           .ThenInclude(user => user.Role)
+                        .Where(user => user.UserName == username)
+                        .FirstOrDefaultAsync();
+
+    public async Task<User> GetUserByNameAsync(string username)
+        => await Context.Set<User>()
+                        .Where(user => user.UserName == username)
+                        .FirstOrDefaultAsync();
+
+    public async Task<bool> UserExistsAsync(string username)
     {
-        _context = context;
-    }
-
-    public async Task<User> GetFullUserProfile(string username)
-        => await _context.Set<User>()
-                         .Include(user => user.Person)
-                            .ThenInclude(person => person.Gender)
-                         .Include(user => user.UserRoles)
-                            .ThenInclude(user => user.Role)
-                         .Where(user => user.UserName == username)
-                         .FirstOrDefaultAsync();
-
-    public async Task<User> GetUserByName(string username)
-        => await _context.Set<User>()
-                         .Where(user => user.UserName == username)
-                         .FirstOrDefaultAsync();
-
-    public async Task<bool> UserExists(string username)
-    {
-        var user = await GetUserByName(username);
+        var user = await GetUserByNameAsync(username);
         return user is not null;
     }
+
+    public async Task<UserResetPasswordDto> GetUserForResetPasswordAsync(string username)
+        => await Context.Set<User>()
+                        .Include(user => user.Person)
+                        .Where(user => user.UserName == username)
+                        .Select(user => user.MapToUserResetPasswordDto())
+                        .FirstOrDefaultAsync();
 }

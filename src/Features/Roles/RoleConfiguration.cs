@@ -4,48 +4,36 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {
-        builder.HasData(
+        builder.AddSeedData(
             new Role
             {
                 Id = RolesId.Unverified,
-                Name = RolesName.Unverified,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = RolesName.Unverified
             },
             new Role
             {
                 Id = RolesId.BasicUser,
-                Name = RolesName.BasicUser,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = RolesName.BasicUser
             },
             new Role
             {
                 Id = RolesId.Secretary,
-                Name = RolesName.Secretary,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = RolesName.Secretary
             },
             new Role
             {
                 Id = RolesId.Dentist,
-                Name = RolesName.Dentist,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = RolesName.Dentist
             },
             new Role
             {
                 Id = RolesId.Admin,
-                Name = RolesName.Admin,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = RolesName.Admin
             },
             new Role
             {
                 Id = RolesId.Superadmin,
-                Name = RolesName.Superadmin,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                Name = RolesName.Superadmin
             }
         );
     }

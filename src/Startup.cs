@@ -32,13 +32,7 @@ public class Startup
         });
 
         services.AddSendGrid(options => options.ApiKey = settings.SendGridApiKey);
-        services.AddSwaggerGen(options =>
-        {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "DentallApi", Version = "v1" });
-            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            options.IncludeXmlComments(xmlPath);
-        });
+        services.AddSwagger();
 
         services.AddAuthentication(options =>
         {
@@ -61,15 +55,7 @@ public class Startup
         });
 
         services.AddAuthorization();
-
-        // Create the Bot Framework Authentication to be used with the Bot Adapter.
-        services.AddSingleton<BotFrameworkAuthentication, ConfigurationBotFrameworkAuthentication>();
-
-        // Create the Bot Adapter with error handling enabled.
-        services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
-
-        // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-        services.AddTransient<IBot, EmptyBot>();
+        services.AddBotServices();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
