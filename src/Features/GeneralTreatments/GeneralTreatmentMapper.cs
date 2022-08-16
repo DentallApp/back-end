@@ -28,7 +28,7 @@ public static class GeneralTreatmentMapper
             Name = treatmentInsertDto.Name,
             Description = treatmentInsertDto.Description,
             Duration = treatmentInsertDto.Duration,
-            ImageUrl = treatmentInsertDto.Image.GetNewPathForDentalServiceImage()
+            ImageUrl = treatmentInsertDto.Image.GetRandomImageName()
         };
 
     public static void MapToGeneralTreatment(this GeneralTreatmentUpdateDto treatmentUpdateDto, GeneralTreatment treatment)
@@ -36,6 +36,6 @@ public static class GeneralTreatmentMapper
         treatment.Name = treatmentUpdateDto.Name;
         treatment.Description = treatmentUpdateDto.Description;
         treatment.Duration = treatmentUpdateDto.Duration;
-        treatment.ImageUrl = treatmentUpdateDto.Image is null ? treatment.ImageUrl : treatmentUpdateDto.Image.GetNewPathForDentalServiceImage();
+        treatment.ImageUrl = treatmentUpdateDto.Image is null ? treatment.ImageUrl : treatmentUpdateDto.Image.GetRandomImageName();
     }
 }

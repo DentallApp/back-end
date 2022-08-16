@@ -14,9 +14,6 @@ public static class FormFileExtensions
     public static string GetExtension(this IFormFile file)
         => Path.GetExtension(file.FileName);
 
-    private static string GetRandomImageName(this IFormFile file)
+    public static string GetRandomImageName(this IFormFile file)
         => $"{file.GetFileNameWithoutExtension()}_{Guid.NewGuid()}{file.GetExtension()}";
-
-    public static string GetNewPathForDentalServiceImage(this IFormFile file)
-        => Path.Combine(EnvReader.Instance[AppSettings.DentalServicesImagesPath], file.GetRandomImageName());
 }
