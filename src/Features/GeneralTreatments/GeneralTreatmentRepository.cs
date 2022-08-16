@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.GeneralTreatments;
 
-public class GeneralTreatmentRepository : Repository<GeneralTreatment>, IGeneralTreatmentRepository
+public class GeneralTreatmentRepository : SoftDeleteRepository<GeneralTreatment>, IGeneralTreatmentRepository
 {
     public GeneralTreatmentRepository(AppDbContext context) : base(context) { }
 

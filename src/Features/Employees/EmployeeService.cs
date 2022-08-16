@@ -26,7 +26,7 @@ public class EmployeeService : IEmployeeService
         if (employee.IsSuperAdmin())
             return new Response(CannotRemoveSuperadminMessage);
 
-        employee.IsDeleted = true;
+        _unitOfWork.EmployeeRepository.Delete(employee);
         await _unitOfWork.SaveChangesAsync();
 
         return new Response
