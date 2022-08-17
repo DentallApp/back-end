@@ -44,6 +44,7 @@ global using DentallApp.DataAccess;
 global using DentallApp.Models;
 global using DentallApp.UnitOfWork;
 global using DentallApp.Repositories;
+global using DentallApp.Validators;
 global using DentallApp.Helpers;
 global using Response = DentallApp.Helpers.Response;
 global using DentallApp.Extensions;
@@ -102,3 +103,5 @@ global using SendGrid.Helpers.Mail;
 global using SendGrid.Extensions.DependencyInjection;
 
 global using DelegateDecompiler;
+global using FileTypeChecker;
+global using FileTypeChecker.Extensions;
