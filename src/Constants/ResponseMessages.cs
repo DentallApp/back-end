@@ -37,4 +37,6 @@ public class ResponseMessages
     public const string CannotRemoveSuperadminMessage = "Lo siento, no se puede eliminar a un SuperAdministrador.";
     public const string CannotEditSuperadminMessage = "Lo siento, no se puede editar los datos de un SuperAdministrador.";
     public const string PermitsNotGrantedMessage = "No tienes permisos para otorgar esos roles.";
+    public const string NotAnImageMessage = "El archivo adjuntado no es una imagen.";
+    public const string UnrecognizableFileMessage = "El archivo está irreconocible. No lo puede reconocer el sistema.";
 }
