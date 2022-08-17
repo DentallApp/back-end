@@ -9,14 +9,14 @@ public class TokenService : ITokenService
         _settings = settings;
     }
 
-    public string CreateJwt(IEnumerable<Claim> claims, DateTime expires, string key)
+    private string CreateJwt(IEnumerable<Claim> claims, DateTime expires, string key)
         => JwtEncoder.Create()
                      .WithSubject(claims)
                      .WithExpires(expires)
                      .WithSigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
                      .Encode();
 
-    public ClaimsPrincipal ValidateJwt(string token, string key)
+    private ClaimsPrincipal ValidateJwt(string token, string key)
         => JwtDecoder.Create()
                      .IgnoreValidateAudience()
                      .IgnoreValidateIssuer()
@@ -57,7 +57,7 @@ public class TokenService : ITokenService
         return CreateJwt(claims, expires, key: passwordHash);
     }
 
-    public IEnumerable<Claim> CreateClaims(UserClaims userClaims)
+    private IEnumerable<Claim> CreateClaims(UserClaims userClaims)
     {
         var claims = new List<Claim>
         {
@@ -73,7 +73,7 @@ public class TokenService : ITokenService
         return claims;
     }
 
-    public IEnumerable<Claim> CreateClaims(EmployeeClaims employeeClaims)
+    private IEnumerable<Claim> CreateClaims(EmployeeClaims employeeClaims)
     {
         var claims = CreateClaims((UserClaims)employeeClaims) as List<Claim>;
         claims.Add(new (CustomClaimsType.EmployeeId, employeeClaims.EmployeeId.ToString()));
