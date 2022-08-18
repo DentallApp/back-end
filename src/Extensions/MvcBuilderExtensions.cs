@@ -13,8 +13,8 @@ public static class MvcBuilderExtensions
                               select new
                               {
                                   state.Key,
-                                  Enumerable = state.Value.Errors.Select(modelError => modelError.ErrorMessage)
-                              }).ToDictionary(x => x.Key, x => x.Enumerable);
+                                  ErrorMessages = state.Value.Errors.Select(modelError => modelError.ErrorMessage)
+                              }).ToDictionary(x => x.Key, x => x.ErrorMessages);
 
                 var result = new Response
                 {
