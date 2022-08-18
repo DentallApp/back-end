@@ -8,10 +8,13 @@ public static class MvcBuilderExtensions
         {
             options.InvalidModelStateResponseFactory = (context) =>
             {
-                var errors = new Dictionary<string, IEnumerable<string>>();
-                foreach (var state in context.ModelState)
-                    if (state.Value.Errors.Count() > 0)
-                        errors.Add(state.Key, state.Value.Errors.Select(modelError => modelError.ErrorMessage));
+                var errors = (from state in context.ModelState
+                              where state.Value.Errors.Count > 0
+                              select new
+                              {
+                                  state.Key,
+                                  Enumerable = state.Value.Errors.Select(modelError => modelError.ErrorMessage)
+                              }).ToDictionary(x => x.Key, x => x.Enumerable);
 
                 var result = new Response
                 {
