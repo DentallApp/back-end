@@ -22,6 +22,7 @@ public class Startup
 
         services.AddHttpClient()
                 .AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
+                .AddCustomInvalidModelStateResponse()
                 .AddNewtonsoftJson();
 
         var cs = settings.ConnectionString;
