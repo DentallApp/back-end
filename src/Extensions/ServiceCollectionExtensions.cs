@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmailVerificationService, EmailVerificationService>()
                 .AddTransient<IEmailTemplateService, EmailTemplateService>()
                 .AddTransient<IEmailService, EmailService>()
+                .AddTransient<ISpecificTreatmentService, SpecificTreatmentService>()
                 .AddTransient<IGeneralTreatmentService, GeneralTreatmentService>()
                 .AddTransient<IPasswordResetService, PasswordResetService>()
                 .AddTransient<IDependentService, DependentService>()
@@ -32,6 +33,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IGenderRepository, GenderRepository>()
                 .AddTransient<IRoleRepository, RoleRepository>()
                 .AddTransient<IOfficeRepository, OfficeRepository>()
+                .AddTransient<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
                 .AddTransient<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
         return services;
