@@ -13,4 +13,9 @@ public class GeneralTreatmentRepository : SoftDeleteRepository<GeneralTreatment>
         => await Context.Set<GeneralTreatment>()
                         .Select(treatment => treatment.MapToGeneralTreatmentShowDto())
                         .ToListAsync();
+
+    public async Task<IEnumerable<GeneralTreatmentGetNameDto>> GetTreatmentsWithNameAsync()
+        => await Context.Set<GeneralTreatment>()
+                        .Select(treatment => treatment.MapToGeneralTreatmentGetNameDto())
+                        .ToListAsync();
 }

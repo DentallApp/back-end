@@ -6,6 +6,8 @@ global using DentallApp.Features.Chatbot.Models;
 global using DentallApp.Features.Chatbot.Handlers;
 global using DentallApp.Features.GeneralTreatments;
 global using DentallApp.Features.GeneralTreatments.DTOs;
+global using DentallApp.Features.SpecificTreatments;
+global using DentallApp.Features.SpecificTreatments.DTOs;
 global using DentallApp.Features.Persons;
 global using DentallApp.Features.Persons.DTOs;
 global using DentallApp.Features.Genders;

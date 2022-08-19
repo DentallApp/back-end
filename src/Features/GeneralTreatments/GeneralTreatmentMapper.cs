@@ -22,6 +22,14 @@ public static class GeneralTreatmentMapper
             Duration = treatment.Duration
         };
 
+    [Decompile]
+    public static GeneralTreatmentGetNameDto MapToGeneralTreatmentGetNameDto(this GeneralTreatment treatment)
+        => new()
+        {
+            Id = treatment.Id,
+            Name = treatment.Name
+        };
+
     public static GeneralTreatment MapToGeneralTreatment(this GeneralTreatmentInsertDto treatmentInsertDto)
         => new()
         {

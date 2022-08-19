@@ -4,4 +4,5 @@ public interface IGeneralTreatmentRepository : ISoftDeleteRepository<GeneralTrea
 {
     Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync();
     Task<IEnumerable<GeneralTreatmentShowDto>> GetTreatmentsWithoutImageUrlAsync();
+    Task<IEnumerable<GeneralTreatmentGetNameDto>> GetTreatmentsWithNameAsync();
 }

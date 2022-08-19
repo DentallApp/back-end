@@ -17,6 +17,9 @@ public class GeneralTreatmentService : IGeneralTreatmentService
     public async Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync()
         => await _repository.GetTreatmentsAsync();
 
+    public async Task<IEnumerable<GeneralTreatmentGetNameDto>> GetTreatmentsWithNameAsync()
+        => await _repository.GetTreatmentsWithNameAsync();
+
     public async Task<Response<GeneralTreatmentGetDto>> GetTreatmentByIdAsync(int id)
     {
         var treatment = await _repository.GetByIdAsync(id);
