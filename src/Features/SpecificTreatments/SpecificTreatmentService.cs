@@ -9,6 +9,9 @@ public class SpecificTreatmentService : ISpecificTreatmentService
         _repository = repository;
     }
 
+    public async Task<IEnumerable<SpecificTreatmentShowDto>> GetSpecificTreatmentsAsync()
+        => await _repository.GetSpecificTreatmentsAsync();
+
     public async Task<IEnumerable<SpecificTreatmentGetDto>> GetSpecificTreatmentsByGeneralTreatmentIdAsync(int generalTreatmentId)
         => await _repository.GetSpecificTreatmentsByGeneralTreatmentIdAsync(generalTreatmentId);
 }

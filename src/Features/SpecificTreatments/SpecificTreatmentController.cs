@@ -15,4 +15,9 @@ public class SpecificTreatmentController : ControllerBase
     [HttpGet("{generalTreatmentId}")]
     public async Task<IEnumerable<SpecificTreatmentGetDto>> Get(int generalTreatmentId)
         => await _service.GetSpecificTreatmentsByGeneralTreatmentIdAsync(generalTreatmentId);
+
+    [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
+    [HttpGet]
+    public async Task<IEnumerable<SpecificTreatmentShowDto>> Get()
+        => await _service.GetSpecificTreatmentsAsync();
 }
