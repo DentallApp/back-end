@@ -19,6 +19,21 @@ public static class SpecificTreatmentMapper
             SpecificTreatmentName = specificTreatment.Name,
             GeneralTreatmentId = specificTreatment.GeneralTreatmentId,
             GeneralTreatmentName = specificTreatment.GeneralTreatment.Name,
-            Price = specificTreatment.Price,
+            Price = specificTreatment.Price
         };
+
+    public static SpecificTreatment MapToSpecificTreatment(this SpecificTreatmentInsertDto treatmentInsertDto)
+        => new()
+        {
+            Name = treatmentInsertDto.Name,
+            GeneralTreatmentId = treatmentInsertDto.GeneralTreatmentId,
+            Price = treatmentInsertDto.Price
+        };
+
+    public static void MapToSpecificTreatment(this SpecificTreatmentUpdateDto treatmentUpdateDto, SpecificTreatment specificTreatment)
+    {
+        specificTreatment.Name = treatmentUpdateDto.Name;
+        specificTreatment.GeneralTreatmentId = treatmentUpdateDto.GeneralTreatmentId;
+        specificTreatment.Price = treatmentUpdateDto.Price;
+    }
 }
