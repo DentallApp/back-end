@@ -11,6 +11,10 @@ public class GeneralTreatmentController : ControllerBase
         _service = service;
     }
 
+    [HttpGet("name")]
+    public async Task<IEnumerable<GeneralTreatmentGetNameDto>> GetTreatmentsWithName()
+        => await _service.GetTreatmentsWithNameAsync();
+
     [HttpGet("edit")]
     public async Task<IEnumerable<GeneralTreatmentShowDto>> GetTreatmentsForEdit()
         => await _service.GetTreatmentsWithoutImageUrlAsync();
