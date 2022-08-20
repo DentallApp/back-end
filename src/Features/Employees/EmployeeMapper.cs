@@ -48,7 +48,9 @@ public static class EmployeeMapper
             DateBirth               = employee.Person.DateBirth,
             GenderName              = employee.Person.Gender.Name,
             GenderId                = employee.Person.Gender.Id,
-            Roles                   = employee.User.UserRoles.Select(role => new RoleGetDto { Id = role.Role.Id, Name = role.Role.Name})
+            Roles                   = employee.User.UserRoles.Select(role => new RoleGetDto { Id = role.Role.Id, Name = role.Role.Name}),
+            Status                  = employee.GetStatusName(),
+            IsDeleted               = employee.IsDeleted
         };
 
     public static void MapToEmployee(this EmployeeUpdateDto employeeUpdateDto, Employee employee)
@@ -65,5 +67,11 @@ public static class EmployeeMapper
         employee.Person.Document    = employeeUpdateDto.Document;
         employee.Person.Email       = employeeUpdateDto.Email;
         employee.User.UserName      = employeeUpdateDto.Email;
+        employee.IsDeleted          = employeeUpdateDto.IsDeleted;
+        if(employeeUpdateDto.IsDeleted)
+        {
+            employee.User.RefreshToken = null;
+            employee.User.RefreshTokenExpiry = null;
+        }
     }
 }

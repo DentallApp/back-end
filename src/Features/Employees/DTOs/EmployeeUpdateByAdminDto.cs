@@ -10,4 +10,5 @@ public class EmployeeUpdateByAdminDto : EmployeeUpdateDto
     [MaxLength(NumberRoles.MaxRole)]
     [MinLength(NumberRoles.MinRole)]
     public IEnumerable<int> Roles { get; set; }
+    public bool IsDeleted { get; set; }
 }
