@@ -12,8 +12,9 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddServices();
-        services.AddRepositories();
+        services.AddServices()
+                .AddRepositories()
+                .AddHelpers();
 
         new EnvLoader().Load();
         var settings = new EnvBinder().Bind<AppSettings>();
