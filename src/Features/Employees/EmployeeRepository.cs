@@ -25,6 +25,7 @@ public class EmployeeRepository : SoftDeleteRepository<Employee>, IEmployeeRepos
                            .ThenInclude(user => user.Role)
                         .Where(employee => employee.Id != currentEmployeeId)
                         .Select(employee => employee.MapToEmployeeGetDto())
+                        .IgnoreQueryFilters()
                         .ToListAsync();
 
     public async Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileByOfficeIdAsync(int currentEmployeeId, int officeId)
@@ -36,6 +37,7 @@ public class EmployeeRepository : SoftDeleteRepository<Employee>, IEmployeeRepos
                            .ThenInclude(user => user.Role)
                         .Where(employee => employee.OfficeId == officeId && employee.Id != currentEmployeeId)
                         .Select(employee => employee.MapToEmployeeGetDto())
+                        .IgnoreQueryFilters()
                         .ToListAsync();
 
     public async Task<Employee> GetDataByIdForCurrentEmployee(int id)
@@ -49,5 +51,6 @@ public class EmployeeRepository : SoftDeleteRepository<Employee>, IEmployeeRepos
                         .Include(employee => employee.Person)
                         .Include(employee => employee.User.UserRoles)
                         .Where(employee => employee.Id == id)
+                        .IgnoreQueryFilters()
                         .FirstOrDefaultAsync();
 }
