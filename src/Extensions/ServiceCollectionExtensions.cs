@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmailService, EmailService>()
                 .AddTransient<ISpecificTreatmentService, SpecificTreatmentService>()
                 .AddTransient<IGeneralTreatmentService, GeneralTreatmentService>()
+                .AddTransient<IProformaInvoiceService, ProformaInvoiceService>()
                 .AddTransient<IPasswordResetService, PasswordResetService>()
                 .AddTransient<IDependentService, DependentService>()
                 .AddTransient<ITokenRefreshService, TokenRefreshService>()
@@ -35,6 +36,14 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IOfficeRepository, OfficeRepository>()
                 .AddTransient<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
                 .AddTransient<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddHelpers(this IServiceCollection services)
+    {
+        services.AddTransient<IHtmlConverter, HtmlConverterIText>()
+                .AddTransient<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>();
 
         return services;
     }

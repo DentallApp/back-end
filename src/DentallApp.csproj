@@ -16,10 +16,12 @@
     <PackageReference Include="EFCore.CustomQueryPreprocessor" Version="1.0.0" />
     <PackageReference Include="EFCore.NamingConventions" Version="5.0.2" />
     <PackageReference Include="File.TypeChecker" Version="3.0.0" />
+    <PackageReference Include="itext7.pdfhtml" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.27" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.16.0" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.16.0" />
+    <PackageReference Include="Scriban" Version="5.5.0" />
     <PackageReference Include="SendGrid.Extensions.DependencyInjection" Version="1.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
     <PackageReference Include="DotEnv.Core" Version="2.2.1" />
@@ -31,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Templates\*.*">
+    <None Update="Templates\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
