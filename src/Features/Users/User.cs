@@ -13,4 +13,5 @@ public class User : ModelBase
     public ICollection<UserRole> UserRoles { get; set; }
     public ICollection<Dependent> Dependents { get; set; }
     public ICollection<Appoinment> Appoinments { get; set; }
+    public ICollection<FavoriteDentist> FavoriteDentists { get; set; }
 }

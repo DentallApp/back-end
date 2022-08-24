@@ -17,6 +17,7 @@ public class AppDbContext : CustomDbContext
     public DbSet<AppoinmentStatus> AppoinmentsStatus { get; set; }
     public DbSet<EmployeeSchedule> EmployeeSchedules { get; set; }
     public DbSet<WeekDay> WeekDays { get; set; }
+    public DbSet<FavoriteDentist> FavoriteDentists { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
