@@ -12,4 +12,5 @@ public class Employee : ModelWithSoftDelete
     public string PostgradeUniversity { get; set; }
     public ICollection<Appoinment> Appoinments { get; set; }
     public ICollection<EmployeeSchedule> EmployeeSchedules { get; set; }
+    public ICollection<FavoriteDentist> FavoriteDentists { get; set; }
 }
