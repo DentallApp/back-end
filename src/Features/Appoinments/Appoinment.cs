@@ -2,8 +2,15 @@
 
 public class Appoinment : ModelBase
 {
+    /// <summary>
+    /// El ID del usuario que agendó la cita.
+    /// </summary>
     public int UserId { get; set; }
     public User User { get; set; }
+
+    /// <summary>
+    /// El ID de la persona que recibirá la atención médica.
+    /// </summary>
     public int PersonId { get; set; }
     public Person Person { get; set; }
     public int DentistId { get; set; }
