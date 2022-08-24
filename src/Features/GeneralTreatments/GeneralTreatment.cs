@@ -7,4 +7,5 @@ public class GeneralTreatment : ModelWithSoftDelete
     public string ImageUrl { get; set; }
     public int Duration { get; set; }
     public ICollection<SpecificTreatment> SpecificTreatments { get; set; }
+    public ICollection<Appoinment> Appoinments { get; set; }
 }

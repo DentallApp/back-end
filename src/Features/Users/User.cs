@@ -12,4 +12,5 @@ public class User : ModelBase
     public Employee Employee { get; set; }
     public ICollection<UserRole> UserRoles { get; set; }
     public ICollection<Dependent> Dependents { get; set; }
+    public ICollection<Appoinment> Appoinments { get; set; }
 }

@@ -42,6 +42,8 @@ global using DentallApp.Features.Offices;
 global using DentallApp.Features.Offices.DTOs;
 global using DentallApp.Features.Appoinments;
 global using DentallApp.Features.AppoinmentsStatus;
+global using DentallApp.Features.EmployeeSchedules;
+global using DentallApp.Features.WeekDays;
 
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;

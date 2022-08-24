@@ -15,6 +15,8 @@ public class AppDbContext : CustomDbContext
     public DbSet<Office> Offices { get; set; }
     public DbSet<Appoinment> Appoinments { get; set; }
     public DbSet<AppoinmentStatus> AppoinmentsStatus { get; set; }
+    public DbSet<EmployeeSchedule> EmployeeSchedules { get; set; }
+    public DbSet<WeekDay> WeekDays { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
@@ -37,5 +39,6 @@ public class AppDbContext : CustomDbContext
         modelBuilder.ApplyConfiguration(new OfficeConfiguration());
         modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         modelBuilder.ApplyConfiguration(new AppoinmentStatusConfiguration());
+        modelBuilder.ApplyConfiguration(new WeekDayConfiguration());
     }
 }

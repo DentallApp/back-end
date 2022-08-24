@@ -13,6 +13,7 @@ public class Person : ModelBase
     public User User { get; set; }
     public Employee Employee { get; set; }
     public Dependent Dependent { get; set; }
+    public ICollection<Appoinment> Appoinments { get; set; }
 
     [Decompile]
     [NotMapped]
