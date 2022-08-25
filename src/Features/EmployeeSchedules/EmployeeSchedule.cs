@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.EmployeeSchedules;
 
-public class EmployeeSchedule : ModelBase
+public class EmployeeSchedule : ModelWithSoftDelete
 {
     public int EmployeeId { get; set; }
     public Employee Employee { get; set; }
@@ -12,5 +12,4 @@ public class EmployeeSchedule : ModelBase
     public TimeSpan? MorningEndHour { get; set; }
     public TimeSpan? AfternoonStartHour { get; set; }
     public TimeSpan? AfternoonEndHour { get; set; }
-    public bool IsAvailable { get; set; }
 }
