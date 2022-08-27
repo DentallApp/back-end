@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmployeeService, EmployeeService>()
                 .AddTransient<IRoleService, RoleService>()
                 .AddTransient<IOfficeService, OfficeService>()
+                .AddTransient<IAppoinmentService, AppoinmentService>()
                 .AddTransient<ITokenService, TokenService>();
 
         return services;
@@ -35,6 +36,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IRoleRepository, RoleRepository>()
                 .AddTransient<IOfficeRepository, OfficeRepository>()
                 .AddTransient<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
+                .AddTransient<IAppoinmentRepository, AppoinmentRepository>()
                 .AddTransient<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
         return services;
