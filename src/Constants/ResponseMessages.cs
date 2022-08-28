@@ -34,6 +34,7 @@ public class ResponseMessages
     public const string PasswordSuccessfullyResetMessage = "La contraseña se ha restablecido con éxito.";
     public const string MissingClaimMessage = "Reclamación (claim) faltante en el token: {0}";
     public const string OfficeNotAssignedMessage = "No puedes gestionar los recursos de una sucursal a la que no ha sido asignada.";
+    public const string AppoinmentNotAssignedMessage = "Esta cita no te pertenece.";
     public const string CannotRemoveSuperadminMessage = "Lo siento, no se puede eliminar a un SuperAdministrador.";
     public const string CannotEditSuperadminMessage = "Lo siento, no se puede editar los datos de un SuperAdministrador.";
     public const string PermitsNotGrantedMessage = "No tienes permisos para otorgar esos roles.";

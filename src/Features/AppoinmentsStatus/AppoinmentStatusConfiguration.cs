@@ -32,8 +32,8 @@ public class AppoinmentStatusConfiguration : IEntityTypeConfiguration<Appoinment
             },
             new AppoinmentStatus
             {
-                Id = 6,
-                Name = "Cancelada"
+                Id = AppoinmentStatusId.Canceled,
+                Name = AppoinmentStatusName.Canceled
             }
         );
     }

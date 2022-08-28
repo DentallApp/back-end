@@ -11,8 +11,26 @@ public class AppoinmentController : ControllerBase
         _appoinmentService = appoinmentService;
     }
 
+    /// <summary>
+    /// Obtiene el historial de citas del usuario básico.
+    /// </summary>
     [AuthorizeByRole(RolesName.BasicUser)]
     [HttpGet("basic-user")]
     public async Task<IEnumerable<AppoinmentGetByBasicUserDto>> GetAppoinmentsByUserId()
         => await _appoinmentService.GetAppoinmentsByUserIdAsync(User.GetUserId());
+
+    /// <summary>
+    /// Permite al usuario básico cancelar su cita agendada.
+    /// </summary>
+    /// <param name="id">El ID de la cita.</param>
+    [AuthorizeByRole(RolesName.BasicUser)]
+    [HttpDelete("{id}/basic-user")]
+    public async Task<ActionResult<Response>> CancelBasicUserAppointment(int id)
+    {
+        var response = await _appoinmentService.CancelBasicUserAppointmentAsync(id, User.GetUserId());
+        if (response.Success)
+            return Ok(response);
+
+        return BadRequest(response);
+    }
 }
