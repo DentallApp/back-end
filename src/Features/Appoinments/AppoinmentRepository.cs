@@ -17,6 +17,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                   join kinship in Context.Set<Kinship>() on dependent.KinshipId equals kinship.Id into kinships
                   from kinship in kinships.DefaultIfEmpty()
                   where appoinment.UserId == userId
+                  orderby appoinment.CreatedAt descending
                   select new AppoinmentGetByBasicUserDto
                   {
                       AppoinmentId      = appoinment.Id,
