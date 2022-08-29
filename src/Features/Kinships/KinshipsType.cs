@@ -9,6 +9,7 @@ public class KinshipsId
 
 public class KinshipsName
 {
+    public const string Default = "Titular";
     public const string Spouse = "Esposo/a";
     public const string Child  = "Hijo/a";
     public const string Other  = "Otros";
