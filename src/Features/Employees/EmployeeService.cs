@@ -43,7 +43,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Response> EditProfileByCurrentEmployeeAsync(int id, EmployeeUpdateDto employeeUpdateDto)
     {
-        var employee = await _unitOfWork.EmployeeRepository.GetDataByIdForCurrentEmployee(id);
+        var employee = await _unitOfWork.EmployeeRepository.GetDataByIdForCurrentEmployeeAsync(id);
         if (employee is null)
             return new Response(EmployeeNotFoundMessage);
 
@@ -59,7 +59,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Response> EditProfileByAdminAsync(int employeeId, ClaimsPrincipal currentEmployee, EmployeeUpdateByAdminDto employeeUpdateDto)
     {
-        var employee = await _unitOfWork.EmployeeRepository.GetDataByIdForAdmin(employeeId);
+        var employee = await _unitOfWork.EmployeeRepository.GetDataByIdForAdminAsync(employeeId);
         if (employee is null)
             return new Response(EmployeeNotFoundMessage);
 
