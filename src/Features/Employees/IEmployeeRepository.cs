@@ -8,4 +8,6 @@ public interface IEmployeeRepository : ISoftDeleteRepository<Employee>
     Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileByOfficeIdAsync(int currentEmployeeId, int officeId);
     Task<Employee> GetDataByIdForCurrentEmployee(int id);
     Task<Employee> GetDataByIdForAdmin(int id);
+    Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsAsync();
+    Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId);
 }
