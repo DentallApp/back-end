@@ -80,7 +80,6 @@ public static class EmployeeMapper
         => new()
         {
             EmployeeId = employee.Id,
-            FullName   = person.FullName,
-            OfficeId   = employee.OfficeId
+            FullName   = person.FullName
         };
 }

@@ -6,8 +6,6 @@ public class EmployeeSchedule : ModelWithSoftDelete
     public Employee Employee { get; set; }
     public int WeekDayId { get; set; }
     public WeekDay WeekDay { get; set; }
-    public int OfficeId { get; set; }
-    public Office Office { get; set; }
     public TimeSpan? MorningStartHour { get; set; }
     public TimeSpan? MorningEndHour { get; set; }
     public TimeSpan? AfternoonStartHour { get; set; }

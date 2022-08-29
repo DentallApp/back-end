@@ -42,5 +42,6 @@ public class AppDbContext : CustomDbContext
         modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         modelBuilder.ApplyConfiguration(new AppoinmentStatusConfiguration());
         modelBuilder.ApplyConfiguration(new WeekDayConfiguration());
+        modelBuilder.ApplyConfiguration(new EmployeeScheduleConfiguration());
     }
 }
