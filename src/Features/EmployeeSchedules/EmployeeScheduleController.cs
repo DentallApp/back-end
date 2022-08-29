@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.EmployeeSchedules;
 
-[AuthorizeByRole(RolesName.Secretary, RolesName.Admin, RolesName.Superadmin)]
+[AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
 [Route("employee-schedule")]
 [ApiController]
 public class EmployeeScheduleController : ControllerBase
@@ -17,7 +17,7 @@ public class EmployeeScheduleController : ControllerBase
         => await _employeeScheduleService.GetEmployeeSchedulesAsync();
 
     [HttpPost]
-    public async Task<ActionResult<Response>> Post(EmployeeScheduleInsertDto employeeScheduleDto)
+    public async Task<ActionResult<Response>> Post([FromBody]EmployeeScheduleInsertDto employeeScheduleDto)
     {
         var response = await _employeeScheduleService.CreateEmployeeScheduleAsync(employeeScheduleDto);
         if (response.Success)
@@ -27,7 +27,7 @@ public class EmployeeScheduleController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Put(int id, EmployeeScheduleUpdateDto employeeScheduleDto)
+    public async Task<ActionResult<Response>> Put(int id, [FromBody]EmployeeScheduleUpdateDto employeeScheduleDto)
     {
         var response = await _employeeScheduleService.UpdateEmployeeScheduleAsync(id, employeeScheduleDto);
         if (response.Success)

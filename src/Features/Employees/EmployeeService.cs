@@ -14,10 +14,8 @@ public class EmployeeService : IEmployeeService
                ? _unitOfWork.EmployeeRepository.GetFullEmployeesProfileByOfficeIdAsync(currentEmployee.GetEmployeeId(), currentEmployee.GetOfficeId())
                : _unitOfWork.EmployeeRepository.GetFullEmployeesProfileAsync(currentEmployee.GetEmployeeId());
 
-    public Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsAsync(ClaimsPrincipal currentEmployee)
-        => currentEmployee.IsSuperAdmin()
-              ? _unitOfWork.EmployeeRepository.GetDentistsAsync() :
-                _unitOfWork.EmployeeRepository.GetDentistsByOfficeIdAsync(currentEmployee.GetOfficeId());
+    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId)
+        => await _unitOfWork.EmployeeRepository.GetDentistsByOfficeIdAsync(officeId);
 
     public async Task<Response> RemoveEmployeeAsync(int id, ClaimsPrincipal currentEmployee)
     {
