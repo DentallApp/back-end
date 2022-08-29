@@ -20,6 +20,9 @@ public static class ClaimsPrincipalExtensions
     public static bool IsNotInOffice(this ClaimsPrincipal claims, int officeId)
         => claims.GetOfficeId() != officeId;
 
+    public static bool IsSuperAdmin(this ClaimsPrincipal claims)
+        => claims.IsInRole(RolesName.Superadmin);
+
     public static bool IsAdmin(this ClaimsPrincipal claims)
         => claims.IsInRole(RolesName.Admin);
 

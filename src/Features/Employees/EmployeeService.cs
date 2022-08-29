@@ -14,6 +14,9 @@ public class EmployeeService : IEmployeeService
                ? _unitOfWork.EmployeeRepository.GetFullEmployeesProfileByOfficeIdAsync(currentEmployee.GetEmployeeId(), currentEmployee.GetOfficeId())
                : _unitOfWork.EmployeeRepository.GetFullEmployeesProfileAsync(currentEmployee.GetEmployeeId());
 
+    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId)
+        => await _unitOfWork.EmployeeRepository.GetDentistsByOfficeIdAsync(officeId);
+
     public async Task<Response> RemoveEmployeeAsync(int id, ClaimsPrincipal currentEmployee)
     {
         var employee = await _unitOfWork.EmployeeRepository.GetEmployeeByIdAsync(id);
@@ -38,7 +41,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Response> EditProfileByCurrentEmployeeAsync(int id, EmployeeUpdateDto employeeUpdateDto)
     {
-        var employee = await _unitOfWork.EmployeeRepository.GetDataByIdForCurrentEmployee(id);
+        var employee = await _unitOfWork.EmployeeRepository.GetDataByIdForCurrentEmployeeAsync(id);
         if (employee is null)
             return new Response(EmployeeNotFoundMessage);
 
@@ -54,7 +57,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Response> EditProfileByAdminAsync(int employeeId, ClaimsPrincipal currentEmployee, EmployeeUpdateByAdminDto employeeUpdateDto)
     {
-        var employee = await _unitOfWork.EmployeeRepository.GetDataByIdForAdmin(employeeId);
+        var employee = await _unitOfWork.EmployeeRepository.GetDataByIdForAdminAsync(employeeId);
         if (employee is null)
             return new Response(EmployeeNotFoundMessage);
 

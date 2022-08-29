@@ -54,4 +54,9 @@ public class EmployeeController : ControllerBase
 
         return BadRequest(response);
     }
+
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
+    [HttpGet("dentist")]
+    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentists()
+        => await _employeeService.GetDentistsByOfficeIdAsync(User.GetOfficeId());
 }

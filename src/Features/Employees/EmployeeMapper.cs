@@ -74,4 +74,12 @@ public static class EmployeeMapper
             employee.User.RefreshTokenExpiry = null;
         }
     }
+
+    [Decompile]
+    public static EmployeeGetByDentistDto MapToEmployeeGetByDentistDto(this Employee employee, Person person)
+        => new()
+        {
+            EmployeeId = employee.Id,
+            FullName   = person.FullName
+        };
 }
