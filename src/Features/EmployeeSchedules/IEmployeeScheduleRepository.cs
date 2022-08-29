@@ -2,5 +2,5 @@
 
 public interface IEmployeeScheduleRepository : ISoftDeleteRepository<EmployeeSchedule>
 {
-    Task<IEnumerable<EmployeeScheduleGetDto>> GetEmployeeSchedulesAsync();
+    Task<IEnumerable<EmployeeScheduleGetDto>> GetEmployeeScheduleByEmployeeIdAsync(int employeeId);
 }

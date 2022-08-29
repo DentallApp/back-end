@@ -12,9 +12,9 @@ public class EmployeeScheduleController : ControllerBase
         _employeeScheduleService = employeeScheduleService;
     }
 
-    [HttpGet]
-    public async Task<IEnumerable<EmployeeScheduleGetDto>> Get()
-        => await _employeeScheduleService.GetEmployeeSchedulesAsync();
+    [HttpGet("{employeeId}")]
+    public async Task<IEnumerable<EmployeeScheduleGetDto>> GetByEmployeeId(int employeeId)
+        => await _employeeScheduleService.GetEmployeeScheduleByEmployeeIdAsync(employeeId);
 
     [HttpPost]
     public async Task<ActionResult<Response>> Post([FromBody]EmployeeScheduleInsertDto employeeScheduleDto)
