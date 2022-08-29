@@ -49,6 +49,7 @@ public class TokenRefreshService : ITokenRefreshService
             return new Response(HasNoRefreshTokenMessage);
 
         user.RefreshToken = null;
+        user.RefreshTokenExpiry = null;
         await _userRepository.SaveAsync();
         return new Response
         {
