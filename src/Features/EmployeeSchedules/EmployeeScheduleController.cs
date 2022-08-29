@@ -26,10 +26,10 @@ public class EmployeeScheduleController : ControllerBase
         return BadRequest(response);
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Put(int id, [FromBody]EmployeeScheduleUpdateDto employeeScheduleDto)
+    [HttpPut("{scheduleId}")]
+    public async Task<ActionResult<Response>> Put(int scheduleId, [FromBody]EmployeeScheduleUpdateDto employeeScheduleDto)
     {
-        var response = await _employeeScheduleService.UpdateEmployeeScheduleAsync(id, employeeScheduleDto);
+        var response = await _employeeScheduleService.UpdateEmployeeScheduleAsync(scheduleId, employeeScheduleDto);
         if (response.Success)
             return Ok(response);
 

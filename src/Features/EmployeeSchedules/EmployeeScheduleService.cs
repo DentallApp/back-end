@@ -27,7 +27,7 @@ public class EmployeeScheduleService : IEmployeeScheduleService
 
     public async Task<Response> UpdateEmployeeScheduleAsync(int scheduleId, EmployeeScheduleUpdateDto employeeScheduleDto)
     {
-        var employeeSchedule = await _employeeScheduleRepository.GetByIdAsync(scheduleId);
+        var employeeSchedule = await _employeeScheduleRepository.GetEmployeeScheduleByIdAsync(scheduleId);
         if (employeeSchedule is null)
             return new Response(ResourceNotFoundMessage);
 

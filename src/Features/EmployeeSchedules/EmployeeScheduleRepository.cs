@@ -11,4 +11,10 @@ public class EmployeeScheduleRepository : SoftDeleteRepository<EmployeeSchedule>
                         .Select(employeeSchedule => employeeSchedule.MapToEmployeeScheduleGetDto())
                         .IgnoreQueryFilters()
                         .ToListAsync();
+
+    public async Task<EmployeeSchedule> GetEmployeeScheduleByIdAsync(int scheduleId)
+        => await Context.Set<EmployeeSchedule>()
+                        .Where(employeeSchedule => employeeSchedule.Id == scheduleId)
+                        .IgnoreQueryFilters()
+                        .FirstOrDefaultAsync();
 }
