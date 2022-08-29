@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmployeeRepository, EmployeeRepository>()
                 .AddTransient<IKinshipRepository, KinshipRepository>()
                 .AddTransient<IGenderRepository, GenderRepository>()
+                .AddTransient<IAppoinmentStatusRepository, AppoinmentStatusRepository>()
                 .AddTransient<IRoleRepository, RoleRepository>()
                 .AddTransient<IOfficeRepository, OfficeRepository>()
                 .AddTransient<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
