@@ -69,16 +69,10 @@ public class EmployeeService : IEmployeeService
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employeeToEdit.OfficeId))
             return new Response(OfficeNotAssignedMessage);
 
-        if (currentEmployee.HasNotPermissions(employeeUpdateDto.Roles))
+        if (currentEmployee.HasNotPermissions(employeeUpdateDto.Roles, employeeToEdit.Id))
             return new Response(PermitsNotGrantedMessage);
 
-        // Esta condición se utiliza en caso que el Superadmin desee editar su propio perfil.
-        // De esta manera se evita eliminar el rol de superadmin.
-        if (currentEmployee.IsSuperAdmin() && currentEmployee.GetEmployeeId() == employeeToEdit.Id)
-            employeeUpdateDto.Roles.Add(RolesId.Superadmin);
-
         employeeUpdateDto.MapToEmployee(employeeToEdit);
-
 
         var userRoles = employeeToEdit.User.UserRoles.OrderBy(userRole => userRole.RoleId);
         var rolesId   = employeeUpdateDto.Roles
