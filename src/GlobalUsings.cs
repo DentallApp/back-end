@@ -48,6 +48,7 @@ global using DentallApp.Features.EmployeeSchedules;
 global using DentallApp.Features.EmployeeSchedules.DTOs;
 global using DentallApp.Features.WeekDays;
 global using DentallApp.Features.FavoriteDentists;
+global using DentallApp.Features.FavoriteDentists.DTOs;
 global using DentallApp.Features.OfficeSchedules;
 
 global using DentallApp.Configuration;
