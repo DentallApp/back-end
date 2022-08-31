@@ -16,14 +16,13 @@ public class EmployeeRepository : SoftDeleteRepository<Employee>, IEmployeeRepos
                         .Where(employee => employee.UserId == userId)
                         .FirstOrDefaultAsync();
 
-    public async Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileAsync(int currentEmployeeId)
+    public async Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileAsync()
         => await Context.Set<Employee>()
                         .Include(employee => employee.Person)
                            .ThenInclude(person => person.Gender)
                         .Include(employee => employee.Office)
                         .Include(employee => employee.User.UserRoles)
                            .ThenInclude(user => user.Role)
-                        .Where(employee => employee.Id != currentEmployeeId)
                         .Select(employee => employee.MapToEmployeeGetDto())
                         .IgnoreQueryFilters()
                         .ToListAsync();

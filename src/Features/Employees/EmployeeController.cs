@@ -16,7 +16,7 @@ public class EmployeeController : ControllerBase
     public async Task<ActionResult<Response>> Delete(int id)
     {
         if (id == User.GetEmployeeId())
-            return Unauthorized();
+            return BadRequest(new Response(CannotRemoveYourOwnProfileMessage));
 
         var response = await _employeeService.RemoveEmployeeAsync(id, User);
         if (response.Success)
@@ -45,8 +45,8 @@ public class EmployeeController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<Response>> Put(int id, [FromBody]EmployeeUpdateByAdminDto employeeUpdateDto)
     {
-        if (id == User.GetEmployeeId())
-            return Unauthorized();
+        if (User.IsAdmin() && id == User.GetEmployeeId())
+            return BadRequest(new Response(CannotEditYourOwnProfileMessage));
 
         var response = await _employeeService.EditProfileByAdminAsync(id, User, employeeUpdateDto);
         if (response.Success)

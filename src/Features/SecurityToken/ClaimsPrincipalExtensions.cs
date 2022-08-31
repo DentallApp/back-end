@@ -27,15 +27,27 @@ public static class ClaimsPrincipalExtensions
         => claims.IsInRole(RolesName.Admin);
 
     /// <summary>
-    /// Checks if the admin, or superadmin has not permissions to grant the roles.
+    /// Compruebe si el administrador o superadministrador no tiene permisos para otorgar los nuevos roles.
     /// </summary>
-    public static bool HasNotPermissions(this ClaimsPrincipal claims, IEnumerable<int> rolesId)
+    /// <param name="currentEmployee">El empleado actual al que se desea realizar la validación.</param>
+    /// <param name="rolesId">Un conjunto de nuevos roles a otorgar.</param>
+    /// <param name="employeeId">El ID del empleado al que se desea otorgar el nuevo rol.</param>
+    /// <returns><c>true</c> si el administrador o superadministrador no tiene permisos, de lo contrario <c>false</c>.</returns>
+    public static bool HasNotPermissions(this ClaimsPrincipal currentEmployee, IEnumerable<int> rolesId, int? employeeId = null)
     {
-        if(claims.IsInRole(RolesName.Admin))
+        if (currentEmployee.IsInRole(RolesName.Admin))
             return rolesId.Where(roleId => roleId < RolesId.Secretary || roleId > RolesId.Dentist).Count() > 0;
 
-        else if(claims.IsInRole(RolesName.Superadmin))
+        else if (currentEmployee.IsInRole(RolesName.Superadmin))
+        {
+            if(employeeId == currentEmployee.GetEmployeeId())
+                return rolesId.Where(roleId => 
+                                     (roleId != RolesId.Superadmin) && 
+                                     (roleId < RolesId.Secretary || roleId > RolesId.Admin))
+                              .Count() > 0;
+            
             return rolesId.Where(roleId => roleId < RolesId.Secretary || roleId > RolesId.Admin).Count() > 0;
+        }
 
         return false;
     }

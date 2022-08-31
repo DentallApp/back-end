@@ -8,21 +8,21 @@ public class UserRoleRepository : Repository<UserRole>, IUserRoleRepository
     {
         if (currentUserRoles.Count() == newRoles.Count())
         {
-            currentUserRoles.Zip(newRoles, (userRole, roleId) =>
+            currentUserRoles.Zip(newRoles, (currentUserRole, newRoleId) =>
             {
-                userRole.RoleId = roleId;
-                return userRole;
+                currentUserRole.RoleId = newRoleId;
+                return currentUserRole;
             }).ToList();
         }
         else
         {
-            foreach (var userRole in currentUserRoles)
-                if (!newRoles.Contains(userRole.RoleId))
-                    Delete(userRole);
+            foreach (UserRole currentUserRole in currentUserRoles)
+                if (!newRoles.Contains(currentUserRole.RoleId))
+                    Delete(currentUserRole);
 
-            foreach (var roleId in newRoles)
-                if (!currentUserRoles.Any(userRole => userRole.RoleId == roleId))
-                    Insert(new UserRole { UserId = userId, RoleId = roleId });
+            foreach (int newRoleId in newRoles)
+                if (!currentUserRoles.Any(currentUserRole => currentUserRole.RoleId == newRoleId))
+                    Insert(new UserRole { UserId = userId, RoleId = newRoleId });
         }
     }
 }

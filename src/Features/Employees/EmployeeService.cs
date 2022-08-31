@@ -12,7 +12,7 @@ public class EmployeeService : IEmployeeService
     public Task<IEnumerable<EmployeeGetDto>> GetEmployeesAsync(ClaimsPrincipal currentEmployee)
         =>  currentEmployee.IsAdmin() 
                ? _unitOfWork.EmployeeRepository.GetFullEmployeesProfileByOfficeIdAsync(currentEmployee.GetEmployeeId(), currentEmployee.GetOfficeId())
-               : _unitOfWork.EmployeeRepository.GetFullEmployeesProfileAsync(currentEmployee.GetEmployeeId());
+               : _unitOfWork.EmployeeRepository.GetFullEmployeesProfileAsync();
 
     public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId)
         => await _unitOfWork.EmployeeRepository.GetDentistsByOfficeIdAsync(officeId);
@@ -57,27 +57,28 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Response> EditProfileByAdminAsync(int employeeId, ClaimsPrincipal currentEmployee, EmployeeUpdateByAdminDto employeeUpdateDto)
     {
-        var employee = await _unitOfWork.EmployeeRepository.GetDataByIdForAdminAsync(employeeId);
-        if (employee is null)
+        var employeeToEdit = await _unitOfWork.EmployeeRepository.GetDataByIdForAdminAsync(employeeId);
+        if (employeeToEdit is null)
             return new Response(EmployeeNotFoundMessage);
 
-        if (employee.IsSuperAdmin())
+        // Un admin no puede editar el perfil de un Superadmin.
+        // Aunque el Superadmin sí pueda editar su propio perfil.
+        if (!currentEmployee.IsSuperAdmin() && employeeToEdit.IsSuperAdmin())
             return new Response(CannotEditSuperadminMessage);
 
-        if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employee.OfficeId))
+        if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employeeToEdit.OfficeId))
             return new Response(OfficeNotAssignedMessage);
 
-        if (currentEmployee.HasNotPermissions(employeeUpdateDto.Roles))
+        if (currentEmployee.HasNotPermissions(employeeUpdateDto.Roles, employeeToEdit.Id))
             return new Response(PermitsNotGrantedMessage);
 
-        employeeUpdateDto.MapToEmployee(employee);
+        employeeUpdateDto.MapToEmployee(employeeToEdit);
 
-
-        var userRoles = employee.User.UserRoles.OrderBy(userRole => userRole.RoleId);
+        var userRoles = employeeToEdit.User.UserRoles.OrderBy(userRole => userRole.RoleId);
         var rolesId   = employeeUpdateDto.Roles
                                          .RemoveDuplicates()
                                          .OrderBy(roleId => roleId);
-        _unitOfWork.UserRoleRepository.UpdateUserRoles(employee.UserId, userRoles, rolesId);
+        _unitOfWork.UserRoleRepository.UpdateUserRoles(employeeToEdit.UserId, userRoles, rolesId);
         await _unitOfWork.SaveChangesAsync();
 
         return new Response
