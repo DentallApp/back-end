@@ -68,30 +68,27 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
-        app.UseCors(options =>
-        {
-            options.AllowAnyOrigin();
-            options.AllowAnyMethod();
-            options.AllowAnyHeader();
-        });
-
         app.UseDefaultFiles()
-            .UseStaticFiles()
-            .UseWebSockets()
-            .UsePathBase(new PathString("/api"))
-            .UseRouting()
-            .UseAuthentication()
-            .UseAuthorization()
-            .UseSwagger()
-            .UseSwaggerUI(options =>
-             {
-                options.SwaggerEndpoint("v1/swagger.json", "DentallApi V1");
-             })
-            .UseEndpoints(endpoints =>
-             {
-                endpoints.MapControllers();
-             });
-
-        // app.UseHttpsRedirection();
+           .UseStaticFiles()
+           .UseWebSockets()
+           .UsePathBase(new PathString("/api"))
+           .UseRouting()
+           .UseCors(options =>
+            {
+               options.AllowAnyOrigin();
+               options.AllowAnyMethod();
+               options.AllowAnyHeader();
+            })
+           .UseAuthentication()
+           .UseAuthorization()
+           .UseSwagger()
+           .UseSwaggerUI(options =>
+            {
+               options.SwaggerEndpoint("v1/swagger.json", "DentallApi V1");
+            })
+           .UseEndpoints(endpoints =>
+            {
+               endpoints.MapControllers();
+            });
     }
 }
