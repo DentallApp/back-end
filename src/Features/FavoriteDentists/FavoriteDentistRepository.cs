@@ -51,13 +51,13 @@ public class FavoriteDentistRepository : Repository<FavoriteDentist>, IFavoriteD
                   from favoriteDentist in favoriteDentists.DefaultIfEmpty()
                   select new DentistGetDto
                   {
-                      DentistId = dentist.Id,
-                      FullName = dentistDetails.FullName,
-                      PregradeUniversity = dentist.PregradeUniversity,
-                      PostgradeUniversity = dentist.PostgradeUniversity,
-                      OfficeId = dentist.OfficeId,
-                      OfficeName = office.Name,
-                      IsFavorite = favoriteDentist != null
+                      DentistId             = dentist.Id,
+                      FullName              = dentistDetails.FullName,
+                      PregradeUniversity    = dentist.PregradeUniversity,
+                      PostgradeUniversity   = dentist.PostgradeUniversity,
+                      OfficeId              = dentist.OfficeId,
+                      OfficeName            = office.Name,
+                      IsFavorite            = favoriteDentist != null
                   }).ToListAsync();
 
     public async Task<FavoriteDentist> GetByUserIdAndDentistIdAsync(int userId, int dentistId)
