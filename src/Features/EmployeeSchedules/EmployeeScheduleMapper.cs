@@ -43,7 +43,7 @@ public static class EmployeeScheduleMapper
         => new()
         {
             FullName       = employee.Person.FullName,
-            EmployeeStatus = employee.IsDeleted,
+            EmployeeStatus = !employee.IsDeleted,
             Schedules = employee.EmployeeSchedules.Select(employeeSchedule => new ScheduleDto
             {
                 WeekDayId           = employeeSchedule.WeekDayId,
