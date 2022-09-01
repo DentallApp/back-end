@@ -37,4 +37,23 @@ public static class EmployeeScheduleMapper
             AfternoonStartHour  = employeeSchedule.AfternoonStartHour.GetHourWithoutSeconds(),
             AfternoonEndHour    = employeeSchedule.AfternoonEndHour.GetHourWithoutSeconds()
         };
+
+    [Decompile]
+    public static EmployeeScheduleGetAllDto MapToEmployeeScheduleGetAllDto(this Employee employee)
+        => new()
+        {
+            FullName          = employee.Person.FullName,
+            IsEmployeeDeleted = employee.IsDeleted,
+            Schedules = employee.EmployeeSchedules.Select(employeeSchedule => new ScheduleDto
+            {
+                WeekDayId           = employeeSchedule.WeekDayId,
+                WeekDayName         = employeeSchedule.WeekDay.Name,
+                MorningStartHour    = employeeSchedule.MorningStartHour.GetHourWithoutSeconds(),
+                MorningEndHour      = employeeSchedule.MorningEndHour.GetHourWithoutSeconds(),
+                AfternoonStartHour  = employeeSchedule.AfternoonStartHour.GetHourWithoutSeconds(),
+                AfternoonEndHour    = employeeSchedule.AfternoonEndHour.GetHourWithoutSeconds()
+            })
+            .OrderBy(scheduleDto => scheduleDto.WeekDayId)
+            .ToList()
+        };
 }
