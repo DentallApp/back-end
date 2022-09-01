@@ -6,7 +6,34 @@ public static class OfficeMapper
     public static OfficeGetDto MapToOfficeGetDto(this Office office)
         => new()
         {
-            Id = office.Id,
+            Id   = office.Id,
             Name = office.Name
         };
+
+    [Decompile]
+    public static OfficeShowDto MapToOfficeShowDto(this Office office)
+        => new()
+        {
+            Id            = office.Id,
+            Name          = office.Name,
+            Address       = office.Address,
+            ContactNumber = office.ContactNumber,
+            IsDeleted     = office.IsDeleted
+        };
+
+    public static Office MapToOfficeDto(this OfficeInsertDto officeInsertDto)
+        => new()
+        {
+            Name            = officeInsertDto.Name,
+            Address         = officeInsertDto.Address,
+            ContactNumber   = officeInsertDto.ContactNumber
+        };
+
+    public static void MapToOfficeDto(this OfficeUpdateDto officeUpdateDto, Office office)
+    {
+        office.Name          = officeUpdateDto.Name;
+        office.Address       = officeUpdateDto.Address;
+        office.ContactNumber = officeUpdateDto.ContactNumber;
+        office.IsDeleted     = officeUpdateDto.IsDeleted;
+    }
 }

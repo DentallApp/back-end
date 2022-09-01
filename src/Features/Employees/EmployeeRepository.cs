@@ -14,6 +14,7 @@ public class EmployeeRepository : SoftDeleteRepository<Employee>, IEmployeeRepos
         => await Context.Set<Employee>()
                         .Include(employee => employee.Office)
                         .Where(employee => employee.UserId == userId)
+                        .IgnoreQueryFilters()
                         .FirstOrDefaultAsync();
 
     public async Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileAsync()

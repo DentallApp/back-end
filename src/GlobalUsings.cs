@@ -54,6 +54,7 @@ global using DentallApp.Features.OfficeSchedules;
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
 global using DentallApp.Models;
+global using DentallApp.DTOs;
 global using DentallApp.UnitOfWork;
 global using DentallApp.Repositories;
 global using DentallApp.Validators;

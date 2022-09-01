@@ -68,7 +68,7 @@ public static class EmployeeMapper
         employee.Person.Email       = employeeUpdateDto.Email;
         employee.User.UserName      = employeeUpdateDto.Email;
         employee.IsDeleted          = employeeUpdateDto.IsDeleted;
-        if(employeeUpdateDto.IsDeleted)
+        if(employee.IsInactive())
         {
             employee.User.RefreshToken = null;
             employee.User.RefreshTokenExpiry = null;
