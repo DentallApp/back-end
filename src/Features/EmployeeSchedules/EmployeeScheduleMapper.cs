@@ -42,8 +42,8 @@ public static class EmployeeScheduleMapper
     public static EmployeeScheduleGetAllDto MapToEmployeeScheduleGetAllDto(this Employee employee)
         => new()
         {
-            FullName       = employee.Person.FullName,
-            EmployeeStatus = !employee.IsDeleted,
+            FullName          = employee.Person.FullName,
+            IsEmployeeDeleted = employee.IsDeleted,
             Schedules = employee.EmployeeSchedules.Select(employeeSchedule => new ScheduleDto
             {
                 WeekDayId           = employeeSchedule.WeekDayId,
