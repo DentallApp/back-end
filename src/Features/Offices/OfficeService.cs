@@ -59,4 +59,7 @@ public class OfficeService : IOfficeService
 
     public async Task<IEnumerable<OfficeShowDto>> GetOfficesForEditAsync()
         => await _officeRepository.GetOfficesForEditAsync();
+
+    public async Task<IEnumerable<OfficeGetDto>> GetAllOfficesAsync()
+        => await _officeRepository.GetAllOfficesAsync();
 }

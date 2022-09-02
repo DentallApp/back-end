@@ -18,7 +18,7 @@ public class EmployeeScheduleController : ControllerBase
     /// <returns></returns>
     [HttpGet]
     public async Task<IEnumerable<EmployeeScheduleGetAllDto>> Get()
-        => await _employeeScheduleService.GetAllEmployeeSchedulesAsync();
+        => await _employeeScheduleService.GetAllEmployeeSchedulesAsync(User.GetOfficeId());
 
     /// <summary>
     /// Obtiene el horario de un empleado.

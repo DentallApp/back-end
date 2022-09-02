@@ -25,8 +25,8 @@ public class EmployeeScheduleService : IEmployeeScheduleService
     public async Task<IEnumerable<EmployeeScheduleGetDto>> GetEmployeeScheduleByEmployeeIdAsync(int employeeId)
         => await _employeeScheduleRepository.GetEmployeeScheduleByEmployeeIdAsync(employeeId);
 
-    public async Task<IEnumerable<EmployeeScheduleGetAllDto>> GetAllEmployeeSchedulesAsync()
-        => await _employeeScheduleRepository.GetAllEmployeeSchedulesAsync();
+    public async Task<IEnumerable<EmployeeScheduleGetAllDto>> GetAllEmployeeSchedulesAsync(int officeId)
+        => await _employeeScheduleRepository.GetAllEmployeeSchedulesAsync(officeId);
 
     public async Task<Response> UpdateEmployeeScheduleAsync(int scheduleId, EmployeeScheduleUpdateDto employeeScheduleDto)
     {

@@ -12,11 +12,18 @@ public class OfficeController : ControllerBase
     }
 
     /// <summary>
-    /// Obtiene la información de cada consultorio.
+    /// Obtiene la información de cada consultorio activo.
     /// </summary>
     [HttpGet]
     public async Task<IEnumerable<OfficeGetDto>> Get()
         => await _officeService.GetOfficesAsync();
+
+    /// <summary>
+    /// Obtiene la información de cada consultorio activo e inactivo.
+    /// </summary>
+    [HttpGet("all")]
+    public async Task<IEnumerable<OfficeGetDto>> GetAll()
+        => await _officeService.GetAllOfficesAsync();
 
     /// <summary>
     /// Obtiene la información de cada consultorio para el formulario de editar.
