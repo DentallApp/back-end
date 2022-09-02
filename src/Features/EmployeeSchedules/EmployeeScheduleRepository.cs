@@ -4,12 +4,12 @@ public class EmployeeScheduleRepository : SoftDeleteRepository<EmployeeSchedule>
 {
     public EmployeeScheduleRepository(AppDbContext context) : base(context) { }
 
-    public async Task<IEnumerable<EmployeeScheduleGetAllDto>> GetAllEmployeeSchedulesAsync()
+    public async Task<IEnumerable<EmployeeScheduleGetAllDto>> GetAllEmployeeSchedulesAsync(int officeId)
         => await Context.Set<Employee>()
                         .Include(employee => employee.Person)
                         .Include(employee => employee.EmployeeSchedules)
                            .ThenInclude(employeeSchedule => employeeSchedule.WeekDay)
-                        .Where(employee => employee.EmployeeSchedules.Any())
+                        .Where(employee => employee.OfficeId == officeId && employee.EmployeeSchedules.Any())
                         .Select(employee => employee.MapToEmployeeScheduleGetAllDto())
                         .IgnoreQueryFilters()
                         .ToListAsync();
