@@ -23,6 +23,12 @@ public class OfficeRepository : SoftDeleteRepository<Office>, IOfficeRepository
                         .Select(office => office.MapToOfficeGetDto())
                         .ToListAsyncEF();
 
+    public async Task<IEnumerable<OfficeGetDto>> GetAllOfficesAsync()
+        => await Context.Set<Office>()
+                        .Select(office => office.MapToOfficeGetDto())
+                        .IgnoreQueryFilters()
+                        .ToListAsyncEF();
+
     public async Task<IEnumerable<OfficeShowDto>> GetOfficesForEditAsync()
         => await Context.Set<Office>()
                         .Select(office => office.MapToOfficeShowDto())
