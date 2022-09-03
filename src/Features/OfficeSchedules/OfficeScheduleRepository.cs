@@ -13,6 +13,14 @@ public class OfficeScheduleRepository : SoftDeleteRepository<OfficeSchedule>, IO
                         .IgnoreQueryFilters()
                         .ToListAsync();
 
+    public async Task<IEnumerable<OfficeScheduleShowDto>> GetHomePageSchedulesAsync()
+        => await Context.Set<Office>()
+                        .Include(office => office.OfficeSchedules)
+                           .ThenInclude(officeSchedule => officeSchedule.WeekDay)
+                        .Where(office => office.OfficeSchedules.Any())
+                        .Select(office => office.MapToOfficeScheduleShowDto())
+                        .ToListAsync();
+
     public async Task<OfficeSchedule> GetOfficeScheduleByIdAsync(int id)
         => await Context.Set<OfficeSchedule>()
                         .Where(officeSchedule => officeSchedule.Id == id)

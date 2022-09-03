@@ -5,4 +5,5 @@ public interface IOfficeScheduleRepository : ISoftDeleteRepository<OfficeSchedul
     Task<OfficeSchedule> GetOfficeScheduleByIdAsync(int id);
     Task<IEnumerable<OfficeScheduleGetDto>> GetOfficeScheduleByOfficeIdAsync(int officeId);
     Task<IEnumerable<OfficeScheduleGetAllDto>> GetAllOfficeSchedulesAsync();
+    Task<IEnumerable<OfficeScheduleShowDto>> GetHomePageSchedulesAsync();
 }
