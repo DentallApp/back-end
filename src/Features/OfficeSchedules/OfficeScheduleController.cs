@@ -14,6 +14,7 @@ public class OfficeScheduleController : ControllerBase
     /// <summary>
     /// Obtiene los horarios de los consultorios activos para la página de inicio.
     /// </summary>
+    /// <remarks>El consultorio debe tener al menos un horario activo.</remarks>
     [HttpGet("home-page")]
     public async Task<IEnumerable<OfficeScheduleShowDto>> GetHomePageSchedules()
         => await _officeScheduleService.GetHomePageSchedulesAsync();
