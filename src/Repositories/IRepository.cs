@@ -9,4 +9,5 @@ public interface IRepository<TEntity> where TEntity : ModelBase
     void Update(TEntity entity);
     void Delete(TEntity entity);
     Task<int> SaveAsync();
+    Task<IAppDbContextTransaction> BeginTransactionAsync();
 }
