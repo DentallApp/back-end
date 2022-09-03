@@ -43,4 +43,6 @@ public class ResponseMessages
     public const string NotAnImageMessage = "El archivo adjuntado no es una imagen.";
     public const string UnrecognizableFileMessage = "El archivo está irreconocible. No lo puede reconocer el sistema.";
     public const string InvalidModelStateMessage = "Se han producido uno o varios errores de validación.";
+    public const string NotAvailableMessage = "N/A";
+    public const string OfficeClosedMessage = "Cerrado";
 }
