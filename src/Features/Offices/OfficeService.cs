@@ -27,25 +27,20 @@ public class OfficeService : IOfficeService
         if (currentOffice is null)
             return new Response(ResourceNotFoundMessage);
 
-        if(officeUpdateDto.IsInactive() && 
-           officeUpdateDto.DisableEmployeeAccounts && 
-           currentOffice.IsEnabledEmployeeAccounts)
-        {
+        using var transaction = await _officeRepository.BeginTransactionAsync();
+        
+        if(officeUpdateDto.IsInactive() && officeUpdateDto.DisableEmployeeAccounts && currentOffice.IsEnabledEmployeeAccounts)
             await _officeRepository.DisableEmployeeAccountsAsync(currentEmployeeId, currentOffice);
-        }
-        else if(officeUpdateDto.IsInactive() &&
-                officeUpdateDto.EnableEmployeeAccounts &&
-                currentOffice.IsDisabledEmployeeAccounts)
-        {
+
+        else if(officeUpdateDto.IsInactive() && officeUpdateDto.EnableEmployeeAccounts && currentOffice.IsDisabledEmployeeAccounts)
             await _officeRepository.EnableEmployeeAccountsAsync(currentOffice);
-        }
+
         else if(officeUpdateDto.IsActive() && currentOffice.IsDisabledEmployeeAccounts)
-        {
             await _officeRepository.EnableEmployeeAccountsAsync(currentOffice);
-        }
 
         officeUpdateDto.MapToOfficeDto(currentOffice);
         await _officeRepository.SaveAsync();
+        await transaction.CommitAsync();
 
         return new Response
         {
