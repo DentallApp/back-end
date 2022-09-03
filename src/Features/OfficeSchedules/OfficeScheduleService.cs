@@ -27,6 +27,9 @@ public class OfficeScheduleService : IOfficeScheduleService
     public async Task<IEnumerable<OfficeScheduleGetAllDto>> GetAllOfficeSchedulesAsync()
         => await _officeScheduleRepository.GetAllOfficeSchedulesAsync();
 
+    public async Task<IEnumerable<OfficeScheduleShowDto>> GetHomePageSchedulesAsync()
+        => await _officeScheduleRepository.GetHomePageSchedulesAsync();
+
     public async Task<IEnumerable<OfficeScheduleGetDto>> GetOfficeScheduleByOfficeIdAsync(int officeId)
         => await _officeScheduleRepository.GetOfficeScheduleByOfficeIdAsync(officeId);
 

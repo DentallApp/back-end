@@ -12,14 +12,21 @@ public class OfficeScheduleController : ControllerBase
     }
 
     /// <summary>
-    /// Obtiene todos los horarios de los consultorios.
+    /// Obtiene los horarios de los consultorios activos para la página de inicio.
+    /// </summary>
+    [HttpGet("home-page")]
+    public async Task<IEnumerable<OfficeScheduleShowDto>> GetHomePageSchedules()
+        => await _officeScheduleService.GetHomePageSchedulesAsync();
+
+    /// <summary>
+    /// Obtiene todos los horarios de los consultorios activos e inactivos.
     /// </summary>
     [HttpGet]
     public async Task<IEnumerable<OfficeScheduleGetAllDto>> Get()
         => await _officeScheduleService.GetAllOfficeSchedulesAsync();
 
     /// <summary>
-    /// Obtiene el horario de un consultorio.
+    /// Obtiene el horario de un consultorio activo o inactivo.
     /// </summary>
     [HttpGet("{officeId}")]
     public async Task<IEnumerable<OfficeScheduleGetDto>> GetByOfficeId(int officeId)

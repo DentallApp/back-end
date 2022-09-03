@@ -38,14 +38,30 @@ public static class OfficeScheduleMapper
         {
             Name            = office.Name,
             IsOfficeDeleted = office.IsDeleted,
-            Schedules = office.OfficeSchedules.Select(officeSchedule => new OfficeScheduleDto
-            {
-                WeekDayId    = officeSchedule.WeekDayId,
-                WeekDayName  = officeSchedule.WeekDay.Name,
-                StartHour    = officeSchedule.StartHour.GetHourWithoutSeconds(),
-                EndHour      = officeSchedule.EndHour.GetHourWithoutSeconds()
-            })
-            .OrderBy(officeSchedule => officeSchedule.WeekDayId)
-            .ToList()
+            Schedules       = office.OfficeSchedules.Select(officeSchedule => officeSchedule.MapToOfficeScheduleDto())
+                                                    .OrderBy(officeScheduleDto => officeScheduleDto.WeekDayId)
+                                                    .ToList()
+        };
+
+    [Decompile]
+    public static OfficeScheduleShowDto MapToOfficeScheduleShowDto(this Office office)
+        => new()
+        {
+            Name            = office.Name,
+            Address         = office.Address,
+            ContactNumber   = office.ContactNumber,
+            Schedules       = office.OfficeSchedules.Select(officeSchedule => officeSchedule.MapToOfficeScheduleDto())
+                                                    .OrderBy(officeScheduleDto => officeScheduleDto.WeekDayId)
+                                                    .ToList()
+        };
+
+    [Decompile]
+    public static OfficeScheduleDto MapToOfficeScheduleDto(this OfficeSchedule officeSchedule)
+        => new()
+        {
+            WeekDayId   = officeSchedule.WeekDayId,
+            WeekDayName = officeSchedule.WeekDay.Name,
+            StartHour   = officeSchedule.StartHour.GetHourWithoutSeconds(),
+            EndHour     = officeSchedule.EndHour.GetHourWithoutSeconds()
         };
 }
