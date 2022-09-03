@@ -8,32 +8,32 @@ public class WeekDayConfiguration : IEntityTypeConfiguration<WeekDay>
             new WeekDay
             {
                 Id = 1,
-                Name = "Lunes"
+                Name = WeekDaysName.Monday
             },
             new WeekDay
             {
                 Id = 2,
-                Name = "Martes"
+                Name = WeekDaysName.Tuesday
             },
             new WeekDay
             {
                 Id = 3,
-                Name = "Miércoles"
+                Name = WeekDaysName.Wednesday
             },
             new WeekDay
             {
                 Id = 4,
-                Name = "Jueves"
+                Name = WeekDaysName.Thursday
             },
             new WeekDay
             {
                 Id = 5,
-                Name = "Viernes"
+                Name = WeekDaysName.Friday
             },
             new WeekDay
             {
                 Id = 6,
-                Name = "Sábado"
+                Name = WeekDaysName.Saturday
             }
         );
     }

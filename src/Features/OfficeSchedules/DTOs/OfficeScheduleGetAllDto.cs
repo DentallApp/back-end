@@ -4,5 +4,5 @@ public class OfficeScheduleGetAllDto
 {
     public string Name { get; set; }
     public bool IsOfficeDeleted { get; set; }
-    public IEnumerable<OfficeScheduleDto> Schedules { get; set; }
+    public List<OfficeScheduleDto> Schedules { get; set; }
 }

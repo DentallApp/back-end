@@ -25,10 +25,46 @@ public class OfficeScheduleService : IOfficeScheduleService
     }
 
     public async Task<IEnumerable<OfficeScheduleGetAllDto>> GetAllOfficeSchedulesAsync()
-        => await _officeScheduleRepository.GetAllOfficeSchedulesAsync();
+    { 
+        var offices = await _officeScheduleRepository.GetAllOfficeSchedulesAsync() as List<OfficeScheduleGetAllDto>;
+        foreach (var office in offices)
+            office.Schedules = AddMissingSchedules(office.Schedules);
+        return offices;
+    }
 
     public async Task<IEnumerable<OfficeScheduleShowDto>> GetHomePageSchedulesAsync()
-        => await _officeScheduleRepository.GetHomePageSchedulesAsync();
+    { 
+        var offices = await _officeScheduleRepository.GetHomePageSchedulesAsync() as List<OfficeScheduleShowDto>;
+        foreach (var office in offices)
+            office.Schedules = AddMissingSchedules(office.Schedules, OfficeClosedMessage);
+        return offices;
+    }
+
+    /// <summary>
+    /// Agrega los horarios que faltan.
+    /// </summary>
+    /// <param name="schedules">Los horarios actuales.</param>
+    /// <param name="notAvailable">Un valor opcional que indica sí el horario no está disponible.</param>
+    private List<OfficeScheduleDto> AddMissingSchedules(List<OfficeScheduleDto> schedules, string notAvailable = NotAvailableMessage)
+    {
+        if (schedules.Count() == WeekDaysType.MaxWeekDay)
+            return schedules;
+
+        foreach (var (weekDayId, weekDayName) in WeekDaysType.WeekDays)
+        {
+            if (schedules.Find(scheduleDto => scheduleDto.WeekDayId == weekDayId) is null)
+            {
+                var newScheduleDto = new OfficeScheduleDto
+                {
+                    WeekDayId   = weekDayId,
+                    WeekDayName = weekDayName,
+                    Schedule    = notAvailable
+                };
+                schedules.Add(newScheduleDto);
+            }
+        }
+        return schedules.OrderBy(scheduleDto => scheduleDto.WeekDayId).ToList();
+    }
 
     public async Task<IEnumerable<OfficeScheduleGetDto>> GetOfficeScheduleByOfficeIdAsync(int officeId)
         => await _officeScheduleRepository.GetOfficeScheduleByOfficeIdAsync(officeId);
