@@ -18,6 +18,7 @@ public class EmployeeScheduleRepository : SoftDeleteRepository<EmployeeSchedule>
         => await Context.Set<EmployeeSchedule>()
                         .Include(employeeSchedule => employeeSchedule.WeekDay)
                         .Where(employeeSchedule => employeeSchedule.EmployeeId == employeeId)
+                        .OrderBy(employeeSchedule => employeeSchedule.WeekDayId)
                         .Select(employeeSchedule => employeeSchedule.MapToEmployeeScheduleGetDto())
                         .IgnoreQueryFilters()
                         .ToListAsync();
