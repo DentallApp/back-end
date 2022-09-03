@@ -9,9 +9,12 @@ public partial class UnitOfWorkEFCore : IUnitOfWork
         _context = context;
     }
 
+    public IAppDbContextTransaction BeginTransaction()
+        => new AppDbContextTransactionEFCore(_context.Database.BeginTransaction());
+
+    public async Task<IAppDbContextTransaction> BeginTransactionAsync()
+        => new AppDbContextTransactionEFCore(await _context.Database.BeginTransactionAsync());
+
     public async Task<int> SaveChangesAsync()
         => await _context.SaveChangesAsync();
-
-    public async Task RollbackAsync()
-        => await _context.Database.RollbackTransactionAsync();
 }

@@ -2,8 +2,9 @@
 
 public interface IUnitOfWork
 {
+    IAppDbContextTransaction BeginTransaction();
+    Task<IAppDbContextTransaction> BeginTransactionAsync();
     Task<int> SaveChangesAsync();
-    Task RollbackAsync();
     IUserRepository UserRepository { get; }
     IUserRoleRepository UserRoleRepository { get; }
     IPersonRepository PersonRepository { get; }
