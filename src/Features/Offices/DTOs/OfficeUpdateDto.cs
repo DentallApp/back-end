@@ -11,7 +11,7 @@ public class OfficeUpdateDto : OfficeInsertDto, ISoftDeleteDto
     /// Un valor que indica sí la casilla de verificación (checkbox) está marcada.
     /// Con esta propiedad se puede verificar sí las cuentas de los empleados deben ser eliminadas temporalmente cuando el consultorio queda inactivo.
     /// </summary>
-    public bool IsCheckboxTicked { get; set; } = true;
+    public bool IsCheckboxTicked { get; set; }
 
     /// <summary>
     /// Un valor que indica sí la casilla de verificación (checkbox) está desmarcada.
