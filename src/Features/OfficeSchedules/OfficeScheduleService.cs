@@ -41,10 +41,14 @@ public class OfficeScheduleService : IOfficeScheduleService
     }
 
     /// <summary>
-    /// Agrega los horarios que faltan.
+    /// Agrega los horarios que faltan dentro de <c>schedules</c>.
     /// </summary>
     /// <param name="schedules">Los horarios actuales.</param>
     /// <param name="notAvailable">Un valor opcional que indica sí el horario no está disponible.</param>
+    /// <returns>
+    /// Una colección con los horarios que faltaban y los que ya estaban.
+    /// Sí no falta ningún horario, entonces se devuelve la misma colección que se pasó por parámetro.
+    /// </returns>
     private List<OfficeScheduleDto> AddMissingSchedules(List<OfficeScheduleDto> schedules, string notAvailable = NotAvailableMessage)
     {
         if (schedules.Count() == WeekDaysType.MaxWeekDay)
