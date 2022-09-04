@@ -14,11 +14,12 @@ public static class OfficeMapper
     public static OfficeShowDto MapToOfficeShowDto(this Office office)
         => new()
         {
-            Id            = office.Id,
-            Name          = office.Name,
-            Address       = office.Address,
-            ContactNumber = office.ContactNumber,
-            IsDeleted     = office.IsDeleted
+            Id               = office.Id,
+            Name             = office.Name,
+            Address          = office.Address,
+            ContactNumber    = office.ContactNumber,
+            IsDeleted        = office.IsDeleted,
+            IsCheckboxTicked = office.IsCheckboxTicked
         };
 
     public static Office MapToOfficeDto(this OfficeInsertDto officeInsertDto)
@@ -31,9 +32,10 @@ public static class OfficeMapper
 
     public static void MapToOfficeDto(this OfficeUpdateDto officeUpdateDto, Office office)
     {
-        office.Name          = officeUpdateDto.Name;
-        office.Address       = officeUpdateDto.Address;
-        office.ContactNumber = officeUpdateDto.ContactNumber;
-        office.IsDeleted     = officeUpdateDto.IsDeleted;
+        office.Name             = officeUpdateDto.Name;
+        office.Address          = officeUpdateDto.Address;
+        office.ContactNumber    = officeUpdateDto.ContactNumber;
+        office.IsDeleted        = officeUpdateDto.IsDeleted;
+        office.IsCheckboxTicked = officeUpdateDto.IsCheckboxTicked;
     }
 }
