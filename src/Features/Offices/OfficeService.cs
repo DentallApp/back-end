@@ -29,10 +29,10 @@ public class OfficeService : IOfficeService
 
         using var transaction = await _officeRepository.BeginTransactionAsync();
         
-        if(officeUpdateDto.IsInactive() && officeUpdateDto.DisableEmployeeAccounts && currentOffice.IsEnabledEmployeeAccounts)
+        if(officeUpdateDto.IsInactive() && officeUpdateDto.IsCheckboxTicked && currentOffice.IsEnabledEmployeeAccounts)
             await _officeRepository.DisableEmployeeAccountsAsync(currentEmployeeId, currentOffice);
 
-        else if(officeUpdateDto.IsInactive() && officeUpdateDto.EnableEmployeeAccounts && currentOffice.IsDisabledEmployeeAccounts)
+        else if(officeUpdateDto.IsInactive() && officeUpdateDto.IsCheckboxUnticked && currentOffice.IsDisabledEmployeeAccounts)
             await _officeRepository.EnableEmployeeAccountsAsync(currentOffice);
 
         else if(officeUpdateDto.IsActive() && currentOffice.IsDisabledEmployeeAccounts)
