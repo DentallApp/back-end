@@ -1,9 +1,9 @@
 ﻿namespace DentallApp.Features.Appoinments.AvailabilityHours;
 
 /// <summary>
-/// Representa un rango de tiempo no disponible.
+/// Representa un rango de tiempo disponible.
 /// </summary>
-public class UnavailableTimeRange
+public class AvailableTimeRangeDto
 {
     public TimeSpan StartHour { get; set; }
     public TimeSpan EndHour { get; set; }

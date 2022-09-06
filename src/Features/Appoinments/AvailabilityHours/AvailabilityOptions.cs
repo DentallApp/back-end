@@ -21,5 +21,5 @@ public class AvailabilityOptions
     /// Obtiene o establece una colección con los rangos de tiempos no disponibles.
     /// La colección debe estar ordenada de forma ascendente.
     /// </summary>
-    public List<UnavailableTimeRange> Unavailables { get; set; }
+    public List<UnavailableTimeRangeDto> Unavailables { get; set; }
 }

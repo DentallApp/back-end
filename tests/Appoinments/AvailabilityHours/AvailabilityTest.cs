@@ -6,7 +6,7 @@ public partial class AvailabilityTest
     [DataTestMethod]
     [DynamicData(nameof(GetData), DynamicDataSourceType.Method)]
     public void GetAvailableHours_WhenNumberOfUnavailableHoursIsGreaterThanOrEqualToZero_ShouldReturnAvailableHours(
-        string testId, AvailabilityOptions options, List<AvailableTimeRange> expected)
+        string testId, AvailabilityOptions options, List<AvailableTimeRangeDto> expected)
     {
         var availableHours = Availability.GetAvailableHours(options);
 
@@ -23,7 +23,7 @@ public partial class AvailabilityTest
     {
         var options = new AvailabilityOptions
         {
-            Unavailables     = new List<UnavailableTimeRange>(),
+            Unavailables     = new List<UnavailableTimeRangeDto>(),
             DentistStartHour = TimeSpan.Parse("9:30"),
             DentistEndHour   = TimeSpan.Parse("12:30"),
             ServiceDuration  = TimeSpan.FromMinutes(0)
@@ -37,7 +37,7 @@ public partial class AvailabilityTest
     [TestMethod]
     public void GetAvailableHours_WhenNumberOfAvailableHoursIsZero_ShouldReturnNull()
     {
-        var unavailables = new List<UnavailableTimeRange>
+        var unavailables = new List<UnavailableTimeRangeDto>
         {
             new() { StartHour = TimeSpan.Parse("8:00"),  EndHour = TimeSpan.Parse("9:00") },
             new() { StartHour = TimeSpan.Parse("9:00"),  EndHour = TimeSpan.Parse("10:00") },
