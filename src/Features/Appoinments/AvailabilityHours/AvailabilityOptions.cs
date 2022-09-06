@@ -1,6 +1,4 @@
-﻿using EllipticCurve.Utils;
-
-namespace DentallApp.Features.Appoinments.AvailabilityHours;
+﻿namespace DentallApp.Features.Appoinments.AvailabilityHours;
 
 public class AvailabilityOptions
 {
