@@ -45,4 +45,9 @@ public class ResponseMessages
     public const string InvalidModelStateMessage = "Se han producido uno o varios errores de validación.";
     public const string NotAvailableMessage = "N/A";
     public const string OfficeClosedMessage = "Cerrado";
+    public const string OfficeClosedForSpecificDayMessage = "El consultorio odontológico está cerrado para el día {0}.";
+    public const string DentistNotAvailableMessage = "El odontólogo no está disponible para el día {0}. Por favor, elija otro día.";
+    public const string NoMorningOrAfternoonHoursMessage = "El odontólogo no tiene horario de mañana ni de tarde.";
+    public const string DentalServiceNotAvailableMessage = "El servicio dental no está disponible. Posiblemente se haya pasado una ID inválida.";
+    public const string NoSchedulesAvailableMessage = "No hay horarios disponibles.";
 }

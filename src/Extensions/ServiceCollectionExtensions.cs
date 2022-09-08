@@ -24,6 +24,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmployeeScheduleService, EmployeeScheduleService>()
                 .AddTransient<IFavoriteDentistService, FavoriteDentistService>()
                 .AddTransient<IOfficeScheduleService, OfficeScheduleService>()
+                .AddTransient<IAvailabilityService, AvailabilityService>()
                 .AddTransient<ITokenService, TokenService>();
 
         return services;

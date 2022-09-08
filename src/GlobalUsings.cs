@@ -42,7 +42,8 @@ global using DentallApp.Features.Offices;
 global using DentallApp.Features.Offices.DTOs;
 global using DentallApp.Features.Appoinments;
 global using DentallApp.Features.Appoinments.DTOs;
-global using DentallApp.Features.Appoinments.AvailabilityHours;
+global using DentallApp.Features.AvailabilityHours;
+global using DentallApp.Features.AvailabilityHours.DTOs;
 global using DentallApp.Features.AppoinmentsStatus;
 global using DentallApp.Features.AppoinmentsStatus.DTOs;
 global using DentallApp.Features.EmployeeSchedules;
@@ -107,6 +108,7 @@ global using Microsoft.AspNetCore.Authorization;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.OpenApi.Models;
 
