@@ -50,4 +50,5 @@ public class ResponseMessages
     public const string NoMorningOrAfternoonHoursMessage = "El odontólogo no tiene horario de mañana ni de tarde.";
     public const string DentalServiceNotAvailableMessage = "El servicio dental no está disponible. Posiblemente se haya pasado una ID inválida.";
     public const string NoSchedulesAvailableMessage = "No hay horarios disponibles.";
+    public const string DateAndTimeAppointmentIsNotAvailableMessage = "La fecha y hora de la cita que has seleccionado no está disponible.";
 }

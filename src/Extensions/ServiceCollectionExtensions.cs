@@ -20,11 +20,11 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmployeeService, EmployeeService>()
                 .AddTransient<IRoleService, RoleService>()
                 .AddTransient<IOfficeService, OfficeService>()
-                .AddTransient<IAppoinmentService, AppoinmentService>()
+                .AddScoped<IAppoinmentService, AppoinmentService>()
                 .AddTransient<IEmployeeScheduleService, EmployeeScheduleService>()
                 .AddTransient<IFavoriteDentistService, FavoriteDentistService>()
                 .AddTransient<IOfficeScheduleService, OfficeScheduleService>()
-                .AddTransient<IAvailabilityService, AvailabilityService>()
+                .AddScoped<IAvailabilityService, AvailabilityService>()
                 .AddTransient<ITokenService, TokenService>();
 
         return services;

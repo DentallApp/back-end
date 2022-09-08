@@ -36,4 +36,18 @@ public class AppoinmentBotService : IAppoinmentBotService
         var repository = scope.ServiceProvider.GetRequiredService<IBotQueryRepository>();
         return await repository.GetPatientsAsync(userProfile);
     }
+
+    public async Task<Response<IEnumerable<AvailableTimeRangeDto>>> GetAvailableHoursAsync(AvailableTimeRangePostDto availableTimeRangeDto)
+    {
+        using var scope = _serviceProvider.CreateScope();
+        var availabilityService = scope.ServiceProvider.GetRequiredService<IAvailabilityService>();
+        return await availabilityService.GetAvailableHoursAsync(availableTimeRangeDto);
+    }
+
+    public async Task<Response> CreateScheduledAppoinmentAsync(AppoinmentInsertDto appoinment)
+    {
+        using var scope = _serviceProvider.CreateScope();
+        var appoinmentService = scope.ServiceProvider.GetRequiredService<IAppoinmentService>();
+        return await appoinmentService.CreateAppoinmentAsync(appoinment);
+    }
 }
