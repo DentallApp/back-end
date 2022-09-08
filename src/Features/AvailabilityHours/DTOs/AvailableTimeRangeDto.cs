@@ -5,6 +5,9 @@
 /// </summary>
 public class AvailableTimeRangeDto
 {
-    public TimeSpan StartHour { get; set; }
-    public TimeSpan EndHour { get; set; }
+    public string StartHour { get; set; }
+    public string EndHour { get; set; }
+
+    public override string ToString()
+        => $"{StartHour} - {EndHour}";
 }

@@ -1,6 +1,4 @@
-﻿using System.Security.Policy;
-
-namespace DentallApp.Tests.AvailabilityHours;
+﻿namespace DentallApp.Tests.AvailabilityHours;
 
 [TestClass]
 public partial class AvailabilityTest
@@ -33,11 +31,11 @@ public partial class AvailabilityTest
         };
         var expected = new List<AvailableTimeRangeDto>
         {
-            new() { StartHour = TimeSpan.Parse("7:00"),  EndHour = TimeSpan.Parse("8:00") },
-            new() { StartHour = TimeSpan.Parse("9:00"),  EndHour = TimeSpan.Parse("10:00") },
-            new() { StartHour = TimeSpan.Parse("11:00"), EndHour = TimeSpan.Parse("12:00") },
-            new() { StartHour = TimeSpan.Parse("15:00"), EndHour = TimeSpan.Parse("16:00") },
-            new() { StartHour = TimeSpan.Parse("16:00"), EndHour = TimeSpan.Parse("17:00") }
+            new() { StartHour = "07:00", EndHour = "08:00" },
+            new() { StartHour = "09:00", EndHour = "10:00" },
+            new() { StartHour = "11:00", EndHour = "12:00" },
+            new() { StartHour = "15:00", EndHour = "16:00" },
+            new() { StartHour = "16:00", EndHour = "17:00" }
         };
         var options = new AvailabilityOptions
         {

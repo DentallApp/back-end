@@ -26,14 +26,14 @@ public partial class AvailabilityTest
             },
             new List<AvailableTimeRangeDto>
             {
-                new() { StartHour = TimeSpan.Parse("7:00"),  EndHour = TimeSpan.Parse("7:30") },
-                new() { StartHour = TimeSpan.Parse("7:30"),  EndHour = TimeSpan.Parse("8:00") },
-                new() { StartHour = TimeSpan.Parse("8:00"),  EndHour = TimeSpan.Parse("8:30") },
-                new() { StartHour = TimeSpan.Parse("8:30"),  EndHour = TimeSpan.Parse("9:00") },
-                new() { StartHour = TimeSpan.Parse("9:30"),  EndHour = TimeSpan.Parse("10:00") },
-                new() { StartHour = TimeSpan.Parse("10:30"), EndHour = TimeSpan.Parse("11:00") },
-                new() { StartHour = TimeSpan.Parse("11:40"), EndHour = TimeSpan.Parse("12:10") },
-                new() { StartHour = TimeSpan.Parse("12:10"), EndHour = TimeSpan.Parse("12:40") }
+                new() { StartHour = "07:00", EndHour = "07:30" },
+                new() { StartHour = "07:30", EndHour = "08:00" },
+                new() { StartHour = "08:00", EndHour = "08:30" },
+                new() { StartHour = "08:30", EndHour = "09:00" },
+                new() { StartHour = "09:30", EndHour = "10:00" },
+                new() { StartHour = "10:30", EndHour = "11:00" },
+                new() { StartHour = "11:40", EndHour = "12:10" },
+                new() { StartHour = "12:10", EndHour = "12:40" }
             }
         };
 
@@ -49,10 +49,10 @@ public partial class AvailabilityTest
             },
             new List<AvailableTimeRangeDto>
             {
-                new() { StartHour = TimeSpan.Parse("7:00"),  EndHour = TimeSpan.Parse("7:40") },
-                new() { StartHour = TimeSpan.Parse("7:40"),  EndHour = TimeSpan.Parse("8:20") },
-                new() { StartHour = TimeSpan.Parse("8:20"),  EndHour = TimeSpan.Parse("9:00") },
-                new() { StartHour = TimeSpan.Parse("11:40"), EndHour = TimeSpan.Parse("12:20") }
+                new() { StartHour = "07:00", EndHour = "07:40" },
+                new() { StartHour = "07:40", EndHour = "08:20" },
+                new() { StartHour = "08:20", EndHour = "09:00" },
+                new() { StartHour = "11:40", EndHour = "12:20" }
             }
         };
 
@@ -68,9 +68,9 @@ public partial class AvailabilityTest
             },
             new List<AvailableTimeRangeDto>
             {
-                new() { StartHour = TimeSpan.Parse("7:00"), EndHour = TimeSpan.Parse("8:00") },
-                new() { StartHour = TimeSpan.Parse("8:00"), EndHour = TimeSpan.Parse("9:00") },
-                new() { StartHour = TimeSpan.Parse("11:40"), EndHour = TimeSpan.Parse("12:40") }
+                new() { StartHour = "07:00",  EndHour = "08:00" },
+                new() { StartHour = "08:00",  EndHour = "09:00" },
+                new() { StartHour = "11:40",  EndHour = "12:40" }
             }
         };
 
@@ -86,7 +86,7 @@ public partial class AvailabilityTest
             },
             new List<AvailableTimeRangeDto>
             {
-                new() { StartHour = TimeSpan.Parse("7:00"), EndHour = TimeSpan.Parse("8:30") }
+                new() { StartHour = "07:00", EndHour = "08:30" }
             }
         };
 
@@ -102,8 +102,8 @@ public partial class AvailabilityTest
             },
             new List<AvailableTimeRangeDto>
             {
-                new() { StartHour = TimeSpan.Parse("7:00"),  EndHour = TimeSpan.Parse("8:30") },
-                new() { StartHour = TimeSpan.Parse("13:10"), EndHour = TimeSpan.Parse("14:40") }
+                new() { StartHour = "07:00",  EndHour = "08:30" },
+                new() { StartHour = "13:10",  EndHour = "14:40" }
             }
         };
 
@@ -123,12 +123,12 @@ public partial class AvailabilityTest
             },
             new List<AvailableTimeRangeDto>
             {
-                new() { StartHour = TimeSpan.Parse("9:30"),   EndHour = TimeSpan.Parse("10:00") },
-                new() { StartHour = TimeSpan.Parse("10:00"),  EndHour = TimeSpan.Parse("10:30") },
-                new() { StartHour = TimeSpan.Parse("10:30"),  EndHour = TimeSpan.Parse("11:00") },
-                new() { StartHour = TimeSpan.Parse("11:00"),  EndHour = TimeSpan.Parse("11:30") },
-                new() { StartHour = TimeSpan.Parse("11:30"),  EndHour = TimeSpan.Parse("12:00") },
-                new() { StartHour = TimeSpan.Parse("12:00"),  EndHour = TimeSpan.Parse("12:30") }
+                new() { StartHour = "09:30",  EndHour = "10:00" },
+                new() { StartHour = "10:00",  EndHour = "10:30" },
+                new() { StartHour = "10:30",  EndHour = "11:00" },
+                new() { StartHour = "11:00",  EndHour = "11:30" },
+                new() { StartHour = "11:30",  EndHour = "12:00" },
+                new() { StartHour = "12:00",  EndHour = "12:30" }
             }
         };
 
@@ -147,15 +147,15 @@ public partial class AvailabilityTest
             },
             new List<AvailableTimeRangeDto>
             {
-                new() { StartHour = TimeSpan.Parse("9:30"),   EndHour = TimeSpan.Parse("10:00") },
-                new() { StartHour = TimeSpan.Parse("10:00"),  EndHour = TimeSpan.Parse("10:30") },
-                new() { StartHour = TimeSpan.Parse("10:30"),  EndHour = TimeSpan.Parse("11:00") },
-                new() { StartHour = TimeSpan.Parse("11:00"),  EndHour = TimeSpan.Parse("11:30") },
-                new() { StartHour = TimeSpan.Parse("11:30"),  EndHour = TimeSpan.Parse("12:00") },
-                new() { StartHour = TimeSpan.Parse("12:00"),  EndHour = TimeSpan.Parse("12:30") },
-                new() { StartHour = TimeSpan.Parse("12:30"),  EndHour = TimeSpan.Parse("13:00") },
-                new() { StartHour = TimeSpan.Parse("13:00"),  EndHour = TimeSpan.Parse("13:30") },
-                new() { StartHour = TimeSpan.Parse("13:30"),  EndHour = TimeSpan.Parse("14:00") }
+                new() { StartHour = "09:30",  EndHour = "10:00" },
+                new() { StartHour = "10:00",  EndHour = "10:30" },
+                new() { StartHour = "10:30",  EndHour = "11:00" },
+                new() { StartHour = "11:00",  EndHour = "11:30" },
+                new() { StartHour = "11:30",  EndHour = "12:00" },
+                new() { StartHour = "12:00",  EndHour = "12:30" },
+                new() { StartHour = "12:30",  EndHour = "13:00" },
+                new() { StartHour = "13:00",  EndHour = "13:30" },
+                new() { StartHour = "13:30",  EndHour = "14:00" }
             }
         };
 
@@ -176,13 +176,13 @@ public partial class AvailabilityTest
             },
             new List<AvailableTimeRangeDto>
             {
-                new() { StartHour = TimeSpan.Parse("7:00"),  EndHour = TimeSpan.Parse("7:30") },
-                new() { StartHour = TimeSpan.Parse("7:30"),  EndHour = TimeSpan.Parse("8:00") },
-                new() { StartHour = TimeSpan.Parse("8:00"),  EndHour = TimeSpan.Parse("8:30") },
-                new() { StartHour = TimeSpan.Parse("8:30"),  EndHour = TimeSpan.Parse("9:00") },
-                new() { StartHour = TimeSpan.Parse("9:30"),  EndHour = TimeSpan.Parse("10:00") },
-                new() { StartHour = TimeSpan.Parse("10:00"), EndHour = TimeSpan.Parse("10:30") },
-                new() { StartHour = TimeSpan.Parse("10:30"), EndHour = TimeSpan.Parse("11:00") }
+                new() { StartHour = "07:00", EndHour = "07:30" },
+                new() { StartHour = "07:30", EndHour = "08:00" },
+                new() { StartHour = "08:00", EndHour = "08:30" },
+                new() { StartHour = "08:30", EndHour = "09:00" },
+                new() { StartHour = "09:30", EndHour = "10:00" },
+                new() { StartHour = "10:00", EndHour = "10:30" },
+                new() { StartHour = "10:30", EndHour = "11:00" }
             }
         };
 
@@ -198,10 +198,10 @@ public partial class AvailabilityTest
             },
             new List<AvailableTimeRangeDto>
             {
-                new() { StartHour = TimeSpan.Parse("8:00"),  EndHour = TimeSpan.Parse("9:00") },
-                new() { StartHour = TimeSpan.Parse("9:00"),  EndHour = TimeSpan.Parse("10:00") },
-                new() { StartHour = TimeSpan.Parse("10:00"), EndHour = TimeSpan.Parse("11:00") },
-                new() { StartHour = TimeSpan.Parse("11:00"), EndHour = TimeSpan.Parse("12:00") }
+                new() { StartHour = "08:00", EndHour = "09:00" },
+                new() { StartHour = "09:00", EndHour = "10:00" },
+                new() { StartHour = "10:00", EndHour = "11:00" },
+                new() { StartHour = "11:00", EndHour = "12:00" }
             }
         };
     }

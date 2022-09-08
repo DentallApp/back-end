@@ -50,8 +50,8 @@ public static class Availability
 
                 availableHours.Add(new AvailableTimeRangeDto
                 {
-                    StartHour = newStartHour,
-                    EndHour = newEndHour
+                    StartHour = newStartHour.GetHourWithoutSeconds(),
+                    EndHour   = newEndHour.GetHourWithoutSeconds()
                 });
                 newStartHour = newEndHour;
             }
