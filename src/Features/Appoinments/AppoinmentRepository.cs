@@ -35,5 +35,17 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                  .IgnoreQueryFilters()
                  .ToListAsync();
 
-
+    public async Task<List<UnavailableTimeRangeDto>> GetUnavailableHoursAsync(int dentistId, DateTime appoinmentDate)
+        => await Context.Set<Appoinment>()
+                        .Where(appoinment => 
+                              (appoinment.DentistId == dentistId) &&
+                              (appoinment.Date == appoinmentDate) &&
+                              (appoinment.IsNotCanceled() ||
+                               appoinment.IsCancelledByEmployee ||
+                               DateTime.Now > Context.AddTime(Context.ToDateTime(appoinment.Date), appoinment.StartHour)))
+                        .Select(appoinment => appoinment.MapToUnavailableTimeRangeDto())
+                        .Distinct()
+                        .OrderBy(appoinment => appoinment.StartHour)
+                          .ThenBy(appoinment => appoinment.EndHour)
+                        .ToListAsync();
 }
