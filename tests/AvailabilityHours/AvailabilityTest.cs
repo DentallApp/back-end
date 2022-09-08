@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.Appoinments.AvailabilityHours;
+﻿namespace DentallApp.Tests.AvailabilityHours;
 
 [TestClass]
 public partial class AvailabilityTest
