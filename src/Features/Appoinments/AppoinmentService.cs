@@ -30,4 +30,19 @@ public class AppoinmentService : IAppoinmentService
             Message = DeleteResourceMessage
         };
     }
+
+    public async Task<Response> CreateAppoinmentAsync(AppoinmentInsertDto appoinmentInsertDto)
+    {
+        if (await _appoinmentRepository.IsNotAvailableAsync(appoinmentInsertDto))
+            return new Response(DateAndTimeAppointmentIsNotAvailableMessage);
+
+        _appoinmentRepository.Insert(appoinmentInsertDto.MapToAppoinment());
+        await _appoinmentRepository.SaveAsync();
+
+        return new Response
+        {
+            Success = true,
+            Message = CreateResourceMessage
+        };
+    }
 }

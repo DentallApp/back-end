@@ -48,4 +48,21 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                         .OrderBy(appoinment => appoinment.StartHour)
                           .ThenBy(appoinment => appoinment.EndHour)
                         .ToListAsync();
+
+    public async Task<bool> IsNotAvailableAsync(AppoinmentInsertDto appoinmentDto)
+    {
+        var result = await Context.Set<Appoinment>()
+                                  .Where(appoinment => 
+                                        (appoinment.DentistId == appoinmentDto.DentistId) &&
+                                        (appoinment.Date == appoinmentDto.AppoinmentDate) &&
+                                        (appoinment.StartHour == appoinmentDto.StartHour) &&
+                                        (appoinment.EndHour == appoinmentDto.EndHour) &&
+                                        (appoinment.IsNotCanceled() ||
+                                         appoinment.IsCancelledByEmployee ||
+                                         DateTime.Now > Context.AddTime(Context.ToDateTime(appoinment.Date), appoinment.StartHour)))
+                                  .Select(appoinment => appoinment.Id)
+                                  .FirstOrDefaultAsync();
+
+        return result != 0;
+    }
 }
