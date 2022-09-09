@@ -11,11 +11,12 @@ public class BotQueryRepository : IBotQueryRepository
 
     public async Task<List<AdaptiveChoice>> GetDentalServicesAsync()
         => await _context.Set<GeneralTreatment>()
+                         .Where(treatment => treatment.SpecificTreatments.Any())
                          .Select(treatment => new AdaptiveChoice
-                         {
+                          {
                              Title = treatment.Name,
                              Value = treatment.Id.ToString()
-                         })
+                          })
                          .ToListAsync();
 
     public async Task<List<AdaptiveChoice>> GetDentistsByOfficeIdAsync(int officeId)
