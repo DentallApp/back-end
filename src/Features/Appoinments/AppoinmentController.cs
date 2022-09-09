@@ -33,4 +33,18 @@ public class AppoinmentController : ControllerBase
 
         return BadRequest(response);
     }
+
+    /// <summary>
+    /// Crea una cita médica para cualquier persona.
+    /// </summary>
+    [AuthorizeByRole(RolesName.Secretary)]
+    [HttpPost]
+    public async Task<ActionResult<Response>> Post(AppoinmentInsertDto appoinmentInsertDto)
+    {
+        var response = await _appoinmentService.CreateAppoinmentAsync(appoinmentInsertDto);
+        if (response.Success)
+            return CreatedAtAction(nameof(Post), response);
+
+        return BadRequest(response);
+    }
 }

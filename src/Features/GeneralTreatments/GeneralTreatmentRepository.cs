@@ -18,4 +18,11 @@ public class GeneralTreatmentRepository : SoftDeleteRepository<GeneralTreatment>
         => await Context.Set<GeneralTreatment>()
                         .Select(treatment => treatment.MapToGeneralTreatmentGetNameDto())
                         .ToListAsync();
+
+    public async Task<GeneralTreatmentGetDurationDto> GetTreatmentWithDurationAsync(int treatmentId)
+        => await Context.Set<GeneralTreatment>()
+                        .Where(treatment => treatment.Id == treatmentId)
+                        .Select(treatment => new GeneralTreatmentGetDurationDto { Duration = treatment.Duration })
+                        .IgnoreQueryFilters()
+                        .FirstOrDefaultAsync();
 }

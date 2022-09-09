@@ -1,0 +1,30 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.3",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Fecha de la cita",
+      "wrap": true,
+      "fontType": "Default",
+      "weight": "Bolder",
+      "size": "Medium",
+      "color": "Dark"
+    },
+    {
+      "type": "Input.Date",
+      "isRequired": true,
+      "errorMessage": "Fecha inválida",
+      "id": "date",
+      "label": "Seleccione una fecha para la cita"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Enviar",
+      "associatedInputs": "auto"
+    }
+  ]
+}

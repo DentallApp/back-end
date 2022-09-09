@@ -1,4 +1,5 @@
 ﻿namespace DentallApp.Features.Appoinments;
+using AppoinmentType = AppoinmentStatusId;
 
 public class Appoinment : ModelBase
 {
@@ -16,7 +17,7 @@ public class Appoinment : ModelBase
     public int DentistId { get; set; }
     [ForeignKey("DentistId")]
     public Employee Employee { get; set; }
-    public int AppoinmentStatusId { get; set; }
+    public int AppoinmentStatusId { get; set; } = AppoinmentType.Scheduled;
     public AppoinmentStatus AppoinmentStatus { get; set; }
     public int GeneralTreatmentId { get; set; }
     public GeneralTreatment GeneralTreatment { get; set; }

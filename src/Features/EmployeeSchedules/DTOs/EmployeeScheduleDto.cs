@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.EmployeeSchedules.DTOs;
 
-public class EmployeeScheduleDto
+public class EmployeeScheduleDto : IEmployeeScheduleDto
 {
     public TimeSpan? MorningStartHour { get; set; }
     public TimeSpan? MorningEndHour { get; set; }

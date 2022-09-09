@@ -20,10 +20,11 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmployeeService, EmployeeService>()
                 .AddTransient<IRoleService, RoleService>()
                 .AddTransient<IOfficeService, OfficeService>()
-                .AddTransient<IAppoinmentService, AppoinmentService>()
+                .AddScoped<IAppoinmentService, AppoinmentService>()
                 .AddTransient<IEmployeeScheduleService, EmployeeScheduleService>()
                 .AddTransient<IFavoriteDentistService, FavoriteDentistService>()
                 .AddTransient<IOfficeScheduleService, OfficeScheduleService>()
+                .AddScoped<IAvailabilityService, AvailabilityService>()
                 .AddTransient<ITokenService, TokenService>();
 
         return services;
@@ -39,7 +40,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IAppoinmentStatusRepository, AppoinmentStatusRepository>()
                 .AddTransient<IRoleRepository, RoleRepository>()
                 .AddTransient<IOfficeRepository, OfficeRepository>()
-                .AddTransient<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
+                .AddScoped<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
                 .AddTransient<IAppoinmentRepository, AppoinmentRepository>()
                 .AddTransient<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
                 .AddTransient<IFavoriteDentistRepository, FavoriteDentistRepository>()

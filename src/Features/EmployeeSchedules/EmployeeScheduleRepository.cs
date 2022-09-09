@@ -28,4 +28,38 @@ public class EmployeeScheduleRepository : SoftDeleteRepository<EmployeeSchedule>
                         .Where(employeeSchedule => employeeSchedule.Id == scheduleId)
                         .IgnoreQueryFilters()
                         .FirstOrDefaultAsync();
+
+    public async Task<EmployeeScheduleByWeekDayDto> GetEmployeeScheduleByWeekDayIdAsync(int employeeId, int weekDayId)
+        => await (from employeeSchedule in Context.Set<EmployeeSchedule>()
+                  join employee in Context.Set<Employee>() on employeeSchedule.EmployeeId equals employee.Id
+                  join office in Context.Set<Office>() on employee.OfficeId equals office.Id
+                  join officeSchedule in Context.Set<OfficeSchedule>() on 
+                    new
+                    {
+                        WeekDayId = weekDayId,
+                        office.Id
+                    }
+                    equals
+                    new
+                    {
+                        officeSchedule.WeekDayId,
+                        Id = officeSchedule.OfficeId
+                    }
+                  where employee.Id == employeeId && employeeSchedule.WeekDayId == weekDayId
+                  select new EmployeeScheduleByWeekDayDto
+                  {
+                      EmployeeScheduleId            = employeeSchedule.Id,
+                      MorningStartHour              = employeeSchedule.MorningStartHour,
+                      MorningEndHour                = employeeSchedule.MorningEndHour,
+                      AfternoonStartHour            = employeeSchedule.AfternoonStartHour,
+                      AfternoonEndHour              = employeeSchedule.AfternoonEndHour,
+                      IsEmployeeScheculeDeleted     = employeeSchedule.IsDeleted,
+                      OfficeId                      = employee.OfficeId,
+                      IsOfficeDeleted               = office.IsDeleted,
+                      IsOfficeScheduleDeleted       = officeSchedule.IsDeleted
+                  })
+                 .IgnoreQueryFilters()
+                 .FirstOrDefaultAsync();
+
+
 }

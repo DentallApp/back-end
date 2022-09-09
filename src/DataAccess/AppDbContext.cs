@@ -1,6 +1,6 @@
 namespace DentallApp.DataAccess;
 
-public class AppDbContext : CustomDbContext
+public partial class AppDbContext : CustomDbContext
 {
     public DbSet<GeneralTreatment> GeneralTreatments { get; set; }
     public DbSet<SpecificTreatment> SpecificTreatments { get; set; }
@@ -32,6 +32,8 @@ public class AppDbContext : CustomDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        AddSqlFunctions(modelBuilder);
+
         modelBuilder.ApplyConfiguration(new GeneralTreatmentConfiguration());
         modelBuilder.ApplyConfiguration(new SpecificTreatmentConfiguration());
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
