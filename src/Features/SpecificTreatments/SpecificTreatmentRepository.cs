@@ -17,4 +17,15 @@ public class SpecificTreatmentRepository : Repository<SpecificTreatment>, ISpeci
                   where specificTreatment.GeneralTreatmentId == generalTreatmentId
                   select specificTreatment.MapToSpecificTreatmentGetDto()
                  ).ToListAsync();
+
+    public async Task<SpecificTreatmentRangeToPayDto> GetTreatmentWithRangeToPayAsync(int generalTreatmentId)
+        => await Context.Set<SpecificTreatment>()
+                        .Where(specificTreatment => specificTreatment.GeneralTreatmentId == generalTreatmentId)
+                        .GroupBy(specificTreatment => specificTreatment.GeneralTreatmentId)
+                        .Select(group => new SpecificTreatmentRangeToPayDto
+                         {
+                            PriceMin = group.Min(specificTreatment => specificTreatment.Price),
+                            PriceMax = group.Max(specificTreatment => specificTreatment.Price)
+                         })
+                        .FirstOrDefaultAsync();
 }

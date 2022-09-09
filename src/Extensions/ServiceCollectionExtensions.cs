@@ -40,7 +40,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IAppoinmentStatusRepository, AppoinmentStatusRepository>()
                 .AddTransient<IRoleRepository, RoleRepository>()
                 .AddTransient<IOfficeRepository, OfficeRepository>()
-                .AddTransient<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
+                .AddScoped<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
                 .AddTransient<IAppoinmentRepository, AppoinmentRepository>()
                 .AddTransient<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
                 .AddTransient<IFavoriteDentistRepository, FavoriteDentistRepository>()

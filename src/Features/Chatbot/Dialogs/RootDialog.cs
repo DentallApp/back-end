@@ -136,7 +136,15 @@ public partial class RootDialog : ComponentDialog
         {
             throw new Exception(response.Message);
         }
-        await stepContext.Context.SendActivityAsync("Cita agendada con éxito. Vuelva pronto... :D", cancellationToken: cancellationToken);
+
+        var rangeToPay = await _botService.GetRangeToPayAsync(appoinment.GeneralTreatmentId);
+        var msg = rangeToPay.PriceMin != rangeToPay.PriceMax ? 
+                    $"El rango a pagar es de ${rangeToPay.PriceMin} a ${rangeToPay.PriceMax}" :
+                    $"El valor a pagar es de ${rangeToPay.PriceMax}";
+
+        await stepContext.Context.SendActivityAsync($"Cita agendada con éxito. {msg}.", cancellationToken: cancellationToken);
+        await stepContext.Context.SendActivityAsync("Gracias por usar nuestro servicio.\n\n" +
+                "Si desea agendar otra cita, escriba algo para empezar de nuevo el proceso.", cancellationToken: cancellationToken);
         return await stepContext.EndDialogAsync(cancellationToken: cancellationToken);
     }
 }

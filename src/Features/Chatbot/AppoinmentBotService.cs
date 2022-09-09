@@ -50,4 +50,11 @@ public class AppoinmentBotService : IAppoinmentBotService
         var appoinmentService = scope.ServiceProvider.GetRequiredService<IAppoinmentService>();
         return await appoinmentService.CreateAppoinmentAsync(appoinment);
     }
+
+    public async Task<SpecificTreatmentRangeToPayDto> GetRangeToPayAsync(int dentalServiceId)
+    {
+        using var scope = _serviceProvider.CreateScope();
+        var repository = scope.ServiceProvider.GetRequiredService<ISpecificTreatmentRepository>();
+        return await repository.GetTreatmentWithRangeToPayAsync(dentalServiceId);
+    }
 }

@@ -8,4 +8,5 @@ public interface IAppoinmentBotService
     Task<List<AdaptiveChoice>> GetDentistsByOfficeIdAsync(int officeId);
     Task<Response<IEnumerable<AvailableTimeRangeDto>>> GetAvailableHoursAsync(AvailableTimeRangePostDto availableTimeRangeDto);
     Task<Response> CreateScheduledAppoinmentAsync(AppoinmentInsertDto appoinment);
+    Task<SpecificTreatmentRangeToPayDto> GetRangeToPayAsync(int dentalServiceId);
 }
