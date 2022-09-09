@@ -32,7 +32,7 @@ public class AvailabilityOptions
     public DateTime? AppoinmentDate { get; set; }
 
     /// <summary>
-    /// Obtiene o establece la fecha y hora actual del sistema.
+    /// Obtiene o establece la fecha y hora actual.
     /// </summary>
     public DateTime CurrentTimeAndDate { get; set; } = DateTime.Now;
 }
