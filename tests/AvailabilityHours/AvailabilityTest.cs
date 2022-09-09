@@ -100,4 +100,44 @@ public partial class AvailabilityTest
 
         Assert.IsNull(availableHours);
     }
+
+    [TestMethod]
+    public void GetAvailableHours_WhenAppointmentDateIsEqualToTheCurrentDate_ShouldDiscardAvailableHoursThatAreLessThanTheCurrentTime()
+    {
+        var unavailables = new List<UnavailableTimeRangeDto>
+        {
+            new() { StartHour = TimeSpan.Parse("10:00"),  EndHour = TimeSpan.Parse("10:30") },
+            new() { StartHour = TimeSpan.Parse("11:00"),  EndHour = TimeSpan.Parse("12:00") }
+        };
+        var options = new AvailabilityOptions
+        {
+            Unavailables       = unavailables,
+            DentistStartHour   = TimeSpan.Parse("7:00"),
+            DentistEndHour     = TimeSpan.Parse("17:00"),
+            ServiceDuration    = TimeSpan.FromMinutes(30),
+            AppoinmentDate     = new DateTime(2022, 08, 01, 0, 0, 0),
+            CurrentTimeAndDate = new DateTime(2022, 08, 01, 12, 0, 0)
+        };
+        var expected = new List<AvailableTimeRangeDto>
+        {
+            new() { StartHour = "12:30", EndHour = "13:00" },
+            new() { StartHour = "13:00", EndHour = "13:30" },
+            new() { StartHour = "13:30", EndHour = "14:00" },
+            new() { StartHour = "14:00", EndHour = "14:30" },
+            new() { StartHour = "14:30", EndHour = "15:00" },
+            new() { StartHour = "15:00", EndHour = "15:30" },
+            new() { StartHour = "15:30", EndHour = "16:00" },
+            new() { StartHour = "16:00", EndHour = "16:30" },
+            new() { StartHour = "16:30", EndHour = "17:00" }
+        };
+
+        var availableHours = Availability.GetAvailableHours(options);
+
+        Assert.AreEqual(expected.Count, actual: availableHours.Count);
+        for (int i = 0; i < availableHours.Count; i++)
+        {
+            Assert.AreEqual(expected[i].StartHour, actual: availableHours[i].StartHour);
+            Assert.AreEqual(expected[i].EndHour,   actual: availableHours[i].EndHour);
+        }
+    }
 }

@@ -59,6 +59,7 @@ public class AvailabilityService : IAvailabilityService
                 DentistStartHour = (TimeSpan)employeeScheduleDto.MorningStartHour,
                 DentistEndHour   = (TimeSpan)employeeScheduleDto.AfternoonEndHour,
                 ServiceDuration  = serviceDuration,
+                AppoinmentDate   = appoinmentDate,
                 Unavailables     = unavailables.OrderBy(timeRange => timeRange.StartHour)
                                                .ThenBy(timeRange => timeRange.EndHour)
                                                .ToList()
@@ -71,6 +72,7 @@ public class AvailabilityService : IAvailabilityService
                 DentistStartHour = (TimeSpan)employeeScheduleDto.MorningStartHour,
                 DentistEndHour   = (TimeSpan)employeeScheduleDto.MorningEndHour,
                 ServiceDuration  = serviceDuration,
+                AppoinmentDate   = appoinmentDate,
                 Unavailables     = unavailables
             });
         }
@@ -81,6 +83,7 @@ public class AvailabilityService : IAvailabilityService
                 DentistStartHour = (TimeSpan)employeeScheduleDto.AfternoonStartHour,
                 DentistEndHour   = (TimeSpan)employeeScheduleDto.AfternoonEndHour,
                 ServiceDuration  = serviceDuration,
+                AppoinmentDate   = appoinmentDate,
                 Unavailables     = unavailables
             });
         }

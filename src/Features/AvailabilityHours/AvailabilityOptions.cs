@@ -1,5 +1,8 @@
 ﻿namespace DentallApp.Features.AvailabilityHours;
 
+/// <summary>
+/// Representa las opciones que se utilizan para el método <see cref="Availability.GetAvailableHours(AvailabilityOptions)"/>.
+/// </summary>
 public class AvailabilityOptions
 {
     /// <summary>
@@ -22,4 +25,14 @@ public class AvailabilityOptions
     /// La colección debe estar ordenada de forma ascendente y no debe tener franjas de horario duplicadas.
     /// </summary>
     public List<UnavailableTimeRangeDto> Unavailables { get; set; }
+
+    /// <summary>
+    /// Obtiene o establece la fecha de la cita.
+    /// </summary>
+    public DateTime? AppoinmentDate { get; set; }
+
+    /// <summary>
+    /// Obtiene o establece la fecha y hora actual del sistema.
+    /// </summary>
+    public DateTime CurrentTimeAndDate { get; set; } = DateTime.Now;
 }
