@@ -25,6 +25,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IFavoriteDentistService, FavoriteDentistService>()
                 .AddTransient<IOfficeScheduleService, OfficeScheduleService>()
                 .AddScoped<IAvailabilityService, AvailabilityService>()
+                .AddTransient<IPersonService, PersonService>()
                 .AddTransient<ITokenService, TokenService>();
 
         return services;
@@ -45,6 +46,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
                 .AddTransient<IFavoriteDentistRepository, FavoriteDentistRepository>()
                 .AddTransient<IOfficeScheduleRepository, OfficeScheduleRepository>()
+                .AddTransient<IPersonRepository, PersonRepository>()
                 .AddTransient<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
         return services;
