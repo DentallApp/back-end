@@ -34,6 +34,7 @@ public class BotQueryRepository : IBotQueryRepository
 
     public async Task<List<AdaptiveChoice>> GetOfficesAsync()
         => await _context.Set<Office>()
+                         .Where(office => office.OfficeSchedules.Any())
                          .Select(office => new AdaptiveChoice
                          {
                              Title = office.Name,
