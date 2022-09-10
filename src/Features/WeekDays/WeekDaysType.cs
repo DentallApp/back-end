@@ -6,6 +6,7 @@ public class WeekDaysType
 
     public static Dictionary<int, string> WeekDays => new()
     {
+        {0, WeekDaysName.Sunday },
         {1, WeekDaysName.Monday },
         {2, WeekDaysName.Tuesday },
         {3, WeekDaysName.Wednesday },
@@ -23,4 +24,5 @@ public class WeekDaysName
     public const string Thursday    = "Jueves";
     public const string Friday      = "Viernes";
     public const string Saturday    = "Sábado";
+    public const string Sunday      = "Domingo";
 }
