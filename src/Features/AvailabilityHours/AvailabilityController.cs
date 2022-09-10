@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.AvailabilityHours;
 
-[Route("appoinment")]
+[Route("availability")]
 [ApiController]
 public class AvailabilityController : ControllerBase
 {
