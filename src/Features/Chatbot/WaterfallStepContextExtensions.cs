@@ -43,4 +43,13 @@ public static class WaterfallStepContextExtensions
     /// </summary>
     public static string GetValueFromString(this WaterfallStepContext stepContext)
         => stepContext.Context.Activity.Value.ToString();
+
+    /// <summary>
+    /// Regresa al anterior paso del diálogo cascada.
+    /// </summary>
+    public static Task<DialogTurnResult> PreviousAsync(this WaterfallStepContext stepContext, object result = null, CancellationToken cancellationToken = default)
+    {
+        stepContext.ActiveDialog.State["stepIndex"] = (int)stepContext.ActiveDialog.State["stepIndex"] - 2;
+        return stepContext.NextAsync(result, cancellationToken);
+    }
 }

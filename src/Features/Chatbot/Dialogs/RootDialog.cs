@@ -91,7 +91,8 @@ public partial class RootDialog : ComponentDialog
 
     private async Task<DialogTurnResult> ShowAppoinmentDate(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
-        stepContext.GetAppoinment().DentistId = int.Parse(stepContext.GetValueFromJObject(CardType.DentistId));
+        if (stepContext.Result is not null)
+            stepContext.GetAppoinment().DentistId = int.Parse(stepContext.GetValueFromJObject(CardType.DentistId));
         var cardJson = await TemplateCardLoader.LoadAppoinmentDateCardAsync();
         return await stepContext.PromptAsync(
             nameof(AdaptiveCardPrompt),
@@ -103,7 +104,8 @@ public partial class RootDialog : ComponentDialog
     private async Task<DialogTurnResult> ShowSchedules(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
         var appoinment  = stepContext.GetAppoinment();
-        appoinment.AppoinmentDate = DateTime.Parse(stepContext.GetValueFromJObject(CardType.Date));
+        if (stepContext.Result is not null)
+            appoinment.AppoinmentDate = DateTime.Parse(stepContext.GetValueFromJObject(CardType.Date));
         var response = await _botService.GetAvailableHoursAsync(new AvailableTimeRangePostDto
         {
             DentistId       = appoinment.DentistId,
@@ -113,7 +115,8 @@ public partial class RootDialog : ComponentDialog
 
         if (!response.Success)
         {
-            throw new Exception(response.Message);
+            await stepContext.Context.SendActivityAsync(response.Message);
+            return await stepContext.PreviousAsync(cancellationToken: cancellationToken);
         }
 
         var availableHours = response.Data as List<AvailableTimeRangeDto>;
@@ -134,7 +137,8 @@ public partial class RootDialog : ComponentDialog
         var response = await _botService.CreateScheduledAppoinmentAsync(appoinment);
         if (!response.Success)
         {
-            throw new Exception(response.Message);
+            await stepContext.Context.SendActivityAsync(response.Message);
+            return await stepContext.PreviousAsync(cancellationToken: cancellationToken);
         }
 
         var rangeToPay = await _botService.GetRangeToPayAsync(appoinment.GeneralTreatmentId);
