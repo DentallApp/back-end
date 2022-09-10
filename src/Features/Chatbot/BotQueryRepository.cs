@@ -24,7 +24,9 @@ public class BotQueryRepository : IBotQueryRepository
                   join person in _context.Set<Person>() on employee.PersonId equals person.Id
                   join office in _context.Set<Office>() on employee.OfficeId equals office.Id
                   join userRole in _context.Set<UserRole>() on employee.UserId equals userRole.UserId
-                  where employee.OfficeId == officeId && userRole.RoleId == RolesId.Dentist
+                  where employee.OfficeId == officeId && 
+                        userRole.RoleId == RolesId.Dentist &&
+                        employee.EmployeeSchedules.Any()
                   select new AdaptiveChoice 
                   { 
                       Title = person.FullName, 
