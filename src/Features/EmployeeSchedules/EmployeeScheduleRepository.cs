@@ -23,6 +23,19 @@ public class EmployeeScheduleRepository : SoftDeleteRepository<EmployeeSchedule>
                         .IgnoreQueryFilters()
                         .ToListAsync();
 
+    public async Task<IEnumerable<WeekDayDto>> GetEmployeeScheduleWithOnlyWeekDayAsync(int employeeId)
+        => await Context.Set<EmployeeSchedule>()
+                        .Include(employeeSchedule => employeeSchedule.WeekDay)
+                        .Where(employeeSchedule => employeeSchedule.EmployeeId == employeeId)
+                        .OrderBy(employeeSchedule => employeeSchedule.WeekDayId)
+                        .Select(employeeSchedule => new WeekDayDto
+                         {
+                            WeekDayId   = employeeSchedule.WeekDayId,
+                            WeekDayName = employeeSchedule.WeekDay.Name
+                         })
+                        .IgnoreQueryFilters()
+                        .ToListAsync();
+
     public async Task<EmployeeSchedule> GetEmployeeScheduleByIdAsync(int scheduleId)
         => await Context.Set<EmployeeSchedule>()
                         .Where(employeeSchedule => employeeSchedule.Id == scheduleId)
