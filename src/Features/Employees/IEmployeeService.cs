@@ -7,4 +7,5 @@ public interface IEmployeeService
     Task<Response> EditProfileByCurrentEmployeeAsync(int id, EmployeeUpdateDto employeeUpdateDto);
     Task<Response> EditProfileByAdminAsync(int employeeId, ClaimsPrincipal currentEmployee, EmployeeUpdateByAdminDto employeeUpdateDto);
     Task<IEnumerable<EmployeeGetByDentistDto>> GetAllDentistsByOfficeIdAsync(int officeId);
+    Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId);
 }

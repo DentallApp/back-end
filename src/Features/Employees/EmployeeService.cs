@@ -17,6 +17,9 @@ public class EmployeeService : IEmployeeService
     public async Task<IEnumerable<EmployeeGetByDentistDto>> GetAllDentistsByOfficeIdAsync(int officeId)
         => await _unitOfWork.EmployeeRepository.GetAllDentistsByOfficeIdAsync(officeId);
 
+    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId)
+        => await _unitOfWork.EmployeeRepository.GetDentistsByOfficeIdAsync(officeId);
+
     public async Task<Response> RemoveEmployeeAsync(int id, ClaimsPrincipal currentEmployee)
     {
         var employee = await _unitOfWork.EmployeeRepository.GetEmployeeByIdAsync(id);
