@@ -1,6 +1,4 @@
-﻿using DentallApp.Features.WeekDays;
-
-namespace DentallApp.Tests.WeekDays;
+﻿namespace DentallApp.Tests.WeekDays;
 
 public partial class WeekDayFormatTest
 {
