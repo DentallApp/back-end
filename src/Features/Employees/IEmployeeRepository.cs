@@ -8,5 +8,5 @@ public interface IEmployeeRepository : ISoftDeleteRepository<Employee>
     Task<IEnumerable<EmployeeGetDto>> GetFullEmployeesProfileByOfficeIdAsync(int currentEmployeeId, int officeId);
     Task<Employee> GetDataByIdForCurrentEmployeeAsync(int id);
     Task<Employee> GetDataByIdForAdminAsync(int id);
-    Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId);
+    Task<IEnumerable<EmployeeGetByDentistDto>> GetAllDentistsByOfficeIdAsync(int officeId);
 }

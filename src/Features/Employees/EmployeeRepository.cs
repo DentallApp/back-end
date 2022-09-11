@@ -54,7 +54,7 @@ public class EmployeeRepository : SoftDeleteRepository<Employee>, IEmployeeRepos
                         .IgnoreQueryFilters()
                         .FirstOrDefaultAsync();
 
-    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId)
+    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetAllDentistsByOfficeIdAsync(int officeId)
         => await (from employee in Context.Set<Employee>()
                   join person in Context.Set<Person>() on employee.PersonId equals person.Id
                   join userRole in Context.Set<UserRole>() on employee.UserId equals userRole.UserId
