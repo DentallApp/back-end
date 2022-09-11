@@ -40,10 +40,10 @@ public partial class RootDialog : ComponentDialog
     {
         var userProfile = stepContext.CreateUserProfileInstance();
         stepContext.CreateAppoinmentInstance().UserId = userProfile.Id;
-        var choicesTask = _botService.GetPatientsAsync(userProfile);
+        var choicesTask  = _botService.GetPatientsAsync(userProfile);
         var cardJsonTask = TemplateCardLoader.LoadPatientCardAsync();
-        var choices = await choicesTask;
-        var cardJson = await cardJsonTask;
+        var choices      = await choicesTask;
+        var cardJson     = await cardJsonTask;
         return await stepContext.PromptAsync(
             nameof(AdaptiveCardPrompt),
             AdaptiveCardFactory.CreateSingleChoiceCard(cardJson, choices),
@@ -60,10 +60,10 @@ public partial class RootDialog : ComponentDialog
                 return await stepContext.PreviousAsync(message: SelectPatientMessage, cancellationToken: cancellationToken);
             stepContext.GetAppoinment().PersonId = int.Parse(selectedPatientId);
         }
-        var choicesTask = _botService.GetOfficesAsync();
+        var choicesTask  = _botService.GetOfficesAsync();
         var cardJsonTask = TemplateCardLoader.LoadOfficeCardAsync();
-        var choices = await choicesTask;
-        var cardJson = await cardJsonTask;
+        var choices      = await choicesTask;
+        var cardJson     = await cardJsonTask;
         return await stepContext.PromptAsync(
             nameof(AdaptiveCardPrompt),
             AdaptiveCardFactory.CreateSingleChoiceCard(cardJson, choices),
@@ -80,10 +80,10 @@ public partial class RootDialog : ComponentDialog
                 return await stepContext.PreviousAsync(message: SelectOfficeMessage, cancellationToken: cancellationToken);
             stepContext.GetAppoinment().OfficeId = int.Parse(selectedOfficeId);
         }
-        var choicesTask = _botService.GetDentalServicesAsync(); 
+        var choicesTask  = _botService.GetDentalServicesAsync(); 
         var cardJsonTask = TemplateCardLoader.LoadDentalServiceCardAsync();
-        var choices = await choicesTask;
-        var cardJson = await cardJsonTask;
+        var choices      = await choicesTask;
+        var cardJson     = await cardJsonTask;
         return await stepContext.PromptAsync(
             nameof(AdaptiveCardPrompt),
             AdaptiveCardFactory.CreateSingleChoiceCard(cardJson, choices),
@@ -100,11 +100,11 @@ public partial class RootDialog : ComponentDialog
                 return await stepContext.PreviousAsync(message: SelectDentalServiceMessage, cancellationToken: cancellationToken);
             stepContext.GetAppoinment().GeneralTreatmentId = int.Parse(selectedDentalServiceId);
         }
-        int officeId = stepContext.GetAppoinment().OfficeId;
-        var choicesTask = _botService.GetDentistsByOfficeIdAsync(officeId);
+        int officeId     = stepContext.GetAppoinment().OfficeId;
+        var choicesTask  = _botService.GetDentistsByOfficeIdAsync(officeId);
         var cardJsonTask = TemplateCardLoader.LoadDentistCardAsync();
-        var choices = await choicesTask;
-        var cardJson = await cardJsonTask;
+        var choices      = await choicesTask;
+        var cardJson     = await cardJsonTask;
         return await stepContext.PromptAsync(
             nameof(AdaptiveCardPrompt),
             AdaptiveCardFactory.CreateSingleChoiceCard(cardJson, choices),
@@ -121,7 +121,11 @@ public partial class RootDialog : ComponentDialog
                 return await stepContext.PreviousAsync(message: SelectDentistMessage, cancellationToken: cancellationToken);
             stepContext.GetAppoinment().DentistId = int.Parse(selectedDentistId);
         }
-        var cardJson = await TemplateCardLoader.LoadAppoinmentDateCardAsync();
+        var dentistScheduleTask = _botService.GetDentistScheduleAsync(stepContext.GetAppoinment().DentistId);
+        var cardJsonTask        = TemplateCardLoader.LoadAppoinmentDateCardAsync();
+        var dentistSchedule     = await dentistScheduleTask;
+        var cardJson            = await cardJsonTask;
+        await stepContext.Context.SendActivityAsync($"El odontólogo atiende los {dentistSchedule}");
         return await stepContext.PromptAsync(
             nameof(AdaptiveCardPrompt),
             AdaptiveCardFactory.CreateDateCard(cardJson),

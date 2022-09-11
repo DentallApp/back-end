@@ -43,7 +43,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IOfficeRepository, OfficeRepository>()
                 .AddScoped<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
                 .AddTransient<IAppoinmentRepository, AppoinmentRepository>()
-                .AddTransient<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
+                .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
                 .AddTransient<IFavoriteDentistRepository, FavoriteDentistRepository>()
                 .AddTransient<IOfficeScheduleRepository, OfficeScheduleRepository>()
                 .AddTransient<IPersonRepository, PersonRepository>()

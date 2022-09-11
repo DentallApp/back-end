@@ -57,4 +57,12 @@ public class AppoinmentBotService : IAppoinmentBotService
         var repository = scope.ServiceProvider.GetRequiredService<ISpecificTreatmentRepository>();
         return await repository.GetTreatmentWithRangeToPayAsync(dentalServiceId);
     }
+
+    public async Task<string> GetDentistScheduleAsync(int dentistId)
+    {
+        using var scope = _serviceProvider.CreateScope();
+        var repository = scope.ServiceProvider.GetRequiredService<IEmployeeScheduleRepository>();
+        var weekDays = (await repository.GetEmployeeScheduleWithOnlyWeekDayAsync(dentistId)) as List<WeekDayDto>;
+        return WeekDayFormat.GetWeekDaysFormat(weekDays);
+    }
 }
