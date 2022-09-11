@@ -2,6 +2,7 @@
 
 public static class WaterfallStepContextExtensions
 {
+    private const string None           = "None";
     private const string UserInfo       = "value-userInfo";
     private const string AppoinmentInfo = "value-appoinmentInfo";
 
@@ -30,12 +31,20 @@ public static class WaterfallStepContextExtensions
     /// <summary>
     /// Obtiene el valor que seleccionó el usuario desde una instancia de tipo <see cref="JObject"/>.
     /// </summary>
-    /// <param name="key">El nombre de la clave del valor.</param>
+    /// <param name="propertyName">El nombre de la propiedad del valor.</param>
     /// <param name="stepContext"></param>
-    public static string GetValueFromJObject(this WaterfallStepContext stepContext, string key)
+    /// <returns>El valor de la propiedad; de lo contrario, <c>null</c> sí la propiedad no está asociada con el valor.</returns>
+    public static string GetValueFromJObject(this WaterfallStepContext stepContext, string propertyName)
     {
-        var value = JObject.Parse(stepContext.Context.Activity.Value.ToString());
-        return (string)value[key];
+        try
+        {
+            var jObject = JObject.Parse(stepContext.Context.Activity.Value.ToString());
+            return jObject.TryGetValue(propertyName, out JToken value) ? (string)value : null;
+        }
+        catch(JsonReaderException)
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -43,4 +52,24 @@ public static class WaterfallStepContextExtensions
     /// </summary>
     public static string GetValueFromString(this WaterfallStepContext stepContext)
         => stepContext.Context.Activity.Value.ToString();
+
+    /// <summary>
+    /// Regresa al anterior paso del diálogo cascada.
+    /// </summary>
+    public static async Task<DialogTurnResult> PreviousAsync(this WaterfallStepContext stepContext, string message, CancellationToken cancellationToken = default)
+    {
+        await stepContext.Context.SendActivityAsync(message);
+        stepContext.ActiveDialog.State["stepIndex"] = (int)stepContext.ActiveDialog.State["stepIndex"] - 2;
+        return await stepContext.NextAsync(None, cancellationToken);
+    }
+
+    /// <summary>
+    /// Comprueba sí el siguiente paso no ha enviado un resultado <see cref="None" />.
+    /// </summary>
+    /// <returns><c>true</c> sí el siguiente paso no envió un resultado; de lo contrario, <c>false</c>.</returns>
+    public static bool CheckNextStepHasNotSentResult(this WaterfallStepContext stepContext)
+    {
+        var result = stepContext.Result;
+        return stepContext.Result is not string || (string)result != None;
+    }
 }
