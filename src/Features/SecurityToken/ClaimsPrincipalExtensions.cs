@@ -6,7 +6,7 @@ public static class ClaimsPrincipalExtensions
         => int.Parse(claims.FindFirstValue(CustomClaimsType.UserId));
 
     public static int GetPersonId(this ClaimsPrincipal claims)
-    => int.Parse(claims.FindFirstValue(CustomClaimsType.PersonId));
+        => int.Parse(claims.FindFirstValue(CustomClaimsType.PersonId));
 
     public static string GetUserName(this ClaimsPrincipal claims)
         => claims.FindFirstValue(CustomClaimsType.UserName);
@@ -25,6 +25,12 @@ public static class ClaimsPrincipalExtensions
 
     public static bool IsAdmin(this ClaimsPrincipal claims)
         => claims.IsInRole(RolesName.Admin);
+
+    public static bool IsOnlyDentist(this ClaimsPrincipal claims)
+        => claims.GetClaimsRoleType().Count() == 1 && claims.IsInRole(RolesName.Dentist);
+
+    private static IEnumerable<Claim> GetClaimsRoleType(this ClaimsPrincipal claims)
+        => claims.Claims.Where(claim => claim.Type == ClaimTypes.Role);
 
     /// <summary>
     /// Compruebe si el administrador o superadministrador no tiene permisos para otorgar los nuevos roles.

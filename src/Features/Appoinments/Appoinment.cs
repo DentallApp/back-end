@@ -7,12 +7,18 @@ public class Appoinment : ModelBase
     /// El ID del usuario que agendó la cita.
     /// </summary>
     public int UserId { get; set; }
+    /// <summary>
+    /// Representa el usuario que agendó la cita.
+    /// </summary>
     public User User { get; set; }
 
     /// <summary>
     /// El ID de la persona que recibirá la atención médica.
     /// </summary>
     public int PersonId { get; set; }
+    /// <summary>
+    /// Representa la persona que recibirá la atención médica.
+    /// </summary>
     public Person Person { get; set; }
     public int DentistId { get; set; }
     [ForeignKey("DentistId")]
