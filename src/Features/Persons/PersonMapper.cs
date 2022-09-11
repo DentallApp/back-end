@@ -6,6 +6,7 @@ public static class PersonMapper
     public static PersonGetDto MapToPersonGetDto(this Person person)
         => new()
         {
+            PersonId    = person.Id,
             Document    = person.Document,
             Names       = person.Names,
             LastNames   = person.LastNames,
