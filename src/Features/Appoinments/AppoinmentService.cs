@@ -71,6 +71,30 @@ public class AppoinmentService : IAppoinmentService
         };
     }
 
+    public async Task<Response> CancelAppointmentsByOfficeIdAsync(int officeId, AppoinmentCancelByEmployeeDto appoinmentCancelDto)
+    {
+        var appoinmentsId = appoinmentCancelDto.Appoinments.Select(appoinment => appoinment.AppoinmentId);
+        await _appoinmentRepository.CancelOfficeAppointmentsAsync(officeId, appoinmentsId);
+
+        return new Response
+        {
+            Success = true,
+            Message = UpdateResourceMessage
+        };
+    }
+
+    public async Task<Response> CancelAppointmentsByDentistIdAsync(int dentistId, AppoinmentCancelByDentistDto appoinmentCancelDto)
+    {
+        var appoinmentsId = appoinmentCancelDto.Appoinments.Select(appoinment => appoinment.AppoinmentId);
+        await _appoinmentRepository.CancelDentistAppointmentsAsync(dentistId, appoinmentsId);
+
+        return new Response
+        {
+            Success = true,
+            Message = UpdateResourceMessage
+        };
+    }
+
     public async Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateDto appoinmentDto)
         => await _appoinmentRepository.GetAppointmentsByOfficeIdAsync(officeId, appoinmentDto.From, appoinmentDto.To);
 

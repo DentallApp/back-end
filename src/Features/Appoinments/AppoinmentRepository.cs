@@ -1,7 +1,15 @@
-﻿namespace DentallApp.Features.Appoinments;
+﻿using LinqToDB;
+using LinqToDB.EntityFrameworkCore;
+
+namespace DentallApp.Features.Appoinments;
 
 public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepository
 {
+    static AppoinmentRepository()
+    {
+        LinqToDBForEFTools.Initialize();
+    }
+
     public AppoinmentRepository(AppDbContext context) : base(context) { }
 
     public async Task<IEnumerable<AppoinmentGetByBasicUserDto>> GetAppoinmentsByUserIdAsync(int userId)
@@ -33,7 +41,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                       KinshipName       = kinship == null ? KinshipsName.Default : kinship.Name
                   })
                  .IgnoreQueryFilters()
-                 .ToListAsync();
+                 .ToListAsyncEF();
 
     public async Task<List<UnavailableTimeRangeDto>> GetUnavailableHoursAsync(int dentistId, DateTime appoinmentDate)
         => await Context.Set<Appoinment>()
@@ -47,7 +55,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                         .Distinct()
                         .OrderBy(appoinment => appoinment.StartHour)
                           .ThenBy(appoinment => appoinment.EndHour)
-                        .ToListAsync();
+                        .ToListAsyncEF();
 
     public async Task<bool> IsNotAvailableAsync(AppoinmentInsertDto appoinmentDto)
     {
@@ -61,7 +69,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                                          appoinment.IsCancelledByEmployee ||
                                          DateTime.Now > Context.AddTime(Context.ToDateTime(appoinment.Date), appoinment.StartHour)))
                                   .Select(appoinment => appoinment.Id)
-                                  .FirstOrDefaultAsync();
+                                  .FirstOrDefaultAsyncEF();
 
         return result != 0;
     }
@@ -76,7 +84,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                                appoinment.Date >= from && appoinment.Date <= to)
                         .Select(appoinment => appoinment.MapToAppoinmentScheduledGetByDentistDto())
                         .IgnoreQueryFilters()
-                        .ToListAsync();
+                        .ToListAsyncEF();
 
     public async Task<IEnumerable<AppoinmentScheduledGetByEmployeeDto>> GetScheduledAppointmentsByOfficeIdAsync(int officeId, DateTime from, DateTime to)
         => await Context.Set<Appoinment>()
@@ -91,7 +99,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                                appoinment.Date >= from && appoinment.Date <= to)
                         .Select(appoinment => appoinment.MapToAppoinmentScheduledGetByEmployeeDto())
                         .IgnoreQueryFilters()
-                        .ToListAsync();
+                        .ToListAsyncEF();
 
     public async Task<IEnumerable<AppoinmentGetByDentistDto>> GetAppointmentsByDentistIdAsync(int dentistId, DateTime from, DateTime to)
         => await Context.Set<Appoinment>()
@@ -103,7 +111,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                                appoinment.Date >= from && appoinment.Date <= to)
                         .Select(appoinment => appoinment.MapToAppoinmentGetByDentistDto())
                         .IgnoreQueryFilters()
-                        .ToListAsync();
+                        .ToListAsyncEF();
 
     public async Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppointmentsByOfficeIdAsync(int officeId, DateTime from, DateTime to)
         => await Context.Set<Appoinment>()
@@ -118,5 +126,31 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                                appoinment.Date >= from && appoinment.Date <= to)
                         .Select(appoinment => appoinment.MapToAppoinmentGetByEmployeeDto())
                         .IgnoreQueryFilters()
-                        .ToListAsync();
+                        .ToListAsyncEF();
+
+    public async Task<int> CancelOfficeAppointmentsAsync(int officeId, IEnumerable<int> appoinmentsId)
+    {
+        var affectedRows = await Context.Set<Appoinment>()
+                                        .Where(appoinment =>
+                                               appoinment.OfficeId == officeId &&
+                                               appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
+                                               appoinmentsId.Contains(appoinment.Id))
+                                        .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
+                                        .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
+                                        .UpdateAsync();
+        return affectedRows;
+    }
+
+    public async Task<int> CancelDentistAppointmentsAsync(int dentistId, IEnumerable<int> appoinmentsId)
+    {
+        var affectedRows = await Context.Set<Appoinment>()
+                                        .Where(appoinment =>
+                                               appoinment.DentistId == dentistId &&
+                                               appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
+                                               appoinmentsId.Contains(appoinment.Id))
+                                        .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
+                                        .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
+                                        .UpdateAsync();
+        return affectedRows;
+    }
 }
