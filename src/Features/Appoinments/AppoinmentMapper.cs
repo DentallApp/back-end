@@ -62,6 +62,7 @@ public static class AppoinmentMapper
             CellPhone          = appoinment.Person.CellPhone,
             Email              = appoinment.Person.Email,
             DateBirth          = appoinment.Person.DateBirth,
+            DentistId          = appoinment.DentistId,
             DentistName        = appoinment.Employee.Person.FullName,
             Status             = appoinment.AppoinmentStatus.Name,
             StatusId           = appoinment.AppoinmentStatusId
@@ -82,6 +83,7 @@ public static class AppoinmentMapper
             CellPhone         = appoinment.Person.CellPhone,
             Email             = appoinment.Person.Email,
             DateBirth         = appoinment.Person.DateBirth,
+            DentistId         = appoinment.DentistId,
             DentistName       = appoinment.Employee.Person.FullName
         };
 
