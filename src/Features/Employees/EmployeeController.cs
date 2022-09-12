@@ -55,6 +55,17 @@ public class EmployeeController : ControllerBase
         return BadRequest(response);
     }
 
+    /// <summary>
+    /// Obtiene todos los odontólogos activos e inactivos del consultorio al que pertenezca la secretaria o admin.
+    /// </summary>
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
+    [HttpGet("dentist/all")]
+    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetAllDentists()
+        => await _employeeService.GetAllDentistsByOfficeIdAsync(User.GetOfficeId());
+
+    /// <summary>
+    /// Obtiene los odontólogos activos del consultorio al que pertenezca la secretaria o admin.
+    /// </summary>
     [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
     [HttpGet("dentist")]
     public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentists()

@@ -54,12 +54,21 @@ public class EmployeeRepository : SoftDeleteRepository<Employee>, IEmployeeRepos
                         .IgnoreQueryFilters()
                         .FirstOrDefaultAsync();
 
+    private IQueryable<EmployeeGetByDentistDto> GetDentistsQueryable(int officeId)
+    {
+        var query = (from employee in Context.Set<Employee>()
+                     join person in Context.Set<Person>() on employee.PersonId equals person.Id
+                     join userRole in Context.Set<UserRole>() on employee.UserId equals userRole.UserId
+                     where employee.OfficeId == officeId && userRole.RoleId == RolesId.Dentist
+                     select employee.MapToEmployeeGetByDentistDto(person));
+        return query;
+    }
+
+    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetAllDentistsByOfficeIdAsync(int officeId)
+        => await GetDentistsQueryable(officeId)
+                 .IgnoreQueryFilters()
+                 .ToListAsync();
+
     public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId)
-        => await (from employee in Context.Set<Employee>()
-                  join person in Context.Set<Person>() on employee.PersonId equals person.Id
-                  join userRole in Context.Set<UserRole>() on employee.UserId equals userRole.UserId
-                  where employee.OfficeId == officeId && userRole.RoleId == RolesId.Dentist
-                  select employee.MapToEmployeeGetByDentistDto(person))
-                .IgnoreQueryFilters()
-                .ToListAsync();
+        => await GetDentistsQueryable(officeId).ToListAsync();
 }

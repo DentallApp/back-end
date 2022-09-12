@@ -35,6 +35,7 @@ public class ResponseMessages
     public const string MissingClaimMessage = "Reclamación (claim) faltante en el token: {0}";
     public const string OfficeNotAssignedMessage = "No puedes gestionar los recursos de una sucursal a la que no ha sido asignada.";
     public const string AppoinmentNotAssignedMessage = "Esta cita no te pertenece.";
+    public const string AppoinmentIsAlreadyCanceledMessage = "No puede actualizar una cita que ya está cancelada.";
     public const string CannotRemoveSuperadminMessage = "Lo siento, no se puede eliminar a un SuperAdministrador.";
     public const string CannotEditSuperadminMessage = "Lo siento, no se puede editar los datos de un SuperAdministrador.";
     public const string CannotEditYourOwnProfileMessage = "No puede editar su propio perfil.";
