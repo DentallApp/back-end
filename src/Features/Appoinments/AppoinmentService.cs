@@ -89,7 +89,7 @@ public class AppoinmentService : IAppoinmentService
                 var msg = string.Format("Estimado usuario {0}, su cita agendada en el consultorio odontológico {1} para el día {2} a las {3} ha sido cancelada por el siguiente motivo: {4}",
                                            appoinment.PatientName, 
                                            businessName, 
-                                           appoinment.AppoinmentDate.GetDateInSpanishFormat(), 
+                                           appoinment.AppoinmentDate, 
                                            appoinment.StartHour.GetHourWithoutSeconds(), 
                                            appoinmentCancelDto.Reason
                                        );
