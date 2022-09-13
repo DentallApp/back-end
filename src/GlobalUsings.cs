@@ -31,6 +31,7 @@ global using DentallApp.Features.TokenRefresh;
 global using DentallApp.Features.Authentication;
 global using DentallApp.Features.Authentication.DTOs;
 global using DentallApp.Features.EmailSending;
+global using DentallApp.Features.InstantMessaging;
 global using DentallApp.Features.PasswordHasher;
 global using DentallApp.Features.EmailVerification;
 global using DentallApp.Features.EmailVerification.DTOs;

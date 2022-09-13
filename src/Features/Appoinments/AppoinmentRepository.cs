@@ -128,7 +128,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                         .IgnoreQueryFilters()
                         .ToListAsyncEF();
 
-    public async Task<int> CancelOfficeAppointmentsAsync(int officeId, IEnumerable<int> appoinmentsId)
+    public async Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appoinmentsId)
     {
         var affectedRows = await Context.Set<Appoinment>()
                                         .Where(appoinment =>
@@ -141,7 +141,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
         return affectedRows;
     }
 
-    public async Task<int> CancelDentistAppointmentsAsync(int dentistId, IEnumerable<int> appoinmentsId)
+    public async Task<int> CancelAppointmentsByDentistIdAsync(int dentistId, IEnumerable<int> appoinmentsId)
     {
         var affectedRows = await Context.Set<Appoinment>()
                                         .Where(appoinment =>

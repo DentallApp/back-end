@@ -48,12 +48,12 @@ public interface IAppoinmentRepository : IRepository<Appoinment>
     /// </summary>
     /// <param name="officeId">El ID del consultorio.</param>
     /// <param name="appoinmentsId">Un conjunto de ID de citas a cancelar.</param>
-    Task<int> CancelOfficeAppointmentsAsync(int officeId, IEnumerable<int> appoinmentsId);
+    Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appoinmentsId);
 
     /// <summary>
     /// Cancela una o más citas agendadas de un dentista.
     /// </summary>
     /// <param name="dentistId">El ID del dentista.</param>
     /// <param name="appoinmentsId">Un conjunto de ID de citas a cancelar.</param>
-    Task<int> CancelDentistAppointmentsAsync(int dentistId, IEnumerable<int> appoinmentsId);
+    Task<int> CancelAppointmentsByDentistIdAsync(int dentistId, IEnumerable<int> appoinmentsId);
 }

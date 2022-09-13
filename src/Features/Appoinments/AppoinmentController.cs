@@ -63,33 +63,17 @@ public class AppoinmentController : ControllerBase
     }
 
     /// <summary>
-    /// Cancela cualquier cita agendada de un consultorio.
+    /// Permite cancelar las citas agendadas de los odontólogos.
     /// </summary>
     /// <remarks>
-    /// Nota: La secretaria y el admin solo pueden cancelar las citas del consultorio al que pertenecen.
+    /// El odontólogo solo podrá cancelar sus propias citas y la
+    /// secretaria/admin solo pueden cancelar las citas del consultorio al que pertenecen.
     /// </remarks>
-    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
-    [HttpPost("cancel/office")]
-    public async Task<ActionResult<Response>> CancelAppointmentsByOfficeId([FromBody]AppoinmentCancelByEmployeeDto appoinmentCancelDto)
-    {
-        var response = await _appoinmentService.CancelAppointmentsByOfficeIdAsync(User.GetOfficeId(), appoinmentCancelDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
-    }
-
-    /// <summary>
-    /// Cancela cualquier cita agendada del odontólogo actual.
-    /// </summary>
-    /// <remarks>
-    /// Nota: El odontólogo solo puede cancelar sus propias citas.
-    /// </remarks>
-    [AuthorizeByRole(RolesName.Dentist)]
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin)]
     [HttpPost("cancel/dentist")]
-    public async Task<ActionResult<Response>> CancelAppointmentsByDentistId([FromBody]AppoinmentCancelByDentistDto appoinmentCancelDto)
+    public async Task<ActionResult<Response>> CancelAppointments([FromBody]AppoinmentCancelDto appoinmentCancelDto)
     {
-        var response = await _appoinmentService.CancelAppointmentsByDentistIdAsync(User.GetEmployeeId(), appoinmentCancelDto);
+        var response = await _appoinmentService.CancelAppointmentsAsync(User, appoinmentCancelDto);
         if (response.Success)
             return Ok(response);
 
