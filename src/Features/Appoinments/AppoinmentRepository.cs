@@ -136,6 +136,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                                                appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
                                                appoinmentsId.Contains(appoinment.Id))
                                         .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
+                                        .Set(appoinment => appoinment.IsCancelledByEmployee, true)
                                         .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
                                         .UpdateAsync();
         return affectedRows;
@@ -149,6 +150,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                                                appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
                                                appoinmentsId.Contains(appoinment.Id))
                                         .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
+                                        .Set(appoinment => appoinment.IsCancelledByEmployee, true)
                                         .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
                                         .UpdateAsync();
         return affectedRows;
