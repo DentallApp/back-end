@@ -14,7 +14,8 @@ public static class UserMapper
         userProfile.UserId      = user.Id;
         userProfile.PersonId    = user.PersonId;
         userProfile.UserName    = user.UserName;
-        userProfile.Roles       = user.UserRoles.Select(role => role.Role.Name);
+        userProfile.Roles       = user.UserRoles.OrderBy(role => role.RoleId)
+                                                .Select(role => role.Role.Name);
         return userProfile;
     }
 
