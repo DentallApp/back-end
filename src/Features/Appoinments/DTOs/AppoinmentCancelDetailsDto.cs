@@ -6,5 +6,5 @@ public class AppoinmentCancelDetailsDto
     public string PatientName { get; set; }
     public string PatientCellPhone { get; set; }
     public string AppoinmentDate { get; set; }
-    public TimeSpan StartHour { get; set; }
+    public string StartHour { get; set; }
 }
