@@ -42,4 +42,18 @@ public interface IAppoinmentRepository : IRepository<Appoinment>
     /// <param name="from">Desde que fecha se desea filtrar las citas.</param>
     /// <param name="to">Hasta que fecha se desea filtrar las citas.</param>
     Task<IEnumerable<AppoinmentScheduledGetByDentistDto>> GetScheduledAppointmentsByDentistIdAsync(int dentistId, DateTime from, DateTime to);
+
+    /// <summary>
+    /// Cancela una o más citas agendadas de un consultorio.
+    /// </summary>
+    /// <param name="officeId">El ID del consultorio.</param>
+    /// <param name="appoinmentsId">Un conjunto de ID de citas a cancelar.</param>
+    Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appoinmentsId);
+
+    /// <summary>
+    /// Cancela una o más citas agendadas de un dentista.
+    /// </summary>
+    /// <param name="dentistId">El ID del dentista.</param>
+    /// <param name="appoinmentsId">Un conjunto de ID de citas a cancelar.</param>
+    Task<int> CancelAppointmentsByDentistIdAsync(int dentistId, IEnumerable<int> appoinmentsId);
 }

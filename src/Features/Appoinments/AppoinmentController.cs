@@ -63,6 +63,24 @@ public class AppoinmentController : ControllerBase
     }
 
     /// <summary>
+    /// Permite cancelar las citas agendadas de los odontólogos.
+    /// </summary>
+    /// <remarks>
+    /// El odontólogo solo podrá cancelar sus propias citas y la
+    /// secretaria/admin solo pueden cancelar las citas del consultorio al que pertenecen.
+    /// </remarks>
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin)]
+    [HttpPost("cancel/dentist")]
+    public async Task<ActionResult<Response>> CancelAppointments([FromBody]AppoinmentCancelDto appoinmentCancelDto)
+    {
+        var response = await _appoinmentService.CancelAppointmentsAsync(User, appoinmentCancelDto);
+        if (response.Success)
+            return Ok(response);
+
+        return BadRequest(response);
+    }
+
+    /// <summary>
     /// Obtiene las citas de cualquier estado (agendada, cancelada, asistida y no asistida) del consultorio al que pertenece la secretaria o admin.
     /// </summary>
     [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
@@ -71,9 +89,9 @@ public class AppoinmentController : ControllerBase
         => await _appoinmentService.GetAppointmentsByOfficeIdAsync(User.GetOfficeId(), appoinmentPostDateDto);
 
     /// <summary>
-    /// Obtiene las citas de cualquier estado (agendada, cancelada, asistida y no asistida) para el dentista actual.
+    /// Obtiene las citas de cualquier estado (agendada, cancelada, asistida y no asistida) para el odontólogo actual.
     /// </summary>
-    /// <remarks>El dentista solo podrá ver sus citas programadas.</remarks>
+    /// <remarks>El odontólogo solo podrá ver sus citas programadas.</remarks>
     [AuthorizeByRole(RolesName.Dentist)]
     [HttpPost("dentist")]
     public async Task<IEnumerable<AppoinmentGetByDentistDto>> GetAppointmentsByDentistId([FromBody]AppoinmentPostDateDto appoinmentPostDateDto)
@@ -88,9 +106,9 @@ public class AppoinmentController : ControllerBase
         => await _appoinmentService.GetScheduledAppointmentsByOfficeIdAsync(User.GetOfficeId(), appoinmentPostDateDto);
 
     /// <summary>
-    /// Obtiene las citas agendadas para el dentista actual.
+    /// Obtiene las citas agendadas para el odontólogo actual.
     /// </summary>
-    /// <remarks>El dentista solo podrá ver sus citas agendadas.</remarks>
+    /// <remarks>El odontólogo solo podrá ver sus citas agendadas.</remarks>
     [AuthorizeByRole(RolesName.Dentist)]
     [HttpPost("scheduled/dentist")]
     public async Task<IEnumerable<AppoinmentScheduledGetByDentistDto>> GetScheduledAppointmentsByDentistId([FromBody]AppoinmentPostDateDto appoinmentPostDateDto)

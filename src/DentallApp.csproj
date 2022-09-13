@@ -17,6 +17,7 @@
     <PackageReference Include="EFCore.NamingConventions" Version="5.0.2" />
     <PackageReference Include="File.TypeChecker" Version="3.0.0" />
     <PackageReference Include="itext7.pdfhtml" Version="4.0.3" />
+    <PackageReference Include="libphonenumber-csharp" Version="8.12.55" />
     <PackageReference Include="linq2db.EntityFrameworkCore" Version="5.10.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.27" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
@@ -31,6 +32,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.4" />
+    <PackageReference Include="Twilio" Version="5.80.0" />
   </ItemGroup>
 
   <ItemGroup>

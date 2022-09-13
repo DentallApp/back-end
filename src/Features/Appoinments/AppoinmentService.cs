@@ -3,10 +3,12 @@
 public class AppoinmentService : IAppoinmentService
 {
     private readonly IAppoinmentRepository _appoinmentRepository;
+    private readonly IInstantMessaging _instantMessaging;
 
-    public AppoinmentService(IAppoinmentRepository appoinmentRepository)
+    public AppoinmentService(IAppoinmentRepository appoinmentRepository, IInstantMessaging instantMessaging)
     {
         _appoinmentRepository = appoinmentRepository;
+        _instantMessaging = instantMessaging;
     }
 
     public async Task<IEnumerable<AppoinmentGetByBasicUserDto>> GetAppoinmentsByUserIdAsync(int userId)
@@ -63,6 +65,41 @@ public class AppoinmentService : IAppoinmentService
 
         appoinmentUpdateDto.MapToAppoinment(appoinment);
         await _appoinmentRepository.SaveAsync();
+
+        return new Response
+        {
+            Success = true,
+            Message = UpdateResourceMessage
+        };
+    }
+
+    public async Task<Response> CancelAppointmentsAsync(ClaimsPrincipal currentEmployee, AppoinmentCancelDto appoinmentCancelDto)
+    {
+        try
+        {
+            var appoinmentsId = appoinmentCancelDto.Appoinments.Select(appoinment => appoinment.AppoinmentId);
+            var businessName = EnvReader.Instance[AppSettings.BusinessName];
+            if (currentEmployee.IsOnlyDentist())
+                await _appoinmentRepository.CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appoinmentsId);
+            else
+                await _appoinmentRepository.CancelAppointmentsByOfficeIdAsync(currentEmployee.GetOfficeId(), appoinmentsId);
+
+            foreach (var appoinment in appoinmentCancelDto.Appoinments)
+            {
+                var msg = string.Format("Estimado usuario {0}, su cita agendada en el consultorio odontológico {1} para el día {2} a las {3} ha sido cancelada por el siguiente motivo: {4}",
+                                           appoinment.PatientName, 
+                                           businessName, 
+                                           appoinment.AppoinmentDate,
+                                           appoinment.StartHour, 
+                                           appoinmentCancelDto.Reason
+                                       );
+                await _instantMessaging.SendMessageAsync(appoinment.PatientCellPhone, msg);
+            }
+        }
+        catch(Exception ex)
+        {
+            return new Response(ex.Message);
+        }
 
         return new Response
         {

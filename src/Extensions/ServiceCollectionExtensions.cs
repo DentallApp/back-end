@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IEmailVerificationService, EmailVerificationService>()
                 .AddTransient<IEmailTemplateService, EmailTemplateService>()
                 .AddTransient<IEmailService, EmailService>()
+                .AddTransient<IInstantMessaging, WhatsAppMessaging>()
                 .AddTransient<ISpecificTreatmentService, SpecificTreatmentService>()
                 .AddTransient<IGeneralTreatmentService, GeneralTreatmentService>()
                 .AddTransient<IProformaInvoiceService, ProformaInvoiceService>()

@@ -33,5 +33,13 @@ public class Appoinment : ModelBase
     public DateTime Date { get; set; }
     public TimeSpan StartHour { get; set; }
     public TimeSpan EndHour { get; set; }
+
+    /// <summary>
+    /// Comprueba sí la cita fue cancelada por el empleado.
+    /// </summary>
+    /// <remarks>
+    /// Esta propiedad permite que la fecha y hora de la cita cancelada por el empleado 
+    /// no se muestre como disponible cuando el usuario básico agende una nueva cita.
+    /// </remarks>
     public bool IsCancelledByEmployee { get; set; }
 }
