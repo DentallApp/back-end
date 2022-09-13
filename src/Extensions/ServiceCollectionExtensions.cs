@@ -5,13 +5,11 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddTransient<IAuthService, AuthService>()
-                .AddTransient<IPasswordHasher, PasswordHasherBcrypt>()
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<IUserRegisterService, UserRegisterService>()
                 .AddTransient<IEmailVerificationService, EmailVerificationService>()
                 .AddTransient<IEmailTemplateService, EmailTemplateService>()
                 .AddTransient<IEmailService, EmailService>()
-                .AddTransient<IInstantMessaging, WhatsAppMessaging>()
                 .AddTransient<ISpecificTreatmentService, SpecificTreatmentService>()
                 .AddTransient<IGeneralTreatmentService, GeneralTreatmentService>()
                 .AddTransient<IProformaInvoiceService, ProformaInvoiceService>()
@@ -56,7 +54,9 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddHelpers(this IServiceCollection services)
     {
         services.AddTransient<IHtmlConverter, HtmlConverterIText>()
-                .AddTransient<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>();
+                .AddTransient<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>()
+                .AddTransient<IPasswordHasher, PasswordHasherBcrypt>()
+                .AddTransient<IInstantMessaging, WhatsAppMessaging>();
 
         return services;
     }
