@@ -46,6 +46,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IFavoriteDentistRepository, FavoriteDentistRepository>()
                 .AddTransient<IOfficeScheduleRepository, OfficeScheduleRepository>()
                 .AddTransient<IPersonRepository, PersonRepository>()
+                .AddScoped<IAppoinmentReminderRepository, AppoinmentReminderRepository>()
                 .AddTransient<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
         return services;
@@ -56,7 +57,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IHtmlConverter, HtmlConverterIText>()
                 .AddTransient<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>()
                 .AddTransient<IPasswordHasher, PasswordHasherBcrypt>()
-                .AddTransient<IInstantMessaging, WhatsAppMessaging>();
+                .AddSingleton<IInstantMessaging, WhatsAppMessaging>();
 
         return services;
     }
