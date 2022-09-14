@@ -55,4 +55,19 @@ public class AppSettings
 
     [EnvKey("DENTAL_SERVICES_IMAGES_PATH")]
     public string DentalServicesImagesPath { get; set; }
+
+    [EnvKey("REMINDER_DUE_TIME")]
+    public double ReminderDueTime { get; set; }
+
+    [EnvKey("REMINDER_PERIOD")]
+    public double ReminderPeriod { get; set; }
+
+    [EnvKey("REMINDER_TIME_IN_ADVANCE")]
+    public int ReminderTimeInAdvance { get; set; }
+
+    [EnvKey("REMINDER_HOUR_MAX")]
+    public int ReminderHourMax { get; set; }
+
+    [EnvKey("REMINDER_HOUR_MIN")]
+    public int ReminderHourMin { get; set; }
 }
