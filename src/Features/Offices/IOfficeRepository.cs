@@ -8,4 +8,5 @@ public interface IOfficeRepository : ISoftDeleteRepository<Office>
     Task<Office> GetOfficeByIdAsync(int id);
     Task<int> EnableEmployeeAccountsAsync(Office office);
     Task<int> DisableEmployeeAccountsAsync(int currentEmployeeId, Office office);
+    IExecutionStrategy CreateExecutionStrategy();
 }

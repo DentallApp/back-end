@@ -27,20 +27,24 @@ public class OfficeService : IOfficeService
         if (currentOffice is null)
             return new Response(ResourceNotFoundMessage);
 
-        using var transaction = await _officeRepository.BeginTransactionAsync();
-        
-        if(officeUpdateDto.IsInactive() && officeUpdateDto.IsCheckboxTicked && currentOffice.IsEnabledEmployeeAccounts)
-            await _officeRepository.DisableEmployeeAccountsAsync(currentEmployeeId, currentOffice);
+        var strategy = _officeRepository.CreateExecutionStrategy();
+        await strategy.ExecuteAsync(
+            async () =>
+            {
+                using var transaction = await _officeRepository.BeginTransactionAsync();
+                if (officeUpdateDto.IsInactive() && officeUpdateDto.IsCheckboxTicked && currentOffice.IsEnabledEmployeeAccounts)
+                    await _officeRepository.DisableEmployeeAccountsAsync(currentEmployeeId, currentOffice);
 
-        else if(officeUpdateDto.IsInactive() && officeUpdateDto.IsCheckboxUnticked && currentOffice.IsDisabledEmployeeAccounts)
-            await _officeRepository.EnableEmployeeAccountsAsync(currentOffice);
+                else if (officeUpdateDto.IsInactive() && officeUpdateDto.IsCheckboxUnticked && currentOffice.IsDisabledEmployeeAccounts)
+                    await _officeRepository.EnableEmployeeAccountsAsync(currentOffice);
 
-        else if(officeUpdateDto.IsActive() && currentOffice.IsDisabledEmployeeAccounts)
-            await _officeRepository.EnableEmployeeAccountsAsync(currentOffice);
+                else if (officeUpdateDto.IsActive() && currentOffice.IsDisabledEmployeeAccounts)
+                    await _officeRepository.EnableEmployeeAccountsAsync(currentOffice);
 
-        officeUpdateDto.MapToOfficeDto(currentOffice);
-        await _officeRepository.SaveAsync();
-        await transaction.CommitAsync();
+                officeUpdateDto.MapToOfficeDto(currentOffice);
+                await _officeRepository.SaveAsync();
+                await transaction.CommitAsync();
+            });
 
         return new Response
         {

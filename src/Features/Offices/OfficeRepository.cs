@@ -1,6 +1,5 @@
 ﻿using LinqToDB;
 using LinqToDB.EntityFrameworkCore;
-
 namespace DentallApp.Features.Offices;
 
 public class OfficeRepository : SoftDeleteRepository<Office>, IOfficeRepository
@@ -60,4 +59,6 @@ public class OfficeRepository : SoftDeleteRepository<Office>, IOfficeRepository
         office.IsEnabledEmployeeAccounts = true;
         return affectedRows;
     }
+
+    public IExecutionStrategy CreateExecutionStrategy() => Context.Database.CreateExecutionStrategy();
 }
