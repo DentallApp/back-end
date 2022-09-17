@@ -1,0 +1,13 @@
+[Unit]
+Description=InDirectline service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=mrdave1999
+ExecStart=/bin/bash -c 'cd $HOME/InDirectLine/Itminus.InDirectLine.Web && dotnet run -c Release'
+
+[Install]
+WantedBy=multi-user.target

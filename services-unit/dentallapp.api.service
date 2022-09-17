@@ -1,0 +1,14 @@
+[Unit]
+Description=DentallApp API service
+After=mariadb
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=mrdave1999
+ExecStart=/bin/bash -c 'cd $HOME/back-end/src && dotnet run -c Release'
+
+[Install]
+WantedBy=multi-user.target
