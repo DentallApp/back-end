@@ -13,7 +13,7 @@ public class EmployeeGetDto
     public string Email { get; set; }
     public string CellPhone { get; set; }
     public DateTime? DateBirth { get; set; }
-    public int GenderId { get; set; }
+    public int? GenderId { get; set; }
     public string GenderName { get; set; }
     public IEnumerable<RoleGetDto> Roles { get; set; }
     public string Status { get; set; }

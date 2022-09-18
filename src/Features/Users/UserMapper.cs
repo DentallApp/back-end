@@ -9,7 +9,7 @@ public static class UserMapper
         userProfile.LastNames   = user.Person.LastNames;
         userProfile.CellPhone   = user.Person.CellPhone;
         userProfile.DateBirth   = user.Person.DateBirth;
-        userProfile.GenderName  = user.Person.Gender.Name;
+        userProfile.GenderName  = user.Person.Gender?.Name;
         userProfile.GenderId    = user.Person.GenderId;
         userProfile.UserId      = user.Id;
         userProfile.PersonId    = user.PersonId;
