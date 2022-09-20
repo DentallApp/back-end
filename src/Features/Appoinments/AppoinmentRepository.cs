@@ -82,6 +82,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                                appoinment.DentistId == dentistId && 
                                appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
                                appoinment.Date >= from && appoinment.Date <= to)
+                        .OrderBy(appoinment => appoinment.Date)
                         .Select(appoinment => appoinment.MapToAppoinmentScheduledGetByDentistDto())
                         .IgnoreQueryFilters()
                         .ToListAsyncEF();
@@ -97,6 +98,7 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                                appoinment.OfficeId == officeId &&
                                appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
                                appoinment.Date >= from && appoinment.Date <= to)
+                        .OrderBy(appoinment => appoinment.Date)
                         .Select(appoinment => appoinment.MapToAppoinmentScheduledGetByEmployeeDto())
                         .IgnoreQueryFilters()
                         .ToListAsyncEF();
