@@ -70,4 +70,12 @@ public class EmployeeController : ControllerBase
     [HttpGet("dentist")]
     public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentists()
         => await _employeeService.GetDentistsByOfficeIdAsync(User.GetOfficeId());
+
+    /// <summary>
+    /// Obtiene los odontólogos activos e inactivos de un consultorio.
+    /// </summary>
+    [AuthorizeByRole(RolesName.Superadmin)]
+    [HttpGet("dentist/{officeId}")]
+    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeId(int officeId)
+        => await _employeeService.GetAllDentistsByOfficeIdAsync(officeId);
 }
