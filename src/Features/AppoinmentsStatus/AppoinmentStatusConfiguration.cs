@@ -27,8 +27,8 @@ public class AppoinmentStatusConfiguration : IEntityTypeConfiguration<Appoinment
             },
             new AppoinmentStatus
             {
-                Id = 5,
-                Name = "Asistida"
+                Id = AppoinmentStatusId.Assisted,
+                Name = AppoinmentStatusName.Assisted
             },
             new AppoinmentStatus
             {

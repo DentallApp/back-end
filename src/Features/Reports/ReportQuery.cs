@@ -46,7 +46,7 @@ public class ReportQuery : IReportQuery
 							  .ToListAsync();
     }
 
-	public async Task<IEnumerable<ReportGetScheduledAppoinmentDto>> GetScheduledAppoinmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
+    public async Task<IEnumerable<ReportGetScheduledAppoinmentDto>> GetScheduledAppoinmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
 	{
         int officeId  = reportPostDto.OfficeId;
         int dentistId = reportPostDto.DentistId;
@@ -79,4 +79,21 @@ public class ReportQuery : IReportQuery
                               .IgnoreQueryFilters()
                               .ToListAsync();
     }
+
+    public async Task<IEnumerable<ReportGetMostRequestedServicesDto>> GetMostRequestedServicesAsync(ReportPostDto reportPostDto)
+        => await _context.Set<Appoinment>()
+                         .Include(appoinment => appoinment.GeneralTreatment)
+                         .Where(appoinment =>
+                               (appoinment.AppoinmentStatusId == AppoinmentStatusId.Assisted) &&
+                               (appoinment.OfficeId == reportPostDto.OfficeId) &&
+                               (appoinment.Date >= reportPostDto.From && appoinment.Date <= reportPostDto.To))
+                         .GroupBy(appoinment => new { appoinment.GeneralTreatmentId, appoinment.GeneralTreatment.Name })
+                         .Select(group => new ReportGetMostRequestedServicesDto
+                          {
+                             DentalServiceName          = group.Key.Name,
+                             TotalAppoinmentsAssisted   = group.Count()
+                          })
+                         .OrderByDescending(dto => dto.TotalAppoinmentsAssisted)
+                         .IgnoreQueryFilters()
+                         .ToListAsync();
 }

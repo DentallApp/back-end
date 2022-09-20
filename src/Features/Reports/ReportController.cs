@@ -25,4 +25,8 @@ public class ReportController : ControllerBase
     [HttpPost("appoinment/scheduled")]
     public async Task<IEnumerable<ReportGetScheduledAppoinmentDto>> GetScheduledAppoinmentsByDateRange([FromBody]ReportPostWithDentistDto reportPostDto)
         => await _reportQuery.GetScheduledAppoinmentsByDateRangeAsync(reportPostDto);
+
+	[HttpPost("most-requested/services")]
+	public async Task<IEnumerable<ReportGetMostRequestedServicesDto>> GetMostRequestedServices([FromBody]ReportPostDto reportPostDto)
+		=> await _reportQuery.GetMostRequestedServicesAsync(reportPostDto);
 }
