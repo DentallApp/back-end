@@ -14,4 +14,15 @@ public static class ReportMapper
             OfficeName        =  appoinment.Office.Name,
             AppoinmentStatus  = appoinment.AppoinmentStatus.Name
         };
+
+    public static object MapToObject(this ReportPostAppoinmentDownloadDto reportPostDownloadDto)
+    {
+        var model = new
+        {
+            reportPostDownloadDto.From,
+            reportPostDownloadDto.To,
+            reportPostDownloadDto.Appoinments
+        };
+        return model;
+    }
 }
