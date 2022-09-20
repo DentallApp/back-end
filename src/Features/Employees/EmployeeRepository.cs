@@ -71,4 +71,13 @@ public class EmployeeRepository : SoftDeleteRepository<Employee>, IEmployeeRepos
 
     public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId)
         => await GetDentistsQueryable(officeId).ToListAsync();
+
+    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetAllDentistsAsync()
+        => await (from employee in Context.Set<Employee>()
+                  join person in Context.Set<Person>() on employee.PersonId equals person.Id
+                  join userRole in Context.Set<UserRole>() on employee.UserId equals userRole.UserId
+                  where userRole.RoleId == RolesId.Dentist
+                  select employee.MapToEmployeeGetByDentistDto(person))
+                .IgnoreQueryFilters()
+                .ToListAsync();
 }

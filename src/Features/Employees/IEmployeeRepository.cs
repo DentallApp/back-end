@@ -20,4 +20,9 @@ public interface IEmployeeRepository : ISoftDeleteRepository<Employee>
     /// </summary>
     /// <param name="officeId">El ID del consultorio.</param>
     Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeIdAsync(int officeId);
+
+    /// <summary>
+    /// Obtiene todos los odontólogos activos e inactivos de cualquier consultorio.
+    /// </summary>
+    Task<IEnumerable<EmployeeGetByDentistDto>> GetAllDentistsAsync();
 }
