@@ -29,7 +29,14 @@ public class Startup
         var cs = settings.ConnectionString;
         services.AddDbContext<AppDbContext>(options =>
         {
-            options.UseMySql(cs, ServerVersion.AutoDetect(cs))
+            options.UseMySql(cs, ServerVersion.AutoDetect(cs), 
+                    mySqlOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 10,
+                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null);
+                    })
                    .UseSnakeCaseNamingConvention();
         });
 
@@ -58,6 +65,7 @@ public class Startup
 
         services.AddAuthorization();
         services.AddBotServices();
+        services.AddHostedService<TimedHostedService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

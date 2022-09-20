@@ -8,11 +8,11 @@ public partial class AppDbContext
     public DateTime ToDateTime(DateTime dateTime) 
         => throw new InvalidOperationException();
 
+    public int DateDiff(DateTime dateTime1, DateTime dateTime2)
+        => throw new InvalidOperationException();
+
     public void AddSqlFunctions(ModelBuilder modelBuilder)
     {
-        var addTimeMethodInfo = typeof(AppDbContext) // Your DB Context
-            .GetRuntimeMethod(nameof(AppDbContext.AddTime), new[] { typeof(DateTime), typeof(TimeSpan) });
-
         modelBuilder.HasDbFunction(() => AddTime(default, default))
            .HasTranslation(args => new SqlFunctionExpression(
                    functionName: "ADDTIME",
@@ -29,6 +29,15 @@ public partial class AppDbContext
                    nullable: false,
                    argumentsPropagateNullability: new[] { false, false },
                    type: typeof(DateTime),
+                   typeMapping: null));
+
+        modelBuilder.HasDbFunction(() => DateDiff(default, default))
+           .HasTranslation(args => new SqlFunctionExpression(
+                   functionName: "DATEDIFF",
+                   arguments: new[] { args.ToArray()[0], args.ToArray()[1] },
+                   nullable: false,
+                   argumentsPropagateNullability: new[] { false, false },
+                   type: typeof(int),
                    typeMapping: null));
     }
 }

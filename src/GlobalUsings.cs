@@ -54,6 +54,7 @@ global using DentallApp.Features.FavoriteDentists;
 global using DentallApp.Features.FavoriteDentists.DTOs;
 global using DentallApp.Features.OfficeSchedules;
 global using DentallApp.Features.OfficeSchedules.DTOs;
+global using DentallApp.Features.AppoinmentReminders;
 
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
@@ -110,6 +111,7 @@ global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+global using Microsoft.EntityFrameworkCore.Storage;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.OpenApi.Models;
 

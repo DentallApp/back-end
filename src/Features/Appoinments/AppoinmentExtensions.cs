@@ -9,5 +9,9 @@ public static class AppoinmentExtensions
     [Decompile]
     public static bool IsNotCanceled(this Appoinment appoinment)
         => appoinment.AppoinmentStatusId != AppoinmentStatusId.Canceled;
+
+    [Decompile]
+    public static bool HasNotReminder(this Appoinment appoinment)
+        => !appoinment.HasReminder;
 }
 
