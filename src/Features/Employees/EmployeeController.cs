@@ -56,16 +56,12 @@ public class EmployeeController : ControllerBase
     }
 
     /// <summary>
-    /// Obtiene todos los odontólogos activos e inactivos.
+    /// Obtiene todos los odontólogos activos e inactivos del consultorio al que pertenezca la secretaria o admin.
     /// </summary>
-    /// <remarks>
-    /// El superadmin tiene acceso a la información de los odontólogos de cualquier consultorio, en cambio,
-    /// la secretaria y el admin solo del consultorio al que pertenecen.
-    /// </remarks>
-    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin, RolesName.Superadmin)]
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
     [HttpGet("dentist/all")]
     public async Task<IEnumerable<EmployeeGetByDentistDto>> GetAllDentists()
-        => await _employeeService.GetAllDentistsAsync(User);
+        => await _employeeService.GetAllDentistsByOfficeIdAsync(User.GetOfficeId());
 
     /// <summary>
     /// Obtiene los odontólogos activos del consultorio al que pertenezca la secretaria o admin.
