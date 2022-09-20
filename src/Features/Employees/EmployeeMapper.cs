@@ -46,8 +46,8 @@ public static class EmployeeMapper
             Email                   = employee.Person.Email,
             CellPhone               = employee.Person.CellPhone,
             DateBirth               = employee.Person.DateBirth,
-            GenderName              = employee.Person.Gender.Name,
-            GenderId                = employee.Person.Gender.Id,
+            GenderName              = employee.Person.Gender?.Name,
+            GenderId                = employee.Person.Gender?.Id,
             Roles                   = employee.User.UserRoles.Select(role => new RoleGetDto { Id = role.Role.Id, Name = role.Role.Name}),
             Status                  = employee.GetStatusName(),
             IsDeleted               = employee.IsDeleted
