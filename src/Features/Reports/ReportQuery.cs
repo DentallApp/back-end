@@ -28,13 +28,12 @@ public class ReportQuery : IReportQuery
 										 (appoinment.AppoinmentStatusId != AppoinmentStatusId.Scheduled) &&
 										 (appoinment.Date >= from && appoinment.Date <= to));
 
-		if (statusId == AppoinmentStatusId.All)
-            queryable = queryable.Where(appoinment =>
-									   (appoinment.OfficeId == officeId));
+        if(statusId == AppoinmentStatusId.All && officeId == OfficesId.All) { }
+		else if (statusId == AppoinmentStatusId.All)
+            queryable = queryable.Where(appoinment => (appoinment.OfficeId == officeId));
 
         else if (officeId == OfficesId.All)
-            queryable = queryable.Where(appoinment =>
-                                       (appoinment.AppoinmentStatusId == statusId));
+            queryable = queryable.Where(appoinment => (appoinment.AppoinmentStatusId == statusId));
 
         else
             queryable = queryable.Where(appoinment =>
@@ -45,5 +44,39 @@ public class ReportQuery : IReportQuery
 							  .Select(appoinment => appoinment.MapToReportGetAppoinmentDto())
 							  .IgnoreQueryFilters()
 							  .ToListAsync();
+    }
+
+	public async Task<IEnumerable<ReportGetScheduledAppoinmentDto>> GetScheduledAppoinmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
+	{
+        int officeId  = reportPostDto.OfficeId;
+        int dentistId = reportPostDto.DentistId;
+        var from      = reportPostDto.From;
+        var to        = reportPostDto.To;
+        IQueryable<Appoinment> queryable;
+        var includableQuery = _context.Set<Appoinment>()
+                                      .Include(appoinment => appoinment.Person)
+                                      .Include(appoinment => appoinment.GeneralTreatment)
+                                      .Include(appoinment => appoinment.Office);
+
+        queryable = includableQuery.Where(appoinment =>
+                                         (appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled) &&
+                                         (appoinment.Date >= from && appoinment.Date <= to));
+
+        if (officeId == OfficesId.All && dentistId == Employee.All) { }
+        else if (officeId == OfficesId.All)
+            queryable = queryable.Where(appoinment => (appoinment.DentistId == dentistId));
+
+        else if (dentistId == Employee.All)
+            queryable = queryable.Where(appoinment => (appoinment.OfficeId == officeId));
+
+        else
+            queryable = queryable.Where(appoinment =>
+                                       (appoinment.OfficeId == officeId) &&
+                                       (appoinment.DentistId == dentistId));
+
+        return await queryable.OrderBy(appoinment => appoinment.Date)
+                              .Select(appoinment => appoinment.MapToReportGetScheduledAppoinmentDto())
+                              .IgnoreQueryFilters()
+                              .ToListAsync();
     }
 }

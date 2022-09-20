@@ -15,6 +15,17 @@ public static class ReportMapper
             AppoinmentStatus  = appoinment.AppoinmentStatus.Name
         };
 
+    [Decompile]
+    public static ReportGetScheduledAppoinmentDto MapToReportGetScheduledAppoinmentDto(this Appoinment appoinment)
+        => new()
+        {
+            AppoinmentDate    = appoinment.Date.GetDateWithStandardFormat(),
+            StartHour         = appoinment.StartHour.GetHourWithoutSeconds(),
+            PatientName       = appoinment.Person.FullName,
+            DentalServiceName = appoinment.GeneralTreatment.Name,
+            OfficeName        = appoinment.Office.Name
+        };
+
     public static object MapToObject(this ReportPostAppoinmentDownloadDto reportPostDownloadDto)
     {
         var model = new

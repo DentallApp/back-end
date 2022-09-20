@@ -16,6 +16,13 @@ public class ReportController : ControllerBase
 	/// Obtiene el reporte de citas asistidas, no asistidas y canceladas por rango de fechas.
 	/// </summary>
 	[HttpPost("appoinment")]
-	public async Task<IEnumerable<ReportGetAppoinmentDto>> GetAppoinmentsByDateRange([FromBody]ReportPostWithStatusDto reportPostFilterDto)
-		=> await _reportQuery.GetAppoinmentsByDateRangeAsync(reportPostFilterDto);
+	public async Task<IEnumerable<ReportGetAppoinmentDto>> GetAppoinmentsByDateRange([FromBody]ReportPostWithStatusDto reportPostDto)
+		=> await _reportQuery.GetAppoinmentsByDateRangeAsync(reportPostDto);
+
+    /// <summary>
+    /// Obtiene el reporte de citas agendadas por rango de fechas.
+    /// </summary>
+    [HttpPost("appoinment/scheduled")]
+    public async Task<IEnumerable<ReportGetScheduledAppoinmentDto>> GetScheduledAppoinmentsByDateRange([FromBody]ReportPostWithDentistDto reportPostDto)
+        => await _reportQuery.GetScheduledAppoinmentsByDateRangeAsync(reportPostDto);
 }
