@@ -23,4 +23,10 @@ public class ReportDownloadPdfService : IReportDownloadPdfService
         var html = await _htmlTemplateLoader.LoadAsync(string.Format(Path, "ReportScheduledAppoinment"), reportPostDownloadDto.MapToObject());
         return _htmlConverter.ConvertToPdfWithPageSizeA3(html, new MemoryStream());
     }
+
+    public async Task<byte[]> CreateReportDentalServiceDownloadPdfAsync(ReportPostDentalServiceDto reportPostDto)
+    {
+        var html = await _htmlTemplateLoader.LoadAsync(string.Format(Path, "ReportDentalServices"), reportPostDto.MapToObject());
+        return _htmlConverter.ConvertToPdf(html, new MemoryStream());
+    }
 }

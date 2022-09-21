@@ -47,4 +47,16 @@ public static class ReportMapper
         };
         return model;
     }
+
+    public static object MapToObject(this ReportPostDentalServiceDto reportPostDto)
+    {
+        var model = new
+        {
+            reportPostDto.From,
+            reportPostDto.To,
+            reportPostDto.OfficeName,
+            reportPostDto.Services
+        };
+        return model;
+    }
 }

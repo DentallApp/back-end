@@ -25,4 +25,11 @@ public class ReportDownloadPdfController : ControllerBase
         var contents = await _reportDownloadPdf.CreateReportScheduledAppoinmentPdfAsync(reportPostDownloadDto);
         return File(contents, "application/pdf", "ReporteCitasAgendadas.pdf");
     }
+
+    [HttpPost("most-requested/services")]
+    public async Task<ActionResult> ReportDentalServiceDownload([FromBody]ReportPostDentalServiceDto reportPostDto)
+    {
+        var contents = await _reportDownloadPdf.CreateReportDentalServiceDownloadPdfAsync(reportPostDto);
+        return File(contents, "application/pdf", "ReporteServicios.pdf");
+    }
 }
