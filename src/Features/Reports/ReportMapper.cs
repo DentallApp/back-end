@@ -36,4 +36,15 @@ public static class ReportMapper
         };
         return model;
     }
+
+    public static object MapToObject(this ReportPostScheduledDownloadDto reportPostDownloadDto)
+    {
+        var model = new
+        {
+            reportPostDownloadDto.From,
+            reportPostDownloadDto.To,
+            reportPostDownloadDto.Appoinments
+        };
+        return model;
+    }
 }
