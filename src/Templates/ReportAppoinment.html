@@ -96,25 +96,34 @@
 
 			<div style="overflow-x:auto; width: 100%; margin: 20px auto;">
 				<table>
+					<colgroup>
+						<col class="small_td" />
+						<col class="small_td" />
+						<col class="regular_td" />
+						<col class="regular_td" />
+						<col class="regular_td" />
+						<col class="regular_td" />
+						<col class="regular_td" />
+					</colgroup>
 					<tr class="heading">
-						<td class="small_td">Fecha</td>
-						<td class="small_td">Hora</td>
-						<td style="regular_td">Paciente</td>
-						<td class="regular_td">Servicio</td>
-						<td class="regular_td">Dentista</td>
-						<td class="regular_td">Consultorio</td>
-						<td class="regular_td">Estado</td>
+						<td>Fecha</td>
+						<td>Hora</td>
+						<td>Paciente</td>
+						<td>Servicio</td>
+						<td>Dentista</td>
+						<td>Consultorio</td>
+						<td>Estado</td>
 					</tr>
 					<tbody>
 						{{ for appoinment in appoinments }}
 						<tr>
-							<td class="small_td">{{ appoinment.appoinment_date }}</td>
-							<td class="small_td">{{ appoinment.start_hour }}</td>
-							<td class="regular_td">{{ appoinment.patient_name }}</td>
-							<td class="regular_td">{{ appoinment.dental_service_name }}</td>
-							<td class="regular_td">{{ appoinment.dentist_name }}</td>
-							<td class="regular_td">{{ appoinment.office_name }}</td>
-							<td class="regular_td">{{ appoinment.status }}</td>
+							<td>{{ appoinment.appoinment_date }}</td>
+							<td>{{ appoinment.start_hour }}</td>
+							<td>{{ appoinment.patient_name }}</td>
+							<td>{{ appoinment.dental_service_name }}</td>
+							<td>{{ appoinment.dentist_name }}</td>
+							<td>{{ appoinment.office_name }}</td>
+							<td>{{ appoinment.status }}</td>
 						</tr>
 						{{ end }}
 					</tbody>
