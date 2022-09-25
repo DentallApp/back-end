@@ -1,49 +1,49 @@
-﻿namespace DentallApp.Features.Reports;
+﻿using Dapper;
+using MySqlConnector;
+
+namespace DentallApp.Features.Reports;
 
 public class ReportQuery : IReportQuery
 {
 	private readonly AppDbContext _context;
+    private readonly AppSettings _settings;
 
-	public ReportQuery(AppDbContext context)
+	public ReportQuery(AppDbContext context, AppSettings settings)
 	{
 		_context = context;
-	}
+        _settings = settings;
+    }
 
-	public async Task<IEnumerable<ReportGetAppoinmentDto>> GetAppoinmentsByDateRangeAsync(ReportPostWithStatusDto reportPostDto)
-	{
-		int statusId = reportPostDto.AppoinmentStatusId;
-		int officeId = reportPostDto.OfficeId;
-		var from	 = reportPostDto.From;
-		var to	     = reportPostDto.To;
-		IQueryable<Appoinment> queryable;
-		var includableQuery = _context.Set<Appoinment>()
-									  .Include(appoinment => appoinment.Person)
-									  .Include(appoinment => appoinment.GeneralTreatment)
-									  .Include(appoinment => appoinment.Employee)
-										 .ThenInclude(employee => employee.Person)
-									  .Include(appoinment => appoinment.Office)
-								      .Include(appoinment => appoinment.AppoinmentStatus);
-
-		queryable = includableQuery.Where(appoinment =>
-										 (appoinment.AppoinmentStatusId != AppoinmentStatusId.Scheduled) &&
-										 (appoinment.Date >= from && appoinment.Date <= to));
-
-        if(statusId == AppoinmentStatusId.All && officeId == OfficesId.All) { }
-		else if (statusId == AppoinmentStatusId.All)
-            queryable = queryable.Where(appoinment => (appoinment.OfficeId == officeId));
-
-        else if (officeId == OfficesId.All)
-            queryable = queryable.Where(appoinment => (appoinment.AppoinmentStatusId == statusId));
-
-        else
-            queryable = queryable.Where(appoinment =>
-									   (appoinment.OfficeId == officeId) &&
-									   (appoinment.AppoinmentStatusId == statusId));
-
-        return await queryable.OrderBy(appoinment => appoinment.Date)
-							  .Select(appoinment => appoinment.MapToReportGetAppoinmentDto())
-							  .IgnoreQueryFilters()
-							  .ToListAsync();
+    public async Task<ReportGetTotalAppoinmentDto> GetTotalAppoinmentsByDateRangeAsync(ReportPostDto reportPostDto)
+    {
+        using var connection = new MySqlConnection(_settings.ConnectionString);
+        var sql = @"
+            SELECT 
+            COUNT(*) AS Total,
+            SUM(case when appoinment_status_id = @Assisted then 1 else 0 END) 
+	            AS TotalAppoinmentsAssisted,
+            SUM(case when appoinment_status_id = @NotAssisted then 1 else 0 END) 
+	            AS TotalAppoinmentsNotAssisted,
+            SUM(case when appoinment_status_id = @Canceled AND is_cancelled_by_employee = 1 then 1 else 0 END) 
+	            AS TotalAppoinmentsCancelledByEmployee,
+            SUM(case when appoinment_status_id = @Canceled AND is_cancelled_by_employee = 0 then 1 else 0 END) 
+	            AS TotalAppoinmentsCancelledByPatient
+            FROM appoinments AS a
+            WHERE (a.appoinment_status_id <> @Scheduled) AND
+                  (a.date >= @From AND a.date <= @To) AND
+                  (a.office_id = @OfficeId OR @OfficeId = 0)
+        ";
+        var result = await connection.QueryAsync<ReportGetTotalAppoinmentDto>(sql, new
+        {
+            AppoinmentStatusId.Assisted,
+            AppoinmentStatusId.NotAssisted,
+            AppoinmentStatusId.Canceled,
+            AppoinmentStatusId.Scheduled,
+            reportPostDto.From,
+            reportPostDto.To,
+            reportPostDto.OfficeId
+        });
+        return result.First();
     }
 
     public async Task<IEnumerable<ReportGetScheduledAppoinmentDto>> GetScheduledAppoinmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
