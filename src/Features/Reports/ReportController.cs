@@ -16,7 +16,7 @@ public class ReportController : ControllerBase
 	/// Obtiene el reporte sobre el total de citas asistidas, no asistidas y canceladas.
 	/// </summary>
 	[HttpPost("appoinment")]
-	public async Task<ReportGetTotalAppoinmentDto> GetTotalAppoinmentsByDateRange([FromBody]ReportPostDto reportPostDto)
+	public async Task<ReportGetTotalAppoinmentDto> GetTotalAppoinmentsByDateRange([FromBody]ReportPostWithDentistDto reportPostDto)
 		=> await _reportQuery.GetTotalAppoinmentsByDateRangeAsync(reportPostDto);
 
     /// <summary>

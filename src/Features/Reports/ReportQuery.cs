@@ -14,7 +14,7 @@ public class ReportQuery : IReportQuery
         _settings = settings;
     }
 
-    public async Task<ReportGetTotalAppoinmentDto> GetTotalAppoinmentsByDateRangeAsync(ReportPostDto reportPostDto)
+    public async Task<ReportGetTotalAppoinmentDto> GetTotalAppoinmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
     {
         using var connection = new MySqlConnection(_settings.ConnectionString);
         var sql = @"
@@ -31,7 +31,8 @@ public class ReportQuery : IReportQuery
             FROM appoinments AS a
             WHERE (a.appoinment_status_id <> @Scheduled) AND
                   (a.date >= @From AND a.date <= @To) AND
-                  (a.office_id = @OfficeId OR @OfficeId = 0)
+                  (a.office_id = @OfficeId OR @OfficeId = 0) AND
+                  (a.dentist_id = @DentistId OR @DentistId = 0)
         ";
         var result = await connection.QueryAsync<ReportGetTotalAppoinmentDto>(sql, new
         {
@@ -41,7 +42,8 @@ public class ReportQuery : IReportQuery
             AppoinmentStatusId.Scheduled,
             reportPostDto.From,
             reportPostDto.To,
-            reportPostDto.OfficeId
+            reportPostDto.OfficeId,
+            reportPostDto.DentistId
         });
         return result.First();
     }
