@@ -66,10 +66,12 @@ public class AppoinmentController : ControllerBase
     /// Permite cancelar las citas agendadas de los odontólogos.
     /// </summary>
     /// <remarks>
-    /// El odontólogo solo podrá cancelar sus propias citas y la
-    /// secretaria/admin solo pueden cancelar las citas del consultorio al que pertenecen.
+    /// Detalles a tomar en cuenta:
+    /// <para>- El odontólogo solo podrá cancelar sus propias citas.</para>
+    /// <para>- La secretaria/admin solo pueden cancelar las citas del consultorio al que pertenecen.</para>
+    /// <para>- El superadmin puede cancelar las citas de cualquier consultorio.</para>
     /// </remarks>
-    [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin)]
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
     [HttpPost("cancel/dentist")]
     public async Task<ActionResult<Response>> CancelAppointments([FromBody]AppoinmentCancelDto appoinmentCancelDto)
     {

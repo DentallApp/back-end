@@ -82,7 +82,10 @@ public class AppoinmentService : IAppoinmentService
             if (currentEmployee.IsOnlyDentist())
                 await _appoinmentRepository.CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appoinmentsId);
             else
-                await _appoinmentRepository.CancelAppointmentsByOfficeIdAsync(currentEmployee.GetOfficeId(), appoinmentsId);
+                await _appoinmentRepository.CancelAppointmentsByOfficeIdAsync(
+                        currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId(), 
+                        appoinmentsId
+                    );
 
             foreach (var appoinment in appoinmentCancelDto.Appoinments)
             {

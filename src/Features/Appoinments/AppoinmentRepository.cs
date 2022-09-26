@@ -133,8 +133,8 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
     public async Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appoinmentsId)
     {
         var affectedRows = await Context.Set<Appoinment>()
+                                        .OptionalWhere(officeId, appoinment => appoinment.OfficeId == officeId)
                                         .Where(appoinment =>
-                                               appoinment.OfficeId == officeId &&
                                                appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
                                                appoinmentsId.Contains(appoinment.Id))
                                         .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
