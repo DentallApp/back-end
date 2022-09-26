@@ -2,7 +2,7 @@
 
 public interface IReportDownloadPdfService
 {
-    Task<byte[]> CreateReportAppoinmentPdfAsync(ReportPostAppoinmentDownloadDto reportPostDownloadDto);
-    Task<byte[]> CreateReportScheduledAppoinmentPdfAsync(ReportPostScheduledDownloadDto reportPostDownloadDto);
+    Task<byte[]> CreateReportTotalAppoinmentPdfAsync(ReportPostTotalAppoinmentDownloadDto reportPostDownloadDto);
+    Task<byte[]> CreateReportTotalScheduledAppoinmentPdfAsync(ReportPostScheduledDownloadDto reportPostDownloadDto);
     Task<byte[]> CreateReportDentalServiceDownloadPdfAsync(ReportPostDentalServiceDto reportPostDto);
 }
