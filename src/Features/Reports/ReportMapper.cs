@@ -2,37 +2,15 @@
 
 public static class ReportMapper
 {
-    [Decompile]
-    public static ReportGetAppoinmentDto MapToReportGetAppoinmentDto(this Appoinment appoinment)
-        => new()
-        {
-            AppoinmentDate    = appoinment.Date.GetDateWithStandardFormat(),
-            StartHour         = appoinment.StartHour.GetHourWithoutSeconds(),
-            PatientName       = appoinment.Person.FullName,
-            DentalServiceName = appoinment.GeneralTreatment.Name,
-            DentistName       = appoinment.Employee.Person.FullName,
-            OfficeName        =  appoinment.Office.Name,
-            AppoinmentStatus  = appoinment.AppoinmentStatus.Name
-        };
-
-    [Decompile]
-    public static ReportGetScheduledAppoinmentDto MapToReportGetScheduledAppoinmentDto(this Appoinment appoinment)
-        => new()
-        {
-            AppoinmentDate    = appoinment.Date.GetDateWithStandardFormat(),
-            StartHour         = appoinment.StartHour.GetHourWithoutSeconds(),
-            PatientName       = appoinment.Person.FullName,
-            DentalServiceName = appoinment.GeneralTreatment.Name,
-            OfficeName        = appoinment.Office.Name
-        };
-
-    public static object MapToObject(this ReportPostAppoinmentDownloadDto reportPostDownloadDto)
+    public static object MapToObject(this ReportPostTotalAppoinmentDownloadDto reportPostDownloadDto)
     {
         var model = new
         {
             reportPostDownloadDto.From,
             reportPostDownloadDto.To,
-            reportPostDownloadDto.Appoinments
+            reportPostDownloadDto.OfficeName,
+            reportPostDownloadDto.DentistName,
+            reportPostDownloadDto.Totals
         };
         return model;
     }
