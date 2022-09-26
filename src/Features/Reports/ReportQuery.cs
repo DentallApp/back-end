@@ -48,38 +48,31 @@ public class ReportQuery : IReportQuery
         return result.First();
     }
 
-    public async Task<IEnumerable<ReportGetScheduledAppoinmentDto>> GetScheduledAppoinmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
-	{
-        int officeId  = reportPostDto.OfficeId;
-        int dentistId = reportPostDto.DentistId;
-        var from      = reportPostDto.From;
-        var to        = reportPostDto.To;
-        IQueryable<Appoinment> queryable;
-        var includableQuery = _context.Set<Appoinment>()
-                                      .Include(appoinment => appoinment.Person)
-                                      .Include(appoinment => appoinment.GeneralTreatment)
-                                      .Include(appoinment => appoinment.Office);
-
-        queryable = includableQuery.Where(appoinment =>
-                                         (appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled) &&
-                                         (appoinment.Date >= from && appoinment.Date <= to));
-
-        if (officeId == OfficesId.All && dentistId == Employee.All) { }
-        else if (officeId == OfficesId.All)
-            queryable = queryable.Where(appoinment => (appoinment.DentistId == dentistId));
-
-        else if (dentistId == Employee.All)
-            queryable = queryable.Where(appoinment => (appoinment.OfficeId == officeId));
-
-        else
-            queryable = queryable.Where(appoinment =>
-                                       (appoinment.OfficeId == officeId) &&
-                                       (appoinment.DentistId == dentistId));
-
-        return await queryable.OrderBy(appoinment => appoinment.Date)
-                              .Select(appoinment => appoinment.MapToReportGetScheduledAppoinmentDto())
-                              .IgnoreQueryFilters()
-                              .ToListAsync();
+    public async Task<IEnumerable<ReportGetTotalScheduledAppoinmentDto>> GetTotalScheduledAppoinmentsByDateRangeAsync(ReportPostDto reportPostDto)
+    {
+        using var connection = new MySqlConnection(_settings.ConnectionString);
+        var sql = @"
+            SELECT 
+            CONCAT(p.names, ' ', p.last_names) AS DentistName,
+            o.name AS OfficeName,
+            COUNT(*) AS Total
+            FROM appoinments AS a
+            INNER JOIN employees AS e ON e.id = a.dentist_id
+            INNER JOIN persons AS p ON p.id = e.person_id
+            INNER JOIN offices AS o ON o.id = a.office_id
+            WHERE (a.appoinment_status_id = @Scheduled) AND
+	              (a.date >= @From AND a.date <= @To) AND
+	              (a.office_id = @OfficeId OR @OfficeId = 0)
+            GROUP BY a.dentist_id
+            ORDER BY Total DESC
+        ";
+        return await connection.QueryAsync<ReportGetTotalScheduledAppoinmentDto>(sql, new
+        {
+            AppoinmentStatusId.Scheduled,
+            reportPostDto.From,
+            reportPostDto.To,
+            reportPostDto.OfficeId
+        });
     }
 
     public async Task<IEnumerable<ReportGetMostRequestedServicesDto>> GetMostRequestedServicesAsync(ReportPostDto reportPostDto)

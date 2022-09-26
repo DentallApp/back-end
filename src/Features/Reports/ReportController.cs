@@ -23,8 +23,8 @@ public class ReportController : ControllerBase
     /// Obtiene el reporte sobre el total de citas agendadas por odontólogo.
     /// </summary>
     [HttpPost("appoinment/scheduled")]
-    public async Task<IEnumerable<ReportGetScheduledAppoinmentDto>> GetScheduledAppoinmentsByDateRange([FromBody]ReportPostWithDentistDto reportPostDto)
-        => await _reportQuery.GetScheduledAppoinmentsByDateRangeAsync(reportPostDto);
+    public async Task<IEnumerable<ReportGetTotalScheduledAppoinmentDto>> GetTotalScheduledAppoinmentsByDateRange([FromBody]ReportPostDto reportPostDto)
+        => await _reportQuery.GetTotalScheduledAppoinmentsByDateRangeAsync(reportPostDto);
 
 	/// <summary>
 	/// Obtiene el reporte de los servicios dentales más solicitados.
