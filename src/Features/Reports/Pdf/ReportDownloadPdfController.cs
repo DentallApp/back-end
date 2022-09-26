@@ -12,6 +12,9 @@ public class ReportDownloadPdfController : ControllerBase
 		_reportDownloadPdf = reportDownloadPdf;
 	}
 
+    /// <summary>
+    /// Descarga el reporte sobre el total de citas asistidas, no asistidas y canceladas.
+    /// </summary>
 	[HttpPost("appoinment")]
 	public async Task<ActionResult> ReportTotalAppoinmentsDownload([FromBody]ReportPostTotalAppoinmentDownloadDto reportPostDownloadDto)
 	{
@@ -19,6 +22,9 @@ public class ReportDownloadPdfController : ControllerBase
         return File(contents, "application/pdf", "Reporte sobre el total de citas.pdf");
     }
 
+    /// <summary>
+    /// Descarga el reporte sobre el total de citas agendadas por odontólogo.
+    /// </summary>
     [HttpPost("appoinment/scheduled")]
     public async Task<ActionResult> ReportTotalScheduledAppoinmentDownload([FromBody]ReportPostScheduledDownloadDto reportPostDownloadDto)
     {
@@ -26,6 +32,9 @@ public class ReportDownloadPdfController : ControllerBase
         return File(contents, "application/pdf", "Reporte sobre el total de citas agendadas.pdf");
     }
 
+    /// <summary>
+    /// Descarga el reporte sobre los servicios dentales más solicitados.
+    /// </summary>
     [HttpPost("most-requested/services")]
     public async Task<ActionResult> ReportDentalServiceDownload([FromBody]ReportPostDentalServiceDto reportPostDto)
     {
