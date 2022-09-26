@@ -80,8 +80,8 @@ public class ReportQuery : IReportQuery
                          .Include(appoinment => appoinment.GeneralTreatment)
                          .Where(appoinment =>
                                (appoinment.AppoinmentStatusId == AppoinmentStatusId.Assisted) &&
-                               (appoinment.OfficeId == reportPostDto.OfficeId) &&
                                (appoinment.Date >= reportPostDto.From && appoinment.Date <= reportPostDto.To))
+                         .OptionalWhere(reportPostDto.OfficeId, appoinment => appoinment.OfficeId == reportPostDto.OfficeId)
                          .GroupBy(appoinment => new { appoinment.GeneralTreatmentId, appoinment.GeneralTreatment.Name })
                          .Select(group => new ReportGetMostRequestedServicesDto
                           {
