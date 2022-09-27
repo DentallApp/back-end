@@ -5,13 +5,31 @@
 		<title>REPORTE DE CITAS ASISTIDAS, NO ASISTIDAS Y CANCELADAS</title>
 
 		<style>
+			* {
+				margin: 0;
+				padding: 0; 
+			}
+
 			.header {
 				display: flex;
 			}
 
-			.information {
+			.wrapper {
 				display: flex;
 				justify-content: center;
+				align-items: center;
+				margin-bottom: 20px;
+			}
+
+			.container_information {
+				margin-right: 20px;
+				display: flex;
+				align-items: center;
+			}
+
+			.text_information {
+				display: flex;
+				align-items: center;
 			}
 
 			.invoice-box {
@@ -44,35 +62,22 @@
 				padding: 5px;
 			}
 
-			.invoice-box table tbody tr td {
-				word-break: break-word;
-			}
-
-			.small_td {
-				width: 100px;
-			}
-
-			.regular_td {
-				width: 150px;
+			.invoice-box table tbody tr td{
+				display: flex;
+				flex-wrap: wrap;
+				max-width: 70%;
+				height: auto;
 			}
 
 			tr:nth-child(even) {
 				background-color: #f2f2f2;
 			}
 
-			@media print {
-
-				@page { 
-					size: A4 landscape;
-					transform: rotate(-90deg); 
-				}
+			.container_total {
+				width: 100%;
+				text-align: right;
 			}
 
-			/** RTL **/
-			.invoice-box.rtl {
-				direction: rtl;
-				font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-			}
 		</style>
 	</head>
 
@@ -85,49 +90,52 @@
 				<h2 style="text-align: center">REPORTE DE CITAS ASISTIDAS, NO ASISTIDAS Y CANCELADAS</h2>
 			</div>
 			
-			<div class="information">
-				<div style="margin-right: 10px">
-					<h4>Desde: {{ from }}</h4>
+			<div class="wrapper">
+				<div style="display: flex;" class="container_information">
+					<h4 style="margin-right: 10px">Desde: </h4> <div class="text_information"> {{ from }}</div>
 				</div>
-				<div>
-					<h4>Hasta: {{ to }}</h4>
+				<div style="display: flex;">
+					<h4 style="margin-right: 10px">Hasta: </h3> <div class="text_information"> {{ to }}</div>
+				</div>
+			</div>
+
+			<div class="wrapper">
+				<div style="display: flex;" class="container_information">
+					<h4 style="margin-right: 10px">Consultorio: </h4> <div class="text_information">{{ office_name }}</div>
+				</div>
+                <div style="display: flex;" class="container_information">
+					<h4 style="margin-right: 10px">Odontólogo: </h4> <div class="text_information">{{ dentist_name }}</div>
 				</div>
 			</div>
 
 			<div style="overflow-x:auto; width: 100%; margin: 20px auto;">
 				<table>
-					<colgroup>
-						<col class="small_td" />
-						<col class="small_td" />
-						<col class="regular_td" />
-						<col class="regular_td" />
-						<col class="regular_td" />
-						<col class="regular_td" />
-						<col class="regular_td" />
-					</colgroup>
 					<tr class="heading">
-						<td>Fecha</td>
-						<td>Hora</td>
-						<td>Paciente</td>
-						<td>Servicio</td>
-						<td>Dentista</td>
-						<td>Consultorio</td>
-						<td>Estado</td>
+						<td>Estado de cita</td>
+						<td>Total</td>
 					</tr>
 					<tbody>
-						{{ for appoinment in appoinments }}
 						<tr>
-							<td>{{ appoinment.appoinment_date }}</td>
-							<td>{{ appoinment.start_hour }}</td>
-							<td>{{ appoinment.patient_name }}</td>
-							<td>{{ appoinment.dental_service_name }}</td>
-							<td>{{ appoinment.dentist_name }}</td>
-							<td>{{ appoinment.office_name }}</td>
-							<td>{{ appoinment.status }}</td>
+							<td>Asistida</td>
+							<td>{{ totals.total_appoinments_assisted }}</td>
 						</tr>
-						{{ end }}
+						<tr>
+							<td>No Asistida</td>
+							<td>{{ totals.total_appoinments_not_assisted }}</td>
+						</tr>
+						<tr>
+							<td>Cancelada por Paciente</td>
+							<td>{{ totals.total_appoinments_cancelled_by_patient }}</td>
+						</tr>
+						<tr>
+							<td>Cancelada por Empleado</td>
+							<td>{{ totals.total_appoinments_cancelled_by_employee }}</td>
+						</tr>
 					</tbody>
 				</table>
+			</div>
+			<div class="container_total">
+				<h3>TOTAL DE CITAS: {{totals.total}}</h3>
 			</div>
 		</div>
 	</body>
