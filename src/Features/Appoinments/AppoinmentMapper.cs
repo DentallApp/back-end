@@ -84,7 +84,8 @@ public static class AppoinmentMapper
             Email             = appoinment.Person.Email,
             DateBirth         = appoinment.Person.DateBirth,
             DentistId         = appoinment.DentistId,
-            DentistName       = appoinment.Employee.Person.FullName
+            DentistName       = appoinment.Employee.Person.FullName,
+            OfficeName        = appoinment.Office.Name
         };
 
     [Decompile]
