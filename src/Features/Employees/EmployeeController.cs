@@ -33,7 +33,7 @@ public class EmployeeController : ControllerBase
     [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
     [HttpPut]
     public async Task<ActionResult<Response>> Put([FromBody]EmployeeUpdateDto employeeUpdateDto)
-    { 
+    {
         var response = await _employeeService.EditProfileByCurrentEmployeeAsync(User.GetEmployeeId(), employeeUpdateDto);
         if (response.Success)
             return Ok(response);
@@ -56,26 +56,21 @@ public class EmployeeController : ControllerBase
     }
 
     /// <summary>
-    /// Obtiene todos los odontólogos activos e inactivos del consultorio al que pertenezca la secretaria o admin.
+    /// Obtiene los odontólogos de un consultorio.
     /// </summary>
-    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
-    [HttpGet("dentist/all")]
-    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetAllDentists()
-        => await _employeeService.GetAllDentistsByOfficeIdAsync(User.GetOfficeId());
-
-    /// <summary>
-    /// Obtiene los odontólogos activos del consultorio al que pertenezca la secretaria o admin.
-    /// </summary>
-    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
-    [HttpGet("dentist")]
-    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentists()
-        => await _employeeService.GetDentistsByOfficeIdAsync(User.GetOfficeId());
-
-    /// <summary>
-    /// Obtiene los odontólogos activos e inactivos de un consultorio.
-    /// </summary>
-    [AuthorizeByRole(RolesName.Superadmin)]
-    [HttpGet("dentist/{officeId}")]
-    public async Task<IEnumerable<EmployeeGetByDentistDto>> GetDentistsByOfficeId(int officeId)
-        => await _employeeService.GetAllDentistsByOfficeIdAsync(officeId);
+    /// <remarks>
+    /// Detalles a tomar en cuenta:
+    /// <para>- Sí <see cref="EmployeePostByDentistDto.OfficeId"/> es <c>0</c>, traerá los odontólogos de todos los consultorios.</para>
+    /// <para>- Sí <see cref="EmployeePostByDentistDto.IsDentistDeleted"/> es <c>true</c>, traerá los odontólogos que han sido eliminados temporalmente.</para>
+    /// <para>- Sí <see cref="EmployeePostByDentistDto.IsDentistDeleted"/> es <c>false</c>, traerá los odontólogos que no han sido eliminados temporalmente.</para>
+    /// <para>- Sí <see cref="EmployeePostByDentistDto.IsDentistDeleted"/> es <c>null</c>, traerá TODOS los odontólogos, sin importar si está eliminado temporalmente o no.</para>
+    /// </remarks>
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin, RolesName.Superadmin)]
+    [HttpPost("dentist")]
+    public async Task<ActionResult<IEnumerable<EmployeeGetByDentistDto>>> GetDentists(EmployeePostByDentistDto employeePostDto)
+    {
+        if (!User.IsSuperAdmin() && User.IsNotInOffice(employeePostDto.OfficeId))
+            return Unauthorized();
+        return Ok(await _employeeService.GetDentistsAsync(employeePostDto));
+    }
 }
