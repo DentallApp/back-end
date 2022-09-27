@@ -83,12 +83,22 @@ public class AppoinmentController : ControllerBase
     }
 
     /// <summary>
-    /// Obtiene las citas de cualquier estado (agendada, cancelada, asistida y no asistida) del consultorio al que pertenece la secretaria o admin.
+    /// Obtiene las citas de cualquier estado (agendada, cancelada, asistida y no asistida) de un consultorio.
     /// </summary>
-    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
-    [HttpPost("office")]
-    public async Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppointmentsByOfficeId([FromBody]AppoinmentPostDateDto appoinmentPostDateDto)
-        => await _appoinmentService.GetAppointmentsByOfficeIdAsync(User.GetOfficeId(), appoinmentPostDateDto);
+    /// <remarks>
+    /// Detalles a tomar en cuenta:
+    /// <para>- La secretaria/admin solo pueden obtener las citas del consultorio al que pertenecen.</para>
+    /// <para>- El superadmin puede obtener las citas de cualquier consultorio.</para>
+    /// </remarks>
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin, RolesName.Superadmin)]
+    [HttpPost("office/{officeId}")]
+    public async Task<ActionResult<Response<IEnumerable<AppoinmentGetByEmployeeDto>>>> GetAppointmentsByOfficeId(int officeId, [FromBody]AppoinmentPostDateWithDentistDto appoinmentPostDateDto)
+    {
+        if (!User.IsSuperAdmin() && User.IsNotInOffice(officeId))
+            return BadRequest(new Response(OfficeNotAssignedMessage));
+        var data = await _appoinmentService.GetAppointmentsByOfficeIdAsync(officeId, appoinmentPostDateDto);
+        return Ok(new Response { Success = true, Data = data, Message = GetResourceMessage });
+    }
 
     /// <summary>
     /// Obtiene las citas de cualquier estado (agendada, cancelada, asistida y no asistida) para el odontólogo actual.

@@ -65,7 +65,8 @@ public static class AppoinmentMapper
             DentistId          = appoinment.DentistId,
             DentistName        = appoinment.Employee.Person.FullName,
             Status             = appoinment.AppoinmentStatus.Name,
-            StatusId           = appoinment.AppoinmentStatusId
+            StatusId           = appoinment.AppoinmentStatusId,
+            OfficeName         = appoinment.Office.Name
         };
 
     [Decompile]
