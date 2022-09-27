@@ -55,6 +55,9 @@ global using DentallApp.Features.FavoriteDentists.DTOs;
 global using DentallApp.Features.OfficeSchedules;
 global using DentallApp.Features.OfficeSchedules.DTOs;
 global using DentallApp.Features.AppoinmentReminders;
+global using DentallApp.Features.Reports;
+global using DentallApp.Features.Reports.DTOs;
+global using DentallApp.Features.Reports.Pdf;
 
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
