@@ -111,15 +111,20 @@ public class AppoinmentService : IAppoinmentService
         };
     }
 
-    public async Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateWithDentistDto appoinmentDto)
-        => await _appoinmentRepository.GetAppointmentsByOfficeIdAsync(officeId, appoinmentDto);
+    public async Task<Response<IEnumerable<AppoinmentGetByEmployeeDto>>> GetAppoinmentsForEmployeeAsync(ClaimsPrincipal currentEmployee, AppoinmentPostDateDto appoinmentPostDto)
+    {
+        if (currentEmployee.IsOnlyDentist() && currentEmployee.GetEmployeeId() != appoinmentPostDto.DentistId)
+            return new Response<IEnumerable<AppoinmentGetByEmployeeDto>>(CanOnlyAccessYourOwnAppoinmentsMessage);
 
-    public async Task<IEnumerable<AppoinmentGetByDentistDto>> GetAppointmentsByDentistIdAsync(int dentistId, AppoinmentPostDateDto appoinmentDto)
-        => await _appoinmentRepository.GetAppointmentsByDentistIdAsync(dentistId, appoinmentDto.From, appoinmentDto.To);
+        if (!currentEmployee.IsSuperAdmin() && currentEmployee.IsNotInOffice(appoinmentPostDto.OfficeId))
+            return new Response<IEnumerable<AppoinmentGetByEmployeeDto>>(OfficeNotAssignedMessage);
 
-    public async Task<IEnumerable<AppoinmentScheduledGetByEmployeeDto>> GetScheduledAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateWithDentistDto appoinmentDto)
-        => await _appoinmentRepository.GetScheduledAppointmentsByOfficeIdAsync(officeId, appoinmentDto);
-
-    public async Task<IEnumerable<AppoinmentScheduledGetByDentistDto>> GetScheduledAppointmentsByDentistIdAsync(int dentistId, AppoinmentPostDateDto appoinmentDto)
-        => await _appoinmentRepository.GetScheduledAppointmentsByDentistIdAsync(dentistId, appoinmentDto.From, appoinmentDto.To);
+        var data = await _appoinmentRepository.GetAppoinmentsForEmployeeAsync(appoinmentPostDto);
+        return new Response<IEnumerable<AppoinmentGetByEmployeeDto>>
+        {
+            Success = true,
+            Message = GetResourceMessage,
+            Data = data
+        };
+    }
 }
