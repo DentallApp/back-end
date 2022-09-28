@@ -2,6 +2,8 @@
 
 public class Employee : ModelWithSoftDelete 
 {
+    public const int All = 0;
+
     public int UserId { get; set; }
     public User User { get; set; }
     public int PersonId { get; set; }

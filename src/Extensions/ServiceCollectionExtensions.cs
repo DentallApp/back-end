@@ -25,6 +25,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IOfficeScheduleService, OfficeScheduleService>()
                 .AddScoped<IAvailabilityService, AvailabilityService>()
                 .AddTransient<IPersonService, PersonService>()
+                .AddTransient<IReportDownloadPdfService, ReportDownloadPdfService>()
                 .AddTransient<ITokenService, TokenService>();
 
         return services;
@@ -47,6 +48,7 @@ public static class ServiceCollectionExtensions
                 .AddTransient<IOfficeScheduleRepository, OfficeScheduleRepository>()
                 .AddTransient<IPersonRepository, PersonRepository>()
                 .AddScoped<IAppoinmentReminderRepository, AppoinmentReminderRepository>()
+                .AddTransient<IReportQuery, ReportQuery>()
                 .AddTransient<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
         return services;

@@ -65,7 +65,8 @@ public static class AppoinmentMapper
             DentistId          = appoinment.DentistId,
             DentistName        = appoinment.Employee.Person.FullName,
             Status             = appoinment.AppoinmentStatus.Name,
-            StatusId           = appoinment.AppoinmentStatusId
+            StatusId           = appoinment.AppoinmentStatusId,
+            OfficeName         = appoinment.Office.Name
         };
 
     [Decompile]
@@ -84,7 +85,8 @@ public static class AppoinmentMapper
             Email             = appoinment.Person.Email,
             DateBirth         = appoinment.Person.DateBirth,
             DentistId         = appoinment.DentistId,
-            DentistName       = appoinment.Employee.Person.FullName
+            DentistName       = appoinment.Employee.Person.FullName,
+            OfficeName        = appoinment.Office.Name
         };
 
     [Decompile]

@@ -82,7 +82,10 @@ public class AppoinmentService : IAppoinmentService
             if (currentEmployee.IsOnlyDentist())
                 await _appoinmentRepository.CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appoinmentsId);
             else
-                await _appoinmentRepository.CancelAppointmentsByOfficeIdAsync(currentEmployee.GetOfficeId(), appoinmentsId);
+                await _appoinmentRepository.CancelAppointmentsByOfficeIdAsync(
+                        currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId(), 
+                        appoinmentsId
+                    );
 
             foreach (var appoinment in appoinmentCancelDto.Appoinments)
             {
@@ -108,14 +111,14 @@ public class AppoinmentService : IAppoinmentService
         };
     }
 
-    public async Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateDto appoinmentDto)
-        => await _appoinmentRepository.GetAppointmentsByOfficeIdAsync(officeId, appoinmentDto.From, appoinmentDto.To);
+    public async Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateWithDentistDto appoinmentDto)
+        => await _appoinmentRepository.GetAppointmentsByOfficeIdAsync(officeId, appoinmentDto);
 
     public async Task<IEnumerable<AppoinmentGetByDentistDto>> GetAppointmentsByDentistIdAsync(int dentistId, AppoinmentPostDateDto appoinmentDto)
         => await _appoinmentRepository.GetAppointmentsByDentistIdAsync(dentistId, appoinmentDto.From, appoinmentDto.To);
 
-    public async Task<IEnumerable<AppoinmentScheduledGetByEmployeeDto>> GetScheduledAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateDto appoinmentDto)
-        => await _appoinmentRepository.GetScheduledAppointmentsByOfficeIdAsync(officeId, appoinmentDto.From, appoinmentDto.To);
+    public async Task<IEnumerable<AppoinmentScheduledGetByEmployeeDto>> GetScheduledAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateWithDentistDto appoinmentDto)
+        => await _appoinmentRepository.GetScheduledAppointmentsByOfficeIdAsync(officeId, appoinmentDto);
 
     public async Task<IEnumerable<AppoinmentScheduledGetByDentistDto>> GetScheduledAppointmentsByDentistIdAsync(int dentistId, AppoinmentPostDateDto appoinmentDto)
         => await _appoinmentRepository.GetScheduledAppointmentsByDentistIdAsync(dentistId, appoinmentDto.From, appoinmentDto.To);

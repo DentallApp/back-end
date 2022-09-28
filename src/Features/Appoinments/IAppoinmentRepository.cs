@@ -15,9 +15,8 @@ public interface IAppoinmentRepository : IRepository<Appoinment>
     /// Obtiene las citas de cualquier estado (agendada, cancelada, asistida y no asistida) de un consultorio.
     /// </summary>
     /// <param name="officeId">El ID del consultorio.</param>
-    /// <param name="from">Desde que fecha se desea filtrar las citas.</param>
-    /// <param name="to">Hasta que fecha se desea filtrar las citas.</param>
-    Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppointmentsByOfficeIdAsync(int officeId, DateTime from, DateTime to);
+    /// <param name="appoinmentDto"></param>
+    Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateWithDentistDto appoinmentDto);
 
     /// <summary>
     /// Obtiene las citas de cualquier estado (agendada, cancelada, asistida y no asistida) de un dentista.
@@ -31,9 +30,8 @@ public interface IAppoinmentRepository : IRepository<Appoinment>
     /// Obtiene las citas agendadas de un consultorio.
     /// </summary>
     /// <param name="officeId">El ID del consultorio.</param>
-    /// <param name="from">Desde que fecha se desea filtrar las citas.</param>
-    /// <param name="to">Hasta que fecha se desea filtrar las citas.</param>
-    Task<IEnumerable<AppoinmentScheduledGetByEmployeeDto>> GetScheduledAppointmentsByOfficeIdAsync(int officeId, DateTime from, DateTime to);
+    /// <param name="appoinmentDto"></param>
+    Task<IEnumerable<AppoinmentScheduledGetByEmployeeDto>> GetScheduledAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateWithDentistDto appoinmentDto);
 
     /// <summary>
     /// Obtiene las citas agendadas de un dentista.

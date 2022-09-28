@@ -6,4 +6,5 @@ public class AppoinmentGetByEmployeeDto : AppoinmentPersonDto
     public int StatusId { get; set; }
     public int DentistId { get; set; }
     public string DentistName { get; set; }
+    public string OfficeName { get; set; }
 }
