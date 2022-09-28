@@ -91,31 +91,25 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
                         .IgnoreQueryFilters()
                         .ToListAsyncEF();
 
+
+    /// <summary>
+    /// Cancela las citas por parte del empleado.
+    /// </summary>
+    private async Task<int> CancelAppointmentsForEmployeeAsync(int officeId, int dentistId, IEnumerable<int> appoinmentsId)
+        => await Context.Set<Appoinment>()
+                        .OptionalWhere(officeId,  appoinment => appoinment.OfficeId == officeId)
+                        .OptionalWhere(dentistId, appoinment => appoinment.DentistId == dentistId)
+                        .Where(appoinment =>
+                               appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
+                               appoinmentsId.Contains(appoinment.Id))
+                        .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
+                        .Set(appoinment => appoinment.IsCancelledByEmployee, true)
+                        .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
+                        .UpdateAsync();
+
     public async Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appoinmentsId)
-    {
-        var affectedRows = await Context.Set<Appoinment>()
-                                        .OptionalWhere(officeId, appoinment => appoinment.OfficeId == officeId)
-                                        .Where(appoinment =>
-                                               appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
-                                               appoinmentsId.Contains(appoinment.Id))
-                                        .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
-                                        .Set(appoinment => appoinment.IsCancelledByEmployee, true)
-                                        .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
-                                        .UpdateAsync();
-        return affectedRows;
-    }
+        => await CancelAppointmentsForEmployeeAsync(officeId, dentistId: default, appoinmentsId);
 
     public async Task<int> CancelAppointmentsByDentistIdAsync(int dentistId, IEnumerable<int> appoinmentsId)
-    {
-        var affectedRows = await Context.Set<Appoinment>()
-                                        .Where(appoinment =>
-                                               appoinment.DentistId == dentistId &&
-                                               appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
-                                               appoinmentsId.Contains(appoinment.Id))
-                                        .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
-                                        .Set(appoinment => appoinment.IsCancelledByEmployee, true)
-                                        .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
-                                        .UpdateAsync();
-        return affectedRows;
-    }
+        => await CancelAppointmentsForEmployeeAsync(officeId: default, dentistId, appoinmentsId);
 }
