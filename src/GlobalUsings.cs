@@ -69,6 +69,7 @@ global using DentallApp.Validators;
 global using DentallApp.Helpers;
 global using DentallApp.Helpers.HtmlConverterHelpers;
 global using DentallApp.Helpers.TemplateEngineHelpers;
+global using DentallApp.Helpers.DateTimeHelpers;
 global using Response = DentallApp.Helpers.Response;
 global using DentallApp.Extensions;
 global using DentallApp.Constants;
