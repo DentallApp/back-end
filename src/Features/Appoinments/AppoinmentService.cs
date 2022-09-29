@@ -1,14 +1,18 @@
 ﻿namespace DentallApp.Features.Appoinments;
 
-public class AppoinmentService : IAppoinmentService
+public partial class AppoinmentService : IAppoinmentService
 {
     private readonly IAppoinmentRepository _appoinmentRepository;
     private readonly IInstantMessaging _instantMessaging;
+    private readonly ISpecificTreatmentRepository _treatmentRepository;
 
-    public AppoinmentService(IAppoinmentRepository appoinmentRepository, IInstantMessaging instantMessaging)
+    public AppoinmentService(IAppoinmentRepository appoinmentRepository, 
+                             IInstantMessaging instantMessaging,
+                             ISpecificTreatmentRepository treatmentRepository)
     {
         _appoinmentRepository = appoinmentRepository;
         _instantMessaging = instantMessaging;
+        _treatmentRepository = treatmentRepository;
     }
 
     public async Task<IEnumerable<AppoinmentGetByBasicUserDto>> GetAppoinmentsByUserIdAsync(int userId)
@@ -38,9 +42,10 @@ public class AppoinmentService : IAppoinmentService
         if (await _appoinmentRepository.IsNotAvailableAsync(appoinmentInsertDto))
             return new Response(DateAndTimeAppointmentIsNotAvailableMessage);
 
-        _appoinmentRepository.Insert(appoinmentInsertDto.MapToAppoinment());
+        var appoinment = appoinmentInsertDto.MapToAppoinment();
+        _appoinmentRepository.Insert(appoinment);
         await _appoinmentRepository.SaveAsync();
-
+        await SendAppoinmentInformationAsync(appoinment.Id, appoinmentInsertDto);
         return new Response
         {
             Success = true,
@@ -78,7 +83,6 @@ public class AppoinmentService : IAppoinmentService
         try
         {
             var appoinmentsId = appoinmentCancelDto.Appoinments.Select(appoinment => appoinment.AppoinmentId);
-            var businessName = EnvReader.Instance[AppSettings.BusinessName];
             if (currentEmployee.IsOnlyDentist())
                 await _appoinmentRepository.CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appoinmentsId);
             else
@@ -86,18 +90,7 @@ public class AppoinmentService : IAppoinmentService
                         currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId(), 
                         appoinmentsId
                     );
-
-            foreach (var appoinment in appoinmentCancelDto.Appoinments)
-            {
-                var msg = string.Format("Estimado usuario {0}, su cita agendada en el consultorio odontológico {1} para el día {2} a las {3} ha sido cancelada por el siguiente motivo: {4}",
-                                           appoinment.PatientName, 
-                                           businessName, 
-                                           appoinment.AppoinmentDate,
-                                           appoinment.StartHour, 
-                                           appoinmentCancelDto.Reason
-                                       );
-                await _instantMessaging.SendMessageAsync(appoinment.PatientCellPhone, msg);
-            }
+            await SendMessageAboutAppoinmentCancellationAsync(appoinmentCancelDto);
         }
         catch(Exception ex)
         {

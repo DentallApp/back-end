@@ -49,4 +49,15 @@ public static class AppoinmentMapper
             StatusId           = appoinment.AppoinmentStatusId,
             OfficeName         = appoinment.Office.Name
         };
+
+    [Decompile]
+    public static AppoinmentInfoDto MapToAppoinmentInfoDto(this Appoinment appoinment)
+        => new()
+        {
+            PatientName         = appoinment.Person.FullName,
+            CellPhone           = appoinment.Person.CellPhone,
+            DentistName         = appoinment.Employee.Person.FullName,
+            DentalServiceName   = appoinment.GeneralTreatment.Name,
+            OfficeName          = appoinment.Office.Name
+        };
 }

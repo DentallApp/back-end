@@ -33,7 +33,7 @@ public static class SwaggerGen
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             options.IncludeXmlComments(xmlPath);
         });
-
+        services.AddSwaggerGenNewtonsoftSupport();
         return services;
     }
 }
