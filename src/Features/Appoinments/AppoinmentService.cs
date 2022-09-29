@@ -83,7 +83,6 @@ public partial class AppoinmentService : IAppoinmentService
         try
         {
             var appoinmentsId = appoinmentCancelDto.Appoinments.Select(appoinment => appoinment.AppoinmentId);
-            var businessName = EnvReader.Instance[AppSettings.BusinessName];
             if (currentEmployee.IsOnlyDentist())
                 await _appoinmentRepository.CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appoinmentsId);
             else
@@ -91,18 +90,7 @@ public partial class AppoinmentService : IAppoinmentService
                         currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId(), 
                         appoinmentsId
                     );
-
-            foreach (var appoinment in appoinmentCancelDto.Appoinments)
-            {
-                var msg = string.Format("Estimado usuario {0}, su cita agendada en el consultorio odontológico {1} para el día {2} a las {3} ha sido cancelada por el siguiente motivo: {4}",
-                                           appoinment.PatientName, 
-                                           businessName, 
-                                           appoinment.AppoinmentDate,
-                                           appoinment.StartHour, 
-                                           appoinmentCancelDto.Reason
-                                       );
-                await _instantMessaging.SendMessageAsync(appoinment.PatientCellPhone, msg);
-            }
+            await SendMessageAboutAppoinmentCancellationAsync(appoinmentCancelDto);
         }
         catch(Exception ex)
         {

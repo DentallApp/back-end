@@ -25,4 +25,19 @@ public partial class AppoinmentService
                                           appoinmentInsertDto.RangeToPay?.ToString());
         await _instantMessaging.SendMessageAsync(info.CellPhone, msg);
     }
+
+    private async Task SendMessageAboutAppoinmentCancellationAsync(AppoinmentCancelDto appoinmentCancelDto)
+    {
+        var businessName = EnvReader.Instance[AppSettings.BusinessName];
+        var template = "Estimado usuario {0}, su cita agendada en el consultorio odontológico {1} para el día {2} a las {3} ha sido cancelada por el siguiente motivo: {4}";
+        foreach (var appoinment in appoinmentCancelDto.Appoinments)
+        {
+            var msg = string.Format(template, appoinment.PatientName,
+                                              businessName,
+                                              appoinment.AppoinmentDate,
+                                              appoinment.StartHour,
+                                              appoinmentCancelDto.Reason);
+            await _instantMessaging.SendMessageAsync(appoinment.PatientCellPhone, msg);
+        }
+    }
 }
