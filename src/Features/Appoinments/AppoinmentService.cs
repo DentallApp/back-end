@@ -1,14 +1,18 @@
 ﻿namespace DentallApp.Features.Appoinments;
 
-public class AppoinmentService : IAppoinmentService
+public partial class AppoinmentService : IAppoinmentService
 {
     private readonly IAppoinmentRepository _appoinmentRepository;
     private readonly IInstantMessaging _instantMessaging;
+    private readonly ISpecificTreatmentRepository _treatmentRepository;
 
-    public AppoinmentService(IAppoinmentRepository appoinmentRepository, IInstantMessaging instantMessaging)
+    public AppoinmentService(IAppoinmentRepository appoinmentRepository, 
+                             IInstantMessaging instantMessaging,
+                             ISpecificTreatmentRepository treatmentRepository)
     {
         _appoinmentRepository = appoinmentRepository;
         _instantMessaging = instantMessaging;
+        _treatmentRepository = treatmentRepository;
     }
 
     public async Task<IEnumerable<AppoinmentGetByBasicUserDto>> GetAppoinmentsByUserIdAsync(int userId)
@@ -38,9 +42,10 @@ public class AppoinmentService : IAppoinmentService
         if (await _appoinmentRepository.IsNotAvailableAsync(appoinmentInsertDto))
             return new Response(DateAndTimeAppointmentIsNotAvailableMessage);
 
-        _appoinmentRepository.Insert(appoinmentInsertDto.MapToAppoinment());
+        var appoinment = appoinmentInsertDto.MapToAppoinment();
+        _appoinmentRepository.Insert(appoinment);
         await _appoinmentRepository.SaveAsync();
-
+        await SendAppoinmentInformationAsync(appoinment.Id, appoinmentInsertDto);
         return new Response
         {
             Success = true,

@@ -112,4 +112,15 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
 
     public async Task<int> CancelAppointmentsByDentistIdAsync(int dentistId, IEnumerable<int> appoinmentsId)
         => await CancelAppointmentsForEmployeeAsync(officeId: default, dentistId, appoinmentsId);
+
+    public async Task<AppoinmentInfoDto> GetAppoinmentInformationAsync(int id)
+        => await Context.Set<Appoinment>()
+                        .Include(appoinment => appoinment.Person)
+                        .Include(appoinment => appoinment.Employee.Person)
+                        .Include(appoinment => appoinment.Office)
+                        .Include(appoinment => appoinment.GeneralTreatment)
+                        .Where(appoinment => appoinment.Id == id)
+                        .Select(appoinment => appoinment.MapToAppoinmentInfoDto())
+                        .IgnoreQueryFilters()
+                        .FirstOrDefaultAsyncEF();
 }
