@@ -5,14 +5,17 @@ public partial class AppoinmentService : IAppoinmentService
     private readonly IAppoinmentRepository _appoinmentRepository;
     private readonly IInstantMessaging _instantMessaging;
     private readonly ISpecificTreatmentRepository _treatmentRepository;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
     public AppoinmentService(IAppoinmentRepository appoinmentRepository, 
                              IInstantMessaging instantMessaging,
-                             ISpecificTreatmentRepository treatmentRepository)
+                             ISpecificTreatmentRepository treatmentRepository,
+                             IDateTimeProvider dateTimeProvider)
     {
         _appoinmentRepository = appoinmentRepository;
         _instantMessaging = instantMessaging;
         _treatmentRepository = treatmentRepository;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<IEnumerable<AppoinmentGetByBasicUserDto>> GetAppoinmentsByUserIdAsync(int userId)
@@ -26,6 +29,9 @@ public partial class AppoinmentService : IAppoinmentService
 
         if (appoinment.UserId != currentUserId)
             return new Response(AppoinmentNotAssignedMessage);
+
+        if (_dateTimeProvider.Now > (appoinment.Date + appoinment.StartHour))
+            return new Response(AppoinmentThatHasAlreadyPassedBasicUserMessage);
 
         appoinment.AppoinmentStatusId = AppoinmentStatusId.Canceled;
         await _appoinmentRepository.SaveAsync();
@@ -78,29 +84,46 @@ public partial class AppoinmentService : IAppoinmentService
         };
     }
 
-    public async Task<Response> CancelAppointmentsAsync(ClaimsPrincipal currentEmployee, AppoinmentCancelDto appoinmentCancelDto)
+    public async Task<Response<AppoinmentsThatCannotBeCanceledDto>> CancelAppointmentsAsync(ClaimsPrincipal currentEmployee, AppoinmentCancelDto appoinmentCancelDto)
     {
+        // Almacena las citas cuya fecha y hora estipulada NO hayan pasado.
+        var appointmentsCanBeCancelled = appoinmentCancelDto.Appoinments
+                                                       .Where(appoinmentDto => 
+                                                             (appoinmentDto.AppoinmentDate + appoinmentDto.StartHour) > _dateTimeProvider.Now);
+        var appointmentsIdCanBeCancelled = appointmentsCanBeCancelled.Select(appoinmentDto => appoinmentDto.AppoinmentId);
         try
         {
-            var appoinmentsId = appoinmentCancelDto.Appoinments.Select(appoinment => appoinment.AppoinmentId);
             if (currentEmployee.IsOnlyDentist())
-                await _appoinmentRepository.CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appoinmentsId);
+                await _appoinmentRepository.CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appointmentsIdCanBeCancelled);
             else
                 await _appoinmentRepository.CancelAppointmentsByOfficeIdAsync(
-                        currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId(), 
-                        appoinmentsId
+                        currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId(),
+                        appointmentsIdCanBeCancelled
                     );
-            await SendMessageAboutAppoinmentCancellationAsync(appoinmentCancelDto);
+            await SendMessageAboutAppoinmentCancellationAsync(appointmentsCanBeCancelled, appoinmentCancelDto.Reason);
         }
         catch(Exception ex)
         {
-            return new Response(ex.Message);
+            return new Response<AppoinmentsThatCannotBeCanceledDto>(ex.Message);
         }
 
-        return new Response
+        if(appoinmentCancelDto.Appoinments.Count() != appointmentsCanBeCancelled.Count())
+        {
+            int count   = appoinmentCancelDto.Appoinments.Count() - appointmentsCanBeCancelled.Count();
+            var message = string.Format(AppoinmentThatHasAlreadyPassedEmployeeMessage, count);
+            var data    = new AppoinmentsThatCannotBeCanceledDto
+            {
+                AppoinmentsId = appoinmentCancelDto.Appoinments
+                                                   .Select(appoinmentDto => appoinmentDto.AppoinmentId)
+                                                   .Except(appointmentsIdCanBeCancelled)
+            };
+            return new Response<AppoinmentsThatCannotBeCanceledDto> { Message = message, Data = data };
+        }
+
+        return new Response<AppoinmentsThatCannotBeCanceledDto>
         {
             Success = true,
-            Message = UpdateResourceMessage
+            Message = SuccessfullyCancelledAppointmentsMessage
         };
     }
 

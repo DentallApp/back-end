@@ -96,7 +96,8 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
     /// Cancela las citas por parte del empleado.
     /// </summary>
     private async Task<int> CancelAppointmentsForEmployeeAsync(int officeId, int dentistId, IEnumerable<int> appoinmentsId)
-        => await Context.Set<Appoinment>()
+        => appoinmentsId.Count() == 0 ? default : 
+           await Context.Set<Appoinment>()
                         .OptionalWhere(officeId,  appoinment => appoinment.OfficeId == officeId)
                         .OptionalWhere(dentistId, appoinment => appoinment.DentistId == dentistId)
                         .Where(appoinment =>
