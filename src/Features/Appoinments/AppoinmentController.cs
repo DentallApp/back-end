@@ -73,7 +73,7 @@ public class AppoinmentController : ControllerBase
     /// </remarks>
     [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
     [HttpPost("cancel/dentist")]
-    public async Task<ActionResult<Response>> CancelAppointments([FromBody]AppoinmentCancelDto appoinmentCancelDto)
+    public async Task<ActionResult<Response<AppoinmentsThatCannotBeCanceledDto>>> CancelAppointments([FromBody]AppoinmentCancelDto appoinmentCancelDto)
     {
         var response = await _appoinmentService.CancelAppointmentsAsync(User, appoinmentCancelDto);
         if (response.Success)
