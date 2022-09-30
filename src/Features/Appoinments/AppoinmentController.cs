@@ -51,7 +51,7 @@ public class AppoinmentController : ControllerBase
     /// <summary>
     /// Actualiza el estado de una cita por su ID.
     /// </summary>
-    [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin)]
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
     [HttpPut("{id}")]
     public async Task<ActionResult<Response>> Put(int id, [FromBody]AppoinmentUpdateDto appoinmentUpdateDto)
     {
