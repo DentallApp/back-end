@@ -68,6 +68,9 @@ public partial class AppoinmentService : IAppoinmentService
         if (appoinment.AppoinmentStatusId == AppoinmentStatusId.Canceled)
             return new Response(AppoinmentIsAlreadyCanceledMessage);
 
+        if (_dateTimeProvider.Now.Date > appoinment.Date)
+            return new Response(AppoinmentCannotBeUpdatedForPreviousDaysMessage);
+
         if (currentEmployee.IsOnlyDentist() && appoinment.DentistId != currentEmployee.GetEmployeeId())
             return new Response(AppoinmentNotAssignedMessage);
 

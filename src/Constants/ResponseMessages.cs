@@ -40,6 +40,7 @@ public class ResponseMessages
     public const string CanOnlyAccessYourOwnAppoinmentsMessage             = "Sólo puede acceder a sus propias citas.";
     public const string AppoinmentThatHasAlreadyPassedBasicUserMessage     = "No puede cancelar una cita que ya pasó. Nuestros empleados se encargarán de cambiar el estado de esta cita posteriormente.";
     public const string AppoinmentThatHasAlreadyPassedEmployeeMessage      = "Algunas citas no se pudieron cancelar porque ya pasó la fecha y hora estipulada. Conteo: {0}.";
+    public const string AppoinmentCannotBeUpdatedForPreviousDaysMessage    = "No puede cambiar el estado de la cita del día anterior a la fecha actual.";
     public const string CannotRemoveSuperadminMessage                      = "Lo siento, no se puede eliminar a un SuperAdministrador.";
     public const string CannotEditSuperadminMessage                        = "Lo siento, no se puede editar los datos de un SuperAdministrador.";
     public const string CannotEditYourOwnProfileMessage                    = "No puede editar su propio perfil.";
