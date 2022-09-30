@@ -25,7 +25,12 @@ public class AppoinmentReminderRepository : IAppoinmentReminderRepository
                    .Where(appoinment =>
                           appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
                           appoinment.HasNotReminder() &&
-                          _context.DateDiff(appoinment.Date, currentDate) == timeInAdvance)
+                          _context.DateDiff(appoinment.Date, currentDate) == timeInAdvance &&
+                          appoinment.CreatedAt != null &&
+                          // Para que el recordatorio no se envíe sí el paciente agenda la cita para el día siguiente.
+                          // El caso anterior sucede cuando el tiempo de antelación (timeInAdvance) es de 1 día.
+                          currentDate != _context.GetDate(appoinment.CreatedAt)
+                         )
                    .Select(appoinment => new AppoinmentReminderDto
                     {
                         AppoinmentId     = appoinment.Id,
