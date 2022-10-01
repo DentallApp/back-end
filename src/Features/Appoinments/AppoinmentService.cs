@@ -1,14 +1,21 @@
 ﻿namespace DentallApp.Features.Appoinments;
 
-public class AppoinmentService : IAppoinmentService
+public partial class AppoinmentService : IAppoinmentService
 {
     private readonly IAppoinmentRepository _appoinmentRepository;
     private readonly IInstantMessaging _instantMessaging;
+    private readonly ISpecificTreatmentRepository _treatmentRepository;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
-    public AppoinmentService(IAppoinmentRepository appoinmentRepository, IInstantMessaging instantMessaging)
+    public AppoinmentService(IAppoinmentRepository appoinmentRepository, 
+                             IInstantMessaging instantMessaging,
+                             ISpecificTreatmentRepository treatmentRepository,
+                             IDateTimeProvider dateTimeProvider)
     {
         _appoinmentRepository = appoinmentRepository;
         _instantMessaging = instantMessaging;
+        _treatmentRepository = treatmentRepository;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<IEnumerable<AppoinmentGetByBasicUserDto>> GetAppoinmentsByUserIdAsync(int userId)
@@ -22,6 +29,9 @@ public class AppoinmentService : IAppoinmentService
 
         if (appoinment.UserId != currentUserId)
             return new Response(AppoinmentNotAssignedMessage);
+
+        if (_dateTimeProvider.Now > (appoinment.Date + appoinment.StartHour))
+            return new Response(AppoinmentThatHasAlreadyPassedBasicUserMessage);
 
         appoinment.AppoinmentStatusId = AppoinmentStatusId.Canceled;
         await _appoinmentRepository.SaveAsync();
@@ -38,9 +48,10 @@ public class AppoinmentService : IAppoinmentService
         if (await _appoinmentRepository.IsNotAvailableAsync(appoinmentInsertDto))
             return new Response(DateAndTimeAppointmentIsNotAvailableMessage);
 
-        _appoinmentRepository.Insert(appoinmentInsertDto.MapToAppoinment());
+        var appoinment = appoinmentInsertDto.MapToAppoinment();
+        _appoinmentRepository.Insert(appoinment);
         await _appoinmentRepository.SaveAsync();
-
+        await SendAppoinmentInformationAsync(appoinment.Id, appoinmentInsertDto);
         return new Response
         {
             Success = true,
@@ -56,6 +67,9 @@ public class AppoinmentService : IAppoinmentService
 
         if (appoinment.AppoinmentStatusId == AppoinmentStatusId.Canceled)
             return new Response(AppoinmentIsAlreadyCanceledMessage);
+
+        if (_dateTimeProvider.Now.Date > appoinment.Date)
+            return new Response(AppoinmentCannotBeUpdatedForPreviousDaysMessage);
 
         if (currentEmployee.IsOnlyDentist() && appoinment.DentistId != currentEmployee.GetEmployeeId())
             return new Response(AppoinmentNotAssignedMessage);
@@ -73,50 +87,63 @@ public class AppoinmentService : IAppoinmentService
         };
     }
 
-    public async Task<Response> CancelAppointmentsAsync(ClaimsPrincipal currentEmployee, AppoinmentCancelDto appoinmentCancelDto)
+    public async Task<Response<AppoinmentsThatCannotBeCanceledDto>> CancelAppointmentsAsync(ClaimsPrincipal currentEmployee, AppoinmentCancelDto appoinmentCancelDto)
     {
+        // Almacena las citas cuya fecha y hora estipulada NO hayan pasado.
+        var appointmentsCanBeCancelled = appoinmentCancelDto.Appoinments
+                                                       .Where(appoinmentDto => 
+                                                             (appoinmentDto.AppoinmentDate + appoinmentDto.StartHour) > _dateTimeProvider.Now);
+        var appointmentsIdCanBeCancelled = appointmentsCanBeCancelled.Select(appoinmentDto => appoinmentDto.AppoinmentId);
         try
         {
-            var appoinmentsId = appoinmentCancelDto.Appoinments.Select(appoinment => appoinment.AppoinmentId);
-            var businessName = EnvReader.Instance[AppSettings.BusinessName];
             if (currentEmployee.IsOnlyDentist())
-                await _appoinmentRepository.CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appoinmentsId);
+                await _appoinmentRepository.CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appointmentsIdCanBeCancelled);
             else
-                await _appoinmentRepository.CancelAppointmentsByOfficeIdAsync(currentEmployee.GetOfficeId(), appoinmentsId);
-
-            foreach (var appoinment in appoinmentCancelDto.Appoinments)
-            {
-                var msg = string.Format("Estimado usuario {0}, su cita agendada en el consultorio odontológico {1} para el día {2} a las {3} ha sido cancelada por el siguiente motivo: {4}",
-                                           appoinment.PatientName, 
-                                           businessName, 
-                                           appoinment.AppoinmentDate,
-                                           appoinment.StartHour, 
-                                           appoinmentCancelDto.Reason
-                                       );
-                await _instantMessaging.SendMessageAsync(appoinment.PatientCellPhone, msg);
-            }
+                await _appoinmentRepository.CancelAppointmentsByOfficeIdAsync(
+                        currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId(),
+                        appointmentsIdCanBeCancelled
+                    );
+            await SendMessageAboutAppoinmentCancellationAsync(appointmentsCanBeCancelled, appoinmentCancelDto.Reason);
         }
         catch(Exception ex)
         {
-            return new Response(ex.Message);
+            return new Response<AppoinmentsThatCannotBeCanceledDto>(ex.Message);
         }
 
-        return new Response
+        if(appoinmentCancelDto.Appoinments.Count() != appointmentsCanBeCancelled.Count())
+        {
+            int count   = appoinmentCancelDto.Appoinments.Count() - appointmentsCanBeCancelled.Count();
+            var message = string.Format(AppoinmentThatHasAlreadyPassedEmployeeMessage, count);
+            var data    = new AppoinmentsThatCannotBeCanceledDto
+            {
+                AppoinmentsId = appoinmentCancelDto.Appoinments
+                                                   .Select(appoinmentDto => appoinmentDto.AppoinmentId)
+                                                   .Except(appointmentsIdCanBeCancelled)
+            };
+            return new Response<AppoinmentsThatCannotBeCanceledDto> { Message = message, Data = data };
+        }
+
+        return new Response<AppoinmentsThatCannotBeCanceledDto>
         {
             Success = true,
-            Message = UpdateResourceMessage
+            Message = SuccessfullyCancelledAppointmentsMessage
         };
     }
 
-    public async Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateDto appoinmentDto)
-        => await _appoinmentRepository.GetAppointmentsByOfficeIdAsync(officeId, appoinmentDto.From, appoinmentDto.To);
+    public async Task<Response<IEnumerable<AppoinmentGetByEmployeeDto>>> GetAppoinmentsForEmployeeAsync(ClaimsPrincipal currentEmployee, AppoinmentPostDateDto appoinmentPostDto)
+    {
+        if (currentEmployee.IsOnlyDentist() && currentEmployee.GetEmployeeId() != appoinmentPostDto.DentistId)
+            return new Response<IEnumerable<AppoinmentGetByEmployeeDto>>(CanOnlyAccessYourOwnAppoinmentsMessage);
 
-    public async Task<IEnumerable<AppoinmentGetByDentistDto>> GetAppointmentsByDentistIdAsync(int dentistId, AppoinmentPostDateDto appoinmentDto)
-        => await _appoinmentRepository.GetAppointmentsByDentistIdAsync(dentistId, appoinmentDto.From, appoinmentDto.To);
+        if (!currentEmployee.IsSuperAdmin() && currentEmployee.IsNotInOffice(appoinmentPostDto.OfficeId))
+            return new Response<IEnumerable<AppoinmentGetByEmployeeDto>>(OfficeNotAssignedMessage);
 
-    public async Task<IEnumerable<AppoinmentScheduledGetByEmployeeDto>> GetScheduledAppointmentsByOfficeIdAsync(int officeId, AppoinmentPostDateDto appoinmentDto)
-        => await _appoinmentRepository.GetScheduledAppointmentsByOfficeIdAsync(officeId, appoinmentDto.From, appoinmentDto.To);
-
-    public async Task<IEnumerable<AppoinmentScheduledGetByDentistDto>> GetScheduledAppointmentsByDentistIdAsync(int dentistId, AppoinmentPostDateDto appoinmentDto)
-        => await _appoinmentRepository.GetScheduledAppointmentsByDentistIdAsync(dentistId, appoinmentDto.From, appoinmentDto.To);
+        var data = await _appoinmentRepository.GetAppoinmentsForEmployeeAsync(appoinmentPostDto);
+        return new Response<IEnumerable<AppoinmentGetByEmployeeDto>>
+        {
+            Success = true,
+            Message = GetResourceMessage,
+            Data = data
+        };
+    }
 }

@@ -176,16 +176,11 @@ public partial class RootDialog : ComponentDialog
         {
             return await stepContext.PreviousAsync(message: SelectScheduleMessage, cancellationToken: cancellationToken);
         }
+        appoinment.RangeToPay = await _botService.GetRangeToPayAsync(appoinment.GeneralTreatmentId);
         var response = await _botService.CreateScheduledAppoinmentAsync(appoinment);
         if (!response.Success)
             return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
-
-        var rangeToPay = await _botService.GetRangeToPayAsync(appoinment.GeneralTreatmentId);
-        var msg = rangeToPay.PriceMin != rangeToPay.PriceMax ? 
-                    $"El rango a pagar es de ${rangeToPay.PriceMin} a ${rangeToPay.PriceMax}" :
-                    $"El valor a pagar es de ${rangeToPay.PriceMax}";
-
-        await stepContext.Context.SendActivityAsync($"Cita agendada con éxito. {msg}.", cancellationToken: cancellationToken);
+        await stepContext.Context.SendActivityAsync($"Cita agendada con éxito. {appoinment.RangeToPay}.", cancellationToken: cancellationToken);
         await stepContext.Context.SendActivityAsync("Gracias por usar nuestro servicio.\n\n" +
                 "Si desea agendar otra cita, escriba algo para empezar de nuevo el proceso.", cancellationToken: cancellationToken);
         return await stepContext.EndDialogAsync(cancellationToken: cancellationToken);

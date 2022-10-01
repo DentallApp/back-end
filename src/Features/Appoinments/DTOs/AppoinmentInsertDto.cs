@@ -17,4 +17,7 @@ public class AppoinmentInsertDto
     public DateTime AppoinmentDate { get; set; }
     public TimeSpan StartHour { get; set; }
     public TimeSpan EndHour { get; set; }
+
+    [JsonIgnore]
+    public SpecificTreatmentRangeToPayDto RangeToPay { get; set; }
 }

@@ -74,87 +74,54 @@ public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepositor
         return result != 0;
     }
 
-    public async Task<IEnumerable<AppoinmentScheduledGetByDentistDto>> GetScheduledAppointmentsByDentistIdAsync(int dentistId, DateTime from, DateTime to)
-        => await Context.Set<Appoinment>()
-                        .Include(appoinment => appoinment.Person)
-                        .Include(appoinment => appoinment.GeneralTreatment)
-                        .Where(appoinment => 
-                               appoinment.DentistId == dentistId && 
-                               appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
-                               appoinment.Date >= from && appoinment.Date <= to)
-                        .OrderBy(appoinment => appoinment.Date)
-                        .Select(appoinment => appoinment.MapToAppoinmentScheduledGetByDentistDto())
-                        .IgnoreQueryFilters()
-                        .ToListAsyncEF();
-
-    public async Task<IEnumerable<AppoinmentScheduledGetByEmployeeDto>> GetScheduledAppointmentsByOfficeIdAsync(int officeId, DateTime from, DateTime to)
-        => await Context.Set<Appoinment>()
-                        .Include(appoinment => appoinment.Person)
-                        .Include(appoinment => appoinment.GeneralTreatment)
-                        .Include(appoinment => appoinment.Employee)
-                          .ThenInclude(employee => employee.Person)
-                        .Where(appoinment =>
-                               appoinment.Employee.IsActive() &&
-                               appoinment.OfficeId == officeId &&
-                               appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
-                               appoinment.Date >= from && appoinment.Date <= to)
-                        .OrderBy(appoinment => appoinment.Date)
-                        .Select(appoinment => appoinment.MapToAppoinmentScheduledGetByEmployeeDto())
-                        .IgnoreQueryFilters()
-                        .ToListAsyncEF();
-
-    public async Task<IEnumerable<AppoinmentGetByDentistDto>> GetAppointmentsByDentistIdAsync(int dentistId, DateTime from, DateTime to)
-        => await Context.Set<Appoinment>()
-                        .Include(appoinment => appoinment.Person)
-                        .Include(appoinment => appoinment.AppoinmentStatus)
-                        .Include(appoinment => appoinment.GeneralTreatment)
-                        .Where(appoinment => 
-                               appoinment.DentistId == dentistId && 
-                               appoinment.Date >= from && appoinment.Date <= to)
-                        .Select(appoinment => appoinment.MapToAppoinmentGetByDentistDto())
-                        .IgnoreQueryFilters()
-                        .ToListAsyncEF();
-
-    public async Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppointmentsByOfficeIdAsync(int officeId, DateTime from, DateTime to)
+    public async Task<IEnumerable<AppoinmentGetByEmployeeDto>> GetAppoinmentsForEmployeeAsync(AppoinmentPostDateDto appoinmentPostDto)
         => await Context.Set<Appoinment>()
                         .Include(appoinment => appoinment.Person)
                         .Include(appoinment => appoinment.AppoinmentStatus)
                         .Include(appoinment => appoinment.GeneralTreatment)
                         .Include(appoinment => appoinment.Employee)
                           .ThenInclude(employee => employee.Person)
-                        .Where(appoinment =>
-                               appoinment.Employee.IsActive() &&
-                               appoinment.OfficeId == officeId && 
-                               appoinment.Date >= from && appoinment.Date <= to)
+                        .Include(appoinment => appoinment.Office)
+                        .OptionalWhere(appoinmentPostDto.StatusId,  appoinment => appoinment.AppoinmentStatusId == appoinmentPostDto.StatusId)
+                        .OptionalWhere(appoinmentPostDto.OfficeId,  appoinment => appoinment.OfficeId == appoinmentPostDto.OfficeId)
+                        .OptionalWhere(appoinmentPostDto.DentistId, appoinment => appoinment.DentistId == appoinmentPostDto.DentistId)
+                        .Where(appoinment => appoinment.Date >= appoinmentPostDto.From && appoinment.Date <= appoinmentPostDto.To)
+                        .OrderBy(appoinment => appoinment.Date)
                         .Select(appoinment => appoinment.MapToAppoinmentGetByEmployeeDto())
                         .IgnoreQueryFilters()
                         .ToListAsyncEF();
 
+
+    /// <summary>
+    /// Cancela las citas por parte del empleado.
+    /// </summary>
+    private async Task<int> CancelAppointmentsForEmployeeAsync(int officeId, int dentistId, IEnumerable<int> appoinmentsId)
+        => appoinmentsId.Count() == 0 ? default : 
+           await Context.Set<Appoinment>()
+                        .OptionalWhere(officeId,  appoinment => appoinment.OfficeId == officeId)
+                        .OptionalWhere(dentistId, appoinment => appoinment.DentistId == dentistId)
+                        .Where(appoinment =>
+                               appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
+                               appoinmentsId.Contains(appoinment.Id))
+                        .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
+                        .Set(appoinment => appoinment.IsCancelledByEmployee, true)
+                        .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
+                        .UpdateAsync();
+
     public async Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appoinmentsId)
-    {
-        var affectedRows = await Context.Set<Appoinment>()
-                                        .Where(appoinment =>
-                                               appoinment.OfficeId == officeId &&
-                                               appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
-                                               appoinmentsId.Contains(appoinment.Id))
-                                        .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
-                                        .Set(appoinment => appoinment.IsCancelledByEmployee, true)
-                                        .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
-                                        .UpdateAsync();
-        return affectedRows;
-    }
+        => await CancelAppointmentsForEmployeeAsync(officeId, dentistId: default, appoinmentsId);
 
     public async Task<int> CancelAppointmentsByDentistIdAsync(int dentistId, IEnumerable<int> appoinmentsId)
-    {
-        var affectedRows = await Context.Set<Appoinment>()
-                                        .Where(appoinment =>
-                                               appoinment.DentistId == dentistId &&
-                                               appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
-                                               appoinmentsId.Contains(appoinment.Id))
-                                        .Set(appoinment => appoinment.AppoinmentStatusId, AppoinmentStatusId.Canceled)
-                                        .Set(appoinment => appoinment.IsCancelledByEmployee, true)
-                                        .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
-                                        .UpdateAsync();
-        return affectedRows;
-    }
+        => await CancelAppointmentsForEmployeeAsync(officeId: default, dentistId, appoinmentsId);
+
+    public async Task<AppoinmentInfoDto> GetAppoinmentInformationAsync(int id)
+        => await Context.Set<Appoinment>()
+                        .Include(appoinment => appoinment.Person)
+                        .Include(appoinment => appoinment.Employee.Person)
+                        .Include(appoinment => appoinment.Office)
+                        .Include(appoinment => appoinment.GeneralTreatment)
+                        .Where(appoinment => appoinment.Id == id)
+                        .Select(appoinment => appoinment.MapToAppoinmentInfoDto())
+                        .IgnoreQueryFilters()
+                        .FirstOrDefaultAsyncEF();
 }
