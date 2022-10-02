@@ -38,7 +38,7 @@ public partial class RootDialog : ComponentDialog
 
     private async Task<DialogTurnResult> ShowNameOfPatients(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
-        if (stepContext.CheckResultIsNone())
+        if (stepContext.CheckIfResultNextStepIsNone())
             return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectPatientMessage);
 
         await stepContext.SendTypingActivityAsync();
@@ -57,7 +57,7 @@ public partial class RootDialog : ComponentDialog
 
     private async Task<DialogTurnResult> ShowNameOfOffices(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
-        if (stepContext.CheckResultIsNone())
+        if (stepContext.CheckIfResultNextStepIsNone())
             return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectOfficeMessage);
 
         var selectedPatientId = stepContext.GetSelectedPatientId();
@@ -78,7 +78,7 @@ public partial class RootDialog : ComponentDialog
 
     private async Task<DialogTurnResult> ShowNameOfServices(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
-        if (stepContext.CheckResultIsNone())
+        if (stepContext.CheckIfResultNextStepIsNone())
             return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectDentalServiceMessage);
 
         var selectedOfficeId = stepContext.GetSelectedOfficeId();
@@ -99,7 +99,7 @@ public partial class RootDialog : ComponentDialog
 
     private async Task<DialogTurnResult> ShowNameOfDentists(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
-        if (stepContext.CheckResultIsNone())
+        if (stepContext.CheckIfResultNextStepIsNone())
             return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectDentistMessage);
 
         var selectedDentalServiceId = stepContext.GetSelectedDentalServiceId();
@@ -121,7 +121,7 @@ public partial class RootDialog : ComponentDialog
 
     private async Task<DialogTurnResult> ShowAppoinmentDate(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
-        if (stepContext.CheckResultIsNone())
+        if (stepContext.CheckIfResultNextStepIsNone())
             return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectAppoinmentDateMessage);
 
         var selectedDentistId = stepContext.GetSelectedDentistId();
@@ -143,7 +143,7 @@ public partial class RootDialog : ComponentDialog
 
     private async Task<DialogTurnResult> ShowSchedules(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
-        if (stepContext.CheckResultIsNone())
+        if (stepContext.CheckIfResultNextStepIsNone())
             return await stepContext.PromptAsync(nameof(TextPrompt), retryMessage: SelectScheduleMessage);
 
         var selectedAppoinmentDate = stepContext.GetSelectedAppoinmentDate();

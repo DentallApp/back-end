@@ -75,9 +75,9 @@ public static class WaterfallStepContextExtensions
     }
 
     /// <summary>
-    /// Comprueba sí el resultado del contexto del paso es <see cref="None" />.
+    /// Comprueba si el resultado del siguiente paso es <see cref="None" />.
     /// </summary>
-    public static bool CheckResultIsNone(this WaterfallStepContext stepContext)
+    public static bool CheckIfResultNextStepIsNone(this WaterfallStepContext stepContext)
         => !stepContext.CheckNextStepHasNotSentResultNone();
 
     public static async Task SendTypingActivityAsync(this WaterfallStepContext stepContext, int millisecondsDelay = 3000)
