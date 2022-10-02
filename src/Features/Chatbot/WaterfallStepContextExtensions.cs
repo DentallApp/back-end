@@ -58,6 +58,7 @@ public static class WaterfallStepContextExtensions
     /// </summary>
     public static async Task<DialogTurnResult> PreviousAsync(this WaterfallStepContext stepContext, string message, CancellationToken cancellationToken = default)
     {
+        await stepContext.SendTypingActivityAsync(2000);
         await stepContext.Context.SendActivityAsync(message);
         stepContext.ActiveDialog.State["stepIndex"] = (int)stepContext.ActiveDialog.State["stepIndex"] - 2;
         return await stepContext.NextAsync(None, cancellationToken);
@@ -66,10 +67,36 @@ public static class WaterfallStepContextExtensions
     /// <summary>
     /// Comprueba sí el siguiente paso no ha enviado un resultado <see cref="None" />.
     /// </summary>
-    /// <returns><c>true</c> sí el siguiente paso no envió un resultado; de lo contrario, <c>false</c>.</returns>
-    public static bool CheckNextStepHasNotSentResult(this WaterfallStepContext stepContext)
+    /// <returns><c>true</c> sí el siguiente paso no envió un resultado <see cref="None" />; de lo contrario, <c>false</c>.</returns>
+    public static bool CheckNextStepHasNotSentResultNone(this WaterfallStepContext stepContext)
     {
         var result = stepContext.Result;
         return stepContext.Result is not string || (string)result != None;
     }
+
+    /// <summary>
+    /// Comprueba sí el resultado del contexto del paso es <see cref="None" />.
+    /// </summary>
+    public static bool CheckResultIsNone(this WaterfallStepContext stepContext)
+        => !stepContext.CheckNextStepHasNotSentResultNone();
+
+    public static async Task SendTypingActivityAsync(this WaterfallStepContext stepContext, int millisecondsDelay = 3000)
+    {
+        var typingActivity = stepContext.Context.Activity.CreateReply();
+        typingActivity.Type = ActivityTypes.Typing;
+        await stepContext.Context.SendActivityAsync(typingActivity);
+        await Task.Delay(millisecondsDelay);
+    }
+
+    public static async Task<DialogTurnResult> PromptAsync(this WaterfallStepContext stepContext, string dialogId, string retryMessage)
+        => await stepContext.PromptAsync(
+                dialogId,
+                new PromptOptions
+                {
+                    Prompt = new Activity { Type = ActivityTypes.Message },
+                    RetryPrompt = MessageFactory.Text(retryMessage)
+                },
+                default
+            );
+
 }
