@@ -33,7 +33,6 @@ public class EmployeeScheduleRepository : SoftDeleteRepository<EmployeeSchedule>
                             WeekDayId   = employeeSchedule.WeekDayId,
                             WeekDayName = employeeSchedule.WeekDay.Name
                          })
-                        .IgnoreQueryFilters()
                         .ToListAsync();
 
     public async Task<EmployeeSchedule> GetEmployeeScheduleByIdAsync(int scheduleId)
