@@ -6,10 +6,13 @@
 public class FavoriteDentistController : ControllerBase
 {
     private readonly IFavoriteDentistService _favoriteDentistService;
+    private readonly IFavoriteDentistRepository _favoriteDentistRepository;
 
-    public FavoriteDentistController(IFavoriteDentistService favoriteDentistService)
+    public FavoriteDentistController(IFavoriteDentistService favoriteDentistService, 
+                                     IFavoriteDentistRepository favoriteDentistRepository)
     {
         _favoriteDentistService = favoriteDentistService;
+        _favoriteDentistRepository = favoriteDentistRepository;
     }
 
     /// <summary>
@@ -31,14 +34,14 @@ public class FavoriteDentistController : ControllerBase
     /// </summary>
     [HttpGet("dentist")]
     public async Task<IEnumerable<DentistGetDto>> GetListOfDentists()
-        => await _favoriteDentistService.GetListOfDentistsAsync(User.GetUserId());
+        => await _favoriteDentistRepository.GetListOfDentistsAsync(User.GetUserId());
 
     /// <summary>
     /// Obtiene únicamente los odontólogos favoritos del usuario básico.
     /// </summary>
     [HttpGet]
     public async Task<IEnumerable<FavoriteDentistGetDto>> GetFavoriteDentists()
-        => await _favoriteDentistService.GetFavoriteDentistsAsync(User.GetUserId());
+        => await _favoriteDentistRepository.GetFavoriteDentistsAsync(User.GetUserId());
 
     /// <summary>
     /// Elimina un odontólogo favorito de un usuario básico.

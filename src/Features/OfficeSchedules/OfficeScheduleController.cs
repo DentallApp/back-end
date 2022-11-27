@@ -5,10 +5,13 @@
 public class OfficeScheduleController : ControllerBase
 {
     private readonly IOfficeScheduleService _officeScheduleService;
+    private readonly IOfficeScheduleRepository _officeScheduleRepository;
 
-    public OfficeScheduleController(IOfficeScheduleService officeScheduleService)
+    public OfficeScheduleController(IOfficeScheduleService officeScheduleService, 
+                                    IOfficeScheduleRepository officeScheduleRepository)
     {
         _officeScheduleService = officeScheduleService;
+        _officeScheduleRepository = officeScheduleRepository;
     }
 
     /// <summary>
@@ -31,7 +34,7 @@ public class OfficeScheduleController : ControllerBase
     /// </summary>
     [HttpGet("{officeId}")]
     public async Task<IEnumerable<OfficeScheduleGetDto>> GetByOfficeId(int officeId)
-        => await _officeScheduleService.GetOfficeScheduleByOfficeIdAsync(officeId);
+        => await _officeScheduleRepository.GetOfficeScheduleByOfficeIdAsync(officeId);
 
     /// <summary>
     /// Crea un nuevo horario para el consultorio.

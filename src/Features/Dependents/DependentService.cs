@@ -26,9 +26,6 @@ public class DependentService : IDependentService
         };
     }
 
-    public async Task<IEnumerable<DependentGetDto>> GetDependentsByUserIdAsync(int userId)
-        => await _unitOfWork.DependentRepository.GetDependentsByUserIdAsync(userId);
-
     public async Task<Response> RemoveDependentAsync(int dependentId, int userId)
     {
         var dependent = await _unitOfWork.DependentRepository.GetByIdAsync(dependentId);

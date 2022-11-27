@@ -6,10 +6,12 @@
 public class PersonController : ControllerBase
 {
 	private readonly IPersonService _personService;
+	private readonly IPersonRepository _personRepository;
 
-	public PersonController(IPersonService personService)
+	public PersonController(IPersonService personService, IPersonRepository personRepository)
 	{
 		_personService = personService;
+		_personRepository = personRepository;
 	}
 
 	/// <summary>
@@ -31,5 +33,5 @@ public class PersonController : ControllerBase
     /// <param name="value">El valor a buscar (puede ser el nombre, apellido o cédula de una persona).</param>
     [HttpGet("search")]
 	public async Task<IEnumerable<PersonGetDto>> Get([FromQuery]string value)
-		=> await _personService.GetPersonsAsync(value);
+		=> await _personRepository.GetPersonsAsync(value);
 }

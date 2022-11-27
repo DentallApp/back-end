@@ -35,6 +35,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IUnitOfWork, UnitOfWorkEFCore>();
         services.AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IDependentRepository, DependentRepository>()
                 .AddScoped<IEmployeeRepository, EmployeeRepository>()
                 .AddScoped<IKinshipRepository, KinshipRepository>()
                 .AddScoped<IGenderRepository, GenderRepository>()

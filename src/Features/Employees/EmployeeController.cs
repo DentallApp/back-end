@@ -5,10 +5,12 @@
 public class EmployeeController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
+    private readonly IEmployeeRepository _employeeRepository;
 
-    public EmployeeController(IEmployeeService employeeService)
+    public EmployeeController(IEmployeeService employeeService, IEmployeeRepository employeeRepository)
     {
         _employeeService = employeeService;
+        _employeeRepository = employeeRepository;
     }
 
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
@@ -71,6 +73,6 @@ public class EmployeeController : ControllerBase
     {
         if (!User.IsSuperAdmin() && User.IsNotInOffice(employeePostDto.OfficeId))
             return Unauthorized();
-        return Ok(await _employeeService.GetDentistsAsync(employeePostDto));
+        return Ok(await _employeeRepository.GetDentistsAsync(employeePostDto));
     }
 }

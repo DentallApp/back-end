@@ -6,10 +6,12 @@
 public class DependentController : ControllerBase
 {
     private readonly IDependentService _dependentService;
+    private readonly IDependentRepository _dependentRepository;
         
-    public DependentController(IDependentService dependentService)
+    public DependentController(IDependentService dependentService, IDependentRepository dependentRepository)
     {
         _dependentService = dependentService;
+        _dependentRepository = dependentRepository;
     }
 
     [HttpPost]
@@ -25,7 +27,7 @@ public class DependentController : ControllerBase
     [Route("user")]
     [HttpGet]
     public async Task<IEnumerable<DependentGetDto>> GetByUserId()
-        => await _dependentService.GetDependentsByUserIdAsync(User.GetUserId());
+        => await _dependentRepository.GetDependentsByUserIdAsync(User.GetUserId());
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<Response>> Delete(int id)

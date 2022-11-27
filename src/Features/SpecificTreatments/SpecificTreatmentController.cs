@@ -4,28 +4,31 @@
 [ApiController]
 public class SpecificTreatmentController : ControllerBase
 {
-    private readonly ISpecificTreatmentService _service;
+    private readonly ISpecificTreatmentService _treatmentService;
+    private readonly ISpecificTreatmentRepository _treatmentRepository;
 
-    public SpecificTreatmentController(ISpecificTreatmentService service)
+    public SpecificTreatmentController(ISpecificTreatmentService treatmentService, 
+                                       ISpecificTreatmentRepository treatmentRepository)
     {
-        _service = service;
+        _treatmentService = treatmentService;
+        _treatmentRepository = treatmentRepository;
     }
 
     [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
     [HttpGet("{generalTreatmentId}")]
     public async Task<IEnumerable<SpecificTreatmentGetDto>> Get(int generalTreatmentId)
-        => await _service.GetSpecificTreatmentsByGeneralTreatmentIdAsync(generalTreatmentId);
+        => await _treatmentRepository.GetSpecificTreatmentsByGeneralTreatmentIdAsync(generalTreatmentId);
 
     [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
     [HttpGet]
     public async Task<IEnumerable<SpecificTreatmentShowDto>> Get()
-        => await _service.GetSpecificTreatmentsAsync();
+        => await _treatmentRepository.GetSpecificTreatmentsAsync();
 
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPost]
     public async Task<ActionResult<Response>> Post([FromBody]SpecificTreatmentInsertDto treatmentInsertDto)
     {
-        var response = await _service.CreateSpecificTreatmentAsync(treatmentInsertDto);
+        var response = await _treatmentService.CreateSpecificTreatmentAsync(treatmentInsertDto);
         if (response.Success)
             return CreatedAtAction(nameof(Post), response);
 
@@ -36,7 +39,7 @@ public class SpecificTreatmentController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<Response>> Put(int id, [FromBody]SpecificTreatmentUpdateDto treatmentUpdateDto)
     {
-        var response = await _service.UpdateSpecificTreatmentAsync(id, treatmentUpdateDto);
+        var response = await _treatmentService.UpdateSpecificTreatmentAsync(id, treatmentUpdateDto);
         if (response.Success)
             return Ok(response);
 
@@ -47,7 +50,7 @@ public class SpecificTreatmentController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult<Response>> Delete(int id)
     {
-        var response = await _service.RemoveSpecificTreatmentAsync(id);
+        var response = await _treatmentService.RemoveSpecificTreatmentAsync(id);
         if (response.Success)
             return Ok(response);
 
