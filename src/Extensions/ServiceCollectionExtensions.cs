@@ -56,9 +56,9 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddHelpers(this IServiceCollection services)
     {
-        services.AddTransient<IHtmlConverter, HtmlConverterIText>()
-                .AddTransient<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>()
-                .AddTransient<IPasswordHasher, PasswordHasherBcrypt>()
+        services.AddSingleton<IHtmlConverter, HtmlConverterIText>()
+                .AddSingleton<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>()
+                .AddSingleton<IPasswordHasher, PasswordHasherBcrypt>()
                 .AddSingleton<IDateTimeProvider, DateTimeProvider>()
                 .AddSingleton<IInstantMessaging, WhatsAppMessaging>();
 
