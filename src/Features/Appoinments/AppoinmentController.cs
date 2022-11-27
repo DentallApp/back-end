@@ -5,10 +5,12 @@
 public class AppoinmentController : ControllerBase
 {
     private readonly IAppoinmentService _appoinmentService;
+    private readonly IAppoinmentRepository _appoinmentRepository;
 
-    public AppoinmentController(IAppoinmentService appoinmentService)
+    public AppoinmentController(IAppoinmentService appoinmentService, IAppoinmentRepository appoinmentRepository)
     {
         _appoinmentService = appoinmentService;
+        _appoinmentRepository = appoinmentRepository;
     }
 
     /// <summary>
@@ -17,7 +19,7 @@ public class AppoinmentController : ControllerBase
     [AuthorizeByRole(RolesName.BasicUser)]
     [HttpGet("basic-user")]
     public async Task<IEnumerable<AppoinmentGetByBasicUserDto>> GetAppoinmentsByUserId()
-        => await _appoinmentService.GetAppoinmentsByUserIdAsync(User.GetUserId());
+        => await _appoinmentRepository.GetAppoinmentsByUserIdAsync(User.GetUserId());
 
     /// <summary>
     /// Permite al usuario básico cancelar su cita agendada.

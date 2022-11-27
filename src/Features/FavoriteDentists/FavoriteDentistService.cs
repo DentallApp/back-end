@@ -59,10 +59,4 @@ public class FavoriteDentistService : IFavoriteDentistService
             Message = DeleteResourceMessage
         };
     }
-
-    public async Task<IEnumerable<FavoriteDentistGetDto>> GetFavoriteDentistsAsync(int userId)
-        => await _favoriteDentistRepository.GetFavoriteDentistsAsync(userId);
-
-    public async Task<IEnumerable<DentistGetDto>> GetListOfDentistsAsync(int userId)
-        => await _favoriteDentistRepository.GetListOfDentistsAsync(userId);
 }

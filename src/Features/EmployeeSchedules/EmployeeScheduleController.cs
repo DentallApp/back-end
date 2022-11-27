@@ -6,10 +6,13 @@
 public class EmployeeScheduleController : ControllerBase
 {
     private readonly IEmployeeScheduleService _employeeScheduleService;
+    private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
 
-    public EmployeeScheduleController(IEmployeeScheduleService employeeScheduleService)
+    public EmployeeScheduleController(IEmployeeScheduleService employeeScheduleService, 
+                                      IEmployeeScheduleRepository employeeScheduleRepository)
     {
         _employeeScheduleService = employeeScheduleService;
+        _employeeScheduleRepository = employeeScheduleRepository;
     }
 
     /// <summary>
@@ -18,14 +21,14 @@ public class EmployeeScheduleController : ControllerBase
     /// <returns></returns>
     [HttpGet]
     public async Task<IEnumerable<EmployeeScheduleGetAllDto>> Get()
-        => await _employeeScheduleService.GetAllEmployeeSchedulesAsync(User.GetOfficeId());
+        => await _employeeScheduleRepository.GetAllEmployeeSchedulesAsync(User.GetOfficeId());
 
     /// <summary>
     /// Obtiene el horario de un empleado.
     /// </summary>
     [HttpGet("{employeeId}")]
     public async Task<IEnumerable<EmployeeScheduleGetDto>> GetByEmployeeId(int employeeId)
-        => await _employeeScheduleService.GetEmployeeScheduleByEmployeeIdAsync(employeeId);
+        => await _employeeScheduleRepository.GetEmployeeScheduleByEmployeeIdAsync(employeeId);
 
     /// <summary>
     /// Crea un nuevo horario para el empleado.

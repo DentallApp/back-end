@@ -52,13 +52,4 @@ public class OfficeService : IOfficeService
             Message = UpdateResourceMessage
         };
     }
-
-    public async Task<IEnumerable<OfficeGetDto>> GetOfficesAsync()
-        => await _officeRepository.GetOfficesAsync();
-
-    public async Task<IEnumerable<OfficeShowDto>> GetOfficesForEditAsync()
-        => await _officeRepository.GetOfficesForEditAsync();
-
-    public async Task<IEnumerable<OfficeGetDto>> GetAllOfficesAsync()
-        => await _officeRepository.GetAllOfficesAsync();
 }

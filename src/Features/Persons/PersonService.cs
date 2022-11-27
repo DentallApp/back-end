@@ -20,7 +20,4 @@ public class PersonService : IPersonService
 			Message = CreateResourceMessage
 		};
 	}
-
-	public async Task<IEnumerable<PersonGetDto>> GetPersonsAsync(string valueToSearch)
-		=> await _personRepository.GetPersonsAsync(valueToSearch);
 }

@@ -70,9 +70,6 @@ public class OfficeScheduleService : IOfficeScheduleService
         return schedules.OrderBy(scheduleDto => scheduleDto.WeekDayId).ToList();
     }
 
-    public async Task<IEnumerable<OfficeScheduleGetDto>> GetOfficeScheduleByOfficeIdAsync(int officeId)
-        => await _officeScheduleRepository.GetOfficeScheduleByOfficeIdAsync(officeId);
-
     public async Task<Response> UpdateOfficeScheduleAsync(int scheduleId, ClaimsPrincipal currentEmployee, OfficeScheduleUpdateDto officeScheduleUpdateDto)
     {
         var officeSchedule = await _officeScheduleRepository.GetOfficeScheduleByIdAsync(scheduleId);

@@ -18,9 +18,6 @@ public partial class AppoinmentService : IAppoinmentService
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public async Task<IEnumerable<AppoinmentGetByBasicUserDto>> GetAppoinmentsByUserIdAsync(int userId)
-        => await _appoinmentRepository.GetAppoinmentsByUserIdAsync(userId);
-
     public async Task<Response> CancelBasicUserAppointmentAsync(int appoinmentId, int currentUserId)
     {
         var appoinment = await _appoinmentRepository.GetByIdAsync(appoinmentId);

@@ -2,18 +2,18 @@
 
 public class SpecificTreatmentService : ISpecificTreatmentService
 {
-    private readonly ISpecificTreatmentRepository _repository;
+    private readonly ISpecificTreatmentRepository _treatmentRepository;
 
-    public SpecificTreatmentService(ISpecificTreatmentRepository repository)
+    public SpecificTreatmentService(ISpecificTreatmentRepository treatmentRepository)
     {
-        _repository = repository;
+        _treatmentRepository = treatmentRepository;
     }
 
     public async Task<Response> CreateSpecificTreatmentAsync(SpecificTreatmentInsertDto treatmentInsertDto)
     {
         var specificTreatment = treatmentInsertDto.MapToSpecificTreatment();
-        _repository.Insert(specificTreatment);
-        await _repository.SaveAsync();
+        _treatmentRepository.Insert(specificTreatment);
+        await _treatmentRepository.SaveAsync();
 
         return new Response
         {
@@ -24,12 +24,12 @@ public class SpecificTreatmentService : ISpecificTreatmentService
 
     public async Task<Response> UpdateSpecificTreatmentAsync(int id, SpecificTreatmentUpdateDto treatmentUpdateDto)
     {
-        var specificTreatment = await _repository.GetByIdAsync(id);
+        var specificTreatment = await _treatmentRepository.GetByIdAsync(id);
         if (specificTreatment is null)
             return new Response(ResourceNotFoundMessage);
 
         treatmentUpdateDto.MapToSpecificTreatment(specificTreatment);
-        await _repository.SaveAsync();
+        await _treatmentRepository.SaveAsync();
 
         return new Response
         {
@@ -38,20 +38,14 @@ public class SpecificTreatmentService : ISpecificTreatmentService
         };
     }
 
-    public async Task<IEnumerable<SpecificTreatmentShowDto>> GetSpecificTreatmentsAsync()
-        => await _repository.GetSpecificTreatmentsAsync();
-
-    public async Task<IEnumerable<SpecificTreatmentGetDto>> GetSpecificTreatmentsByGeneralTreatmentIdAsync(int generalTreatmentId)
-        => await _repository.GetSpecificTreatmentsByGeneralTreatmentIdAsync(generalTreatmentId);
-
     public async Task<Response> RemoveSpecificTreatmentAsync(int id)
     {
-        var specificTreatment = await _repository.GetByIdAsync(id);
+        var specificTreatment = await _treatmentRepository.GetByIdAsync(id);
         if (specificTreatment is null)
             return new Response(ResourceNotFoundMessage);
 
-        _repository.Delete(specificTreatment);
-        await _repository.SaveAsync();
+        _treatmentRepository.Delete(specificTreatment);
+        await _treatmentRepository.SaveAsync();
 
         return new Response
         {

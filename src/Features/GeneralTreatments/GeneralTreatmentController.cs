@@ -4,29 +4,32 @@
 [ApiController]
 public class GeneralTreatmentController : ControllerBase
 {
-    private readonly IGeneralTreatmentService _service;
+    private readonly IGeneralTreatmentService _treatmentService;
+    private readonly IGeneralTreatmentRepository _treatmentRepository;
 
-    public GeneralTreatmentController(IGeneralTreatmentService service)
+    public GeneralTreatmentController(IGeneralTreatmentService treatmentService, 
+                                      IGeneralTreatmentRepository treatmentRepository)
     {
-        _service = service;
+        _treatmentService = treatmentService;
+        _treatmentRepository = treatmentRepository;
     }
 
     [HttpGet("name")]
     public async Task<IEnumerable<GeneralTreatmentGetNameDto>> GetTreatmentsWithName()
-        => await _service.GetTreatmentsWithNameAsync();
+        => await _treatmentRepository.GetTreatmentsWithNameAsync();
 
     [HttpGet("edit")]
     public async Task<IEnumerable<GeneralTreatmentShowDto>> GetTreatmentsForEdit()
-        => await _service.GetTreatmentsWithoutImageUrlAsync();
+        => await _treatmentRepository.GetTreatmentsWithoutImageUrlAsync();
 
     [HttpGet]
     public async Task<IEnumerable<GeneralTreatmentGetDto>> Get()
-        => await _service.GetTreatmentsAsync();
+        => await _treatmentRepository.GetTreatmentsAsync();
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Response<GeneralTreatmentGetDto>>> Get(int id)
     {
-        var response = await _service.GetTreatmentByIdAsync(id);
+        var response = await _treatmentService.GetTreatmentByIdAsync(id);
         if (response.Success)
             return Ok(response);
 
@@ -37,7 +40,7 @@ public class GeneralTreatmentController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Response>> Post([FromForm]GeneralTreatmentInsertDto treatmentInsertDto)
     {
-        var response = await _service.CreateTreatmentAsync(treatmentInsertDto);
+        var response = await _treatmentService.CreateTreatmentAsync(treatmentInsertDto);
         if (response.Success)
             return CreatedAtAction(nameof(Post), response);
 
@@ -48,7 +51,7 @@ public class GeneralTreatmentController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<Response>> Put(int id, [FromForm]GeneralTreatmentUpdateDto treatmentUpdateDto)
     {
-        var response = await _service.UpdateTreatmentAsync(id, treatmentUpdateDto);
+        var response = await _treatmentService.UpdateTreatmentAsync(id, treatmentUpdateDto);
         if (response.Success)
             return Ok(response);
 
@@ -59,7 +62,7 @@ public class GeneralTreatmentController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult<Response>> Delete(int id)
     {
-        var response = await _service.RemoveTreatmentAsync(id);
+        var response = await _treatmentService.RemoveTreatmentAsync(id);
         if (response.Success)
             return Ok(response);
 

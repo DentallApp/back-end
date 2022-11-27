@@ -2,27 +2,18 @@
 
 public class GeneralTreatmentService : IGeneralTreatmentService
 {
-    private readonly IGeneralTreatmentRepository _repository;
+    private readonly IGeneralTreatmentRepository _treatmentRepository;
     private readonly string _basePath;
 
-    public GeneralTreatmentService(IGeneralTreatmentRepository repository, AppSettings settings)
+    public GeneralTreatmentService(IGeneralTreatmentRepository treatmentRepository, AppSettings settings)
     {
-        _repository = repository;
+        _treatmentRepository = treatmentRepository;
         _basePath = settings.DentalServicesImagesPath;
     }
 
-    public async Task<IEnumerable<GeneralTreatmentShowDto>> GetTreatmentsWithoutImageUrlAsync()
-        => await _repository.GetTreatmentsWithoutImageUrlAsync();
-
-    public async Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync()
-        => await _repository.GetTreatmentsAsync();
-
-    public async Task<IEnumerable<GeneralTreatmentGetNameDto>> GetTreatmentsWithNameAsync()
-        => await _repository.GetTreatmentsWithNameAsync();
-
     public async Task<Response<GeneralTreatmentGetDto>> GetTreatmentByIdAsync(int id)
     {
-        var treatment = await _repository.GetByIdAsync(id);
+        var treatment = await _treatmentRepository.GetByIdAsync(id);
         if (treatment is null)
             return new Response<GeneralTreatmentGetDto>(ResourceNotFoundMessage);
 
@@ -37,9 +28,9 @@ public class GeneralTreatmentService : IGeneralTreatmentService
     public async Task<Response> CreateTreatmentAsync(GeneralTreatmentInsertDto treatmentInsertDto)
     {
         var treatment = treatmentInsertDto.MapToGeneralTreatment();
-        _repository.Insert(treatment);
+        _treatmentRepository.Insert(treatment);
         await treatmentInsertDto.Image.WriteAsync(Path.Combine(_basePath, treatment.ImageUrl));
-        await _repository.SaveAsync();
+        await _treatmentRepository.SaveAsync();
 
         return new Response
         {
@@ -50,7 +41,7 @@ public class GeneralTreatmentService : IGeneralTreatmentService
 
     public async Task<Response> UpdateTreatmentAsync(int id, GeneralTreatmentUpdateDto treatmentUpdateDto)
     {
-        var treatment = await _repository.GetByIdAsync(id);
+        var treatment = await _treatmentRepository.GetByIdAsync(id);
         if (treatment is null)
             return new Response(ResourceNotFoundMessage);
 
@@ -61,7 +52,7 @@ public class GeneralTreatmentService : IGeneralTreatmentService
             File.Delete(Path.Combine(_basePath, oldImageUrl));
             await treatmentUpdateDto.Image.WriteAsync(Path.Combine(_basePath, treatment.ImageUrl));
         }
-        await _repository.SaveAsync();
+        await _treatmentRepository.SaveAsync();
 
         return new Response
         {
@@ -72,12 +63,12 @@ public class GeneralTreatmentService : IGeneralTreatmentService
 
     public async Task<Response> RemoveTreatmentAsync(int id)
     {
-        var treatment = await _repository.GetByIdAsync(id);
+        var treatment = await _treatmentRepository.GetByIdAsync(id);
         if (treatment is null)
             return new Response(ResourceNotFoundMessage);
 
-        _repository.Delete(treatment);
-        await _repository.SaveAsync();
+        _treatmentRepository.Delete(treatment);
+        await _treatmentRepository.SaveAsync();
 
         return new Response
         {
