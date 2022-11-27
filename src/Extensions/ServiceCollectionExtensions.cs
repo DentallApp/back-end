@@ -4,52 +4,52 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddTransient<IAuthService, AuthService>()
-                .AddTransient<IUserService, UserService>()
-                .AddTransient<IUserRegisterService, UserRegisterService>()
-                .AddTransient<IEmailVerificationService, EmailVerificationService>()
-                .AddTransient<IEmailTemplateService, EmailTemplateService>()
-                .AddTransient<IEmailService, EmailService>()
-                .AddTransient<ISpecificTreatmentService, SpecificTreatmentService>()
-                .AddTransient<IGeneralTreatmentService, GeneralTreatmentService>()
-                .AddTransient<IProformaInvoiceService, ProformaInvoiceService>()
-                .AddTransient<IPasswordResetService, PasswordResetService>()
-                .AddTransient<IDependentService, DependentService>()
-                .AddTransient<ITokenRefreshService, TokenRefreshService>()
-                .AddTransient<IEmployeeService, EmployeeService>()
-                .AddTransient<IRoleService, RoleService>()
-                .AddTransient<IOfficeService, OfficeService>()
+        services.AddScoped<IAuthService, AuthService>()
+                .AddScoped<IUserService, UserService>()
+                .AddScoped<IUserRegisterService, UserRegisterService>()
+                .AddScoped<IEmailVerificationService, EmailVerificationService>()
+                .AddScoped<IEmailTemplateService, EmailTemplateService>()
+                .AddScoped<IEmailService, EmailService>()
+                .AddScoped<ISpecificTreatmentService, SpecificTreatmentService>()
+                .AddScoped<IGeneralTreatmentService, GeneralTreatmentService>()
+                .AddScoped<IProformaInvoiceService, ProformaInvoiceService>()
+                .AddScoped<IPasswordResetService, PasswordResetService>()
+                .AddScoped<IDependentService, DependentService>()
+                .AddScoped<ITokenRefreshService, TokenRefreshService>()
+                .AddScoped<IEmployeeService, EmployeeService>()
+                .AddScoped<IRoleService, RoleService>()
+                .AddScoped<IOfficeService, OfficeService>()
                 .AddScoped<IAppoinmentService, AppoinmentService>()
-                .AddTransient<IEmployeeScheduleService, EmployeeScheduleService>()
-                .AddTransient<IFavoriteDentistService, FavoriteDentistService>()
-                .AddTransient<IOfficeScheduleService, OfficeScheduleService>()
+                .AddScoped<IEmployeeScheduleService, EmployeeScheduleService>()
+                .AddScoped<IFavoriteDentistService, FavoriteDentistService>()
+                .AddScoped<IOfficeScheduleService, OfficeScheduleService>()
                 .AddScoped<IAvailabilityService, AvailabilityService>()
-                .AddTransient<IPersonService, PersonService>()
-                .AddTransient<IReportDownloadPdfService, ReportDownloadPdfService>()
-                .AddTransient<ITokenService, TokenService>();
+                .AddScoped<IPersonService, PersonService>()
+                .AddScoped<IReportDownloadPdfService, ReportDownloadPdfService>()
+                .AddScoped<ITokenService, TokenService>();
 
         return services;
     }
 
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddTransient<IUnitOfWork, UnitOfWorkEFCore>();
-        services.AddTransient<IUserRepository, UserRepository>()
-                .AddTransient<IEmployeeRepository, EmployeeRepository>()
-                .AddTransient<IKinshipRepository, KinshipRepository>()
-                .AddTransient<IGenderRepository, GenderRepository>()
-                .AddTransient<IAppoinmentStatusRepository, AppoinmentStatusRepository>()
-                .AddTransient<IRoleRepository, RoleRepository>()
-                .AddTransient<IOfficeRepository, OfficeRepository>()
+        services.AddScoped<IUnitOfWork, UnitOfWorkEFCore>();
+        services.AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IEmployeeRepository, EmployeeRepository>()
+                .AddScoped<IKinshipRepository, KinshipRepository>()
+                .AddScoped<IGenderRepository, GenderRepository>()
+                .AddScoped<IAppoinmentStatusRepository, AppoinmentStatusRepository>()
+                .AddScoped<IRoleRepository, RoleRepository>()
+                .AddScoped<IOfficeRepository, OfficeRepository>()
                 .AddScoped<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
-                .AddTransient<IAppoinmentRepository, AppoinmentRepository>()
+                .AddScoped<IAppoinmentRepository, AppoinmentRepository>()
                 .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
-                .AddTransient<IFavoriteDentistRepository, FavoriteDentistRepository>()
-                .AddTransient<IOfficeScheduleRepository, OfficeScheduleRepository>()
-                .AddTransient<IPersonRepository, PersonRepository>()
+                .AddScoped<IFavoriteDentistRepository, FavoriteDentistRepository>()
+                .AddScoped<IOfficeScheduleRepository, OfficeScheduleRepository>()
+                .AddScoped<IPersonRepository, PersonRepository>()
                 .AddScoped<IAppoinmentReminderRepository, AppoinmentReminderRepository>()
-                .AddTransient<IReportQuery, ReportQuery>()
-                .AddTransient<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
+                .AddScoped<IReportQuery, ReportQuery>()
+                .AddScoped<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
         return services;
     }
