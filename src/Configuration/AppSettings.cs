@@ -2,7 +2,7 @@ namespace DentallApp.Configuration;
 
 public class AppSettings
 {
-    public const string MaxDateInDateInput = "MAX_DATE_IN_DATE_INPUT";
+    public const string MaxDaysInCalendar = "MAX_DAYS_IN_CALENDAR";
     public const string BusinessName = "BUSINESS_NAME";
 
     public string ConnectionString { get; set; }
