@@ -4,11 +4,6 @@ namespace DentallApp.Features.Offices;
 
 public class OfficeRepository : SoftDeleteRepository<Office>, IOfficeRepository
 {
-    static OfficeRepository()
-    {
-        LinqToDBForEFTools.Initialize();
-    }
-
     public OfficeRepository(AppDbContext context) : base(context) { }
 
     public async Task<Office> GetOfficeByIdAsync(int id)

@@ -1,16 +1,10 @@
 ﻿using LinqToDB;
-using LinqToDB.EntityFrameworkCore;
 
 namespace DentallApp.Features.AppoinmentReminders;
 
 public class AppoinmentReminderRepository : IAppoinmentReminderRepository
 {
     private readonly AppDbContext _context;
-
-    static AppoinmentReminderRepository()
-    {
-        LinqToDBForEFTools.Initialize();
-    }
 
     public AppoinmentReminderRepository(AppDbContext context)
     {
