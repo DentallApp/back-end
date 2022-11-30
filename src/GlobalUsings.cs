@@ -61,6 +61,7 @@ global using DentallApp.Features.Reports.Pdf;
 
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
+global using DentallApp.DataAccess.DbConnectors;
 global using DentallApp.Models;
 global using DentallApp.DTOs;
 global using DentallApp.UnitOfWork;
@@ -76,6 +77,7 @@ global using DentallApp.Constants;
 global using static DentallApp.Constants.ResponseMessages;
 
 global using System;
+global using System.Data;
 global using System.Text;
 global using System.Collections.Generic;
 global using System.Threading;
@@ -123,6 +125,7 @@ global using Newtonsoft.Json.Linq;
 global using Newtonsoft.Json;
 
 global using DotEnv.Core;
+global using Dapper;
 
 global using SendGrid;
 global using SendGrid.Helpers.Mail;

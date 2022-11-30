@@ -19,7 +19,8 @@ public class Startup
         new EnvLoader().Load();
         var settings = new EnvBinder().Bind<AppSettings>();
 
-        services.AddSingleton(settings);
+        services.AddSingleton(settings)
+                .AddSingleton<IDbConnector>(new MariaDbConnector(settings.ConnectionString));
 
         services.AddHttpClient()
                 .AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)

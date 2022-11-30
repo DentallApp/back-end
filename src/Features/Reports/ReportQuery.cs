@@ -1,22 +1,19 @@
-﻿using Dapper;
-using MySqlConnector;
-
-namespace DentallApp.Features.Reports;
+﻿namespace DentallApp.Features.Reports;
 
 public class ReportQuery : IReportQuery
 {
 	private readonly AppDbContext _context;
-    private readonly AppSettings _settings;
+    private readonly IDbConnector _dbConnector;
 
-	public ReportQuery(AppDbContext context, AppSettings settings)
+	public ReportQuery(AppDbContext context, IDbConnector dbConnector)
 	{
 		_context = context;
-        _settings = settings;
+        _dbConnector = dbConnector;
     }
 
     public async Task<ReportGetTotalAppoinmentDto> GetTotalAppoinmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
     {
-        using var connection = new MySqlConnection(_settings.ConnectionString);
+        using var connection = _dbConnector.CreateConnection();
         var sql = @"
             SELECT 
             COUNT(*) AS Total,
@@ -50,7 +47,7 @@ public class ReportQuery : IReportQuery
 
     public async Task<IEnumerable<ReportGetTotalScheduledAppoinmentDto>> GetTotalScheduledAppoinmentsByDateRangeAsync(ReportPostDto reportPostDto)
     {
-        using var connection = new MySqlConnection(_settings.ConnectionString);
+        using var connection = _dbConnector.CreateConnection();
         var sql = @"
             SELECT 
             CONCAT(p.names, ' ', p.last_names) AS DentistName,
