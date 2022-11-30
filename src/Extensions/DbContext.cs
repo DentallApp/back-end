@@ -1,9 +1,12 @@
-﻿namespace DentallApp.Extensions;
+﻿using LinqToDB.EntityFrameworkCore;
+
+namespace DentallApp.Extensions;
 
 public static class DbContext
 {
     public static IServiceCollection AddDbContext(this IServiceCollection services, AppSettings settings)
     {
+        LinqToDBForEFTools.Initialize();
         var cs = settings.ConnectionString;
         services.AddDbContext<AppDbContext>(options =>
         {

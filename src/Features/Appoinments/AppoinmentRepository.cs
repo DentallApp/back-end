@@ -5,11 +5,6 @@ namespace DentallApp.Features.Appoinments;
 
 public class AppoinmentRepository : Repository<Appoinment>, IAppoinmentRepository
 {
-    static AppoinmentRepository()
-    {
-        LinqToDBForEFTools.Initialize();
-    }
-
     public AppoinmentRepository(AppDbContext context) : base(context) { }
 
     public async Task<IEnumerable<AppoinmentGetByBasicUserDto>> GetAppoinmentsByUserIdAsync(int userId)
