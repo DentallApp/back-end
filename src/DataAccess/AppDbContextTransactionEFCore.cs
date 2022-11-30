@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-
-namespace DentallApp.DataAccess;
+﻿namespace DentallApp.DataAccess;
 
 public class AppDbContextTransactionEFCore : IAppDbContextTransaction
 {
