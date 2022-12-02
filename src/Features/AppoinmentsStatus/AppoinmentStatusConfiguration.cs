@@ -12,18 +12,8 @@ public class AppoinmentStatusConfiguration : IEntityTypeConfiguration<Appoinment
             },
             new AppoinmentStatus
             {
-                Id = 2,
-                Name = "En proceso"
-            },
-            new AppoinmentStatus
-            {
                 Id = AppoinmentStatusId.NotAssisted,
                 Name = AppoinmentStatusName.NotAssisted
-            },
-            new AppoinmentStatus
-            {
-                Id = 4,
-                Name = "En consulta"
             },
             new AppoinmentStatus
             {
