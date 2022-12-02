@@ -3,9 +3,9 @@
 public class AppoinmentStatusId
 {
     public const int Scheduled   = 1;
-    public const int Assisted    = 5;
+    public const int Assisted    = 2;
     public const int NotAssisted = 3;
-    public const int Canceled    = 6;
+    public const int Canceled    = 4;
 }
 
 public class AppoinmentStatusName
