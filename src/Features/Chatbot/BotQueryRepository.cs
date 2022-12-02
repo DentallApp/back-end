@@ -47,18 +47,19 @@ public class BotQueryRepository : IBotQueryRepository
     public async Task<List<AdaptiveChoice>> GetPatientsAsync(UserProfile userProfile)
     { 
         var choices = await _context.Set<Dependent>()
+                                    .Include(dependent => dependent.Kinship)
                                     .Include(dependent => dependent.Person)
                                     .Where(dependent => dependent.UserId == userProfile.Id)
                                     .Select(dependent => new AdaptiveChoice
                                     {
-                                        Title = dependent.Person.FullName,
+                                        Title = dependent.Person.FullName + " / " + dependent.Kinship.Name,
                                         Value = dependent.Person.Id.ToString()
                                     })
                                     .ToListAsync();
         
-        choices.Add(new AdaptiveChoice
+        choices.Insert(0, new AdaptiveChoice
         {
-            Title = userProfile.FullName,
+            Title = userProfile.FullName + " / " + KinshipsName.Default,
             Value = userProfile.PersonId.ToString()
         });
         return choices;
