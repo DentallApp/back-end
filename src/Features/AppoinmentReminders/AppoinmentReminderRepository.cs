@@ -18,7 +18,6 @@ public class AppoinmentReminderRepository : IAppoinmentReminderRepository
                       .ThenInclude(employee => employee.Person)
                    .Where(appoinment =>
                           appoinment.AppoinmentStatusId == AppoinmentStatusId.Scheduled &&
-                          appoinment.HasNotReminder() &&
                           _context.DateDiff(appoinment.Date, currentDate) == timeInAdvance &&
                           appoinment.CreatedAt != null &&
                           // Para que el recordatorio no se envíe sí el paciente agenda la cita para el día siguiente.
@@ -36,11 +35,4 @@ public class AppoinmentReminderRepository : IAppoinmentReminderRepository
                     })
                    .IgnoreQueryFilters()
                    .ToList();
-
-    public void UpdateScheduledAppoinments(IEnumerable<int> appoinmentsId)
-        => _context.Set<Appoinment>()
-                   .Where(appoinment => appoinmentsId.Contains(appoinment.Id))
-                   .Set(appoinment => appoinment.HasReminder, true)
-                   .Set(appoinment => appoinment.UpdatedAt, DateTime.Now)
-                   .Update();
 }

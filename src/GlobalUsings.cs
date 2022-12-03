@@ -136,3 +136,4 @@ global using FileTypeChecker;
 global using FileTypeChecker.Extensions;
 global using iText.Html2pdf;
 global using Scriban;
+global using Quartz;

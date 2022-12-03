@@ -42,9 +42,4 @@ public class Appoinment : ModelBase
     /// no se muestre como disponible cuando el usuario básico agende una nueva cita.
     /// </remarks>
     public bool IsCancelledByEmployee { get; set; }
-
-    /// <summary>
-    /// Comprueba sí el paciente recibió el recordatorio de su cita.
-    /// </summary>
-    public bool HasReminder { get; set; }
 }

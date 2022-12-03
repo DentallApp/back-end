@@ -25,9 +25,6 @@ public class AppSettings
     public string TwilioFromNumber { get; set; }
     public string DefaultRegion { get; set; }
     public string DentalServicesImagesPath { get; set; }
-    public double ReminderDueTime { get; set; }
-    public double ReminderPeriod { get; set; }
     public int ReminderTimeInAdvance { get; set; }
-    public int ReminderHourMax { get; set; }
-    public int ReminderHourMin { get; set; }
+    public string ReminderCronExpr { get; set; }
 }
