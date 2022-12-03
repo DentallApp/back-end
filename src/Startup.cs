@@ -31,28 +31,7 @@ public class Startup
         services.AddDbContext(settings);
         services.AddSendGrid(options => options.ApiKey = settings.SendGridApiKey);
         services.AddSwagger();
-
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            options.RequireHttpsMetadata = false;
-            options.SaveToken = true;
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.AccessTokenKey)),
-                ValidateIssuer = false,
-                ValidateAudience = false
-            };
-        });
-
-        services.AddAuthorization();
+        services.AddAuthenticationJwtBearer(settings);
         services.AddBotServices();
         services.AddQuartzJobs(settings);
     }
