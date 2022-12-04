@@ -2,9 +2,9 @@
 
 public static class WaterfallStepContextExtensions
 {
-    private const string None           = "None";
-    private const string UserInfo       = "value-userInfo";
-    private const string AppoinmentInfo = "value-appoinmentInfo";
+    private const string None            = "None";
+    private const string UserInfo        = "value-userInfo";
+    private const string AppointmentInfo = "value-appointmentInfo";
 
     public static UserProfile CreateUserProfileInstance(this WaterfallStepContext stepContext)
     {
@@ -18,15 +18,15 @@ public static class WaterfallStepContextExtensions
     public static UserProfile GetUserProfile(this WaterfallStepContext stepContext)
         => (UserProfile)stepContext.Values[UserInfo];
 
-    public static AppoinmentInsertDto CreateAppoinmentInstance(this WaterfallStepContext stepContext)
+    public static AppointmentInsertDto CreateAppointmentInstance(this WaterfallStepContext stepContext)
     {
-        var appoinmentInfo = new AppoinmentInsertDto();
-        stepContext.Values[AppoinmentInfo] = appoinmentInfo;
-        return appoinmentInfo;
+        var appointmentInfo = new AppointmentInsertDto();
+        stepContext.Values[AppointmentInfo] = appointmentInfo;
+        return appointmentInfo;
     }
 
-    public static AppoinmentInsertDto GetAppoinment(this WaterfallStepContext stepContext)
-        => (AppoinmentInsertDto)stepContext.Values[AppoinmentInfo];
+    public static AppointmentInsertDto GetAppointment(this WaterfallStepContext stepContext)
+        => (AppointmentInsertDto)stepContext.Values[AppointmentInfo];
 
     /// <summary>
     /// Obtiene el valor que seleccionó el usuario desde una instancia de tipo <see cref="JObject"/>.

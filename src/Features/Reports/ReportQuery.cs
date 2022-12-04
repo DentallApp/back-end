@@ -11,32 +11,32 @@ public class ReportQuery : IReportQuery
         _dbConnector = dbConnector;
     }
 
-    public async Task<ReportGetTotalAppoinmentDto> GetTotalAppoinmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
+    public async Task<ReportGetTotalAppointmentDto> GetTotalAppointmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
     {
         using var connection = _dbConnector.CreateConnection();
         var sql = @"
             SELECT 
             COUNT(*) AS Total,
-            SUM(case when appoinment_status_id = @Assisted then 1 else 0 END) 
-	            AS TotalAppoinmentsAssisted,
-            SUM(case when appoinment_status_id = @NotAssisted then 1 else 0 END) 
-	            AS TotalAppoinmentsNotAssisted,
-            SUM(case when appoinment_status_id = @Canceled AND is_cancelled_by_employee = 1 then 1 else 0 END) 
-	            AS TotalAppoinmentsCancelledByEmployee,
-            SUM(case when appoinment_status_id = @Canceled AND is_cancelled_by_employee = 0 then 1 else 0 END) 
-	            AS TotalAppoinmentsCancelledByPatient
-            FROM appoinments AS a
-            WHERE (a.appoinment_status_id <> @Scheduled) AND
+            SUM(case when appointment_status_id = @Assisted then 1 else 0 END) 
+	            AS TotalAppointmentsAssisted,
+            SUM(case when appointment_status_id = @NotAssisted then 1 else 0 END) 
+	            AS TotalAppointmentsNotAssisted,
+            SUM(case when appointment_status_id = @Canceled AND is_cancelled_by_employee = 1 then 1 else 0 END) 
+	            AS TotalAppointmentsCancelledByEmployee,
+            SUM(case when appointment_status_id = @Canceled AND is_cancelled_by_employee = 0 then 1 else 0 END) 
+	            AS TotalAppointmentsCancelledByPatient
+            FROM appointments AS a
+            WHERE (a.appointment_status_id <> @Scheduled) AND
                   (a.date >= @From AND a.date <= @To) AND
                   (a.office_id = @OfficeId OR @OfficeId = 0) AND
                   (a.dentist_id = @DentistId OR @DentistId = 0)
         ";
-        var result = await connection.QueryAsync<ReportGetTotalAppoinmentDto>(sql, new
+        var result = await connection.QueryAsync<ReportGetTotalAppointmentDto>(sql, new
         {
-            AppoinmentStatusId.Assisted,
-            AppoinmentStatusId.NotAssisted,
-            AppoinmentStatusId.Canceled,
-            AppoinmentStatusId.Scheduled,
+            AppointmentStatusId.Assisted,
+            AppointmentStatusId.NotAssisted,
+            AppointmentStatusId.Canceled,
+            AppointmentStatusId.Scheduled,
             reportPostDto.From,
             reportPostDto.To,
             reportPostDto.OfficeId,
@@ -45,7 +45,7 @@ public class ReportQuery : IReportQuery
         return result.First();
     }
 
-    public async Task<IEnumerable<ReportGetTotalScheduledAppoinmentDto>> GetTotalScheduledAppoinmentsByDateRangeAsync(ReportPostDto reportPostDto)
+    public async Task<IEnumerable<ReportGetTotalScheduledAppointmentDto>> GetTotalScheduledAppointmentsByDateRangeAsync(ReportPostDto reportPostDto)
     {
         using var connection = _dbConnector.CreateConnection();
         var sql = @"
@@ -53,19 +53,19 @@ public class ReportQuery : IReportQuery
             CONCAT(p.names, ' ', p.last_names) AS DentistName,
             o.name AS OfficeName,
             COUNT(*) AS Total
-            FROM appoinments AS a
+            FROM appointments AS a
             INNER JOIN employees AS e ON e.id = a.dentist_id
             INNER JOIN persons AS p ON p.id = e.person_id
             INNER JOIN offices AS o ON o.id = a.office_id
-            WHERE (a.appoinment_status_id = @Scheduled) AND
+            WHERE (a.appointment_status_id = @Scheduled) AND
 	              (a.date >= @From AND a.date <= @To) AND
 	              (a.office_id = @OfficeId OR @OfficeId = 0)
             GROUP BY a.dentist_id
             ORDER BY Total DESC
         ";
-        return await connection.QueryAsync<ReportGetTotalScheduledAppoinmentDto>(sql, new
+        return await connection.QueryAsync<ReportGetTotalScheduledAppointmentDto>(sql, new
         {
-            AppoinmentStatusId.Scheduled,
+            AppointmentStatusId.Scheduled,
             reportPostDto.From,
             reportPostDto.To,
             reportPostDto.OfficeId
@@ -73,19 +73,19 @@ public class ReportQuery : IReportQuery
     }
 
     public async Task<IEnumerable<ReportGetMostRequestedServicesDto>> GetMostRequestedServicesAsync(ReportPostDto reportPostDto)
-        => await _context.Set<Appoinment>()
-                         .Include(appoinment => appoinment.GeneralTreatment)
-                         .Where(appoinment =>
-                               (appoinment.AppoinmentStatusId == AppoinmentStatusId.Assisted) &&
-                               (appoinment.Date >= reportPostDto.From && appoinment.Date <= reportPostDto.To))
-                         .OptionalWhere(reportPostDto.OfficeId, appoinment => appoinment.OfficeId == reportPostDto.OfficeId)
-                         .GroupBy(appoinment => new { appoinment.GeneralTreatmentId, appoinment.GeneralTreatment.Name })
+        => await _context.Set<Appointment>()
+                         .Include(appointment => appointment.GeneralTreatment)
+                         .Where(appointment =>
+                               (appointment.AppointmentStatusId == AppointmentStatusId.Assisted) &&
+                               (appointment.Date >= reportPostDto.From && appointment.Date <= reportPostDto.To))
+                         .OptionalWhere(reportPostDto.OfficeId, appointment => appointment.OfficeId == reportPostDto.OfficeId)
+                         .GroupBy(appointment => new { appointment.GeneralTreatmentId, appointment.GeneralTreatment.Name })
                          .Select(group => new ReportGetMostRequestedServicesDto
                           {
                              DentalServiceName          = group.Key.Name,
-                             TotalAppoinmentsAssisted   = group.Count()
+                             TotalAppointmentsAssisted   = group.Count()
                           })
-                         .OrderByDescending(dto => dto.TotalAppoinmentsAssisted)
+                         .OrderByDescending(dto => dto.TotalAppointmentsAssisted)
                          .IgnoreQueryFilters()
                          .ToListAsync();
 }

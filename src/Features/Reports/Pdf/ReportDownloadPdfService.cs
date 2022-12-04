@@ -12,15 +12,15 @@ public class ReportDownloadPdfService : IReportDownloadPdfService
         _htmlConverter = htmlConverter;
     }
 
-    public async Task<byte[]> CreateReportTotalAppoinmentPdfAsync(ReportPostTotalAppoinmentDownloadDto reportPostDownloadDto)
+    public async Task<byte[]> CreateReportTotalAppointmentPdfAsync(ReportPostTotalAppointmentDownloadDto reportPostDownloadDto)
     {
-        var html = await _htmlTemplateLoader.LoadAsync(string.Format(Path, "ReportAppoinment"), reportPostDownloadDto.MapToObject());
+        var html = await _htmlTemplateLoader.LoadAsync(string.Format(Path, "ReportAppointment"), reportPostDownloadDto.MapToObject());
         return _htmlConverter.ConvertToPdf(html, new MemoryStream());
     }
 
-    public async Task<byte[]> CreateReportTotalScheduledAppoinmentPdfAsync(ReportPostScheduledDownloadDto reportPostDownloadDto)
+    public async Task<byte[]> CreateReportTotalScheduledAppointmentPdfAsync(ReportPostScheduledDownloadDto reportPostDownloadDto)
     {
-        var html = await _htmlTemplateLoader.LoadAsync(string.Format(Path, "ReportScheduledAppoinment"), reportPostDownloadDto.MapToObject());
+        var html = await _htmlTemplateLoader.LoadAsync(string.Format(Path, "ReportScheduledAppointment"), reportPostDownloadDto.MapToObject());
         return _htmlConverter.ConvertToPdf(html, new MemoryStream());
     }
 

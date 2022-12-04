@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(conversationState);
 
         services.AddSingleton<RootDialog>();
-        services.AddSingleton<IAppoinmentBotService, AppoinmentBotService>();
+        services.AddSingleton<IAppointmentBotService, AppointmentBotService>();
         services.AddScoped<IBotQueryRepository, BotQueryRepository>();
 
         // Create the Bot Framework Authentication to be used with the Bot Adapter.

@@ -2,15 +2,15 @@
 
 public partial class RootDialog : ComponentDialog
 {
-    private const string SelectDentalServiceMessage  = "Error. Escoja un servicio dental";
-    private const string SelectDentistMessage        = "Error. Escoja un odontólogo";
-    private const string SelectPatientMessage        = "Error. Escoja un paciente";
-    private const string SelectOfficeMessage         = "Error. Escoja un consultorio";
-    private const string SelectAppoinmentDateMessage = "Error. Escoja una fecha válida";
-    private const string SelectScheduleMessage       = "Error. Escoja un horario";
-    private readonly IAppoinmentBotService _botService;
+    private const string SelectDentalServiceMessage   = "Error. Escoja un servicio dental";
+    private const string SelectDentistMessage         = "Error. Escoja un odontólogo";
+    private const string SelectPatientMessage         = "Error. Escoja un paciente";
+    private const string SelectOfficeMessage          = "Error. Escoja un consultorio";
+    private const string SelectAppointmentDateMessage = "Error. Escoja una fecha válida";
+    private const string SelectScheduleMessage        = "Error. Escoja un horario";
+    private readonly IAppointmentBotService _botService;
 
-    public RootDialog(IAppoinmentBotService botService) : base(nameof(RootDialog))
+    public RootDialog(IAppointmentBotService botService) : base(nameof(RootDialog))
     {
         _botService = botService;
 
@@ -20,7 +20,7 @@ public partial class RootDialog : ComponentDialog
             ShowNameOfOffices,
             ShowNameOfServices,
             ShowNameOfDentists,
-            ShowAppoinmentDate,
+            ShowAppointmentDate,
             ShowSchedules,
             ShowAppointmentData
         };
@@ -43,7 +43,7 @@ public partial class RootDialog : ComponentDialog
 
         await stepContext.SendTypingActivityAsync();
         var userProfile = stepContext.CreateUserProfileInstance();
-        stepContext.CreateAppoinmentInstance().UserId = userProfile.Id;
+        stepContext.CreateAppointmentInstance().UserId = userProfile.Id;
         var choicesTask  = _botService.GetPatientsAsync(userProfile);
         var cardJsonTask = TemplateCardLoader.LoadPatientCardAsync();
         var choices      = await choicesTask;
@@ -63,7 +63,7 @@ public partial class RootDialog : ComponentDialog
         var selectedPatientId = stepContext.GetSelectedPatientId();
         if (selectedPatientId is null)
             return await stepContext.PreviousAsync(message: SelectPatientMessage, cancellationToken: cancellationToken);
-        stepContext.GetAppoinment().PersonId = int.Parse(selectedPatientId);
+        stepContext.GetAppointment().PersonId = int.Parse(selectedPatientId);
         await stepContext.SendTypingActivityAsync();
         var choicesTask  = _botService.GetOfficesAsync();
         var cardJsonTask = TemplateCardLoader.LoadOfficeCardAsync();
@@ -84,7 +84,7 @@ public partial class RootDialog : ComponentDialog
         var selectedOfficeId = stepContext.GetSelectedOfficeId();
         if (selectedOfficeId is null)
             return await stepContext.PreviousAsync(message: SelectOfficeMessage, cancellationToken: cancellationToken);
-        stepContext.GetAppoinment().OfficeId = int.Parse(selectedOfficeId);
+        stepContext.GetAppointment().OfficeId = int.Parse(selectedOfficeId);
         await stepContext.SendTypingActivityAsync();
         var choicesTask  = _botService.GetDentalServicesAsync();
         var cardJsonTask = TemplateCardLoader.LoadDentalServiceCardAsync();
@@ -105,9 +105,9 @@ public partial class RootDialog : ComponentDialog
         var selectedDentalServiceId = stepContext.GetSelectedDentalServiceId();
         if (selectedDentalServiceId is null)
             return await stepContext.PreviousAsync(message: SelectDentalServiceMessage, cancellationToken: cancellationToken);
-        stepContext.GetAppoinment().GeneralTreatmentId = int.Parse(selectedDentalServiceId);
+        stepContext.GetAppointment().GeneralTreatmentId = int.Parse(selectedDentalServiceId);
         await stepContext.SendTypingActivityAsync();
-        int officeId     = stepContext.GetAppoinment().OfficeId;
+        int officeId     = stepContext.GetAppointment().OfficeId;
         var choicesTask  = _botService.GetDentistsByOfficeIdAsync(officeId);
         var cardJsonTask = TemplateCardLoader.LoadDentistCardAsync();
         var choices      = await choicesTask;
@@ -119,18 +119,18 @@ public partial class RootDialog : ComponentDialog
         );
     }
 
-    private async Task<DialogTurnResult> ShowAppoinmentDate(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+    private async Task<DialogTurnResult> ShowAppointmentDate(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
         if (stepContext.CheckIfResultNextStepIsNone())
-            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectAppoinmentDateMessage);
+            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectAppointmentDateMessage);
 
         var selectedDentistId = stepContext.GetSelectedDentistId();
         if (selectedDentistId is null)
             return await stepContext.PreviousAsync(message: SelectDentistMessage, cancellationToken: cancellationToken);
-        stepContext.GetAppoinment().DentistId = int.Parse(selectedDentistId);
+        stepContext.GetAppointment().DentistId = int.Parse(selectedDentistId);
         await stepContext.SendTypingActivityAsync();
-        var dentistScheduleTask = _botService.GetDentistScheduleAsync(stepContext.GetAppoinment().DentistId);
-        var cardJsonTask        = TemplateCardLoader.LoadAppoinmentDateCardAsync();
+        var dentistScheduleTask = _botService.GetDentistScheduleAsync(stepContext.GetAppointment().DentistId);
+        var cardJsonTask        = TemplateCardLoader.LoadAppointmentDateCardAsync();
         var dentistSchedule     = await dentistScheduleTask;
         var cardJson            = await cardJsonTask;
         await stepContext.Context.SendActivityAsync($"El odontólogo atiende los {dentistSchedule}");
@@ -146,17 +146,17 @@ public partial class RootDialog : ComponentDialog
         if (stepContext.CheckIfResultNextStepIsNone())
             return await stepContext.PromptAsync(nameof(TextPrompt), retryMessage: SelectScheduleMessage);
 
-        var selectedAppoinmentDate = stepContext.GetSelectedAppoinmentDate();
-        if (selectedAppoinmentDate is null)
-            return await stepContext.PreviousAsync(message: SelectAppoinmentDateMessage, cancellationToken: cancellationToken);
-        stepContext.GetAppoinment().AppoinmentDate = DateTime.Parse(selectedAppoinmentDate);
+        var selectedAppointmentDate = stepContext.GetSelectedAppointmentDate();
+        if (selectedAppointmentDate is null)
+            return await stepContext.PreviousAsync(message: SelectAppointmentDateMessage, cancellationToken: cancellationToken);
+        stepContext.GetAppointment().AppointmentDate = DateTime.Parse(selectedAppointmentDate);
         await stepContext.SendTypingActivityAsync();
-        var appoinment = stepContext.GetAppoinment();
+        var appointment = stepContext.GetAppointment();
         var response   = await _botService.GetAvailableHoursAsync(new AvailableTimeRangePostDto
         {
-            DentistId       = appoinment.DentistId,
-            DentalServiceId = appoinment.GeneralTreatmentId,
-            AppointmentDate = appoinment.AppoinmentDate
+            DentistId       = appointment.DentistId,
+            DentalServiceId = appointment.GeneralTreatmentId,
+            AppointmentDate = appointment.AppointmentDate
         });
 
         if (!response.Success)
@@ -173,24 +173,24 @@ public partial class RootDialog : ComponentDialog
 
     private async Task<DialogTurnResult> ShowAppointmentData(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
-        var appoinment = stepContext.GetAppoinment();
+        var appointment = stepContext.GetAppointment();
         try
         {
             var selectedTimeRange = stepContext.GetSelectedTimeRange();
             var timeRange         = selectedTimeRange.Split("-");
-            appoinment.StartHour  = TimeSpan.Parse(timeRange[0]);
-            appoinment.EndHour    = TimeSpan.Parse(timeRange[1]);
+            appointment.StartHour  = TimeSpan.Parse(timeRange[0]);
+            appointment.EndHour    = TimeSpan.Parse(timeRange[1]);
         }
         catch(FormatException)
         {
             return await stepContext.PreviousAsync(message: SelectScheduleMessage, cancellationToken: cancellationToken);
         }
         await stepContext.SendTypingActivityAsync();
-        appoinment.RangeToPay = await _botService.GetRangeToPayAsync(appoinment.GeneralTreatmentId);
-        var response = await _botService.CreateScheduledAppoinmentAsync(appoinment);
+        appointment.RangeToPay = await _botService.GetRangeToPayAsync(appointment.GeneralTreatmentId);
+        var response = await _botService.CreateScheduledAppointmentAsync(appointment);
         if (!response.Success)
             return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
-        await stepContext.Context.SendActivityAsync($"Cita agendada con éxito. {appoinment.RangeToPay}.", cancellationToken: cancellationToken);
+        await stepContext.Context.SendActivityAsync($"Cita agendada con éxito. {appointment.RangeToPay}.", cancellationToken: cancellationToken);
         await stepContext.Context.SendActivityAsync("Gracias por usar nuestro servicio.\n\n" +
                 "Si desea agendar otra cita, escriba algo para empezar de nuevo el proceso.", cancellationToken: cancellationToken);
         return await stepContext.EndDialogAsync(cancellationToken: cancellationToken);

@@ -16,6 +16,6 @@ public class TemplateCardLoader
     public static async Task<string> LoadPatientCardAsync()
         => await File.ReadAllTextAsync($"{BasePath}/PatientCard.json");
 
-    public static async Task<string> LoadAppoinmentDateCardAsync()
-        => await File.ReadAllTextAsync($"{BasePath}/AppoinmentDateCard.json");
+    public static async Task<string> LoadAppointmentDateCardAsync()
+        => await File.ReadAllTextAsync($"{BasePath}/AppointmentDateCard.json");
 }

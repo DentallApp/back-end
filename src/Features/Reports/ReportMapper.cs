@@ -2,7 +2,7 @@
 
 public static class ReportMapper
 {
-    public static object MapToObject(this ReportPostTotalAppoinmentDownloadDto reportPostDownloadDto)
+    public static object MapToObject(this ReportPostTotalAppointmentDownloadDto reportPostDownloadDto)
     {
         var model = new
         {
@@ -21,7 +21,7 @@ public static class ReportMapper
         {
             reportPostDownloadDto.From,
             reportPostDownloadDto.To,
-            reportPostDownloadDto.Appoinments
+            reportPostDownloadDto.Appointments
         };
         return model;
     }
