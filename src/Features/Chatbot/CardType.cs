@@ -24,7 +24,7 @@ public static class CardType
     public static string GetSelectedDentistId(this WaterfallStepContext stepContext)
         => stepContext.GetValueFromJObject(DentistId);
 
-    public static string GetSelectedAppoinmentDate(this WaterfallStepContext stepContext)
+    public static string GetSelectedAppointmentDate(this WaterfallStepContext stepContext)
         => stepContext.GetValueFromJObject(DateId);
 
     public static string GetSelectedTimeRange(this WaterfallStepContext stepContext)

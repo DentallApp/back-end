@@ -10,6 +10,6 @@ public class Office : ModelWithSoftDelete
     [NotMapped]
     public bool IsDisabledEmployeeAccounts => !IsEnabledEmployeeAccounts;
     public ICollection<Employee> Employees { get; set; }
-    public ICollection<Appoinment> Appoinments { get; set; }
+    public ICollection<Appointment> Appointments { get; set; }
     public ICollection<OfficeSchedule> OfficeSchedules { get; set; }
 }

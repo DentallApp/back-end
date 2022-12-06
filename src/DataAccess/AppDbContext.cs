@@ -13,8 +13,8 @@ public partial class AppDbContext : CustomDbContext
     public DbSet<Kinship> Kinships { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Office> Offices { get; set; }
-    public DbSet<Appoinment> Appoinments { get; set; }
-    public DbSet<AppoinmentStatus> AppoinmentsStatus { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<AppointmentStatus> AppointmentsStatus { get; set; }
     public DbSet<EmployeeSchedule> EmployeeSchedules { get; set; }
     public DbSet<WeekDay> WeekDays { get; set; }
     public DbSet<FavoriteDentist> FavoriteDentists { get; set; }
@@ -42,7 +42,7 @@ public partial class AppDbContext : CustomDbContext
         modelBuilder.ApplyConfiguration(new DependentConfiguration());
         modelBuilder.ApplyConfiguration(new OfficeConfiguration());
         modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
-        modelBuilder.ApplyConfiguration(new AppoinmentStatusConfiguration());
+        modelBuilder.ApplyConfiguration(new AppointmentStatusConfiguration());
         modelBuilder.ApplyConfiguration(new WeekDayConfiguration());
         modelBuilder.ApplyConfiguration(new EmployeeScheduleConfiguration());
         modelBuilder.ApplyConfiguration(new OfficeScheduleConfiguration());

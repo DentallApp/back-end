@@ -2,5 +2,5 @@
 
 public class ReportPostWithStatusDto : ReportPostDto
 {
-    public int AppoinmentStatusId { get; set; }
+    public int AppointmentStatusId { get; set; }
 }

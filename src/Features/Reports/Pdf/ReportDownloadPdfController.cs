@@ -15,20 +15,20 @@ public class ReportDownloadPdfController : ControllerBase
     /// <summary>
     /// Descarga el reporte sobre el total de citas asistidas, no asistidas y canceladas.
     /// </summary>
-	[HttpPost("appoinment")]
-	public async Task<ActionResult> ReportTotalAppoinmentsDownload([FromBody]ReportPostTotalAppoinmentDownloadDto reportPostDownloadDto)
+	[HttpPost("appointment")]
+	public async Task<ActionResult> ReportTotalAppointmentsDownload([FromBody]ReportPostTotalAppointmentDownloadDto reportPostDownloadDto)
 	{
-        var contents = await _reportDownloadPdf.CreateReportTotalAppoinmentPdfAsync(reportPostDownloadDto);
+        var contents = await _reportDownloadPdf.CreateReportTotalAppointmentPdfAsync(reportPostDownloadDto);
         return File(contents, "application/pdf", "Reporte sobre el total de citas.pdf");
     }
 
     /// <summary>
     /// Descarga el reporte sobre el total de citas agendadas por odontólogo.
     /// </summary>
-    [HttpPost("appoinment/scheduled")]
-    public async Task<ActionResult> ReportTotalScheduledAppoinmentDownload([FromBody]ReportPostScheduledDownloadDto reportPostDownloadDto)
+    [HttpPost("appointment/scheduled")]
+    public async Task<ActionResult> ReportTotalScheduledAppointmentDownload([FromBody]ReportPostScheduledDownloadDto reportPostDownloadDto)
     {
-        var contents = await _reportDownloadPdf.CreateReportTotalScheduledAppoinmentPdfAsync(reportPostDownloadDto);
+        var contents = await _reportDownloadPdf.CreateReportTotalScheduledAppointmentPdfAsync(reportPostDownloadDto);
         return File(contents, "application/pdf", "Reporte sobre el total de citas agendadas.pdf");
     }
 

@@ -1,0 +1,122 @@
+﻿using LinqToDB;
+using LinqToDB.EntityFrameworkCore;
+
+namespace DentallApp.Features.Appointments;
+
+public class AppointmentRepository : Repository<Appointment>, IAppointmentRepository
+{
+    public AppointmentRepository(AppDbContext context) : base(context) { }
+
+    public async Task<IEnumerable<AppointmentGetByBasicUserDto>> GetAppointmentsByUserIdAsync(int userId)
+        => await (from appointment in Context.Set<Appointment>()
+                  join appointmentStatus in Context.Set<AppointmentStatus>() on appointment.AppointmentStatusId equals appointmentStatus.Id
+                  join patientDetails in Context.Set<Person>() on appointment.PersonId equals patientDetails.Id
+                  join dentist in Context.Set<Employee>() on appointment.DentistId equals dentist.Id
+                  join dentistDetails in Context.Set<Person>() on dentist.PersonId equals dentistDetails.Id
+                  join office in Context.Set<Office>() on appointment.OfficeId equals office.Id
+                  join generalTreatment in Context.Set<GeneralTreatment>() on appointment.GeneralTreatmentId equals generalTreatment.Id
+                  join dependent in Context.Set<Dependent>() on patientDetails.Id equals dependent.PersonId into dependents
+                  from dependent in dependents.DefaultIfEmpty()
+                  join kinship in Context.Set<Kinship>() on dependent.KinshipId equals kinship.Id into kinships
+                  from kinship in kinships.DefaultIfEmpty()
+                  where appointment.UserId == userId
+                  orderby appointment.CreatedAt descending
+                  select new AppointmentGetByBasicUserDto
+                  {
+                      AppointmentId     = appointment.Id,
+                      PatientName       = patientDetails.FullName,
+                      Status            = appointmentStatus.Name,
+                      CreatedAt         = appointment.CreatedAt.GetDateAndHourInSpanishFormat(),
+                      AppointmentDate   = appointment.Date.GetDateInSpanishFormat(),
+                      StartHour         = appointment.StartHour.GetHourWithoutSeconds(),
+                      EndHour           = appointment.EndHour.GetHourWithoutSeconds(),
+                      DentistName       = dentistDetails.FullName,
+                      DentalServiceName = generalTreatment.Name,
+                      OfficeName        = office.Name,
+                      KinshipName       = kinship == null ? KinshipsName.Default : kinship.Name
+                  })
+                 .IgnoreQueryFilters()
+                 .ToListAsyncEF();
+
+    public async Task<List<UnavailableTimeRangeDto>> GetUnavailableHoursAsync(int dentistId, DateTime appointmentDate)
+        => await Context.Set<Appointment>()
+                        .Where(appointment => 
+                              (appointment.DentistId == dentistId) &&
+                              (appointment.Date == appointmentDate) &&
+                              (appointment.IsNotCanceled() ||
+                               appointment.IsCancelledByEmployee ||
+                               DateTime.Now > Context.AddTime(Context.ToDateTime(appointment.Date), appointment.StartHour)))
+                        .Select(appointment => appointment.MapToUnavailableTimeRangeDto())
+                        .Distinct()
+                        .OrderBy(appointment => appointment.StartHour)
+                          .ThenBy(appointment => appointment.EndHour)
+                        .ToListAsyncEF();
+
+    public async Task<bool> IsNotAvailableAsync(AppointmentInsertDto appointmentDto)
+    {
+        var result = await Context.Set<Appointment>()
+                                  .Where(appointment => 
+                                        (appointment.DentistId == appointmentDto.DentistId) &&
+                                        (appointment.Date == appointmentDto.AppointmentDate) &&
+                                        (appointment.StartHour == appointmentDto.StartHour) &&
+                                        (appointment.EndHour == appointmentDto.EndHour) &&
+                                        (appointment.IsNotCanceled() ||
+                                         appointment.IsCancelledByEmployee ||
+                                         DateTime.Now > Context.AddTime(Context.ToDateTime(appointment.Date), appointment.StartHour)))
+                                  .Select(appointment => appointment.Id)
+                                  .FirstOrDefaultAsyncEF();
+
+        return result != 0;
+    }
+
+    public async Task<IEnumerable<AppointmentGetByEmployeeDto>> GetAppointmentsForEmployeeAsync(AppointmentPostDateDto appointmentPostDto)
+        => await Context.Set<Appointment>()
+                        .Include(appointment => appointment.Person)
+                        .Include(appointment => appointment.AppointmentStatus)
+                        .Include(appointment => appointment.GeneralTreatment)
+                        .Include(appointment => appointment.Employee)
+                          .ThenInclude(employee => employee.Person)
+                        .Include(appointment => appointment.Office)
+                        .OptionalWhere(appointmentPostDto.StatusId,  appointment => appointment.AppointmentStatusId == appointmentPostDto.StatusId)
+                        .OptionalWhere(appointmentPostDto.OfficeId,  appointment => appointment.OfficeId == appointmentPostDto.OfficeId)
+                        .OptionalWhere(appointmentPostDto.DentistId, appointment => appointment.DentistId == appointmentPostDto.DentistId)
+                        .Where(appointment => appointment.Date >= appointmentPostDto.From && appointment.Date <= appointmentPostDto.To)
+                        .OrderBy(appointment => appointment.Date)
+                        .Select(appointment => appointment.MapToAppointmentGetByEmployeeDto())
+                        .IgnoreQueryFilters()
+                        .ToListAsyncEF();
+
+
+    /// <summary>
+    /// Cancela las citas por parte del empleado.
+    /// </summary>
+    private async Task<int> CancelAppointmentsForEmployeeAsync(int officeId, int dentistId, IEnumerable<int> appointmentsId)
+        => appointmentsId.Count() == 0 ? default : 
+           await Context.Set<Appointment>()
+                        .OptionalWhere(officeId,  appointment => appointment.OfficeId == officeId)
+                        .OptionalWhere(dentistId, appointment => appointment.DentistId == dentistId)
+                        .Where(appointment =>
+                               appointment.AppointmentStatusId == AppointmentStatusId.Scheduled &&
+                               appointmentsId.Contains(appointment.Id))
+                        .Set(appointment => appointment.AppointmentStatusId, AppointmentStatusId.Canceled)
+                        .Set(appointment => appointment.IsCancelledByEmployee, true)
+                        .Set(appointment => appointment.UpdatedAt, DateTime.Now)
+                        .UpdateAsync();
+
+    public async Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appointmentsId)
+        => await CancelAppointmentsForEmployeeAsync(officeId, dentistId: default, appointmentsId);
+
+    public async Task<int> CancelAppointmentsByDentistIdAsync(int dentistId, IEnumerable<int> appointmentsId)
+        => await CancelAppointmentsForEmployeeAsync(officeId: default, dentistId, appointmentsId);
+
+    public async Task<AppointmentInfoDto> GetAppointmentInformationAsync(int id)
+        => await Context.Set<Appointment>()
+                        .Include(appointment => appointment.Person)
+                        .Include(appointment => appointment.Employee.Person)
+                        .Include(appointment => appointment.Office)
+                        .Include(appointment => appointment.GeneralTreatment)
+                        .Where(appointment => appointment.Id == id)
+                        .Select(appointment => appointment.MapToAppointmentInfoDto())
+                        .IgnoreQueryFilters()
+                        .FirstOrDefaultAsyncEF();
+}

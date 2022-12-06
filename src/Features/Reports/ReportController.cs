@@ -15,23 +15,23 @@ public class ReportController : ControllerBase
 	/// <summary>
 	/// Obtiene el reporte sobre el total de citas asistidas, no asistidas y canceladas.
 	/// </summary>
-	[HttpPost("appoinment")]
-	public async Task<ActionResult<ReportGetTotalAppoinmentDto>> GetTotalAppoinmentsByDateRange([FromBody]ReportPostWithDentistDto reportPostDto)
+	[HttpPost("appointment")]
+	public async Task<ActionResult<ReportGetTotalAppointmentDto>> GetTotalAppointmentsByDateRange([FromBody]ReportPostWithDentistDto reportPostDto)
 	{
 		if (User.IsAdmin() && User.IsNotInOffice(reportPostDto.OfficeId))
 			return Unauthorized();
-		return Ok(await _reportQuery.GetTotalAppoinmentsByDateRangeAsync(reportPostDto));
+		return Ok(await _reportQuery.GetTotalAppointmentsByDateRangeAsync(reportPostDto));
 	}
 
 	/// <summary>
 	/// Obtiene el reporte sobre el total de citas agendadas por odontólogo.
 	/// </summary>
-	[HttpPost("appoinment/scheduled")]
-	public async Task<ActionResult<IEnumerable<ReportGetTotalScheduledAppoinmentDto>>> GetTotalScheduledAppoinmentsByDateRange([FromBody]ReportPostDto reportPostDto)
+	[HttpPost("appointment/scheduled")]
+	public async Task<ActionResult<IEnumerable<ReportGetTotalScheduledAppointmentDto>>> GetTotalScheduledAppointmentsByDateRange([FromBody]ReportPostDto reportPostDto)
 	{
         if (User.IsAdmin() && User.IsNotInOffice(reportPostDto.OfficeId))
             return Unauthorized();
-        return Ok(await _reportQuery.GetTotalScheduledAppoinmentsByDateRangeAsync(reportPostDto));
+        return Ok(await _reportQuery.GetTotalScheduledAppointmentsByDateRangeAsync(reportPostDto));
 	}
 
 	/// <summary>

@@ -14,7 +14,7 @@ public class Person : ModelBase
     public User User { get; set; }
     public Employee Employee { get; set; }
     public Dependent Dependent { get; set; }
-    public ICollection<Appoinment> Appoinments { get; set; }
+    public ICollection<Appointment> Appointments { get; set; }
 
     [Decompile]
     [NotMapped]

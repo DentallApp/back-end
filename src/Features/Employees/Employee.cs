@@ -12,7 +12,7 @@ public class Employee : ModelWithSoftDelete
     public Office Office { get; set; }
     public string PregradeUniversity { get; set; }
     public string PostgradeUniversity { get; set; }
-    public ICollection<Appoinment> Appoinments { get; set; }
+    public ICollection<Appointment> Appointments { get; set; }
     public ICollection<EmployeeSchedule> EmployeeSchedules { get; set; }
     public ICollection<FavoriteDentist> FavoriteDentists { get; set; }
 }

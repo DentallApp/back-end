@@ -2,15 +2,15 @@
 
 public class AvailabilityService : IAvailabilityService
 {
-    private readonly IAppoinmentRepository _appoinmentRepository;
+    private readonly IAppointmentRepository _appointmentRepository;
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
     private readonly IGeneralTreatmentRepository _dentalServiceRepository;
 
-    public AvailabilityService(IAppoinmentRepository appoinmentRepository,
+    public AvailabilityService(IAppointmentRepository appointmentRepository,
                                IEmployeeScheduleRepository employeeScheduleRepository,
                                IGeneralTreatmentRepository dentalServiceRepository)
     {
-        _appoinmentRepository = appoinmentRepository;
+        _appointmentRepository = appointmentRepository;
         _employeeScheduleRepository = employeeScheduleRepository;
         _dentalServiceRepository = dentalServiceRepository;
     }
@@ -30,8 +30,8 @@ public class AvailabilityService : IAvailabilityService
     {
         int dentistId            = availableTimeRangePostDto.DentistId;
         int serviceId            = availableTimeRangePostDto.DentalServiceId;
-        var appoinmentDate       = availableTimeRangePostDto.AppointmentDate;
-        int weekDayId            = (int)appoinmentDate.DayOfWeek;
+        var appointmentDate      = availableTimeRangePostDto.AppointmentDate;
+        int weekDayId            = (int)appointmentDate.DayOfWeek;
         var weekDayName          = WeekDaysType.WeekDays[weekDayId];
         var employeeScheduleDto  = await _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(dentistId, weekDayId);
         if (employeeScheduleDto is null || employeeScheduleDto.IsEmployeeScheculeDeleted)
@@ -43,7 +43,7 @@ public class AvailabilityService : IAvailabilityService
         if (employeeScheduleDto.HasNotSchedule())
             return new Response<IEnumerable<AvailableTimeRangeDto>>(NoMorningOrAfternoonHoursMessage);
 
-        var unavailables      = await _appoinmentRepository.GetUnavailableHoursAsync(dentistId, appoinmentDate);
+        var unavailables      = await _appointmentRepository.GetUnavailableHoursAsync(dentistId, appointmentDate);
         var dentalServiceDto  = await  _dentalServiceRepository.GetTreatmentWithDurationAsync(serviceId);
         if (dentalServiceDto is null)
             return new Response<IEnumerable<AvailableTimeRangeDto>>(DentalServiceNotAvailableMessage);
@@ -59,7 +59,7 @@ public class AvailabilityService : IAvailabilityService
                 DentistStartHour = (TimeSpan)employeeScheduleDto.MorningStartHour,
                 DentistEndHour   = (TimeSpan)employeeScheduleDto.AfternoonEndHour,
                 ServiceDuration  = serviceDuration,
-                AppoinmentDate   = appoinmentDate,
+                AppoinmentDate   = appointmentDate,
                 Unavailables     = unavailables.OrderBy(timeRange => timeRange.StartHour)
                                                .ThenBy(timeRange => timeRange.EndHour)
                                                .ToList()
@@ -72,7 +72,7 @@ public class AvailabilityService : IAvailabilityService
                 DentistStartHour = (TimeSpan)employeeScheduleDto.MorningStartHour,
                 DentistEndHour   = (TimeSpan)employeeScheduleDto.MorningEndHour,
                 ServiceDuration  = serviceDuration,
-                AppoinmentDate   = appoinmentDate,
+                AppoinmentDate   = appointmentDate,
                 Unavailables     = unavailables
             });
         }
@@ -83,7 +83,7 @@ public class AvailabilityService : IAvailabilityService
                 DentistStartHour = (TimeSpan)employeeScheduleDto.AfternoonStartHour,
                 DentistEndHour   = (TimeSpan)employeeScheduleDto.AfternoonEndHour,
                 ServiceDuration  = serviceDuration,
-                AppoinmentDate   = appoinmentDate,
+                AppoinmentDate   = appointmentDate,
                 Unavailables     = unavailables
             });
         }
