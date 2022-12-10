@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
                 .AddScoped<IRoleService, RoleService>()
                 .AddScoped<IOfficeService, OfficeService>()
                 .AddScoped<IAppointmentService, AppointmentService>()
+                .AddScoped<IAppointmentInformationSendingService, AppointmentInformationSendingService>()
                 .AddScoped<IAppointmentCancellationService, AppointmentCancellationService>()
                 .AddScoped<IEmployeeScheduleService, EmployeeScheduleService>()
                 .AddScoped<IFavoriteDentistService, FavoriteDentistService>()
