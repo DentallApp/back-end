@@ -1,20 +1,17 @@
 ﻿namespace DentallApp.Features.Appointments;
 
-public partial class AppointmentService : IAppointmentService
+public class AppointmentService : IAppointmentService
 {
     private readonly IAppointmentRepository _appointmentRepository;
-    private readonly IInstantMessaging _instantMessaging;
-    private readonly ISpecificTreatmentRepository _treatmentRepository;
+    private readonly IAppointmentInformationSendingService _sendingService;
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    public AppointmentService(IAppointmentRepository appointmentRepository, 
-                              IInstantMessaging instantMessaging,
-                              ISpecificTreatmentRepository treatmentRepository,
+    public AppointmentService(IAppointmentRepository appointmentRepository,
+                              IAppointmentInformationSendingService sendingService,
                               IDateTimeProvider dateTimeProvider)
     {
         _appointmentRepository = appointmentRepository;
-        _instantMessaging = instantMessaging;
-        _treatmentRepository = treatmentRepository;
+        _sendingService = sendingService;
         _dateTimeProvider = dateTimeProvider;
     }
 
@@ -26,7 +23,7 @@ public partial class AppointmentService : IAppointmentService
         var appointment = appointmentInsertDto.MapToAppointment();
         _appointmentRepository.Insert(appointment);
         await _appointmentRepository.SaveAsync();
-        await SendAppointmentInformationAsync(appointment.Id, appointmentInsertDto);
+        await _sendingService.SendAppointmentInformationAsync(appointment.Id, appointmentInsertDto);
         return new Response
         {
             Success = true,

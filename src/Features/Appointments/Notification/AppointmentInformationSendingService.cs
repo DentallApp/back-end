@@ -1,8 +1,21 @@
-﻿namespace DentallApp.Features.Appointments;
+﻿namespace DentallApp.Features.Appointments.Notification;
 
-public partial class AppointmentService
+public class AppointmentInformationSendingService : IAppointmentInformationSendingService
 {
-    private async Task SendAppointmentInformationAsync(int appointmentId, AppointmentInsertDto appointmentInsertDto)
+    private readonly IAppointmentRepository _appointmentRepository;
+    private readonly IInstantMessaging _instantMessaging;
+    private readonly ISpecificTreatmentRepository _treatmentRepository;
+
+    public AppointmentInformationSendingService(IAppointmentRepository appointmentRepository,
+                                                IInstantMessaging instantMessaging,
+                                                ISpecificTreatmentRepository treatmentRepository)
+    {
+        _appointmentRepository = appointmentRepository;
+        _instantMessaging = instantMessaging;
+        _treatmentRepository = treatmentRepository;
+    }
+
+    public async Task SendAppointmentInformationAsync(int appointmentId, AppointmentInsertDto appointmentInsertDto)
     {
         // La consulta se ejecuta en caso que se realice el agendamiento de forma manual.
         appointmentInsertDto.RangeToPay ??= await _treatmentRepository.GetTreatmentWithRangeToPayAsync(appointmentInsertDto.GeneralTreatmentId);
