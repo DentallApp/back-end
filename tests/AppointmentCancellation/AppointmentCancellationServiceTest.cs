@@ -1,21 +1,20 @@
-﻿namespace DentallApp.Tests.Appointments;
+﻿namespace DentallApp.Tests.AppointmentCancellation;
 
 [TestClass]
-public class AppointmentServiceTest
+public class AppointmentCancellationServiceTest
 {
-    private IAppointmentRepository _appointmentRepository;
+    private IAppointmentCancellationRepository _appointmentRepository;
     private IDateTimeProvider _dateTimeProvider;
-    private IAppointmentService _service;
+    private IAppointmentCancellationService _appointmentService;
 
     [TestInitialize]
     public void TestInitialize()
     {
-        _appointmentRepository = Mock.Create<IAppointmentRepository>();
+        _appointmentRepository = Mock.Create<IAppointmentCancellationRepository>();
         _dateTimeProvider      = Mock.Create<IDateTimeProvider>();
-        _service               = new AppointmentService(_appointmentRepository,
-                                                        Mock.Create<IInstantMessaging>(), 
-                                                        Mock.Create<ISpecificTreatmentRepository>(),
-                                                        _dateTimeProvider); 
+        _appointmentService    = new AppointmentCancellationService(_appointmentRepository,
+                                                                    Mock.Create<IInstantMessaging>(),
+                                                                    _dateTimeProvider); 
     }
 
     [TestMethod]
@@ -39,7 +38,7 @@ public class AppointmentServiceTest
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
-        var response = await _service.CancelAppointmentsAsync(claimsPrincipal, dto);
+        var response = await _appointmentService.CancelAppointmentsAsync(claimsPrincipal, dto);
 
         Assert.IsTrue(response.Success);
         Assert.AreEqual(expected: SuccessfullyCancelledAppointmentsMessage, actual: response.Message);
@@ -69,7 +68,7 @@ public class AppointmentServiceTest
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
-        var response = await _service.CancelAppointmentsAsync(claimsPrincipal, dto);
+        var response = await _appointmentService.CancelAppointmentsAsync(claimsPrincipal, dto);
 
         var message = string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 2);
         var appointmentsId = response.Data.AppointmentsId.ToList();
@@ -103,7 +102,7 @@ public class AppointmentServiceTest
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 02, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
-        var response = await _service.CancelAppointmentsAsync(claimsPrincipal, dto);
+        var response = await _appointmentService.CancelAppointmentsAsync(claimsPrincipal, dto);
 
         var message = string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 5);
         var appointmentsId = response.Data.AppointmentsId.ToList();
@@ -128,7 +127,7 @@ public class AppointmentServiceTest
                 StartHour = new TimeSpan(13, 0, 0)
             });
 
-        var response = await _service.CancelBasicUserAppointmentAsync(default, default);
+        var response = await _appointmentService.CancelBasicUserAppointmentAsync(default, default);
 
         Assert.IsFalse(response.Success);
         Assert.AreEqual(expected: AppointmentThatHasAlreadyPassedBasicUserMessage, actual: response.Message);

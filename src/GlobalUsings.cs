@@ -43,6 +43,8 @@ global using DentallApp.Features.Offices;
 global using DentallApp.Features.Offices.DTOs;
 global using DentallApp.Features.Appointments;
 global using DentallApp.Features.Appointments.DTOs;
+global using DentallApp.Features.AppointmentCancellation;
+global using DentallApp.Features.AppointmentCancellation.DTOs;
 global using DentallApp.Features.AvailabilityHours;
 global using DentallApp.Features.AvailabilityHours.DTOs;
 global using DentallApp.Features.AppointmentsStatus;

@@ -1,7 +1,4 @@
-﻿using LinqToDB;
-using LinqToDB.EntityFrameworkCore;
-
-namespace DentallApp.Features.Appointments;
+﻿namespace DentallApp.Features.Appointments;
 
 public class AppointmentRepository : Repository<Appointment>, IAppointmentRepository
 {
@@ -36,7 +33,7 @@ public class AppointmentRepository : Repository<Appointment>, IAppointmentReposi
                       KinshipName       = kinship == null ? KinshipsName.Default : kinship.Name
                   })
                  .IgnoreQueryFilters()
-                 .ToListAsyncEF();
+                 .ToListAsync();
 
     public async Task<List<UnavailableTimeRangeDto>> GetUnavailableHoursAsync(int dentistId, DateTime appointmentDate)
         => await Context.Set<Appointment>()
@@ -50,7 +47,7 @@ public class AppointmentRepository : Repository<Appointment>, IAppointmentReposi
                         .Distinct()
                         .OrderBy(appointment => appointment.StartHour)
                           .ThenBy(appointment => appointment.EndHour)
-                        .ToListAsyncEF();
+                        .ToListAsync();
 
     public async Task<bool> IsNotAvailableAsync(AppointmentInsertDto appointmentDto)
     {
@@ -64,7 +61,7 @@ public class AppointmentRepository : Repository<Appointment>, IAppointmentReposi
                                          appointment.IsCancelledByEmployee ||
                                          DateTime.Now > Context.AddTime(Context.ToDateTime(appointment.Date), appointment.StartHour)))
                                   .Select(appointment => appointment.Id)
-                                  .FirstOrDefaultAsyncEF();
+                                  .FirstOrDefaultAsync();
 
         return result != 0;
     }
@@ -84,30 +81,7 @@ public class AppointmentRepository : Repository<Appointment>, IAppointmentReposi
                         .OrderBy(appointment => appointment.Date)
                         .Select(appointment => appointment.MapToAppointmentGetByEmployeeDto())
                         .IgnoreQueryFilters()
-                        .ToListAsyncEF();
-
-
-    /// <summary>
-    /// Cancela las citas por parte del empleado.
-    /// </summary>
-    private async Task<int> CancelAppointmentsForEmployeeAsync(int officeId, int dentistId, IEnumerable<int> appointmentsId)
-        => appointmentsId.Count() == 0 ? default : 
-           await Context.Set<Appointment>()
-                        .OptionalWhere(officeId,  appointment => appointment.OfficeId == officeId)
-                        .OptionalWhere(dentistId, appointment => appointment.DentistId == dentistId)
-                        .Where(appointment =>
-                               appointment.AppointmentStatusId == AppointmentStatusId.Scheduled &&
-                               appointmentsId.Contains(appointment.Id))
-                        .Set(appointment => appointment.AppointmentStatusId, AppointmentStatusId.Canceled)
-                        .Set(appointment => appointment.IsCancelledByEmployee, true)
-                        .Set(appointment => appointment.UpdatedAt, DateTime.Now)
-                        .UpdateAsync();
-
-    public async Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appointmentsId)
-        => await CancelAppointmentsForEmployeeAsync(officeId, dentistId: default, appointmentsId);
-
-    public async Task<int> CancelAppointmentsByDentistIdAsync(int dentistId, IEnumerable<int> appointmentsId)
-        => await CancelAppointmentsForEmployeeAsync(officeId: default, dentistId, appointmentsId);
+                        .ToListAsync();
 
     public async Task<AppointmentInfoDto> GetAppointmentInformationAsync(int id)
         => await Context.Set<Appointment>()
@@ -118,5 +92,5 @@ public class AppointmentRepository : Repository<Appointment>, IAppointmentReposi
                         .Where(appointment => appointment.Id == id)
                         .Select(appointment => appointment.MapToAppointmentInfoDto())
                         .IgnoreQueryFilters()
-                        .FirstOrDefaultAsyncEF();
+                        .FirstOrDefaultAsync();
 }

@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Appointments.DTOs;
+﻿namespace DentallApp.Features.AppointmentCancellation.DTOs;
 
 public class AppointmentCancelDetailsDto
 {
