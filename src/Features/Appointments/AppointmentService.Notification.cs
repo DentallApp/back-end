@@ -2,12 +2,12 @@
 
 public partial class AppointmentService
 {
-    private async Task SendAppoinmentInformationAsync(int appoinmentId, AppointmentInsertDto appoinmentInsertDto)
+    private async Task SendAppointmentInformationAsync(int appointmentId, AppointmentInsertDto appointmentInsertDto)
     {
         // La consulta se ejecuta en caso que se realice el agendamiento de forma manual.
-        appoinmentInsertDto.RangeToPay ??= await _treatmentRepository.GetTreatmentWithRangeToPayAsync(appoinmentInsertDto.GeneralTreatmentId);
+        appointmentInsertDto.RangeToPay ??= await _treatmentRepository.GetTreatmentWithRangeToPayAsync(appointmentInsertDto.GeneralTreatmentId);
         var businessName = EnvReader.Instance[AppSettings.BusinessName];
-        var info = await _appointmentRepository.GetAppointmentInformationAsync(appoinmentId);
+        var info = await _appointmentRepository.GetAppointmentInformationAsync(appointmentId);
         var template = "Hola {0}, gracias por agendar una cita en el consultorio {1}. La información de su cita es:" +
                        "\n- Odontólogo: {2}" +
                        "\n- Consultorio: {3}" +
@@ -20,9 +20,9 @@ public partial class AppointmentService
                                           info.DentistName,
                                           info.OfficeName,
                                           info.DentalServiceName,
-                                          appoinmentInsertDto.AppointmentDate.GetDateInSpanishFormat(),
-                                          appoinmentInsertDto.StartHour.GetHourWithoutSeconds(),
-                                          appoinmentInsertDto.RangeToPay?.ToString());
+                                          appointmentInsertDto.AppointmentDate.GetDateInSpanishFormat(),
+                                          appointmentInsertDto.StartHour.GetHourWithoutSeconds(),
+                                          appointmentInsertDto.RangeToPay?.ToString());
         await _instantMessaging.SendMessageAsync(info.CellPhone, msg);
     }
 }

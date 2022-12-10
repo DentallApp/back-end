@@ -26,7 +26,7 @@ public partial class AppointmentService : IAppointmentService
         var appointment = appointmentInsertDto.MapToAppointment();
         _appointmentRepository.Insert(appointment);
         await _appointmentRepository.SaveAsync();
-        await SendAppoinmentInformationAsync(appointment.Id, appointmentInsertDto);
+        await SendAppointmentInformationAsync(appointment.Id, appointmentInsertDto);
         return new Response
         {
             Success = true,

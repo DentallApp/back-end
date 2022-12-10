@@ -53,7 +53,7 @@ public partial class AppointmentCancellationService : IAppointmentCancellationSe
                         currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId(),
                         appointmentsIdCanBeCancelled
                     );
-            await SendMessageAboutAppoinmentCancellationAsync(appointmentsCanBeCancelled, appointmentCancelDto.Reason);
+            await SendMessageAboutAppointmentCancellationAsync(appointmentsCanBeCancelled, appointmentCancelDto.Reason);
         }
         catch (Exception ex)
         {
