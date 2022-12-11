@@ -3,10 +3,12 @@
 public class EmployeeService : IEmployeeService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IPasswordHasher _passwordHasher;
 
-    public EmployeeService(IUnitOfWork unitOfWork)
+    public EmployeeService(IUnitOfWork unitOfWork, IPasswordHasher passwordHasher)
     {
         _unitOfWork = unitOfWork;
+        _passwordHasher = passwordHasher;
     }
 
     public Task<IEnumerable<EmployeeGetDto>> GetEmployeesAsync(ClaimsPrincipal currentEmployee)
@@ -69,6 +71,9 @@ public class EmployeeService : IEmployeeService
         if (currentEmployee.HasNotPermissions(employeeUpdateDto.Roles, employeeToEdit.Id))
             return new Response(PermitsNotGrantedMessage);
 
+        if (employeeUpdateDto.Password is not null)
+            employeeToEdit.User.Password = _passwordHasher.HashPassword(employeeUpdateDto.Password);
+        
         employeeUpdateDto.MapToEmployee(employeeToEdit);
 
         var userRoles = employeeToEdit.User.UserRoles.OrderBy(userRole => userRole.RoleId);
