@@ -25,7 +25,7 @@ public class ReportQuery : IReportQuery
 	            AS TotalAppointmentsCancelledByEmployee,
             SUM(case when appointment_status_id = @Canceled AND is_cancelled_by_employee = 0 then 1 else 0 END) 
 	            AS TotalAppointmentsCancelledByPatient
-            FROM appointments AS a
+            FROM appointment AS a
             WHERE (a.appointment_status_id <> @Scheduled) AND
                   (a.date >= @From AND a.date <= @To) AND
                   (a.office_id = @OfficeId OR @OfficeId = 0) AND
@@ -53,10 +53,10 @@ public class ReportQuery : IReportQuery
             CONCAT(p.names, ' ', p.last_names) AS DentistName,
             o.name AS OfficeName,
             COUNT(*) AS Total
-            FROM appointments AS a
-            INNER JOIN employees AS e ON e.id = a.dentist_id
-            INNER JOIN persons AS p ON p.id = e.person_id
-            INNER JOIN offices AS o ON o.id = a.office_id
+            FROM appointment AS a
+            INNER JOIN employee AS e ON e.id = a.dentist_id
+            INNER JOIN person AS p ON p.id = e.person_id
+            INNER JOIN office AS o ON o.id = a.office_id
             WHERE (a.appointment_status_id = @Scheduled) AND
 	              (a.date >= @From AND a.date <= @To) AND
 	              (a.office_id = @OfficeId OR @OfficeId = 0)
