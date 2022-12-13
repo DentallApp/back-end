@@ -1,14 +1,14 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿// ASPNETCORE_ENVIRONMENT must be set from the .env file before initializing a new instance of WebApplicationBuilder. 
+// If the environment isn't set, it defaults to Production, which disables most debugging features.
+var envVars  = new EnvLoader().Load();
+var settings = new EnvBinder(envVars).Bind<AppSettings>();
+var builder  = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddServices()
                 .AddRepositories()
                 .AddHelpers();
-
-// Sets environment variables from a .env file.
-new EnvLoader().Load();
-var settings = new EnvBinder().Bind<AppSettings>();
 
 builder.Services.AddSingleton(settings)
                 .AddSingleton<IDbConnector>(new MariaDbConnector(settings.ConnectionString));
