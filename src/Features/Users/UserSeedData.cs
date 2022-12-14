@@ -19,6 +19,7 @@ public static class UserSeedData
         CreateDentistAccount(builder);
         CreateAdminAccount(builder);
         CreateSuperAdminAccount(builder);
+        CreateAdditionalAccounts(builder);
     }
 
     private static void CreateBasicUserAccount(ModelBuilder builder)
@@ -250,6 +251,88 @@ public static class UserSeedData
                         Id = 5,
                         UserId = 5,
                         RoleId = RolesId.Superadmin
+                    }
+               );
+    }
+
+    private static void CreateAdditionalAccounts(ModelBuilder builder)
+    {
+        builder.Entity<Person>()
+               .AddSeedData(
+                    new Person
+                    {
+                        Id = 6,
+                        Document = "0923611706",
+                        Names = "María José",
+                        LastNames = "Amariles Valencia",
+                        CellPhone = "0998994337",
+                        Email = "mary_01@hotmail.com",
+                        DateBirth = new DateTime(1999, 01, 10),
+                        GenderId = GendersId.Female,
+                    },
+                    new Person
+                    {
+                        Id = 7,
+                        Document = "0923611707",
+                        Names = "Carlos Andrés",
+                        LastNames = "Torres Rivera",
+                        CellPhone = "0998994338",
+                        Email = "torres_02@hotmail.com",
+                        DateBirth = new DateTime(1998, 02, 07),
+                        GenderId = GendersId.Male,
+                    }
+               );
+        builder.Entity<User>()
+               .AddSeedData(
+                    new User
+                    {
+                        Id = 6,
+                        UserName = "mary_01@hotmail.com",
+                        Password = Password,
+                        PersonId = 6
+                    },
+                    new User
+                    {
+                        Id = 7,
+                        UserName = "torres_02@hotmail.com",
+                        Password = Password,
+                        PersonId = 7
+                    }
+               );
+        builder.Entity<Employee>()
+               .AddSeedData(
+                    new Employee
+                    {
+                        Id = 5,
+                        UserId = 6,
+                        PersonId = 6,
+                        OfficeId = 2,
+                        PregradeUniversity = "UG",
+                        PostgradeUniversity = "ESPOL"
+                    },
+                    new Employee
+                    {
+                        Id = 6,
+                        UserId = 7,
+                        PersonId = 7,
+                        OfficeId = 3,
+                        PregradeUniversity = "UG",
+                        PostgradeUniversity = "ESPOL"
+                    }
+               );
+        builder.Entity<UserRole>()
+               .AddSeedData(
+                    new UserRole
+                    {
+                        Id = 6,
+                        UserId = 6,
+                        RoleId = RolesId.Dentist
+                    },
+                    new UserRole
+                    {
+                        Id = 7,
+                        UserId = 7,
+                        RoleId = RolesId.Dentist
                     }
                );
     }
