@@ -36,12 +36,12 @@ public partial class AppDbContext : CustomDbContext
                     .ApplyConfiguration(new GenderConfiguration())
                     .ApplyConfiguration(new KinshipConfiguration())
                     .ApplyConfiguration(new DependentConfiguration())
-                    .ApplyConfiguration(new OfficeConfiguration())
+                    .ApplyConfiguration(new OfficeConfiguration(_env))
                     .ApplyConfiguration(new EmployeeConfiguration())
                     .ApplyConfiguration(new AppointmentStatusConfiguration())
                     .ApplyConfiguration(new WeekDayConfiguration())
-                    .ApplyConfiguration(new EmployeeScheduleConfiguration())
-                    .ApplyConfiguration(new OfficeScheduleConfiguration());
+                    .ApplyConfiguration(new EmployeeScheduleConfiguration(_env))
+                    .ApplyConfiguration(new OfficeScheduleConfiguration(_env));
 
         modelBuilder.CreateDefaultUserAccounts(_env);
     }
