@@ -2,9 +2,20 @@
 
 public class OfficeConfiguration : IEntityTypeConfiguration<Office>
 {
+    private readonly IWebHostEnvironment _env;
+
+    public OfficeConfiguration(IWebHostEnvironment env)
+    {
+        _env = env;
+    }
+
     public void Configure(EntityTypeBuilder<Office> builder)
     {
         builder.HasQueryFilterSoftDelete();
+
+        if (!_env.IsDevelopment())
+            return;
+
         builder.AddSeedData(
             new Office
             {
