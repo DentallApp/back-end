@@ -69,7 +69,7 @@ global using DentallApp.Entities;
 global using DentallApp.Entities.BaseClasses;
 global using DentallApp.DTOs;
 global using DentallApp.UnitOfWork;
-global using DentallApp.Repositories;
+global using DentallApp.DataAccess;
 global using DentallApp.Validators;
 global using DentallApp.Helpers;
 global using DentallApp.Helpers.HtmlConverterHelpers;
