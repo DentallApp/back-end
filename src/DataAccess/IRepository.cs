@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Repositories;
+﻿namespace DentallApp.DataAccess;
 
 public interface IRepository<TEntity> where TEntity : EntityBase
 {
