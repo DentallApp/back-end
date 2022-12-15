@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Repositories;
 
-public class Repository<TEntity> : IRepository<TEntity> where TEntity : ModelBase
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBase
 {
     private readonly AppDbContext _context;
     private readonly DbSet<TEntity> _entities;
@@ -38,10 +38,10 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : ModelBas
 
     public virtual void SoftDelete(TEntity entity)
     {
-        if (entity is ModelWithSoftDelete modelWithSoftDelete)
+        if (entity is SoftDeleteEntity softDeleteEntity)
         {
-            modelWithSoftDelete.IsDeleted = true;
-            Context.Entry(modelWithSoftDelete).Property(e => e.IsDeleted).IsModified = true;
+            softDeleteEntity.IsDeleted = true;
+            Context.Entry(softDeleteEntity).Property(e => e.IsDeleted).IsModified = true;
         }
     }
 
