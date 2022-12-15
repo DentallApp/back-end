@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Kinships;
+﻿namespace DentallApp.Features.Dependents.Kinships;
 
 [Route("kinship")]
 [ApiController]

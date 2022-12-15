@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Kinships;
+﻿namespace DentallApp.Features.Dependents.Kinships;
 
 public class KinshipRepository : Repository<Kinship>, IKinshipRepository
 {

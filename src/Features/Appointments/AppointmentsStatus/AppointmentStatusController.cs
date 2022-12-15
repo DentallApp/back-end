@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.AppointmentsStatus;
+﻿namespace DentallApp.Features.Appointments.AppointmentsStatus;
 
 [Route("appointment-status")]
 [ApiController]

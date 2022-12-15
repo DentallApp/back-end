@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.AppointmentsStatus.DTOs;
+﻿namespace DentallApp.Features.Appointments.AppointmentsStatus.DTOs;
 
 public class AppointmentStatusGetDto
 {

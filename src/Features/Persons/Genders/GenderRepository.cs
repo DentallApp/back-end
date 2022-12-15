@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Genders;
+﻿namespace DentallApp.Features.Persons.Genders;
 
 public class GenderRepository : Repository<Gender>, IGenderRepository
 {

@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Kinships.DTOs;
+﻿namespace DentallApp.Features.Dependents.Kinships.DTOs;
 
 public class KinshipGetDto
 {

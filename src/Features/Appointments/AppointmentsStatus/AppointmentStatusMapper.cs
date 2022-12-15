@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.AppointmentsStatus;
+﻿namespace DentallApp.Features.Appointments.AppointmentsStatus;
 
 public static class AppointmentStatusMapper
 {
