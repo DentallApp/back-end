@@ -66,6 +66,7 @@ global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
 global using DentallApp.DataAccess.DbConnectors;
 global using DentallApp.Entities;
+global using DentallApp.Entities.BaseClasses;
 global using DentallApp.DTOs;
 global using DentallApp.UnitOfWork;
 global using DentallApp.Repositories;
