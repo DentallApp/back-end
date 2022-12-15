@@ -79,14 +79,8 @@ global using DentallApp.Extensions;
 global using DentallApp.Constants;
 global using static DentallApp.Constants.ResponseMessages;
 
-global using System;
 global using System.Data;
 global using System.Text;
-global using System.Collections.Generic;
-global using System.Threading;
-global using System.Threading.Tasks;
-global using System.IO;
-global using System.Linq;
 global using System.Linq.Expressions;
 global using System.Reflection;
 global using System.Security.Claims;
@@ -98,21 +92,12 @@ global using System.IdentityModel.Tokens.Jwt;
 global using Microsoft.Bot.Builder;
 global using Microsoft.Bot.Builder.Integration.AspNet.Core;
 global using Microsoft.Bot.Builder.Dialogs;
-global using Microsoft.Bot.Builder.Dialogs.Choices;
 global using Microsoft.Bot.Builder.TraceExtensions;
 global using Microsoft.Bot.Schema;
 global using Microsoft.Bot.Connector.Authentication;
 global using AdaptiveCards;
 
-global using Microsoft.Extensions.Logging;
-global using Microsoft.Extensions.Configuration;
-global using Microsoft.Extensions.DependencyInjection;
-global using Microsoft.Extensions.Hosting;
-
 global using Microsoft.AspNetCore.Mvc;
-global using Microsoft.AspNetCore.Builder;
-global using Microsoft.AspNetCore.Hosting;
-global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Authorization;
 
