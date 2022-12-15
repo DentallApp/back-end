@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Entities;
+﻿namespace DentallApp.Entities.BaseClasses;
 
 public class SoftDeleteEntity : EntityBase
 {
