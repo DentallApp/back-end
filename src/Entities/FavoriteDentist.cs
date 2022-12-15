@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class FavoriteDentist : ModelBase
+public class FavoriteDentist : EntityBase
 {
     public int UserId { get; set; }
     public User User { get; set; }

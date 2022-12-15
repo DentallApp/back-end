@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class Office : ModelWithSoftDelete
+public class Office : SoftDeleteEntity
 {
     public string Name { get; set; }
     public string Address { get; set; }

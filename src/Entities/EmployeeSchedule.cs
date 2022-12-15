@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class EmployeeSchedule : ModelWithSoftDelete
+public class EmployeeSchedule : SoftDeleteEntity
 {
     public int EmployeeId { get; set; }
     public Employee Employee { get; set; }

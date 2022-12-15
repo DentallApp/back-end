@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class AppointmentStatus : ModelBase
+public class AppointmentStatus : EntityBase
 {
     public string Name { get; set; }
     public ICollection<Appointment> Appointments { get; set; }

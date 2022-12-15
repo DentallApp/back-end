@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
     
-public class Employee : ModelWithSoftDelete 
+public class Employee : SoftDeleteEntity 
 {
     public const int All = 0;
 

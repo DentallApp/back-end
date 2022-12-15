@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Repositories;
 
-public interface IRepository<TEntity> where TEntity : ModelBase
+public interface IRepository<TEntity> where TEntity : EntityBase
 {
     Task<TEntity> GetByIdAsync(int id);
     Task<IEnumerable<TEntity>> GetAllAsync();

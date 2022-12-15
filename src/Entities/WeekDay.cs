@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class WeekDay : ModelBase
+public class WeekDay : EntityBase
 {
     public string Name { get; set; }
     public ICollection<EmployeeSchedule> EmployeeSchedules { get; set; }

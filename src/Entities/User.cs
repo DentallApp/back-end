@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class User : ModelBase
+public class User : EntityBase
 {
     [Column("username")]
     public string UserName { get; set; }

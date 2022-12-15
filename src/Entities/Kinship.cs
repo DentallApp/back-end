@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class Kinship : ModelBase
+public class Kinship : EntityBase
 {
     public string Name { get; set; }
     public ICollection<Dependent> Dependents { get; set; }

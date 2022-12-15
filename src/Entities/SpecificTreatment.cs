@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class SpecificTreatment : ModelBase
+public class SpecificTreatment : EntityBase
 {
     public int GeneralTreatmentId { get; set; }
     public GeneralTreatment GeneralTreatment { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class Dependent : ModelWithSoftDelete
+public class Dependent : SoftDeleteEntity
 {
     public int UserId { get; set; }
     public User User { get; set; }

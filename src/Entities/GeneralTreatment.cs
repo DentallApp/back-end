@@ -1,6 +1,6 @@
-namespace DentallApp.Models;
+namespace DentallApp.Entities;
 
-public class GeneralTreatment : ModelWithSoftDelete
+public class GeneralTreatment : SoftDeleteEntity
 {
     public string Name { get; set; }
     public string Description { get; set; }

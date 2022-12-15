@@ -1,7 +1,7 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 using AppointmentType = AppointmentStatusId;
 
-public class Appointment : ModelBase
+public class Appointment : EntityBase
 {
     /// <summary>
     /// El ID del usuario que agendó la cita.

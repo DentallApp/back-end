@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class UserRole : ModelBase
+public class UserRole : EntityBase
 {
     public int UserId { get; set; }
     public User User { get; set; }

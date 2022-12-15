@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class Person : ModelBase
+public class Person : EntityBase
 {
     public string Document { get; set; }
     public string Names { get; set; }

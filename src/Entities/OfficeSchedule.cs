@@ -1,6 +1,6 @@
-﻿namespace DentallApp.Models;
+﻿namespace DentallApp.Entities;
 
-public class OfficeSchedule : ModelWithSoftDelete
+public class OfficeSchedule : SoftDeleteEntity
 {
     public int WeekDayId { get; set; }
     public WeekDay WeekDay { get; set; }
