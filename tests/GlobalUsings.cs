@@ -16,6 +16,6 @@ global using DentallApp.Features.SpecificTreatments;
 global using DentallApp.Helpers.DateTimeHelpers;
 global using DentallApp.Features.SecurityToken;
 global using DentallApp.Features.Roles;
-global using DentallApp.Models;
+global using DentallApp.Entities;
 global using DentallApp.Configuration;
 global using static DentallApp.Constants.ResponseMessages;
