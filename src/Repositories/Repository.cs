@@ -43,6 +43,10 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
             softDeleteEntity.IsDeleted = true;
             Context.Entry(softDeleteEntity).Property(e => e.IsDeleted).IsModified = true;
         }
+        else
+        {
+            throw new Exception($"{typeof(TEntity).FullName} must be a subtype of {nameof(SoftDeleteEntity)} to call the {nameof(SoftDelete)} method.");
+        }
     }
 
     public virtual Task<int> SaveAsync()
