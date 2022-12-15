@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.GeneralTreatments;
 
-public interface IGeneralTreatmentRepository : ISoftDeleteRepository<GeneralTreatment>
+public interface IGeneralTreatmentRepository : IRepository<GeneralTreatment>
 {
     Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync();
     Task<IEnumerable<GeneralTreatmentShowDto>> GetTreatmentsWithoutImageUrlAsync();

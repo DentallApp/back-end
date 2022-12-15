@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.OfficeSchedules;
 
-public interface IOfficeScheduleRepository : ISoftDeleteRepository<OfficeSchedule>
+public interface IOfficeScheduleRepository : IRepository<OfficeSchedule>
 {
     Task<OfficeSchedule> GetOfficeScheduleByIdAsync(int id);
     Task<IEnumerable<OfficeScheduleGetDto>> GetOfficeScheduleByOfficeIdAsync(int officeId);

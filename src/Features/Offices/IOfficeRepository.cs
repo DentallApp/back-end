@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Offices;
 
-public interface IOfficeRepository : ISoftDeleteRepository<Office>
+public interface IOfficeRepository : IRepository<Office>
 {
     Task<IEnumerable<OfficeGetDto>> GetOfficesAsync();
     Task<IEnumerable<OfficeGetDto>> GetAllOfficesAsync();

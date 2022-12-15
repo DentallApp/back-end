@@ -35,7 +35,7 @@ public class DependentService : IDependentService
         if (dependent.UserId != userId)
             return new Response(ResourceFromAnotherUserMessage);
 
-        _unitOfWork.DependentRepository.Delete(dependent);
+        _unitOfWork.DependentRepository.SoftDelete(dependent);
         await _unitOfWork.SaveChangesAsync();
 
         return new Response

@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Employees;
 
-public class EmployeeRepository : SoftDeleteRepository<Employee>, IEmployeeRepository
+public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
 {
     public EmployeeRepository(AppDbContext context) : base(context) { }
 

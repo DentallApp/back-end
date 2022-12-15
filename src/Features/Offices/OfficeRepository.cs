@@ -2,7 +2,7 @@
 using LinqToDB.EntityFrameworkCore;
 namespace DentallApp.Features.Offices;
 
-public class OfficeRepository : SoftDeleteRepository<Office>, IOfficeRepository
+public class OfficeRepository : Repository<Office>, IOfficeRepository
 {
     public OfficeRepository(AppDbContext context) : base(context) { }
 

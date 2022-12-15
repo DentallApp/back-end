@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.OfficeSchedules;
 
-public class OfficeScheduleRepository : SoftDeleteRepository<OfficeSchedule>, IOfficeScheduleRepository
+public class OfficeScheduleRepository : Repository<OfficeSchedule>, IOfficeScheduleRepository
 {
     public OfficeScheduleRepository(AppDbContext context) : base(context) { }
 
