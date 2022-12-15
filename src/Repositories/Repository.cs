@@ -36,6 +36,15 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : ModelBas
     public virtual void Delete(TEntity entity)
         => _entities.Remove(entity);
 
+    public virtual void SoftDelete(TEntity entity)
+    {
+        if (entity is ModelWithSoftDelete modelWithSoftDelete)
+        {
+            modelWithSoftDelete.IsDeleted = true;
+            Context.Entry(modelWithSoftDelete).Property(e => e.IsDeleted).IsModified = true;
+        }
+    }
+
     public virtual Task<int> SaveAsync()
         => _context.SaveChangesAsync();
 
