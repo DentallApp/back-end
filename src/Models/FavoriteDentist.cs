@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.FavoriteDentists;
+﻿namespace DentallApp.Models;
 
 public class FavoriteDentist : ModelBase
 {

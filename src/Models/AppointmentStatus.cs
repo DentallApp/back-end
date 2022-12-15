@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.AppointmentsStatus;
+﻿namespace DentallApp.Models;
 
 public class AppointmentStatus : ModelBase
 {

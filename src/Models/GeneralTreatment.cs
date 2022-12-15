@@ -1,4 +1,4 @@
-namespace DentallApp.Features.GeneralTreatments;
+namespace DentallApp.Models;
 
 public class GeneralTreatment : ModelWithSoftDelete
 {

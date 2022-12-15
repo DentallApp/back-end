@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Appointments;
+﻿namespace DentallApp.Models;
 using AppointmentType = AppointmentStatusId;
 
 public class Appointment : ModelBase

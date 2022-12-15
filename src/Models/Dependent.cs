@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Dependents;
+﻿namespace DentallApp.Models;
 
 public class Dependent : ModelWithSoftDelete
 {

@@ -1,5 +1,5 @@
-﻿namespace DentallApp.Features.Employees;
-
+﻿namespace DentallApp.Models;
+    
 public class Employee : ModelWithSoftDelete 
 {
     public const int All = 0;

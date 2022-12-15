@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Offices;
+﻿namespace DentallApp.Models;
 
 public class Office : ModelWithSoftDelete
 {

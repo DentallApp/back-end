@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Roles;
+﻿namespace DentallApp.Models;
 
 public class Role : ModelBase
 {

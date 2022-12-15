@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.OfficeSchedules;
+﻿namespace DentallApp.Models;
 
 public class OfficeSchedule : ModelWithSoftDelete
 {

@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.WeekDays;
+﻿namespace DentallApp.Models;
 
 public class WeekDay : ModelBase
 {

@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Persons;
+﻿namespace DentallApp.Models;
 
 public class Person : ModelBase
 {

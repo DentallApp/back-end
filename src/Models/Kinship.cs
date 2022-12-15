@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Kinships;
+﻿namespace DentallApp.Models;
 
 public class Kinship : ModelBase
 {

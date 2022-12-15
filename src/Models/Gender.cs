@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Genders;
+﻿namespace DentallApp.Models;
 
 public class Gender : ModelBase
 {

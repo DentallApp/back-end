@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.EmployeeSchedules;
+﻿namespace DentallApp.Models;
 
 public class EmployeeSchedule : ModelWithSoftDelete
 {

@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.SpecificTreatments;
+﻿namespace DentallApp.Models;
 
 public class SpecificTreatment : ModelBase
 {
