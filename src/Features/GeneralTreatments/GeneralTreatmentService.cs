@@ -67,7 +67,7 @@ public class GeneralTreatmentService : IGeneralTreatmentService
         if (treatment is null)
             return new Response(ResourceNotFoundMessage);
 
-        _treatmentRepository.Delete(treatment);
+        _treatmentRepository.SoftDelete(treatment);
         await _treatmentRepository.SaveAsync();
 
         return new Response

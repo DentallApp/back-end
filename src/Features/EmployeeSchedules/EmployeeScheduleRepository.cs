@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.EmployeeSchedules;
 
-public class EmployeeScheduleRepository : SoftDeleteRepository<EmployeeSchedule>, IEmployeeScheduleRepository
+public class EmployeeScheduleRepository : Repository<EmployeeSchedule>, IEmployeeScheduleRepository
 {
     public EmployeeScheduleRepository(AppDbContext context) : base(context) { }
 

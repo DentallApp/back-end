@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.EmployeeSchedules;
 
-public interface IEmployeeScheduleRepository : ISoftDeleteRepository<EmployeeSchedule>
+public interface IEmployeeScheduleRepository : IRepository<EmployeeSchedule>
 {
     Task<EmployeeSchedule> GetEmployeeScheduleByIdAsync(int scheduleId);
     Task<IEnumerable<EmployeeScheduleGetDto>> GetEmployeeScheduleByEmployeeIdAsync(int employeeId);
