@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Persons;
+﻿namespace DentallApp.Features.PersonalInformation;
 
 public interface IPersonService
 {

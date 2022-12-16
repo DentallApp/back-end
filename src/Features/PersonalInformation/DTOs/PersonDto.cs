@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Persons.DTOs;
+﻿namespace DentallApp.Features.PersonalInformation.DTOs;
 
 public class PersonDto
 {

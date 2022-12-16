@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Persons;
+﻿namespace DentallApp.Features.PersonalInformation;
 
 public static class PersonMapper
 {

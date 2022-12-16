@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Persons.Genders.DTOs;
+﻿namespace DentallApp.Features.PersonalInformation.Genders.DTOs;
 
 public class GenderGetDto
 {

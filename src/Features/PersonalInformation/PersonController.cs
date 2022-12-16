@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Persons;
+﻿namespace DentallApp.Features.PersonalInformation;
 
 [AuthorizeByRole(RolesName.Secretary)]
 [Route("person")]

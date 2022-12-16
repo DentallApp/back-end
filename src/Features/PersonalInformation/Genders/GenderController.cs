@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Persons.Genders;
+﻿namespace DentallApp.Features.PersonalInformation.Genders;
 
 [Route("gender")]
 [ApiController]
