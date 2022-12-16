@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Offices.DTOs;
 
-public class OfficeUpdateDto : OfficeInsertDto, ISoftDeleteDto
+public class OfficeUpdateDto : OfficeInsertDto
 {
     /// <summary>
     /// Un valor que indica sí el consultorio debe ser eliminado temporalmente.
@@ -18,4 +18,7 @@ public class OfficeUpdateDto : OfficeInsertDto, ISoftDeleteDto
     /// </summary>
     [JsonIgnore]
     public bool IsCheckboxUnticked => !IsCheckboxTicked;
+
+    public bool IsActive() => !IsDeleted;
+    public bool IsInactive() => IsDeleted;
 }
