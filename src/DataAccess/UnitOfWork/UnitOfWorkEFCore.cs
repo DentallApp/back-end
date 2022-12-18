@@ -1,4 +1,4 @@
-﻿namespace DentallApp.UnitOfWork;
+﻿namespace DentallApp.DataAccess.UnitOfWork;
 
 public partial class UnitOfWorkEFCore : IUnitOfWork
 {
