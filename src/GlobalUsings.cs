@@ -64,6 +64,7 @@ global using DentallApp.Features.Reports.Pdf;
 
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
+global using DentallApp.DataAccess.Repositories;
 global using DentallApp.DataAccess.UnitOfWork;
 global using DentallApp.DataAccess.DbConnectors;
 global using DentallApp.DataAccess.DbTransactions;
