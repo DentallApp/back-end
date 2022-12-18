@@ -1,4 +1,4 @@
-﻿namespace DentallApp.DataAccess;
+﻿namespace DentallApp.DataAccess.DbTransactions;
 
 public class AppDbContextTransactionEFCore : IAppDbContextTransaction
 {
