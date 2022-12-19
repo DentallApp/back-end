@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Helpers;
+﻿namespace DentallApp.Attributes;
 
 public class AuthorizeByRoleAttribute : AuthorizeAttribute
 {

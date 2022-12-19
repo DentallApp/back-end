@@ -1,14 +1,16 @@
-﻿namespace DentallApp.Validators;
+﻿namespace DentallApp.Attributes;
 
 public class ImageAttribute : ValidationAttribute
 {
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
         var formFile = value as IFormFile;
-        if (formFile == null)
+
+        // This is so that the image can be optional when updating an entity.
+        if (formFile is null)
             return ValidationResult.Success;
 
-        var fileStream = formFile.OpenReadStream();
+        using var fileStream = formFile.OpenReadStream();
         bool isRecognizableType = FileTypeValidator.IsTypeRecognizable(fileStream);
         if (!isRecognizableType)
             return new ValidationResult(UnrecognizableFileMessage);
