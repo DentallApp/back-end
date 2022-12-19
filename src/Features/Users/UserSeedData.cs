@@ -9,9 +9,9 @@ public static class UserSeedData
     private const string SuperAdminEmail = "superadmin@hotmail.com";
     private const string Password        = "$2a$10$60QnEiafBCLfVBMfQkExVeolyBxVHWcSQKTvkxVJj9FUozRpRP/GW";
 
-    public static void CreateDefaultUserAccounts(this ModelBuilder builder, IWebHostEnvironment env)
+    public static void CreateDefaultUserAccounts(this ModelBuilder builder)
     {
-        if (!env.IsDevelopment())
+        if (!WebHostEnvironment.IsDevelopment())
             return;
 
         CreateBasicUserAccount(builder);

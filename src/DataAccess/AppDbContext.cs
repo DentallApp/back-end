@@ -2,8 +2,7 @@ namespace DentallApp.DataAccess;
 
 public partial class AppDbContext : CustomDbContext
 {
-    private readonly IWebHostEnvironment _env;
-    public AppDbContext(IWebHostEnvironment env, DbContextOptions<AppDbContext> options) : base(options) => _env = env;
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.AddDelegateDecompiler();
@@ -36,13 +35,13 @@ public partial class AppDbContext : CustomDbContext
                     .ApplyConfiguration(new GenderConfiguration())
                     .ApplyConfiguration(new KinshipConfiguration())
                     .ApplyConfiguration(new DependentConfiguration())
-                    .ApplyConfiguration(new OfficeConfiguration(_env))
+                    .ApplyConfiguration(new OfficeConfiguration())
                     .ApplyConfiguration(new EmployeeConfiguration())
                     .ApplyConfiguration(new AppointmentStatusConfiguration())
                     .ApplyConfiguration(new WeekDayConfiguration())
-                    .ApplyConfiguration(new EmployeeScheduleConfiguration(_env))
-                    .ApplyConfiguration(new OfficeScheduleConfiguration(_env));
+                    .ApplyConfiguration(new EmployeeScheduleConfiguration())
+                    .ApplyConfiguration(new OfficeScheduleConfiguration());
 
-        modelBuilder.CreateDefaultUserAccounts(_env);
+        modelBuilder.CreateDefaultUserAccounts();
     }
 }

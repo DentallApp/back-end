@@ -2,18 +2,11 @@
 
 public class OfficeScheduleConfiguration : IEntityTypeConfiguration<OfficeSchedule>
 {
-    private readonly IWebHostEnvironment _env;
-
-    public OfficeScheduleConfiguration(IWebHostEnvironment env)
-    {
-        _env = env;
-    }
-
     public void Configure(EntityTypeBuilder<OfficeSchedule> builder)
     {
         builder.HasQueryFilterSoftDelete();
 
-        if (!_env.IsDevelopment())
+        if (!WebHostEnvironment.IsDevelopment())
             return;
 
         builder.AddSeedData(

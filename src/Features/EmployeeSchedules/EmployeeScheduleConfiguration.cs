@@ -2,18 +2,11 @@
 
 public class EmployeeScheduleConfiguration : IEntityTypeConfiguration<EmployeeSchedule>
 {
-    private readonly IWebHostEnvironment _env;
-
-    public EmployeeScheduleConfiguration(IWebHostEnvironment env)
-    {
-        _env = env;
-    }
-
     public void Configure(EntityTypeBuilder<EmployeeSchedule> builder)
     {
         builder.HasQueryFilterSoftDelete();
 
-        if (!_env.IsDevelopment())
+        if (!WebHostEnvironment.IsDevelopment())
             return;
 
         builder.AddSeedData(
