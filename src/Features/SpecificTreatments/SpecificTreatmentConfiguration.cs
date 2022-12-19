@@ -4,6 +4,9 @@ public class SpecificTreatmentConfiguration : IEntityTypeConfiguration<SpecificT
 {
     public void Configure(EntityTypeBuilder<SpecificTreatment> builder)
     {
+        if (!WebHostEnvironment.IsDevelopment())
+            return;
+
         builder.AddSeedData(
              // Ortodoncia/Brackets
              new SpecificTreatment { Id = 1, GeneralTreatmentId = 1, Name = "Ortodoncia metálica",    Price = 80 },
