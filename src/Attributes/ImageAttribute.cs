@@ -10,7 +10,7 @@ public class ImageAttribute : ValidationAttribute
         if (formFile is null)
             return ValidationResult.Success;
 
-        var fileStream = formFile.OpenReadStream();
+        using var fileStream = formFile.OpenReadStream();
         bool isRecognizableType = FileTypeValidator.IsTypeRecognizable(fileStream);
         if (!isRecognizableType)
             return new ValidationResult(UnrecognizableFileMessage);
