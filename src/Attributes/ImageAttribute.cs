@@ -5,7 +5,7 @@ public class ImageAttribute : ValidationAttribute
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
         var formFile = value as IFormFile;
-        if (formFile == null)
+        if (formFile is null)
             return ValidationResult.Success;
 
         var fileStream = formFile.OpenReadStream();
