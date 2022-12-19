@@ -4,13 +4,11 @@ namespace DentallApp.DataAccess.DbConnectors;
 
 public class MariaDbConnector : IDbConnector
 {
-    private string ConnectionString { get; }
+    private readonly string _connectionString;
 
     public MariaDbConnector(string connectionString)
-    {
-        ConnectionString = connectionString;
-    }
+        => _connectionString = connectionString;
 
     public IDbConnection CreateConnection()
-        => new MySqlConnection(ConnectionString);
+        => new MySqlConnection(_connectionString);
 }
