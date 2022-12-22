@@ -22,9 +22,9 @@ public class RepositoryExtensionsTests
             new() { Id = 2, UserId = userId, RoleId = RolesId.Admin },
             new() { Id = 1, UserId = userId, RoleId = RolesId.Secretary }
         };
-        // These are the new role IDs obtained from the web client.
+        // These are the role IDs obtained from the web client.
         // Duplicate roles must be removed.
-        var newRolesId = new List<int>() 
+        var rolesId = new List<int>() 
         { 
             RolesId.Admin, 
             RolesId.Dentist, 
@@ -32,14 +32,14 @@ public class RepositoryExtensionsTests
         };
 
         // Update employee roles.
-        _repository.UpdateEntities(key: userId, source: ref currentUserRoles, identifiers: ref newRolesId);
+        _repository.UpdateEntities(key: userId, source: ref currentUserRoles, identifiers: ref rolesId);
 
         Assert.AreEqual(expected: count, actual: currentUserRoles.Count);
-        Assert.AreEqual(expected: count, actual: newRolesId.Count);
+        Assert.AreEqual(expected: count, actual: rolesId.Count);
         Assert.AreEqual(expected: RolesId.Dentist, actual: currentUserRoles[0].RoleId);
         Assert.AreEqual(expected: RolesId.Admin,   actual: currentUserRoles[1].RoleId);
-        Assert.AreEqual(expected: RolesId.Dentist, actual: newRolesId[0]);
-        Assert.AreEqual(expected: RolesId.Admin,   actual: newRolesId[1]);
+        Assert.AreEqual(expected: RolesId.Dentist, actual: rolesId[0]);
+        Assert.AreEqual(expected: RolesId.Admin,   actual: rolesId[1]);
     }
 
     [TestMethod]
@@ -54,8 +54,8 @@ public class RepositoryExtensionsTests
             new() { Id = 2, UserId = userId, RoleId = RolesId.Admin }
     };
         var data = new List<UserRole>(currentUserRoles);
-        // These are the new role IDs obtained from the web client.
-        var newRolesId = new List<int>()
+        // These are the role IDs obtained from the web client.
+        var rolesId = new List<int>()
         {
             RolesId.Dentist,
             RolesId.Secretary
@@ -68,7 +68,7 @@ public class RepositoryExtensionsTests
             });
         
         // Update employee roles.
-        _repository.UpdateEntities(key: userId, source: ref data, identifiers: ref newRolesId);
+        _repository.UpdateEntities(key: userId, source: ref data, identifiers: ref rolesId);
 
         Assert.AreEqual(expected: 2, actual: currentUserRoles.Count);
         Assert.AreEqual(expected: RolesId.Secretary, actual: currentUserRoles[0].RoleId);
@@ -86,8 +86,8 @@ public class RepositoryExtensionsTests
             new() { Id = 1, UserId = userId, RoleId = RolesId.Secretary }
         };
         var data = new List<UserRole>(currentUserRoles);
-        // These are the new role IDs obtained from the web client.
-        var newRolesId = new List<int>()
+        // These are the role IDs obtained from the web client.
+        var rolesId = new List<int>()
         {
             RolesId.Admin,
             RolesId.Dentist,
@@ -97,7 +97,7 @@ public class RepositoryExtensionsTests
             .DoInstead((UserRole entity) => currentUserRoles.Add(entity));
 
         // Update employee roles.
-        _repository.UpdateEntities(key: userId, source: ref data, identifiers: ref newRolesId);
+        _repository.UpdateEntities(key: userId, source: ref data, identifiers: ref rolesId);
 
         Assert.AreEqual(expected: 3, actual: currentUserRoles.Count);
         Assert.AreEqual(expected: RolesId.Secretary, actual: currentUserRoles[0].RoleId);
