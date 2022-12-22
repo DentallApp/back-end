@@ -43,7 +43,7 @@ public class RepositoryExtensionsTests
     }
 
     [TestMethod]
-    public void UpdateEntities_WhenNewEntriesDoNotContainsTheSecondaryForeignKey_ShouldDeleteCurrentEntity()
+    public void UpdateEntities_WhenIdentifiersDoNotContainsTheSecondaryForeignKey_ShouldDeleteCurrentEntity()
     {
         const int userId = 1;
         // These are the current roles of an employee.
@@ -78,7 +78,7 @@ public class RepositoryExtensionsTests
 
 
     [TestMethod]
-    public void UpdateEntities_WhenSourceDoNotContainsTheNewId_ShouldInsertCurrentEntity()
+    public void UpdateEntities_WhenSourceDoNotContainsTheIdentifier_ShouldInsertCurrentEntity()
     {
         const int userId = 1;
         // These are the current roles of an employee.
