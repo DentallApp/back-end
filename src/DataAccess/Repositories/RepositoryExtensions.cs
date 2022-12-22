@@ -20,33 +20,33 @@ public static class RepositoryExtensions
     /// <param name="source">
     /// A sequence of entities of type <typeparamref name="TEntity" /> loaded from a data source (e.g, database).
     /// </param>
-    /// <param name="newEntries">
+    /// <param name="identifiers">
     /// A sequence of foreign keys of type <see cref="int" /> obtained from a client (e.g, web browser).
     /// </param>
-    public static void UpdateEntities<TEntity>(this IRepository<TEntity> repository, int key, ref List<TEntity> source, ref List<int> newEntries)
+    public static void UpdateEntities<TEntity>(this IRepository<TEntity> repository, int key, ref List<TEntity> source, ref List<int> identifiers)
         where TEntity : EntityBase, IIntermediateEntity, new()
     {
-        newEntries = newEntries.Distinct().OrderBy(id => id).ToList();
+        identifiers = identifiers.Distinct().OrderBy(id => id).ToList();
         source     = source.OrderBy(entity => entity.SecondaryForeignKey).ToList();
 
-        if (source.Count == newEntries.Count)
+        if (source.Count == identifiers.Count)
         {
-            _ = source.Zip(newEntries, (currentEntity, newId) => currentEntity.SecondaryForeignKey = newId).ToList();
+            _ = source.Zip(identifiers, (currentEntity, newId) => currentEntity.SecondaryForeignKey = newId).ToList();
         }
         else
         {
             foreach (TEntity currentEntity in source)
-                if(newEntries.NotContains(currentEntity.SecondaryForeignKey))
+                if(identifiers.NotContains(currentEntity.SecondaryForeignKey))
                     repository.Delete(currentEntity);
 
-            foreach (int newId in newEntries)
+            foreach (int newId in identifiers)
                 if(source.NotContains(newId))
                     repository.Insert(new TEntity { PrimaryForeignKey = key, SecondaryForeignKey = newId });
         }
     }
 
-    private static bool NotContains(this List<int> newEntries, int secondaryForeignKey) 
-        => !newEntries.Contains(secondaryForeignKey);
+    private static bool NotContains(this List<int> identifiers, int secondaryForeignKey) 
+        => !identifiers.Contains(secondaryForeignKey);
 
     private static bool NotContains<TEntity>(this List<TEntity> source, int newId) where TEntity : IIntermediateEntity
         => !source.Any(currentEntity => currentEntity.SecondaryForeignKey == newId);

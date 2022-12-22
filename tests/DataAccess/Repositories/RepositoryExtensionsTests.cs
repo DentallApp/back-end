@@ -32,7 +32,7 @@ public class RepositoryExtensionsTests
         };
 
         // Update employee roles.
-        _repository.UpdateEntities(key: userId, source: ref currentUserRoles, newEntries: ref newRolesId);
+        _repository.UpdateEntities(key: userId, source: ref currentUserRoles, identifiers: ref newRolesId);
 
         Assert.AreEqual(expected: count, actual: currentUserRoles.Count);
         Assert.AreEqual(expected: count, actual: newRolesId.Count);
@@ -68,7 +68,7 @@ public class RepositoryExtensionsTests
             });
         
         // Update employee roles.
-        _repository.UpdateEntities(key: userId, source: ref data, newEntries: ref newRolesId);
+        _repository.UpdateEntities(key: userId, source: ref data, identifiers: ref newRolesId);
 
         Assert.AreEqual(expected: 2, actual: currentUserRoles.Count);
         Assert.AreEqual(expected: RolesId.Secretary, actual: currentUserRoles[0].RoleId);
@@ -97,7 +97,7 @@ public class RepositoryExtensionsTests
             .DoInstead((UserRole entity) => currentUserRoles.Add(entity));
 
         // Update employee roles.
-        _repository.UpdateEntities(key: userId, source: ref data, newEntries: ref newRolesId);
+        _repository.UpdateEntities(key: userId, source: ref data, identifiers: ref newRolesId);
 
         Assert.AreEqual(expected: 3, actual: currentUserRoles.Count);
         Assert.AreEqual(expected: RolesId.Secretary, actual: currentUserRoles[0].RoleId);
