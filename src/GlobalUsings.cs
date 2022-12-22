@@ -70,6 +70,7 @@ global using DentallApp.DataAccess.DbConnectors;
 global using DentallApp.DataAccess.DbTransactions;
 global using DentallApp.Entities;
 global using DentallApp.Entities.BaseClasses;
+global using DentallApp.Entities.Interfaces;
 global using DentallApp.Attributes;
 global using DentallApp.Helpers;
 global using DentallApp.Helpers.HtmlConverterHelpers;
