@@ -12,7 +12,7 @@ public class RepositoryExtensionsTests
     }
 
     [TestMethod]
-    public void UpdateEntities_WhenNumberOfElementsAreEqual_ShouldMergeSequenceOfElements()
+    public void AddOrUpdateOrDelete_WhenNumberOfElementsAreEqual_ShouldMergeSequenceOfElements()
     {
         const int count  = 2;
         const int userId = 1;
@@ -43,7 +43,7 @@ public class RepositoryExtensionsTests
     }
 
     [TestMethod]
-    public void UpdateEntities_WhenIdentifiersDoNotContainsTheSecondaryForeignKey_ShouldDeleteCurrentEntity()
+    public void AddOrUpdateOrDelete_WhenIdentifiersDoNotContainsTheSecondaryForeignKey_ShouldDeleteCurrentEntity()
     {
         const int userId = 1;
         // These are the current roles of an employee.
@@ -78,7 +78,7 @@ public class RepositoryExtensionsTests
 
 
     [TestMethod]
-    public void UpdateEntities_WhenSourceDoNotContainsTheIdentifier_ShouldInsertCurrentEntity()
+    public void AddOrUpdateOrDelete_WhenSourceDoNotContainsTheIdentifier_ShouldInsertCurrentEntity()
     {
         const int userId = 1;
         // These are the current roles of an employee.
