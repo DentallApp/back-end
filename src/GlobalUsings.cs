@@ -24,7 +24,6 @@ global using DentallApp.Features.UserRegistration;
 global using DentallApp.Features.Roles;
 global using DentallApp.Features.Roles.DTOs;
 global using DentallApp.Features.UserRoles;
-global using DentallApp.Features.UserRoles.DTOs;
 global using DentallApp.Features.SecurityToken;
 global using DentallApp.Features.SecurityToken.DTOs;
 global using DentallApp.Features.TokenRefresh;
