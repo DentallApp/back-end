@@ -120,7 +120,7 @@ public class AppointmentCancellationServiceTests
     public async Task CancelBasicUserAppointmentAsync_WhenAppointmentCannotBeCancelled_ShouldReturnFailureResponse()
     {
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 04, 15, 0, 0));
-        Mock.Arrange(() => _appointmentRepository.GetByIdAsync(default))
+        Mock.Arrange(() => _appointmentRepository.GetByIdAsync(Arg.AnyInt))
             .ReturnsAsync((int id) => new Appointment
             {
                 Date      = new DateTime(2022, 08, 04),
