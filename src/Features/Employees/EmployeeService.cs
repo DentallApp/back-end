@@ -76,11 +76,7 @@ public class EmployeeService : IEmployeeService
         
         employeeUpdateDto.MapToEmployee(employeeToEdit);
 
-        var userRoles = employeeToEdit.User.UserRoles.OrderBy(userRole => userRole.RoleId);
-        var rolesId   = employeeUpdateDto.Roles
-                                         .RemoveDuplicates()
-                                         .OrderBy(roleId => roleId);
-        _unitOfWork.UserRoleRepository.UpdateUserRoles(employeeToEdit.UserId, userRoles, rolesId);
+        _unitOfWork.UserRoleRepository.UpdateUserRoles(employeeToEdit.UserId, employeeToEdit.User.UserRoles, rolesId: employeeUpdateDto.Roles);
         await _unitOfWork.SaveChangesAsync();
 
         return new Response
