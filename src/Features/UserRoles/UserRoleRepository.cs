@@ -6,5 +6,5 @@ public class UserRoleRepository : Repository<UserRole>, IUserRoleRepository
 
     /// <inheritdoc />
     public void UpdateUserRoles(int userId, List<UserRole> currentUserRoles, List<int> rolesId)
-        => this.UpdateEntities(key: userId, source: ref currentUserRoles, identifiers: ref rolesId);
+        => this.AddOrUpdateOrDelete(key: userId, source: ref currentUserRoles, identifiers: ref rolesId);
 }

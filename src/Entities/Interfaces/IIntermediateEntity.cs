@@ -2,7 +2,7 @@
 
 /// <summary>
 /// <para>Represents an intermediate table with foreign keys.</para>
-/// This interface is used in the <c>where</c> clause of <see cref="RepositoryExtensions.UpdateEntities" />.
+/// This interface is used in the <c>where</c> clause of <see cref="RepositoryExtensions.AddOrUpdateOrDelete" />.
 /// </summary>
 public interface IIntermediateEntity
 {

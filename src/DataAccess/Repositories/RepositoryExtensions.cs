@@ -6,7 +6,7 @@
 public static class RepositoryExtensions
 {
     /// <summary>
-    /// Updates one or more entities of type <typeparamref name="TEntity" />.
+    /// Adds, updates or deletes an entity of type <typeparamref name="TEntity" />.
     /// </summary>
     /// <remarks>
     /// <para>This method is used in several parts of the code, such as, for example, in <see cref="UserRoleRepository.UpdateUserRoles" />.</para>
@@ -23,7 +23,7 @@ public static class RepositoryExtensions
     /// <param name="identifiers">
     /// A sequence of foreign keys of type <see cref="int" /> obtained from a client (e.g, web browser).
     /// </param>
-    public static void UpdateEntities<TEntity>(this IRepository<TEntity> repository, int key, ref List<TEntity> source, ref List<int> identifiers)
+    public static void AddOrUpdateOrDelete<TEntity>(this IRepository<TEntity> repository, int key, ref List<TEntity> source, ref List<int> identifiers)
         where TEntity : EntityBase, IIntermediateEntity, new()
     {
         identifiers = identifiers.Distinct().OrderBy(id => id).ToList();
