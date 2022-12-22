@@ -10,7 +10,7 @@ public static class RepositoryExtensions
     /// </summary>
     /// <remarks>
     /// <para>This method is used in several parts of the code, such as, for example, in <see cref="UserRoleRepository.UpdateUserRoles" />.</para>
-    /// It is not recommended to use this method in classes that represent business logic, because the name of this method is very technical.
+    /// It is not recommended to use this method in classes that represent business logic, because it can complicate unit tests.
     /// </remarks>
     /// <typeparam name="TEntity">The entity to update.</typeparam>
     /// <param name="repository">An entity repository.</param>
