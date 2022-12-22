@@ -31,7 +31,7 @@ public static class RepositoryExtensions
 
         if (source.Count == identifiers.Count)
         {
-            _ = source.Zip(identifiers, (currentEntity, newId) => currentEntity.SecondaryForeignKey = newId).ToList();
+            _ = source.Zip(identifiers, (currentEntity, id) => currentEntity.SecondaryForeignKey = id).ToList();
         }
         else
         {
@@ -39,15 +39,15 @@ public static class RepositoryExtensions
                 if(identifiers.NotContains(currentEntity.SecondaryForeignKey))
                     repository.Delete(currentEntity);
 
-            foreach (int newId in identifiers)
-                if(source.NotContains(newId))
-                    repository.Insert(new TEntity { PrimaryForeignKey = key, SecondaryForeignKey = newId });
+            foreach (int id in identifiers)
+                if(source.NotContains(id))
+                    repository.Insert(new TEntity { PrimaryForeignKey = key, SecondaryForeignKey = id });
         }
     }
 
     private static bool NotContains(this List<int> identifiers, int secondaryForeignKey) 
         => !identifiers.Contains(secondaryForeignKey);
 
-    private static bool NotContains<TEntity>(this List<TEntity> source, int newId) where TEntity : IIntermediateEntity
-        => !source.Any(currentEntity => currentEntity.SecondaryForeignKey == newId);
+    private static bool NotContains<TEntity>(this List<TEntity> source, int id) where TEntity : IIntermediateEntity
+        => !source.Any(currentEntity => currentEntity.SecondaryForeignKey == id);
 }
