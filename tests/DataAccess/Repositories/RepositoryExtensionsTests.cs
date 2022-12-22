@@ -52,7 +52,8 @@ public class RepositoryExtensionsTests
             new() { Id = 1, UserId = userId, RoleId = RolesId.Secretary },
             new() { Id = 3, UserId = userId, RoleId = RolesId.Dentist },
             new() { Id = 2, UserId = userId, RoleId = RolesId.Admin }
-    };
+        };
+        // Create a temporary collection because the original collection cannot be modified while iterating.
         var data = new List<UserRole>(currentUserRoles);
         // These are the role IDs obtained from the web client.
         var rolesId = new List<int>()
@@ -85,6 +86,7 @@ public class RepositoryExtensionsTests
         {
             new() { Id = 1, UserId = userId, RoleId = RolesId.Secretary }
         };
+        // Create a temporary collection because the original collection cannot be modified while iterating.
         var data = new List<UserRole>(currentUserRoles);
         // These are the role IDs obtained from the web client.
         var rolesId = new List<int>()
