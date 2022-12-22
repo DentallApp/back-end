@@ -25,7 +25,9 @@ public partial class AppDbContext : CustomDbContext
                     .AddEntity<EmployeeSchedule>()
                     .AddEntity<WeekDay>()
                     .AddEntity<FavoriteDentist>()
-                    .AddEntity<OfficeSchedule>();
+                    .AddEntity<OfficeSchedule>()
+                    .AddEntity<PublicHoliday>()
+                    .AddEntity<OfficeHoliday>();
 
         AddSqlFunctions(modelBuilder);
 
