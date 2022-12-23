@@ -42,7 +42,8 @@ public partial class AppDbContext : CustomDbContext
                     .ApplyConfiguration(new AppointmentStatusConfiguration())
                     .ApplyConfiguration(new WeekDayConfiguration())
                     .ApplyConfiguration(new EmployeeScheduleConfiguration())
-                    .ApplyConfiguration(new OfficeScheduleConfiguration());
+                    .ApplyConfiguration(new OfficeScheduleConfiguration())
+                    .ApplyConfiguration(new PublicHolidayConfiguration());
 
         modelBuilder.CreateDefaultUserAccounts();
     }
