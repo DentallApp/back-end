@@ -60,6 +60,9 @@ global using DentallApp.Features.AppointmentReminders;
 global using DentallApp.Features.Reports;
 global using DentallApp.Features.Reports.DTOs;
 global using DentallApp.Features.Reports.Pdf;
+global using DentallApp.Features.PublicHolidays;
+global using DentallApp.Features.PublicHolidays.DTOs;
+global using DentallApp.Features.PublicHolidays.Offices;
 
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
