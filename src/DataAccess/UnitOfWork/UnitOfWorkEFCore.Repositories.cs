@@ -21,4 +21,12 @@ public partial class UnitOfWorkEFCore
     private IEmployeeRepository _employeeRepository;
     public IEmployeeRepository EmployeeRepository
         => _employeeRepository ??= new EmployeeRepository(_context);
+
+    private IPublicHolidayRepository _publicHolidayRepository;
+    public IPublicHolidayRepository PublicHolidayRepository
+        => _publicHolidayRepository ??= new PublicHolidayRepository(_context);
+
+    private IHolidayOfficeRepository _holidayOfficeRepository;
+    public IHolidayOfficeRepository HolidayOfficeRepository
+        => _holidayOfficeRepository ??= new HolidayOfficeRepository(_context);
 }
