@@ -28,6 +28,7 @@ public static class ServiceCollectionExtensions
                 .AddScoped<IAvailabilityService, AvailabilityService>()
                 .AddScoped<IPersonService, PersonService>()
                 .AddScoped<IReportDownloadPdfService, ReportDownloadPdfService>()
+                .AddScoped<IPublicHolidayService, PublicHolidayService>()
                 .AddScoped<ITokenService, TokenService>();
 
         return services;
@@ -53,6 +54,7 @@ public static class ServiceCollectionExtensions
                 .AddScoped<IPersonRepository, PersonRepository>()
                 .AddScoped<IAppointmentReminderRepository, AppointmentReminderRepository>()
                 .AddScoped<IReportQuery, ReportQuery>()
+                .AddScoped<IPublicHolidayRepository, PublicHolidayRepository>()
                 .AddScoped<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
         return services;
