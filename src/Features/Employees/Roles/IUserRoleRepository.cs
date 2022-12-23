@@ -3,7 +3,7 @@
 public interface IUserRoleRepository : IRepository<UserRole>
 {
     /// <summary>
-    /// Adds, updates or removes the roles of a user.
+    /// Adds, updates or removes the roles to a user.
     /// </summary>
     /// <param name="userId">The ID of the user to update.</param>
     /// <param name="currentUserRoles">A collection with the current roles of a user.</param>
