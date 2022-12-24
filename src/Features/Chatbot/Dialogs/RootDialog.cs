@@ -154,6 +154,7 @@ public partial class RootDialog : ComponentDialog
         var appointment = stepContext.GetAppointment();
         var response   = await _botService.GetAvailableHoursAsync(new AvailableTimeRangePostDto
         {
+            OfficeId        = appointment.OfficeId,
             DentistId       = appointment.DentistId,
             DentalServiceId = appointment.GeneralTreatmentId,
             AppointmentDate = appointment.AppointmentDate
