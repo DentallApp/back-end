@@ -5,14 +5,17 @@ public class AvailabilityService : IAvailabilityService
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
     private readonly IGeneralTreatmentRepository _dentalServiceRepository;
+    private readonly IHolidayOfficeRepository _holidayOfficeRepository;
 
     public AvailabilityService(IAppointmentRepository appointmentRepository,
                                IEmployeeScheduleRepository employeeScheduleRepository,
-                               IGeneralTreatmentRepository dentalServiceRepository)
+                               IGeneralTreatmentRepository dentalServiceRepository,
+                               IHolidayOfficeRepository holidayOfficeRepository)
     {
         _appointmentRepository = appointmentRepository;
         _employeeScheduleRepository = employeeScheduleRepository;
         _dentalServiceRepository = dentalServiceRepository;
+        _holidayOfficeRepository = holidayOfficeRepository;
     }
 
     /// <summary>
@@ -28,11 +31,15 @@ public class AvailabilityService : IAvailabilityService
 
     public async Task<Response<IEnumerable<AvailableTimeRangeDto>>> GetAvailableHoursAsync(AvailableTimeRangePostDto availableTimeRangePostDto)
     {
+        int officeId             = availableTimeRangePostDto.OfficeId;
         int dentistId            = availableTimeRangePostDto.DentistId;
         int serviceId            = availableTimeRangePostDto.DentalServiceId;
         var appointmentDate      = availableTimeRangePostDto.AppointmentDate;
         int weekDayId            = (int)appointmentDate.DayOfWeek;
         var weekDayName          = WeekDaysType.WeekDays[weekDayId];
+        if (await _holidayOfficeRepository.IsPublicHolidayAsync(officeId, appointmentDate.Day, appointmentDate.Month))
+            return new Response<IEnumerable<AvailableTimeRangeDto>>(AppointmentDateIsPublicHolidayMessage);
+
         var employeeScheduleDto  = await _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(dentistId, weekDayId);
         if (employeeScheduleDto is null || employeeScheduleDto.IsEmployeeScheculeDeleted)
             return new Response<IEnumerable<AvailableTimeRangeDto>>(string.Format(DentistNotAvailableMessage, weekDayName));
