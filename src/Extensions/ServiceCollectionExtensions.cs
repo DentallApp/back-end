@@ -55,6 +55,7 @@ public static class ServiceCollectionExtensions
                 .AddScoped<IAppointmentReminderRepository, AppointmentReminderRepository>()
                 .AddScoped<IReportQuery, ReportQuery>()
                 .AddScoped<IPublicHolidayRepository, PublicHolidayRepository>()
+                .AddScoped<IHolidayOfficeRepository, HolidayOfficeRepository>()
                 .AddScoped<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
         return services;
