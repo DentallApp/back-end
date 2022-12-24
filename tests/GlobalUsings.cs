@@ -15,4 +15,6 @@ global using DentallApp.Features.SecurityToken;
 global using DentallApp.Features.Roles;
 global using DentallApp.Entities;
 global using DentallApp.Configuration;
+
+global using DentallApp.DataAccess.Repositories;
 global using static DentallApp.Constants.ResponseMessages;

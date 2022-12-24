@@ -25,7 +25,9 @@ public partial class AppDbContext : CustomDbContext
                     .AddEntity<EmployeeSchedule>()
                     .AddEntity<WeekDay>()
                     .AddEntity<FavoriteDentist>()
-                    .AddEntity<OfficeSchedule>();
+                    .AddEntity<OfficeSchedule>()
+                    .AddEntity<PublicHoliday>()
+                    .AddEntity<HolidayOffice>();
 
         AddSqlFunctions(modelBuilder);
 
@@ -40,7 +42,8 @@ public partial class AppDbContext : CustomDbContext
                     .ApplyConfiguration(new AppointmentStatusConfiguration())
                     .ApplyConfiguration(new WeekDayConfiguration())
                     .ApplyConfiguration(new EmployeeScheduleConfiguration())
-                    .ApplyConfiguration(new OfficeScheduleConfiguration());
+                    .ApplyConfiguration(new OfficeScheduleConfiguration())
+                    .ApplyConfiguration(new PublicHolidayConfiguration());
 
         modelBuilder.CreateDefaultUserAccounts();
     }

@@ -10,4 +10,6 @@ public interface IUnitOfWork
     IPersonRepository PersonRepository { get; }
     IDependentRepository DependentRepository { get; }
     IEmployeeRepository EmployeeRepository { get; }
+    IPublicHolidayRepository PublicHolidayRepository { get; }
+    IHolidayOfficeRepository HolidayOfficeRepository { get; }
 }
