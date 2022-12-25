@@ -1,8 +1,8 @@
-﻿namespace DentallApp.Helpers;
+﻿namespace DentallApp.Responses;
 
-public class Response<T> : ResponseBase
+public class Response : ResponseBase
 {
-    public T Data { get; set; }
+    public object Data { get; set; }
 
     public Response()
     {

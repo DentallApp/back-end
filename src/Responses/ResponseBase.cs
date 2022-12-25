@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Helpers;
+﻿namespace DentallApp.Responses;
 
 public class ResponseBase
 {
