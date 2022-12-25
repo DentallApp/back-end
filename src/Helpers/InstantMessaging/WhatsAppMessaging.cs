@@ -2,7 +2,7 @@
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
-namespace DentallApp.Features.InstantMessaging;
+namespace DentallApp.Helpers.InstantMessaging;
 
 public class WhatsAppMessaging : IInstantMessaging
 {

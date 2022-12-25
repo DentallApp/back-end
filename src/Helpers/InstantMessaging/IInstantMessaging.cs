@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.InstantMessaging;
+﻿namespace DentallApp.Helpers.InstantMessaging;
 
 public interface IInstantMessaging
 {

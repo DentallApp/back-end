@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.PasswordHasher;
+﻿namespace DentallApp.Helpers.PasswordHasher;
 
 public interface IPasswordHasher
 {
