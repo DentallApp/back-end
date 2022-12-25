@@ -9,7 +9,7 @@ global using DentallApp.Features.Chatbot.Factories;
 global using DentallApp.Features.WeekDays;
 global using DentallApp.Features.AppointmentCancellation;
 global using DentallApp.Features.AppointmentCancellation.DTOs;
-global using DentallApp.Features.InstantMessaging;
+global using DentallApp.Helpers.InstantMessaging;
 global using DentallApp.Helpers.DateTimeHelpers;
 global using DentallApp.Features.SecurityToken;
 global using DentallApp.Features.Roles;
