@@ -76,7 +76,17 @@ public class EmployeeService : IEmployeeService
         
         employeeUpdateDto.MapToEmployee(employeeToEdit);
 
-        _unitOfWork.UserRoleRepository.UpdateUserRoles(employeeToEdit.UserId, employeeToEdit.User.UserRoles, rolesId: employeeUpdateDto.Roles);
+        if (currentEmployee.IsDentist())
+        {
+            var specialtiesId = employeeUpdateDto.SpecialtiesId ?? Enumerable.Empty<int>().ToList();
+            _unitOfWork.EmployeeSpecialtyRepository.UpdateEmployeeSpecialties(employeeToEdit.Id,
+                                                                              employeeToEdit.EmployeeSpecialties,
+                                                                              specialtiesId);
+        }
+
+        _unitOfWork.UserRoleRepository.UpdateUserRoles(employeeToEdit.UserId, 
+                                                       employeeToEdit.User.UserRoles, 
+                                                       rolesId: employeeUpdateDto.Roles);
         await _unitOfWork.SaveChangesAsync();
 
         return new Response

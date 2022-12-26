@@ -16,6 +16,7 @@ public class EmployeeGetDto
     public int? GenderId { get; set; }
     public string GenderName { get; set; }
     public IEnumerable<RoleGetDto> Roles { get; set; }
+    public IEnumerable<GeneralTreatmentGetNameDto> Specialties { get; set; }
     public string Status { get; set; }
     public bool IsDeleted { get; set; }
 }

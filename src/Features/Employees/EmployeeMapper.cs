@@ -48,7 +48,18 @@ public static class EmployeeMapper
             DateBirth               = employee.Person.DateBirth,
             GenderName              = employee.Person.Gender?.Name,
             GenderId                = employee.Person.Gender?.Id,
-            Roles                   = employee.User.UserRoles.Select(role => new RoleGetDto { Id = role.Role.Id, Name = role.Role.Name}),
+            Roles                   = employee.User.UserRoles.Select(role => 
+                                                                     new RoleGetDto 
+                                                                     { 
+                                                                         Id   = role.Role.Id, 
+                                                                         Name = role.Role.Name
+                                                                     }),
+            Specialties             = employee.EmployeeSpecialties.Select(employeeSpecialty =>
+                                                                     new GeneralTreatmentGetNameDto
+                                                                     {
+                                                                         Id   = employeeSpecialty.GeneralTreatment.Id,
+                                                                         Name = employeeSpecialty.GeneralTreatment.Name
+                                                                     }),
             Status                  = employee.GetStatusName(),
             IsDeleted               = employee.IsDeleted
         };
