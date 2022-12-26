@@ -15,9 +15,9 @@ public class PublicHolidayService : IPublicHolidayService
         _unitOfWork.PublicHolidayRepository.Insert(publicHoliday);
         foreach(var officeId in holidayInsertDto.OfficesId.RemoveDuplicates())
         {
-            var officeHoliday = new HolidayOffice { OfficeId = officeId };
-            _unitOfWork.HolidayOfficeRepository.Insert(officeHoliday);
-            officeHoliday.PublicHoliday = publicHoliday;
+            var holidayOffice = new HolidayOffice { OfficeId = officeId };
+            _unitOfWork.HolidayOfficeRepository.Insert(holidayOffice);
+            holidayOffice.PublicHoliday = publicHoliday;
         }
         await _unitOfWork.SaveChangesAsync();
 
