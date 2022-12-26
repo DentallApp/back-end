@@ -26,8 +26,8 @@ public static class RepositoryExtensions
     public static void AddOrUpdateOrDelete<TEntity>(this IRepository<TEntity> repository, int key, ref List<TEntity> source, ref List<int> identifiers)
         where TEntity : EntityBase, IIntermediateEntity, new()
     {
-        identifiers = identifiers.Distinct().OrderBy(id => id).ToList();
-        source     = source.OrderBy(entity => entity.SecondaryForeignKey).ToList();
+        identifiers = identifiers.Distinct().Order().ToList();
+        source      = source.OrderBy(entity => entity.SecondaryForeignKey).ToList();
 
         if (source.Count == identifiers.Count)
         {
