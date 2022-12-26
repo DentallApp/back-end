@@ -108,7 +108,8 @@ public partial class RootDialog : ComponentDialog
         stepContext.GetAppointment().GeneralTreatmentId = int.Parse(selectedDentalServiceId);
         await stepContext.SendTypingActivityAsync();
         int officeId     = stepContext.GetAppointment().OfficeId;
-        var choicesTask  = _botService.GetDentistsByOfficeIdAsync(officeId);
+        int specialtyId  = stepContext.GetAppointment().GeneralTreatmentId;
+        var choicesTask  = _botService.GetDentistsAsync(officeId, specialtyId);
         var cardJsonTask = TemplateCardLoader.LoadDentistCardAsync();
         var choices      = await choicesTask;
         var cardJson     = await cardJsonTask;

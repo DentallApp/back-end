@@ -16,11 +16,11 @@ public class AppointmentBotService : IAppointmentBotService
         return await repository.GetDentalServicesAsync();
     }
 
-    public async Task<List<AdaptiveChoice>> GetDentistsByOfficeIdAsync(int officeId)
+    public async Task<List<AdaptiveChoice>> GetDentistsAsync(int officeId, int specialtyId)
     {
 		using var scope = _serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IBotQueryRepository>();
-        return await repository.GetDentistsByOfficeIdAsync(officeId);
+        return await repository.GetDentistsAsync(officeId, specialtyId);
     }
 
     public async Task<List<AdaptiveChoice>> GetOfficesAsync()

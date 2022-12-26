@@ -5,7 +5,7 @@ public interface IAppointmentBotService
     Task<List<AdaptiveChoice>> GetPatientsAsync(UserProfile userProfile);
     Task<List<AdaptiveChoice>> GetOfficesAsync();
     Task<List<AdaptiveChoice>> GetDentalServicesAsync();
-    Task<List<AdaptiveChoice>> GetDentistsByOfficeIdAsync(int officeId);
+    Task<List<AdaptiveChoice>> GetDentistsAsync(int officeId, int specialtyId);
     Task<Response<IEnumerable<AvailableTimeRangeDto>>> GetAvailableHoursAsync(AvailableTimeRangePostDto availableTimeRangeDto);
     Task<Response> CreateScheduledAppointmentAsync(AppointmentInsertDto appointment);
     Task<SpecificTreatmentRangeToPayDto> GetRangeToPayAsync(int dentalServiceId);

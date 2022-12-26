@@ -19,20 +19,30 @@ public class BotQueryRepository : IBotQueryRepository
                           })
                          .ToListAsync();
 
-    public async Task<List<AdaptiveChoice>> GetDentistsByOfficeIdAsync(int officeId)
+    public async Task<List<AdaptiveChoice>> GetDentistsAsync(int officeId, int specialtyId)
         => await (from employee in _context.Set<Employee>()
                   join person in _context.Set<Person>() on employee.PersonId equals person.Id
                   join office in _context.Set<Office>() on employee.OfficeId equals office.Id
+                  join employeeSpecialty in _context.Set<EmployeeSpecialty>()
+                      on employee.Id equals employeeSpecialty.EmployeeId into employeeSpecialties
+                  from employeeSpecialty in employeeSpecialties.DefaultIfEmpty()
                   join userRole in _context.Set<UserRole>() on employee.UserId equals userRole.UserId
-                  where employee.OfficeId == officeId && 
+                  where employee.IsActive() &&
+                        employee.OfficeId == officeId && 
                         userRole.RoleId == RolesId.Dentist &&
-                        employee.EmployeeSchedules.Any()
+                        employee.EmployeeSchedules.Any() &&
+                       (employeeSpecialty.SpecialtyId == specialtyId ||
+                        HasNoSpecialties(employee))
                   select new AdaptiveChoice 
                   { 
                       Title = person.FullName, 
                       Value = employee.Id.ToString() 
-                  }
-                 ).ToListAsync();
+                  })
+                .IgnoreQueryFilters()
+                .ToListAsync();
+
+    [Decompile]
+    private bool HasNoSpecialties(Employee employee) => !employee.EmployeeSpecialties.Any();
 
     public async Task<List<AdaptiveChoice>> GetOfficesAsync()
         => await _context.Set<Office>()
