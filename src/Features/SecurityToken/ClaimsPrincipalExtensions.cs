@@ -26,6 +26,9 @@ public static class ClaimsPrincipalExtensions
     public static bool IsAdmin(this ClaimsPrincipal claims)
         => claims.IsInRole(RolesName.Admin);
 
+    public static bool IsDentist(this ClaimsPrincipal claims)
+        => claims.IsInRole(RolesName.Dentist);
+
     public static bool IsOnlyDentist(this ClaimsPrincipal claims)
         => claims.GetClaimsRoleType().Count() == 1 && claims.IsInRole(RolesName.Dentist);
 
