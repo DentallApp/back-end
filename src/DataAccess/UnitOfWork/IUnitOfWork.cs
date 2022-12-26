@@ -12,4 +12,5 @@ public interface IUnitOfWork
     IEmployeeRepository EmployeeRepository { get; }
     IPublicHolidayRepository PublicHolidayRepository { get; }
     IHolidayOfficeRepository HolidayOfficeRepository { get; }
+    IEmployeeSpecialtyRepository EmployeeSpecialtyRepository { get; }
 }
