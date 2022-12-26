@@ -24,6 +24,8 @@ public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
                         .Include(employee => employee.Office)
                         .Include(employee => employee.User.UserRoles)
                            .ThenInclude(user => user.Role)
+                        .Include(employee => employee.EmployeeSpecialties)
+                           .ThenInclude(employeeSpecialty => employeeSpecialty.GeneralTreatment)
                         .Select(employee => employee.MapToEmployeeGetDto())
                         .IgnoreQueryFilters()
                         .ToListAsync();
@@ -35,6 +37,8 @@ public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
                         .Include(employee => employee.Office)
                         .Include(employee => employee.User.UserRoles)
                            .ThenInclude(user => user.Role)
+                        .Include(employee => employee.EmployeeSpecialties)
+                           .ThenInclude(employeeSpecialty => employeeSpecialty.GeneralTreatment)
                         .Where(employee => employee.OfficeId == officeId && employee.Id != currentEmployeeId)
                         .Select(employee => employee.MapToEmployeeGetDto())
                         .IgnoreQueryFilters()
@@ -50,6 +54,7 @@ public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
         => await Context.Set<Employee>()
                         .Include(employee => employee.Person)
                         .Include(employee => employee.User.UserRoles)
+                        .Include(employee => employee.EmployeeSpecialties)
                         .Where(employee => employee.Id == id)
                         .IgnoreQueryFilters()
                         .FirstOrDefaultAsync();

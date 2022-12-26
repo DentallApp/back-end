@@ -2,8 +2,6 @@
     
 public class Employee : SoftDeleteEntity 
 {
-    public const int All = 0;
-
     public int UserId { get; set; }
     public User User { get; set; }
     public int PersonId { get; set; }
@@ -15,4 +13,5 @@ public class Employee : SoftDeleteEntity
     public ICollection<Appointment> Appointments { get; set; }
     public ICollection<EmployeeSchedule> EmployeeSchedules { get; set; }
     public ICollection<FavoriteDentist> FavoriteDentists { get; set; }
+    public List<EmployeeSpecialty> EmployeeSpecialties { get; set; }
 }

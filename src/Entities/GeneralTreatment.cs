@@ -8,4 +8,5 @@ public class GeneralTreatment : SoftDeleteEntity
     public int Duration { get; set; }
     public ICollection<SpecificTreatment> SpecificTreatments { get; set; }
     public ICollection<Appointment> Appointments { get; set; }
+    public ICollection<EmployeeSpecialty> EmployeeSpecialties { get; set; }
 }

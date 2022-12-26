@@ -10,4 +10,5 @@ public class EmployeeInsertDto : UserInsertDto
     [MaxLength(NumberRoles.MaxRole)]
     [MinLength(NumberRoles.MinRole)]
     public IEnumerable<int> Roles { get; set; }
+    public IEnumerable<int> SpecialtiesId { get; set; }
 }

@@ -69,6 +69,16 @@ public class UserRegisterService : IUserRegisterService
         _unitOfWork.EmployeeRepository.Insert(employee);
         employee.User = user;
         employee.Person = user.Person;
+        if (currentEmployee.IsDentist())
+        {
+            var specialtiesId = (employeeInsertDto.SpecialtiesId ?? Enumerable.Empty<int>()).RemoveDuplicates();
+            foreach (var specialtyId in specialtiesId)
+            {
+                var employeeSpecialty = new EmployeeSpecialty { SpecialtyId = specialtyId };
+                _unitOfWork.EmployeeSpecialtyRepository.Insert(employeeSpecialty);
+                employeeSpecialty.Employee = employee;
+            }
+        }
         await _unitOfWork.SaveChangesAsync();
 
         return new Response

@@ -11,5 +11,6 @@ public class EmployeeUpdateByAdminDto : EmployeeUpdateDto
     [MaxLength(NumberRoles.MaxRole)]
     [MinLength(NumberRoles.MinRole)]
     public List<int> Roles { get; set; }
+    public List<int> SpecialtiesId { get; set; }
     public bool IsDeleted { get; set; }
 }

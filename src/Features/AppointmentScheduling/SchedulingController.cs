@@ -55,18 +55,7 @@ public class SchedulingController : ControllerBase
     /// Obtiene los odontólogos activos de un consultorio para el agendamiento.
     /// El odontólogo debe tener al menos un horario activo.
     /// </summary>
-    /// <remarks>
-    /// Solicitud de muestra:
-    ///
-    ///     GET /dentist/{officeId}
-    ///     {
-    ///        "title": "David Sebastián",
-    ///        "value": "1"
-    ///     }
-    /// Nota: La propiedad <c>value</c> almacena el ID del odontólogo.
-    /// </remarks>
-    /// <param name="officeId">El ID del consultorio.</param>
-    [HttpGet("dentist/{officeId}")]
-	public async Task<List<AdaptiveChoice>> GetDentistsByOfficeId(int officeId)
-		=> await _botQueryRepository.GetDentistsByOfficeIdAsync(officeId);
+    [HttpGet("dentist")]
+	public async Task<List<AdaptiveChoice>> GetDentists([FromQuery]SchedulingGetDentistsDto schedulingDto)
+		=> await _botQueryRepository.GetDentistsAsync(schedulingDto.OfficeId, schedulingDto.DentalServiceId);
 }
