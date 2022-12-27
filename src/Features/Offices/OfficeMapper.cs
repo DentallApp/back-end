@@ -22,7 +22,7 @@ public static class OfficeMapper
             IsCheckboxTicked = office.IsCheckboxTicked
         };
 
-    public static Office MapToOfficeDto(this OfficeInsertDto officeInsertDto)
+    public static Office MapToOffice(this OfficeInsertDto officeInsertDto)
         => new()
         {
             Name            = officeInsertDto.Name,
@@ -30,7 +30,7 @@ public static class OfficeMapper
             ContactNumber   = officeInsertDto.ContactNumber
         };
 
-    public static void MapToOfficeDto(this OfficeUpdateDto officeUpdateDto, Office office)
+    public static void MapToOffice(this OfficeUpdateDto officeUpdateDto, Office office)
     {
         office.Name             = officeUpdateDto.Name;
         office.Address          = officeUpdateDto.Address;

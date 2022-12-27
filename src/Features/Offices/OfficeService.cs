@@ -11,7 +11,7 @@ public class OfficeService : IOfficeService
 
     public async Task<Response> CreateOfficeAsync(OfficeInsertDto officeInsertDto)
     {
-        _officeRepository.Insert(officeInsertDto.MapToOfficeDto());
+        _officeRepository.Insert(officeInsertDto.MapToOffice());
         await _officeRepository.SaveAsync();
 
         return new Response
@@ -41,7 +41,7 @@ public class OfficeService : IOfficeService
                 else if (officeUpdateDto.IsActive() && currentOffice.IsDisabledEmployeeAccounts)
                     await _officeRepository.EnableEmployeeAccountsAsync(currentOffice);
 
-                officeUpdateDto.MapToOfficeDto(currentOffice);
+                officeUpdateDto.MapToOffice(currentOffice);
                 await _officeRepository.SaveAsync();
                 await transaction.CommitAsync();
             });
