@@ -9,16 +9,18 @@ public class OfficeScheduleService : IOfficeScheduleService
         _officeScheduleRepository = officeScheduleRepository;
     }
 
-    public async Task<Response> CreateOfficeScheduleAsync(ClaimsPrincipal currentEmployee, OfficeScheduleInsertDto officeScheduleInsertDto)
+    public async Task<Response<DtoBase>> CreateOfficeScheduleAsync(ClaimsPrincipal currentEmployee, OfficeScheduleInsertDto officeScheduleInsertDto)
     {
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(officeScheduleInsertDto.OfficeId))
-            return new Response(OfficeNotAssignedMessage);
+            return new Response<DtoBase>(OfficeNotAssignedMessage);
 
-        _officeScheduleRepository.Insert(officeScheduleInsertDto.MapToOfficeSchedule());
+        var officeSchedule = officeScheduleInsertDto.MapToOfficeSchedule();
+        _officeScheduleRepository.Insert(officeSchedule);
         await _officeScheduleRepository.SaveAsync();
 
-        return new Response
+        return new Response<DtoBase>
         {
+            Data    = new DtoBase { Id = officeSchedule.Id },
             Success = true,
             Message = CreateResourceMessage
         };
