@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Extensions;
 
-public static class ServiceCollectionExtensions
+public static class ApplicationDependencies
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
