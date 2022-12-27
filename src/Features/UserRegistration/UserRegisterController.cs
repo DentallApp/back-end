@@ -25,7 +25,7 @@ public class UserRegisterController : ControllerBase
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
     [Route("employee")]
     [HttpPost]
-    public async Task<ActionResult<Response>> CreateEmployeeAccount([FromBody]EmployeeInsertDto employeeInsertDto)
+    public async Task<ActionResult<Response<DtoBase>>> CreateEmployeeAccount([FromBody]EmployeeInsertDto employeeInsertDto)
     {
         var response = await _userRegisterService.CreateEmployeeAccountAsync(User, employeeInsertDto);
         if (response.Success)
