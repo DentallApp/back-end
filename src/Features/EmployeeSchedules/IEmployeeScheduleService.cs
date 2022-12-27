@@ -2,6 +2,6 @@
 
 public interface IEmployeeScheduleService
 {
-    Task<Response> CreateEmployeeScheduleAsync(EmployeeScheduleInsertDto employeeScheduleDto);
+    Task<Response<DtoBase>> CreateEmployeeScheduleAsync(EmployeeScheduleInsertDto employeeScheduleDto);
     Task<Response> UpdateEmployeeScheduleAsync(int scheduleId, EmployeeScheduleUpdateDto employeeScheduleDto);
 }
