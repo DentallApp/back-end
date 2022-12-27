@@ -25,15 +25,16 @@ public class GeneralTreatmentService : IGeneralTreatmentService
         };
     }
 
-    public async Task<Response> CreateTreatmentAsync(GeneralTreatmentInsertDto treatmentInsertDto)
+    public async Task<Response<DtoBase>> CreateTreatmentAsync(GeneralTreatmentInsertDto treatmentInsertDto)
     {
         var treatment = treatmentInsertDto.MapToGeneralTreatment();
         _treatmentRepository.Insert(treatment);
         await treatmentInsertDto.Image.WriteAsync(Path.Combine(_basePath, treatment.ImageUrl));
         await _treatmentRepository.SaveAsync();
 
-        return new Response
+        return new Response<DtoBase>
         {
+            Data    = new DtoBase { Id = treatment.Id },
             Success = true,
             Message = CreateResourceMessage
         };
