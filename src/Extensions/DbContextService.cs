@@ -2,7 +2,7 @@
 
 namespace DentallApp.Extensions;
 
-public static class DbContext
+public static class DbContextService
 {
     public static IServiceCollection AddDbContext(this IServiceCollection services, AppSettings settings)
     {
