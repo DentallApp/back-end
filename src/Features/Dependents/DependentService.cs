@@ -9,7 +9,7 @@ public class DependentService : IDependentService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Response> CreateDependentAsync(int userId, DependentInsertDto dependentDto)
+    public async Task<Response<DtoBase>> CreateDependentAsync(int userId, DependentInsertDto dependentDto)
     {
         var person = dependentDto.MapToPerson();
         _unitOfWork.PersonRepository.Insert(person);
@@ -19,8 +19,9 @@ public class DependentService : IDependentService
         dependent.Person = person;
         await _unitOfWork.SaveChangesAsync();
 
-        return new Response
+        return new Response<DtoBase>
         {
+            Data    = new DtoBase { Id = dependent.Id },
             Success = true,
             Message = CreateResourceMessage
         };

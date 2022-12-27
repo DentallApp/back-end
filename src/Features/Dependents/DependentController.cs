@@ -15,7 +15,7 @@ public class DependentController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Response>> Post([FromBody]DependentInsertDto dependentDto)
+    public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]DependentInsertDto dependentDto)
     {
         var response = await _dependentService.CreateDependentAsync(User.GetUserId(), dependentDto);
         if (response.Success)
