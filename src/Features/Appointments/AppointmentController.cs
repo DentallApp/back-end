@@ -26,7 +26,7 @@ public class AppointmentController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Secretary)]
     [HttpPost]
-    public async Task<ActionResult<Response>> Post([FromBody]AppointmentInsertDto appointmentInsertDto)
+    public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]AppointmentInsertDto appointmentInsertDto)
     {
         var response = await _appointmentService.CreateAppointmentAsync(appointmentInsertDto);
         if (response.Success)
