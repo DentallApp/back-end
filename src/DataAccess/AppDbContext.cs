@@ -5,7 +5,12 @@ public partial class AppDbContext : CustomDbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.AddDelegateDecompiler();
+    {
+        optionsBuilder.ConfigureWarnings(warnings =>
+                // See https://github.com/DentallApp/back-end/issues/25.
+                warnings.Ignore(CoreEventId.PossibleIncorrectRequiredNavigationWithQueryFilterInteractionWarning));
+        optionsBuilder.AddDelegateDecompiler();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
