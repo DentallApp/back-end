@@ -6,8 +6,6 @@ public class ReminderJob : IJob
     private readonly AppSettings _settings;
     private readonly IServiceProvider _serviceProvider;
     private readonly IInstantMessaging _instantMessaging;
-    private const string TemplateMessage = 
-        "Estimado usuario {0}, le recordamos que el día {1} a las {2} tiene una cita agendada en el consultorio {3} con el odontólogo {4}";
 
     public ReminderJob(ILogger<ReminderJob> logger, 
                               AppSettings settings,
@@ -30,7 +28,7 @@ public class ReminderJob : IJob
         var businessName = EnvReader.Instance[AppSettings.BusinessName];
         foreach (var appointmentDto in scheduledAppointments)
         {
-            var message = string.Format(TemplateMessage,
+            var message = string.Format(AppointmentReminderMessageTemplate,
                                         appointmentDto.PatientName,
                                         appointmentDto.Date.GetDateInSpanishFormat(),
                                         appointmentDto.StartHour.GetHourWithoutSeconds(),
