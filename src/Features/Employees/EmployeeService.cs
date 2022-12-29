@@ -12,7 +12,7 @@ public class EmployeeService : IEmployeeService
     }
 
     public Task<IEnumerable<EmployeeGetDto>> GetEmployeesAsync(ClaimsPrincipal currentEmployee)
-        =>  currentEmployee.IsAdmin() 
+        =>  currentEmployee.IsAdmin()
                ? _unitOfWork.EmployeeRepository.GetFullEmployeesProfileByOfficeIdAsync(currentEmployee.GetEmployeeId(), currentEmployee.GetOfficeId())
                : _unitOfWork.EmployeeRepository.GetFullEmployeesProfileAsync();
 
@@ -73,20 +73,18 @@ public class EmployeeService : IEmployeeService
 
         if (employeeUpdateDto.Password is not null)
             employeeToEdit.User.Password = _passwordHasher.HashPassword(employeeUpdateDto.Password);
-        
+
         employeeUpdateDto.MapToEmployee(employeeToEdit);
+        var specialtiesId = employeeUpdateDto.SpecialtiesId ?? Enumerable.Empty<int>().ToList();
+        _unitOfWork.EmployeeSpecialtyRepository
+                   .UpdateEmployeeSpecialties(employeeToEdit.Id,
+                                              employeeToEdit.EmployeeSpecialties,
+                                              specialtiesId);
 
-        if (currentEmployee.IsDentist())
-        {
-            var specialtiesId = employeeUpdateDto.SpecialtiesId ?? Enumerable.Empty<int>().ToList();
-            _unitOfWork.EmployeeSpecialtyRepository.UpdateEmployeeSpecialties(employeeToEdit.Id,
-                                                                              employeeToEdit.EmployeeSpecialties,
-                                                                              specialtiesId);
-        }
-
-        _unitOfWork.UserRoleRepository.UpdateUserRoles(employeeToEdit.UserId, 
-                                                       employeeToEdit.User.UserRoles, 
-                                                       rolesId: employeeUpdateDto.Roles);
+        _unitOfWork.UserRoleRepository
+                   .UpdateUserRoles(employeeToEdit.UserId,
+                                    employeeToEdit.User.UserRoles,
+                                    rolesId: employeeUpdateDto.Roles);
         await _unitOfWork.SaveChangesAsync();
 
         return new Response

@@ -7,8 +7,8 @@ public class UserRegisterService : IUserRegisterService
     private readonly ITokenService _tokenService;
     private readonly IPasswordHasher _passwordHasher;
 
-    public UserRegisterService(IUnitOfWork unitOfWork, 
-                               IEmailService emailService, 
+    public UserRegisterService(IUnitOfWork unitOfWork,
+                               IEmailService emailService,
                                ITokenService tokenService,
                                IPasswordHasher passwordHasher)
     {
@@ -69,15 +69,12 @@ public class UserRegisterService : IUserRegisterService
         _unitOfWork.EmployeeRepository.Insert(employee);
         employee.User = user;
         employee.Person = user.Person;
-        if (currentEmployee.IsDentist())
+        var specialtiesId = (employeeInsertDto.SpecialtiesId ?? Enumerable.Empty<int>()).RemoveDuplicates();
+        foreach (var specialtyId in specialtiesId)
         {
-            var specialtiesId = (employeeInsertDto.SpecialtiesId ?? Enumerable.Empty<int>()).RemoveDuplicates();
-            foreach (var specialtyId in specialtiesId)
-            {
-                var employeeSpecialty = new EmployeeSpecialty { SpecialtyId = specialtyId };
-                _unitOfWork.EmployeeSpecialtyRepository.Insert(employeeSpecialty);
-                employeeSpecialty.Employee = employee;
-            }
+            var employeeSpecialty = new EmployeeSpecialty { SpecialtyId = specialtyId };
+            _unitOfWork.EmployeeSpecialtyRepository.Insert(employeeSpecialty);
+            employeeSpecialty.Employee = employee;
         }
         await _unitOfWork.SaveChangesAsync();
 
