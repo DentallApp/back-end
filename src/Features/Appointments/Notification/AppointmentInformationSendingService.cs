@@ -17,7 +17,7 @@ public class AppointmentInformationSendingService : IAppointmentInformationSendi
 
     public async Task SendAppointmentInformationAsync(int appointmentId, AppointmentInsertDto appointmentInsertDto)
     {
-        // La consulta se ejecuta en caso que se realice el agendamiento de forma manual.
+        // The query is executed in case the scheduling of appointments is done manually by the secretary.
         appointmentInsertDto.RangeToPay ??= await _treatmentRepository.GetTreatmentWithRangeToPayAsync(appointmentInsertDto.GeneralTreatmentId);
         var businessName = EnvReader.Instance[AppSettings.BusinessName];
         var info = await _appointmentRepository.GetAppointmentInformationAsync(appointmentId);
