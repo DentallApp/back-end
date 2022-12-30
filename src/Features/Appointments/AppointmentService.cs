@@ -3,15 +3,12 @@
 public class AppointmentService : IAppointmentService
 {
     private readonly IAppointmentRepository _appointmentRepository;
-    private readonly IAppointmentInformationSendingService _sendingService;
     private readonly IDateTimeProvider _dateTimeProvider;
 
     public AppointmentService(IAppointmentRepository appointmentRepository,
-                              IAppointmentInformationSendingService sendingService,
                               IDateTimeProvider dateTimeProvider)
     {
         _appointmentRepository = appointmentRepository;
-        _sendingService = sendingService;
         _dateTimeProvider = dateTimeProvider;
     }
 
@@ -23,7 +20,6 @@ public class AppointmentService : IAppointmentService
         var appointment = appointmentInsertDto.MapToAppointment();
         _appointmentRepository.Insert(appointment);
         await _appointmentRepository.SaveAsync();
-        await _sendingService.SendAppointmentInformationAsync(appointment.Id, appointmentInsertDto);
         return new Response<DtoBase>
         {
             Data    = new DtoBase { Id = appointment.Id },
