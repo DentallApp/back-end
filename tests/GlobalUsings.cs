@@ -13,6 +13,12 @@ global using DentallApp.Helpers.InstantMessaging;
 global using DentallApp.Helpers.DateTimeHelpers;
 global using DentallApp.Features.SecurityToken;
 global using DentallApp.Features.Roles;
+global using DentallApp.Features.Appointments;
+global using DentallApp.Features.EmployeeSchedules;
+global using DentallApp.Features.EmployeeSchedules.DTOs;
+global using DentallApp.Features.GeneralTreatments;
+global using DentallApp.Features.GeneralTreatments.DTOs;
+global using DentallApp.Features.PublicHolidays.Offices;
 global using DentallApp.Entities;
 global using DentallApp.Configuration;
 
