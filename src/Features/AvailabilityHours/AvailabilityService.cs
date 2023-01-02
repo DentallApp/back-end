@@ -6,16 +6,19 @@ public class AvailabilityService : IAvailabilityService
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
     private readonly IGeneralTreatmentRepository _dentalServiceRepository;
     private readonly IHolidayOfficeRepository _holidayOfficeRepository;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
     public AvailabilityService(IAppointmentRepository appointmentRepository,
                                IEmployeeScheduleRepository employeeScheduleRepository,
                                IGeneralTreatmentRepository dentalServiceRepository,
-                               IHolidayOfficeRepository holidayOfficeRepository)
+                               IHolidayOfficeRepository holidayOfficeRepository,
+                               IDateTimeProvider dateTimeProvider)
     {
         _appointmentRepository = appointmentRepository;
         _employeeScheduleRepository = employeeScheduleRepository;
         _dentalServiceRepository = dentalServiceRepository;
         _holidayOfficeRepository = holidayOfficeRepository;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     /// <summary>
@@ -63,35 +66,38 @@ public class AvailabilityService : IAvailabilityService
             unavailables.Add(GetTimeOff(employeeScheduleDto));
             availableHours = Availability.GetAvailableHours(new AvailabilityOptions
             {
-                DentistStartHour = (TimeSpan)employeeScheduleDto.MorningStartHour,
-                DentistEndHour   = (TimeSpan)employeeScheduleDto.AfternoonEndHour,
-                ServiceDuration  = serviceDuration,
-                AppoinmentDate   = appointmentDate,
-                Unavailables     = unavailables.OrderBy(timeRange => timeRange.StartHour)
-                                               .ThenBy(timeRange => timeRange.EndHour)
-                                               .ToList()
+                DentistStartHour   = (TimeSpan)employeeScheduleDto.MorningStartHour,
+                DentistEndHour     = (TimeSpan)employeeScheduleDto.AfternoonEndHour,
+                ServiceDuration    = serviceDuration,
+                AppoinmentDate     = appointmentDate,
+                CurrentTimeAndDate = _dateTimeProvider.Now,
+                Unavailables       = unavailables.OrderBy(timeRange => timeRange.StartHour)
+                                                 .ThenBy(timeRange => timeRange.EndHour)
+                                                 .ToList()
             });
         }
         else if(employeeScheduleDto.IsMorningSchedule())
         {
             availableHours = Availability.GetAvailableHours(new AvailabilityOptions
             {
-                DentistStartHour = (TimeSpan)employeeScheduleDto.MorningStartHour,
-                DentistEndHour   = (TimeSpan)employeeScheduleDto.MorningEndHour,
-                ServiceDuration  = serviceDuration,
-                AppoinmentDate   = appointmentDate,
-                Unavailables     = unavailables
+                DentistStartHour   = (TimeSpan)employeeScheduleDto.MorningStartHour,
+                DentistEndHour     = (TimeSpan)employeeScheduleDto.MorningEndHour,
+                ServiceDuration    = serviceDuration,
+                AppoinmentDate     = appointmentDate,
+                Unavailables       = unavailables,
+                CurrentTimeAndDate = _dateTimeProvider.Now
             });
         }
         else if(employeeScheduleDto.IsAfternoonSchedule())
         {
             availableHours = Availability.GetAvailableHours(new AvailabilityOptions
             {
-                DentistStartHour = (TimeSpan)employeeScheduleDto.AfternoonStartHour,
-                DentistEndHour   = (TimeSpan)employeeScheduleDto.AfternoonEndHour,
-                ServiceDuration  = serviceDuration,
-                AppoinmentDate   = appointmentDate,
-                Unavailables     = unavailables
+                DentistStartHour   = (TimeSpan)employeeScheduleDto.AfternoonStartHour,
+                DentistEndHour     = (TimeSpan)employeeScheduleDto.AfternoonEndHour,
+                ServiceDuration    = serviceDuration,
+                AppoinmentDate     = appointmentDate,
+                Unavailables       = unavailables,
+                CurrentTimeAndDate = _dateTimeProvider.Now
             });
         }
 
