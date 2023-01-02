@@ -29,7 +29,7 @@ public class AvailabilityOptions
     /// <summary>
     /// Obtiene o establece la fecha de la cita.
     /// </summary>
-    public DateTime? AppoinmentDate { get; set; }
+    public DateTime? AppointmentDate { get; set; }
 
     /// <summary>
     /// Obtiene o establece la fecha y hora actual.

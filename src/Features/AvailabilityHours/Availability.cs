@@ -27,13 +27,13 @@ public static class Availability
         if (options.ServiceDuration == TimeSpan.Zero)
             throw new InvalidOperationException("The duration of the dental service may not be 00:00");
 
-        var availableHours                  = new List<AvailableTimeRangeDto>();
-        int unavailableTimeRangeIndex       = 0;
-        int totalUnavailableHours           = options.Unavailables.Count;
+        var availableHours                   = new List<AvailableTimeRangeDto>();
+        int unavailableTimeRangeIndex        = 0;
+        int totalUnavailableHours            = options.Unavailables.Count;
         // Para verificar sí la fecha de la cita no es la fecha actual.
-        bool appoinmentDateIsNotCurrentDate = options.CurrentTimeAndDate.Date != options.AppoinmentDate;
-        TimeSpan currentTime                = options.CurrentTimeAndDate.TimeOfDay;
-        TimeSpan newStartHour               = options.DentistStartHour;
+        bool appointmentDateIsNotCurrentDate = options.CurrentTimeAndDate.Date != options.AppointmentDate;
+        TimeSpan currentTime                 = options.CurrentTimeAndDate.TimeOfDay;
+        TimeSpan newStartHour                = options.DentistStartHour;
         while (true)
         {
             TimeSpan newEndHour = newStartHour + options.ServiceDuration;
@@ -51,7 +51,7 @@ public static class Availability
                 if (unavailableTimeRange is not null && newStartHour >= unavailableTimeRange.EndHour)
                     unavailableTimeRangeIndex.MoveNextUnavailableTimeRangeIndex();
 
-                if (appoinmentDateIsNotCurrentDate || newStartHour > currentTime)
+                if (appointmentDateIsNotCurrentDate || newStartHour > currentTime)
                 {
                     availableHours.Add(new AvailableTimeRangeDto
                     {

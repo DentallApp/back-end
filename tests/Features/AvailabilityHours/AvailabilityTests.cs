@@ -115,7 +115,7 @@ public partial class AvailabilityTests
             DentistStartHour   = TimeSpan.Parse("7:00"),
             DentistEndHour     = TimeSpan.Parse("17:00"),
             ServiceDuration    = TimeSpan.FromMinutes(30),
-            AppoinmentDate     = new DateTime(2022, 08, 01, 0, 0, 0),
+            AppointmentDate    = new DateTime(2022, 08, 01, 0, 0, 0),
             CurrentTimeAndDate = new DateTime(2022, 08, 01, 12, 0, 0)
         };
         var expected = new List<AvailableTimeRangeDto>
