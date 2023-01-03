@@ -2,12 +2,12 @@
 
 public static class UserSeedData
 {
-    private const string BasicUserEmail  = "basic_user@hotmail.com";
-    private const string SecretaryEmail  = "secretary@hotmail.com";
-    private const string DentistEmail    = "dentist@hotmail.com";
-    private const string AdminEmail      = "admin@hotmail.com";
-    private const string SuperAdminEmail = "superadmin@hotmail.com";
-    private const string Password        = "$2a$10$60QnEiafBCLfVBMfQkExVeolyBxVHWcSQKTvkxVJj9FUozRpRP/GW";
+    private const string _basicUserEmail  = "basic_user@hotmail.com";
+    private const string _secretaryEmail  = "secretary@hotmail.com";
+    private const string _dentistEmail    = "dentist@hotmail.com";
+    private const string _adminEmail      = "admin@hotmail.com";
+    private const string _superAdminEmail = "superadmin@hotmail.com";
+    private const string _password        = "$2a$10$60QnEiafBCLfVBMfQkExVeolyBxVHWcSQKTvkxVJj9FUozRpRP/GW";
 
     public static void CreateDefaultUserAccounts(this ModelBuilder builder)
     {
@@ -29,7 +29,7 @@ public static class UserSeedData
                         Names = "Roberto Emilio",
                         LastNames = "Placencio Pinto",
                         CellPhone = "0998994332",
-                        Email = BasicUserEmail,
+                        Email = _basicUserEmail,
                         DateBirth = new DateTime(1999, 08, 27),
                         GenderId = GendersId.Male,
                     }
@@ -38,8 +38,8 @@ public static class UserSeedData
                     new User
                     {
                         Id = 1,
-                        UserName = BasicUserEmail,
-                        Password = Password,
+                        UserName = _basicUserEmail,
+                        Password = _password,
                         PersonId = 1
                     }
                );
@@ -63,7 +63,7 @@ public static class UserSeedData
                         Names = "María Consuelo",
                         LastNames = "Rodríguez Valencia",
                         CellPhone = "0998994333",
-                        Email = SecretaryEmail,
+                        Email = _secretaryEmail,
                         DateBirth = new DateTime(1999, 07, 25),
                         GenderId = GendersId.Female,
                     }
@@ -72,8 +72,8 @@ public static class UserSeedData
                     new User
                     {
                         Id = 2,
-                        UserName = SecretaryEmail,
-                        Password = Password,
+                        UserName = _secretaryEmail,
+                        Password = _password,
                         PersonId = 2
                     }
                );
@@ -108,7 +108,7 @@ public static class UserSeedData
                         Names = "Guillermo Oswaldo",
                         LastNames = "Rodríguez Rivera",
                         CellPhone = "0998994334",
-                        Email = DentistEmail,
+                        Email = _dentistEmail,
                         DateBirth = new DateTime(1999, 07, 21),
                         GenderId = GendersId.Male,
                     }
@@ -117,8 +117,8 @@ public static class UserSeedData
                     new User
                     {
                         Id = 3,
-                        UserName = DentistEmail,
-                        Password = Password,
+                        UserName = _dentistEmail,
+                        Password = _password,
                         PersonId = 3
                     }
                );
@@ -153,7 +153,7 @@ public static class UserSeedData
                         Names = "Jean Carlos",
                         LastNames = "Figueroa Lopéz",
                         CellPhone = "0998994335",
-                        Email = AdminEmail,
+                        Email = _adminEmail,
                         DateBirth = new DateTime(1999, 09, 15),
                         GenderId = GendersId.Male,
                     }
@@ -162,8 +162,8 @@ public static class UserSeedData
                     new User
                     {
                         Id = 4,
-                        UserName = AdminEmail,
-                        Password = Password,
+                        UserName = _adminEmail,
+                        Password = _password,
                         PersonId = 4
                     }
                );
@@ -198,7 +198,7 @@ public static class UserSeedData
                         Names = "David Sebastian",
                         LastNames = "Román Amariles",
                         CellPhone = "0998994336",
-                        Email = SuperAdminEmail,
+                        Email = _superAdminEmail,
                         DateBirth = new DateTime(1999, 08, 27),
                         GenderId = GendersId.Male,
                     }
@@ -207,8 +207,8 @@ public static class UserSeedData
                     new User
                     {
                         Id = 5,
-                        UserName = SuperAdminEmail,
-                        Password = Password,
+                        UserName = _superAdminEmail,
+                        Password = _password,
                         PersonId = 5
                     }
                );
@@ -264,14 +264,14 @@ public static class UserSeedData
                     {
                         Id = 6,
                         UserName = "mary_01@hotmail.com",
-                        Password = Password,
+                        Password = _password,
                         PersonId = 6
                     },
                     new User
                     {
                         Id = 7,
                         UserName = "torres_02@hotmail.com",
-                        Password = Password,
+                        Password = _password,
                         PersonId = 7
                     }
                );

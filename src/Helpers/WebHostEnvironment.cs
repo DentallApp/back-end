@@ -2,17 +2,17 @@
 
 public static class WebHostEnvironment
 {
-    private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
-    private const string Development = "Development";
-    private const string Staging     = "Staging";
-    private const string Production  = "Production";
+    private const string _aspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
+    private const string _development = "Development";
+    private const string _staging     = "Staging";
+    private const string _production  = "Production";
 
-    public static bool IsDevelopment() => IsEnvironment(Development);
-    public static bool IsStaging()     => IsEnvironment(Staging);
-    public static bool IsProduction()  => IsEnvironment(Production);
+    public static bool IsDevelopment() => IsEnvironment(_development);
+    public static bool IsStaging()     => IsEnvironment(_staging);
+    public static bool IsProduction()  => IsEnvironment(_production);
 
     public static bool IsEnvironment(string environmentName)
-        => string.Equals(Environment.GetEnvironmentVariable(AspNetCoreEnvironment), 
+        => string.Equals(Environment.GetEnvironmentVariable(_aspNetCoreEnvironment), 
                          environmentName, 
                          StringComparison.OrdinalIgnoreCase);
 }
