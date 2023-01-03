@@ -1,5 +1,11 @@
 ﻿namespace DentallApp.Features.Chatbot.Helpers;
 
+/// <summary>
+/// <para>Prompts a user to enter information on the adaptive card.</para>
+/// Reference: <seealso href="https://binarygrounds.com/2021/06/12/adaptive-cards-in-bot-dialog.html">
+/// Use Adaptive Cards as dialog in Bot Framework.
+/// </seealso>
+/// </summary>
 public class AdaptiveCardPrompt : Prompt<JObject>
 {
     public AdaptiveCardPrompt(string dialogId, PromptValidator<JObject> validator = null)
