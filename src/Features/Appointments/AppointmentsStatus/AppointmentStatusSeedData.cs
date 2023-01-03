@@ -1,8 +1,8 @@
 ﻿namespace DentallApp.Features.Appointments.AppointmentsStatus;
 
-public class AppointmentStatusConfiguration : IEntityTypeConfiguration<AppointmentStatus>
+public static class AppointmentStatusSeedData
 {
-    public void Configure(EntityTypeBuilder<AppointmentStatus> builder)
+    public static ModelBuilder CreateAppointmentStatus(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new AppointmentStatus
@@ -26,5 +26,6 @@ public class AppointmentStatusConfiguration : IEntityTypeConfiguration<Appointme
                 Name = AppointmentStatusName.Canceled
             }
         );
+        return builder;
     }
 }

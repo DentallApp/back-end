@@ -2,7 +2,9 @@ namespace DentallApp.DataAccess;
 
 public partial class AppDbContext : CustomDbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    private readonly IWebHostEnvironment _env;
+
+    public AppDbContext(IWebHostEnvironment env, DbContextOptions<AppDbContext> options) : base(options) => _env = env;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -35,21 +37,23 @@ public partial class AppDbContext : CustomDbContext
                     .AddEntity<HolidayOffice>();
 
         AddSqlFunctions(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-        modelBuilder.ApplyConfiguration(new GeneralTreatmentConfiguration())
-                    .ApplyConfiguration(new SpecificTreatmentConfiguration())
-                    .ApplyConfiguration(new RoleConfiguration())
-                    .ApplyConfiguration(new GenderConfiguration())
-                    .ApplyConfiguration(new KinshipConfiguration())
-                    .ApplyConfiguration(new DependentConfiguration())
-                    .ApplyConfiguration(new OfficeConfiguration())
-                    .ApplyConfiguration(new EmployeeConfiguration())
-                    .ApplyConfiguration(new AppointmentStatusConfiguration())
-                    .ApplyConfiguration(new WeekDayConfiguration())
-                    .ApplyConfiguration(new EmployeeScheduleConfiguration())
-                    .ApplyConfiguration(new OfficeScheduleConfiguration())
-                    .ApplyConfiguration(new PublicHolidayConfiguration());
+        // Seed data.
+        modelBuilder.CreateRoles()
+                    .CreateKinships()
+                    .CreateAppointmentStatus()
+                    .CreateWeekDays()
+                    .CreateGenders();
 
-        modelBuilder.CreateDefaultUserAccounts();
+        if (_env.IsDevelopment())
+        {
+            modelBuilder.CreateGeneralTreatments()
+                        .CreateSpecificTreatments()
+                        .CreateOffices()
+                        .CreateOfficeSchedules()
+                        .CreateEmployeeSchedules()
+                        .CreateDefaultUserAccounts();
+        }
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace DentallApp.Features.Roles;
 
-public class RoleConfiguration : IEntityTypeConfiguration<Role>
+public static class RoleSeedData
 {
-    public void Configure(EntityTypeBuilder<Role> builder)
+    public static ModelBuilder CreateRoles(this ModelBuilder builder)
     {
-        builder.AddSeedData(
+         builder.AddSeedData(
             new Role
             {
                 Id = RolesId.Unverified,
@@ -36,5 +36,6 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
                 Name = RolesName.Superadmin
             }
         );
+        return builder;
     }
 }

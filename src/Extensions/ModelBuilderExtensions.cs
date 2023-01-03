@@ -13,4 +13,14 @@ public static class ModelBuilderExtensions
         modelBuilder.Entity<TEntity>();
         return modelBuilder;
     }
+
+    public static DataBuilder<TEntity> AddSeedData<TEntity>(this ModelBuilder builder, params TEntity[] data) where TEntity : EntityBase
+    {
+        foreach (var entity in data)
+        {
+            entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
+        }
+        return builder.Entity<TEntity>().HasData(data);
+    }
 }

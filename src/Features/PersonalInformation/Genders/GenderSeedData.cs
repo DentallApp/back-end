@@ -1,8 +1,8 @@
 ﻿namespace DentallApp.Features.PersonalInformation.Genders;
 
-public class GenderConfiguration : IEntityTypeConfiguration<Gender>
+public static class GenderSeedData
 {
-    public void Configure(EntityTypeBuilder<Gender> builder)
+    public static ModelBuilder CreateGenders(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new Gender
@@ -16,5 +16,6 @@ public class GenderConfiguration : IEntityTypeConfiguration<Gender>
                 Name = GendersName.Female
             }
         );
+        return builder;
     }
 }

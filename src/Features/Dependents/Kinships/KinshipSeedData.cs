@@ -1,8 +1,8 @@
 ﻿namespace DentallApp.Features.Dependents.Kinships;
 
-public class KinshipConfiguration : IEntityTypeConfiguration<Kinship>
+public static class KinshipSeedData
 {
-    public void Configure(EntityTypeBuilder<Kinship> builder)
+    public static ModelBuilder CreateKinships(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new Kinship
@@ -21,5 +21,6 @@ public class KinshipConfiguration : IEntityTypeConfiguration<Kinship>
                 Name = KinshipsName.Other
             }
         );
+        return builder;
     }
 }

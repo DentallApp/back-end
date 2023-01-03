@@ -1,8 +1,8 @@
 ﻿namespace DentallApp.Features.WeekDays;
 
-public class WeekDayConfiguration : IEntityTypeConfiguration<WeekDay>
+public static class WeekDaySeedData
 {
-    public void Configure(EntityTypeBuilder<WeekDay> builder)
+    public static ModelBuilder CreateWeekDays(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new WeekDay
@@ -36,5 +36,6 @@ public class WeekDayConfiguration : IEntityTypeConfiguration<WeekDay>
                 Name = WeekDaysName.Saturday
             }
         );
+        return builder;
     }
 }

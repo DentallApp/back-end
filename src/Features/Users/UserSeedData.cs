@@ -11,9 +11,6 @@ public static class UserSeedData
 
     public static void CreateDefaultUserAccounts(this ModelBuilder builder)
     {
-        if (!WebHostEnvironment.IsDevelopment())
-            return;
-
         CreateBasicUserAccount(builder);
         CreateSecretaryAccount(builder);
         CreateDentistAccount(builder);
@@ -24,8 +21,7 @@ public static class UserSeedData
 
     private static void CreateBasicUserAccount(ModelBuilder builder)
     {
-        builder.Entity<Person>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Person
                     {
                         Id = 1,
@@ -38,8 +34,7 @@ public static class UserSeedData
                         GenderId = GendersId.Male,
                     }
                );
-        builder.Entity<User>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new User
                     {
                         Id = 1,
@@ -48,8 +43,7 @@ public static class UserSeedData
                         PersonId = 1
                     }
                );
-        builder.Entity<UserRole>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new UserRole
                     {
                         Id = 1,
@@ -61,8 +55,7 @@ public static class UserSeedData
 
     private static void CreateSecretaryAccount(ModelBuilder builder)
     {
-        builder.Entity<Person>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Person
                     {
                         Id = 2,
@@ -75,8 +68,7 @@ public static class UserSeedData
                         GenderId = GendersId.Female,
                     }
                );
-        builder.Entity<User>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new User
                     {
                         Id = 2,
@@ -85,8 +77,7 @@ public static class UserSeedData
                         PersonId = 2
                     }
                );
-        builder.Entity<Employee>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Employee
                     {
                         Id = 1,
@@ -97,8 +88,7 @@ public static class UserSeedData
                         PostgradeUniversity = "ESPOL"
                     }
                );
-        builder.Entity<UserRole>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new UserRole
                     {
                         Id = 2,
@@ -110,8 +100,7 @@ public static class UserSeedData
 
     private static void CreateDentistAccount(ModelBuilder builder)
     {
-        builder.Entity<Person>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Person
                     {
                         Id = 3,
@@ -124,8 +113,7 @@ public static class UserSeedData
                         GenderId = GendersId.Male,
                     }
                );
-        builder.Entity<User>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new User
                     {
                         Id = 3,
@@ -134,8 +122,7 @@ public static class UserSeedData
                         PersonId = 3
                     }
                );
-        builder.Entity<Employee>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Employee
                     {
                         Id = 2,
@@ -146,8 +133,7 @@ public static class UserSeedData
                         PostgradeUniversity = "ESPOL"
                     }
                );
-        builder.Entity<UserRole>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new UserRole
                     {
                         Id = 3,
@@ -159,8 +145,7 @@ public static class UserSeedData
 
     private static void CreateAdminAccount(ModelBuilder builder)
     {
-        builder.Entity<Person>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Person
                     {
                         Id = 4,
@@ -173,8 +158,7 @@ public static class UserSeedData
                         GenderId = GendersId.Male,
                     }
                );
-        builder.Entity<User>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new User
                     {
                         Id = 4,
@@ -183,8 +167,7 @@ public static class UserSeedData
                         PersonId = 4
                     }
                );
-        builder.Entity<Employee>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Employee
                     {
                         Id = 3,
@@ -195,8 +178,7 @@ public static class UserSeedData
                         PostgradeUniversity = "ESPOL"
                     }
                );
-        builder.Entity<UserRole>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new UserRole
                     {
                         Id = 4,
@@ -208,8 +190,7 @@ public static class UserSeedData
 
     private static void CreateSuperAdminAccount(ModelBuilder builder)
     {
-        builder.Entity<Person>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Person
                     {
                         Id = 5,
@@ -222,8 +203,7 @@ public static class UserSeedData
                         GenderId = GendersId.Male,
                     }
                );
-        builder.Entity<User>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new User
                     {
                         Id = 5,
@@ -232,8 +212,7 @@ public static class UserSeedData
                         PersonId = 5
                     }
                );
-        builder.Entity<Employee>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Employee
                     {
                         Id = 4,
@@ -244,8 +223,7 @@ public static class UserSeedData
                         PostgradeUniversity = "ESPOL"
                     }
                );
-        builder.Entity<UserRole>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new UserRole
                     {
                         Id = 5,
@@ -257,8 +235,7 @@ public static class UserSeedData
 
     private static void CreateAdditionalAccounts(ModelBuilder builder)
     {
-        builder.Entity<Person>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Person
                     {
                         Id = 6,
@@ -282,8 +259,7 @@ public static class UserSeedData
                         GenderId = GendersId.Male,
                     }
                );
-        builder.Entity<User>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new User
                     {
                         Id = 6,
@@ -299,8 +275,7 @@ public static class UserSeedData
                         PersonId = 7
                     }
                );
-        builder.Entity<Employee>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new Employee
                     {
                         Id = 5,
@@ -320,8 +295,7 @@ public static class UserSeedData
                         PostgradeUniversity = "ESPOL"
                     }
                );
-        builder.Entity<UserRole>()
-               .AddSeedData(
+        builder.AddSeedData(
                     new UserRole
                     {
                         Id = 6,
