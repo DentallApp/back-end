@@ -39,20 +39,20 @@ public partial class AppDbContext : CustomDbContext
         AddSqlFunctions(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-        // Seed data.
-        modelBuilder.CreateRoles()
-                    .CreateKinships()
-                    .CreateAppointmentStatus()
-                    .CreateWeekDays()
-                    .CreateGenders();
+        // Create seed data.
+        modelBuilder.CreateDefaultRoles()
+                    .CreateDefaultKinships()
+                    .CreateDefaultAppointmentStatus()
+                    .CreateDefaultWeekDays()
+                    .CreateDefaultGenders();
 
         if (_env.IsDevelopment())
         {
-            modelBuilder.CreateGeneralTreatments()
-                        .CreateSpecificTreatments()
-                        .CreateOffices()
-                        .CreateOfficeSchedules()
-                        .CreateEmployeeSchedules()
+            modelBuilder.CreateDefaultGeneralTreatments()
+                        .CreateDefaultSpecificTreatments()
+                        .CreateDefaultOffices()
+                        .CreateDefaultOfficeSchedules()
+                        .CreateDefaultEmployeeSchedules()
                         .CreateDefaultUserAccounts();
         }
     }

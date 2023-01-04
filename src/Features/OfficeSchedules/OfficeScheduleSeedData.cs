@@ -2,7 +2,7 @@
 
 public static class OfficeScheduleSeedData
 {
-    public static ModelBuilder CreateOfficeSchedules(this ModelBuilder builder)
+    public static ModelBuilder CreateDefaultOfficeSchedules(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new OfficeSchedule

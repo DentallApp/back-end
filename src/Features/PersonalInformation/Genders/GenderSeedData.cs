@@ -2,7 +2,7 @@
 
 public static class GenderSeedData
 {
-    public static ModelBuilder CreateGenders(this ModelBuilder builder)
+    public static ModelBuilder CreateDefaultGenders(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new Gender

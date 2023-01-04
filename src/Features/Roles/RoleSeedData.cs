@@ -2,7 +2,7 @@
 
 public static class RoleSeedData
 {
-    public static ModelBuilder CreateRoles(this ModelBuilder builder)
+    public static ModelBuilder CreateDefaultRoles(this ModelBuilder builder)
     {
          builder.AddSeedData(
             new Role

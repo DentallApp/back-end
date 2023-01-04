@@ -2,7 +2,7 @@
 
 public static class GeneralTreatmentSeedData
 {
-    public static ModelBuilder CreateGeneralTreatments(this ModelBuilder builder)
+    public static ModelBuilder CreateDefaultGeneralTreatments(this ModelBuilder builder)
     {
         builder.AddSeedData(
              new GeneralTreatment

@@ -2,7 +2,7 @@
 
 public static class AppointmentStatusSeedData
 {
-    public static ModelBuilder CreateAppointmentStatus(this ModelBuilder builder)
+    public static ModelBuilder CreateDefaultAppointmentStatus(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new AppointmentStatus

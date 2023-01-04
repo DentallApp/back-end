@@ -2,7 +2,7 @@
 
 public static class OfficeSeedData
 {
-    public static ModelBuilder CreateOffices(this ModelBuilder builder)
+    public static ModelBuilder CreateDefaultOffices(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new Office

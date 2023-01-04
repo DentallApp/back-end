@@ -2,7 +2,7 @@
 
 public static class EmployeeScheduleSeedData
 {
-    public static ModelBuilder CreateEmployeeSchedules(this ModelBuilder builder)
+    public static ModelBuilder CreateDefaultEmployeeSchedules(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new EmployeeSchedule

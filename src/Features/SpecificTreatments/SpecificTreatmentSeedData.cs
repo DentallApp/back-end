@@ -2,7 +2,7 @@
 
 public static class SpecificTreatmentSeedData
 {
-    public static ModelBuilder CreateSpecificTreatments(this ModelBuilder builder)
+    public static ModelBuilder CreateDefaultSpecificTreatments(this ModelBuilder builder)
     {
         builder.AddSeedData(
              // Ortodoncia/Brackets

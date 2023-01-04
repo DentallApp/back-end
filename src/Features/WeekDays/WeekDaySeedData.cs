@@ -2,7 +2,7 @@
 
 public static class WeekDaySeedData
 {
-    public static ModelBuilder CreateWeekDays(this ModelBuilder builder)
+    public static ModelBuilder CreateDefaultWeekDays(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new WeekDay

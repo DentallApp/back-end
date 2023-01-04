@@ -2,7 +2,7 @@
 
 public static class KinshipSeedData
 {
-    public static ModelBuilder CreateKinships(this ModelBuilder builder)
+    public static ModelBuilder CreateDefaultKinships(this ModelBuilder builder)
     {
         builder.AddSeedData(
             new Kinship
