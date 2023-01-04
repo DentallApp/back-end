@@ -42,6 +42,8 @@ public class AppointmentRepository : Repository<Appointment>, IAppointmentReposi
                               (appointment.Date == appointmentDate) &&
                               (appointment.IsNotCanceled() ||
                                appointment.IsCancelledByEmployee ||
+                               // Checks if the canceled appointment is not available.
+                               // This check allows patients to choose a time slot for an appointment canceled by another basic user.
                                DateTime.Now > Context.AddTime(Context.ToDateTime(appointment.Date), appointment.StartHour)))
                         .Select(appointment => appointment.MapToUnavailableTimeRangeDto())
                         .Distinct()
@@ -59,6 +61,8 @@ public class AppointmentRepository : Repository<Appointment>, IAppointmentReposi
                                         (appointment.EndHour == appointmentDto.EndHour) &&
                                         (appointment.IsNotCanceled() ||
                                          appointment.IsCancelledByEmployee ||
+                                         // Checks if the canceled appointment is not available.
+                                         // This check allows patients to choose a time slot for an appointment canceled by another basic user.
                                          DateTime.Now > Context.AddTime(Context.ToDateTime(appointment.Date), appointment.StartHour)))
                                   .Select(appointment => appointment.Id)
                                   .FirstOrDefaultAsync();
