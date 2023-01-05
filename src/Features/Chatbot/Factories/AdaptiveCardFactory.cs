@@ -13,9 +13,9 @@ public class AdaptiveCardFactory
         );
     }
 
-    public static PromptOptions CreateDateCard(string cardJson)
+    public static PromptOptions CreateDateCard(string cardJson, IDateTimeProvider dateTimeProvider)
     {
-        var currentDate = DateTime.Now.Date;
+        var currentDate = dateTimeProvider.Now.Date;
         double maxDays = EnvReader.Instance.GetDoubleValue(AppSettings.MaxDaysInCalendar);
         var maxDate = currentDate.AddDays(maxDays);
         var card = AdaptiveCard.FromJson(cardJson).Card;

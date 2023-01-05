@@ -3,10 +3,12 @@
 public class TokenService : ITokenService
 {
     private readonly AppSettings _settings;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
-    public TokenService(AppSettings settings)
+    public TokenService(AppSettings settings, IDateTimeProvider dateTimeProvider)
     {
         _settings = settings;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     private string CreateJwt(IEnumerable<Claim> claims, DateTime expires, string key)
@@ -32,7 +34,7 @@ public class TokenService : ITokenService
         => ValidateJwt(token, key: passwordHash);
 
     public string CreateAccessToken(IEnumerable<Claim> claims)
-        => CreateJwt(claims, DateTime.UtcNow.AddMinutes(_settings.AccessTokenExpires), _settings.AccessTokenKey);
+        => CreateJwt(claims, _dateTimeProvider.UtcNow.AddMinutes(_settings.AccessTokenExpires), _settings.AccessTokenKey);
 
     public string CreateAccessToken(UserClaims userClaims)
         => CreateAccessToken(CreateClaims(userClaims));
@@ -41,7 +43,7 @@ public class TokenService : ITokenService
         => CreateAccessToken(CreateClaims(employeeClaims));
 
     public string CreateEmailVerificationToken(IEnumerable<Claim> claims)
-        => CreateJwt(claims, DateTime.UtcNow.AddHours(_settings.EmailVerificationTokenExpires), _settings.EmailVerificationTokenKey);
+        => CreateJwt(claims, _dateTimeProvider.UtcNow.AddHours(_settings.EmailVerificationTokenExpires), _settings.EmailVerificationTokenKey);
 
     public string CreateEmailVerificationToken(UserClaims userClaims)
         => CreateEmailVerificationToken(CreateClaims(userClaims));
@@ -53,7 +55,7 @@ public class TokenService : ITokenService
             new (CustomClaimsType.UserId, userid.ToString()),
             new (CustomClaimsType.UserName, username),
          };
-        var expires = DateTime.UtcNow.AddHours(_settings.PasswordResetTokenExpires);
+        var expires = _dateTimeProvider.UtcNow.AddHours(_settings.PasswordResetTokenExpires);
         return CreateJwt(claims, expires, key: passwordHash);
     }
 
@@ -85,7 +87,7 @@ public class TokenService : ITokenService
         => RandomHelper.GetRandomNumber();
 
     public DateTime CreateExpiryForRefreshToken()
-        => DateTime.Now.AddDays(_settings.RefreshTokenExpires);
+        => _dateTimeProvider.Now.AddDays(_settings.RefreshTokenExpires);
 
     public ClaimsPrincipal GetPrincipalFromExpiredAccessToken(string token)
         => JwtDecoder.Create()

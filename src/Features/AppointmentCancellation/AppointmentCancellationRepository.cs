@@ -4,7 +4,12 @@ namespace DentallApp.Features.AppointmentCancellation;
 
 public class AppointmentCancellationRepository : Repository<Appointment>, IAppointmentCancellationRepository
 {
-    public AppointmentCancellationRepository(AppDbContext context) : base(context) { }
+    private readonly IDateTimeProvider _dateTimeProvider;
+
+    public AppointmentCancellationRepository(IDateTimeProvider dateTimeProvider, AppDbContext context) : base(context) 
+    {
+        _dateTimeProvider = dateTimeProvider;
+    }
 
     /// <summary>
     /// Cancela las citas por parte del empleado.
@@ -19,7 +24,7 @@ public class AppointmentCancellationRepository : Repository<Appointment>, IAppoi
                                appointmentsId.Contains(appointment.Id))
                         .Set(appointment => appointment.AppointmentStatusId, AppointmentStatusId.Canceled)
                         .Set(appointment => appointment.IsCancelledByEmployee, true)
-                        .Set(appointment => appointment.UpdatedAt, DateTime.Now)
+                        .Set(appointment => appointment.UpdatedAt, _dateTimeProvider.Now)
                         .UpdateAsync();
 
     public async Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appointmentsId)

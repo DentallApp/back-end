@@ -6,26 +6,29 @@ public class ReminderJob : IJob
     private readonly AppSettings _settings;
     private readonly IServiceProvider _serviceProvider;
     private readonly IInstantMessaging _instantMessaging;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
     public ReminderJob(ILogger<ReminderJob> logger, 
-                              AppSettings settings,
-                              IServiceProvider serviceProvider,
-                              IInstantMessaging instantMessaging)
+                       AppSettings settings,
+                       IServiceProvider serviceProvider,
+                       IInstantMessaging instantMessaging,
+                       IDateTimeProvider dateTimeProvider)
     {
         _settings = settings;
         _logger = logger;
         _serviceProvider = serviceProvider;
         _instantMessaging = instantMessaging;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public Task Execute(IJobExecutionContext context)
     {
         _logger.LogInformation("Sending appointment reminder.");
-        var currentDateAndTime = DateTime.Now;
-        using var scope = _serviceProvider.CreateScope();
-        var repository = scope.ServiceProvider.GetRequiredService<IAppointmentReminderRepository>();
+        var currentDateAndTime    = _dateTimeProvider.Now;
+        using var scope           = _serviceProvider.CreateScope();
+        var repository            = scope.ServiceProvider.GetRequiredService<IAppointmentReminderRepository>();
         var scheduledAppointments = repository.GetScheduledAppointments(_settings.ReminderTimeInAdvance, currentDateAndTime.Date);
-        var businessName = EnvReader.Instance[AppSettings.BusinessName];
+        var businessName          = EnvReader.Instance[AppSettings.BusinessName];
         foreach (var appointmentDto in scheduledAppointments)
         {
             var message = string.Format(AppointmentReminderMessageTemplate,
