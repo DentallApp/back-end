@@ -9,10 +9,12 @@ public partial class RootDialog : ComponentDialog
     private const string SelectAppointmentDateMessage = "Error. Escoja una fecha válida";
     private const string SelectScheduleMessage        = "Error. Escoja un horario";
     private readonly IAppointmentBotService _botService;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
-    public RootDialog(IAppointmentBotService botService) : base(nameof(RootDialog))
+    public RootDialog(IAppointmentBotService botService, IDateTimeProvider dateTimeProvider) : base(nameof(RootDialog))
     {
         _botService = botService;
+        _dateTimeProvider = dateTimeProvider;
 
         var waterfallSteps = new WaterfallStep[]
         {
@@ -137,7 +139,7 @@ public partial class RootDialog : ComponentDialog
         await stepContext.Context.SendActivityAsync($"El odontólogo atiende los {dentistSchedule}");
         return await stepContext.PromptAsync(
             nameof(AdaptiveCardPrompt),
-            AdaptiveCardFactory.CreateDateCard(cardJson),
+            AdaptiveCardFactory.CreateDateCard(cardJson, _dateTimeProvider),
             cancellationToken
         );
     }

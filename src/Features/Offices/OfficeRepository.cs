@@ -4,7 +4,12 @@ namespace DentallApp.Features.Offices;
 
 public class OfficeRepository : Repository<Office>, IOfficeRepository
 {
-    public OfficeRepository(AppDbContext context) : base(context) { }
+    private readonly IDateTimeProvider _dateTimeProvider;
+
+    public OfficeRepository(IDateTimeProvider dateTimeProvider, AppDbContext context) : base(context) 
+    {
+        _dateTimeProvider = dateTimeProvider;
+    }
 
     public async Task<Office> GetOfficeByIdAsync(int id)
         => await Context.Set<Office>()
@@ -34,8 +39,8 @@ public class OfficeRepository : Repository<Office>, IOfficeRepository
         var affectedRows = await Context.Set<Employee>()
                                         .Where(employee => employee.Id != currentEmployeeId && employee.OfficeId == office.Id)
                                         .Set(employee => employee.IsDeleted, true)
-                                        .Set(employee => employee.UpdatedAt, DateTime.Now)
-                                        .Set(employee => employee.User.UpdatedAt, DateTime.Now)
+                                        .Set(employee => employee.UpdatedAt, _dateTimeProvider.Now)
+                                        .Set(employee => employee.User.UpdatedAt, _dateTimeProvider.Now)
                                         .Set(employee => employee.User.RefreshToken, e => null)
                                         .Set(employee => employee.User.RefreshTokenExpiry, e => null)
                                         .UpdateAsync();
@@ -49,7 +54,7 @@ public class OfficeRepository : Repository<Office>, IOfficeRepository
                                         .Where(employee => employee.OfficeId == office.Id)
                                         .IgnoreQueryFilters()
                                         .Set(employee => employee.IsDeleted, false)
-                                        .Set(employee => employee.UpdatedAt, DateTime.Now)
+                                        .Set(employee => employee.UpdatedAt, _dateTimeProvider.Now)
                                         .UpdateAsync();
         office.IsEnabledEmployeeAccounts = true;
         return affectedRows;

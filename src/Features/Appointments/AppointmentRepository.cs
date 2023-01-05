@@ -2,7 +2,12 @@
 
 public class AppointmentRepository : Repository<Appointment>, IAppointmentRepository
 {
-    public AppointmentRepository(AppDbContext context) : base(context) { }
+    private readonly IDateTimeProvider _dateTimeProvider;
+
+    public AppointmentRepository(IDateTimeProvider dateTimeProvider, AppDbContext context) : base(context) 
+    {
+        _dateTimeProvider = dateTimeProvider;
+    }
 
     public async Task<IEnumerable<AppointmentGetByBasicUserDto>> GetAppointmentsByUserIdAsync(int userId)
         => await (from appointment in Context.Set<Appointment>()
@@ -44,7 +49,7 @@ public class AppointmentRepository : Repository<Appointment>, IAppointmentReposi
                                appointment.IsCancelledByEmployee ||
                                // Checks if the canceled appointment is not available.
                                // This check allows patients to choose a time slot for an appointment canceled by another basic user.
-                               DateTime.Now > Context.AddTime(Context.ToDateTime(appointment.Date), appointment.StartHour)))
+                               _dateTimeProvider.Now > Context.AddTime(Context.ToDateTime(appointment.Date), appointment.StartHour)))
                         .Select(appointment => appointment.MapToUnavailableTimeRangeDto())
                         .Distinct()
                         .OrderBy(appointment => appointment.StartHour)
@@ -63,7 +68,7 @@ public class AppointmentRepository : Repository<Appointment>, IAppointmentReposi
                                          appointment.IsCancelledByEmployee ||
                                          // Checks if the canceled appointment is not available.
                                          // This check allows patients to choose a time slot for an appointment canceled by another basic user.
-                                         DateTime.Now > Context.AddTime(Context.ToDateTime(appointment.Date), appointment.StartHour)))
+                                         _dateTimeProvider.Now > Context.AddTime(Context.ToDateTime(appointment.Date), appointment.StartHour)))
                                   .Select(appointment => appointment.Id)
                                   .FirstOrDefaultAsync();
 

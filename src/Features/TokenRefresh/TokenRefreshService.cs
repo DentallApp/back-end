@@ -4,11 +4,13 @@ public class TokenRefreshService : ITokenRefreshService
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
-    public TokenRefreshService(IUserRepository userRepository, ITokenService tokenService)
+    public TokenRefreshService(IUserRepository userRepository, ITokenService tokenService, IDateTimeProvider dateTimeProvider)
     {
         _userRepository = userRepository;
         _tokenService = tokenService;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<Response<TokenDto>> RefreshTokenAsync(TokenDto tokenDto)
@@ -24,7 +26,7 @@ public class TokenRefreshService : ITokenRefreshService
         if (user.RefreshToken != tokenDto.RefreshToken)
             return new Response<TokenDto>(RefreshTokenInvalidMessage);
 
-        if (DateTime.Now >= user.RefreshTokenExpiry)
+        if (_dateTimeProvider.Now >= user.RefreshTokenExpiry)
             return new Response<TokenDto>(RefreshTokenExpiredMessage);
 
         tokenDto.AccessToken = _tokenService.CreateAccessToken(claimPrincipal.Claims);
