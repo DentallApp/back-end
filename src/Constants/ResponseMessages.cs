@@ -37,7 +37,7 @@ public class ResponseMessages
     public const string AppointmentNotAssignedMessage                      = "Esta cita no te pertenece.";
     public const string SuccessfullyCancelledAppointmentsMessage           = "Las citas se cancelaron con éxito.";
     public const string AppointmentIsAlreadyCanceledMessage                = "No puede actualizar una cita que ya está cancelada.";
-    public const string CanOnlyAccessYourOwnAppointmentsMessage             = "Sólo puede acceder a sus propias citas.";
+    public const string CanOnlyAccessYourOwnAppointmentsMessage            = "Sólo puede acceder a sus propias citas.";
     public const string AppointmentThatHasAlreadyPassedBasicUserMessage    = "No puede cancelar una cita que ya pasó. Nuestros empleados se encargarán de cambiar el estado de esta cita posteriormente.";
     public const string AppointmentThatHasAlreadyPassedEmployeeMessage     = "Algunas citas no se pudieron cancelar porque ya pasó la fecha y hora estipulada. Conteo: {0}.";
     public const string AppointmentCannotBeUpdatedForPreviousDaysMessage   = "No puede cambiar el estado de la cita del día anterior a la fecha actual.";
@@ -58,4 +58,19 @@ public class ResponseMessages
     public const string NoSchedulesAvailableMessage                        = "No hay horarios disponibles.";
     public const string DateAndTimeAppointmentIsNotAvailableMessage        = "La fecha y hora de la cita que has seleccionado no está disponible.";
     public const string AppointmentDateIsPublicHolidayMessage              = "La fecha de la cita que seleccionaste no está disponible porque es día festivo.";
+
+    // Messages sent by the bot.
+    public const string SelectDentalServiceMessage                         = "Error. Escoja un servicio dental";
+    public const string SelectDentistMessage                               = "Error. Escoja un odontólogo";
+    public const string SelectPatientMessage                               = "Error. Escoja un paciente";
+    public const string SelectOfficeMessage                                = "Error. Escoja un consultorio";
+    public const string SelectAppointmentDateMessage                       = "Error. Escoja una fecha válida";
+    public const string SelectScheduleMessage                              = "Error. Escoja un horario";
+    public const string ShowScheduleToUserMessage                          = "El odontólogo atiende los {0}";
+    public const string RangeToPayMinMaxMessage                            = "El rango a pagar es de {0} a {1}";
+    public const string RangeToPayMessage                                  = "El valor a pagar es de {0}";
+    public const string SuccessfullyScheduledAppointmentMessage            = "Cita agendada con éxito. {0}.";
+    public const string TotalHoursAvailableMessage                         = "Total de horas disponibles: {0}.\n\nSeleccione la hora para su cita:";
+    public const string ThanksForUsingServiceMessage                       = "Gracias por usar nuestro servicio.\n\n" +
+                                                                                "Si desea agendar otra cita, escriba algo para empezar de nuevo el proceso.";
 }
