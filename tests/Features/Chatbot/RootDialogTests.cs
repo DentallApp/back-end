@@ -1,7 +1,7 @@
 ﻿namespace DentallApp.Tests.Features.Chatbot;
 
 [TestClass]
-public class RootDialogTests
+public partial class RootDialogTests
 {
     private DialogTestClient _testClient;
     private IDateTimeProvider _dateTimeProvider;
@@ -17,63 +17,39 @@ public class RootDialogTests
     [TestMethod]
     public async Task Bot_WhenAnIncomingActivityIsSent_ShouldRespondWithAnOutgoingActivity()
     {
-        await SendReplyWithChoiceSetAsync(cardType: PatientName, CreateInitialActivity());
-
-        var userSelectedValue = "{ patientId: 1 }";
-        var activity = new Activity { Value = JObject.Parse(userSelectedValue) };
-        await SendReplyWithChoiceSetAsync(cardType: OfficeName, activity);
-
-        userSelectedValue = "{ officeId: 1 }";
-        activity = new Activity { Value = JObject.Parse(userSelectedValue) };
-        await SendReplyWithChoiceSetAsync(cardType: DentalServiceName, activity);
-
-        userSelectedValue = "{ dentalServiceId: 1 }";
-        activity = new Activity { Value = JObject.Parse(userSelectedValue) };
-        await SendReplyWithChoiceSetAsync(cardType: DentistName, activity);
-
-        userSelectedValue = "{ dentistId: 1 }";
-        activity = new Activity { Value = JObject.Parse(userSelectedValue) };
-        await SendReplyWithInputDateAsync(activity);
-
-        userSelectedValue = "{ date: '2023-01-06' }";
-        activity = new Activity { Value = JObject.Parse(userSelectedValue) };
-        await SendReplyWithHeroCardAsync(activity);
-
-        userSelectedValue = "07:00 - 08:00";
-        activity = new Activity { Value = userSelectedValue };
-        await SendLastReplyAsync(activity);
+        await SendReplyWithChoiceSetAsync(choiceType: PatientName,       incomingActivity: CreateInitialActivity());
+        await SendReplyWithChoiceSetAsync(choiceType: OfficeName,        incomingActivity: CreateActivityWithSelectedPatientId());
+        await SendReplyWithChoiceSetAsync(choiceType: DentalServiceName, incomingActivity: CreateActivityWithSelectedOfficeId());
+        await SendReplyWithChoiceSetAsync(choiceType: DentistName,       incomingActivity: CreateActivityWithSelectedDentalServiceId());
+        await SendReplyWithInputDateAsync(incomingActivity: CreateActivityWithSelectedDentistId());
+        await SendReplyWithHeroCardAsync(incomingActivity: CreateActivityWithSelectedDate());
+        await SendLastReplyAsync(incomingActivity: CreateActivityWithSelectedSchedule());
     }
 
-    private Activity CreateInitialActivity()
-        => new()
-        {
-            Text = "Hi",
-            From = new ChannelAccount { Id = "1", Name = "daveseva2010@hotmail.es" },
-            ChannelData = JObject.Parse(@"
-            {
-                personId: 1,
-                fullName: 'Dave Roman'
-            }")
-        };
-
-    private async Task SendReplyWithChoiceSetAsync(string cardType, Activity activity)
+    /// <summary>
+    /// Sends a choice set type response to the client.
+    /// </summary>
+    /// <param name="choiceType">The type of choice to send to client.</param>
+    /// <param name="incomingActivity">The incoming activity sent by the client.</param>
+    /// <returns></returns>
+    private async Task SendReplyWithChoiceSetAsync(string choiceType, Activity incomingActivity)
     {
-        var reply     = await _testClient.SendActivityAsync<IMessageActivity>(activity);
+        var reply     = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         Assert.AreEqual(expected: ActivityTypes.Typing, actual: reply.Type);
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
         Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
         var content   = JObject.Parse(replyNext.Attachments[0].Content.ToString());
         var choices   = content.SelectToken("body[1].choices").ToObject<List<AdaptiveChoice>>();
-        Assert.AreEqual(expected: 1,        actual: choices.Count);
-        Assert.AreEqual(expected: cardType, actual: choices[0].Title);
-        Assert.AreEqual(expected: Id,       actual: choices[0].Value);
+        Assert.AreEqual(expected: 1,          actual: choices.Count);
+        Assert.AreEqual(expected: choiceType, actual: choices[0].Title);
+        Assert.AreEqual(expected: Id,         actual: choices[0].Value);
     }
 
-    private async Task SendReplyWithInputDateAsync(Activity activity)
+    private async Task SendReplyWithInputDateAsync(Activity incomingActivity)
     {
         Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2023, 01, 01));
-        var reply     = await _testClient.SendActivityAsync<IMessageActivity>(activity);
+        var reply     = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         Assert.AreEqual(expected: ActivityTypes.Typing, actual: reply.Type);
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
         Assert.AreEqual(expected: string.Format(ShowScheduleToUserMessage, Schedule), actual: replyNext.Text);
@@ -89,9 +65,9 @@ public class RootDialogTests
         Assert.AreEqual(expected: "2023-03-02", actual: max);
     }
 
-    private async Task SendReplyWithHeroCardAsync(Activity activity)
+    private async Task SendReplyWithHeroCardAsync(Activity incomingActivity)
     {
-        var reply     = await _testClient.SendActivityAsync<IMessageActivity>(activity);
+        var reply     = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         Assert.AreEqual(expected: ActivityTypes.Typing, actual: reply.Type);
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
         Assert.AreEqual(expected: string.Format(TotalHoursAvailableMessage, 1), actual: replyNext.Text);
@@ -103,9 +79,9 @@ public class RootDialogTests
         Assert.AreEqual(expected: $"{StartHour} - {EndHour}", actual: heroCard.Buttons[0].Value);
     }
 
-    private async Task SendLastReplyAsync(Activity activity)
+    private async Task SendLastReplyAsync(Activity incomingActivity)
     {
-        var reply         = await _testClient.SendActivityAsync<IMessageActivity>(activity);
+        var reply         = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         Assert.AreEqual(expected: ActivityTypes.Typing,  actual: reply.Type);
         var replyNext     = _testClient.GetNextReply<IMessageActivity>();
         var rangeToPayMsg = string.Format(RangeToPayMinMaxMessage, PriceMin, PriceMax);
