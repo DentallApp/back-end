@@ -3,8 +3,6 @@ using Attachment = Microsoft.Bot.Schema.Attachment;
 
 public class HeroCardFactory
 {
-    public const string RetryPromptMessage = "Error horario no válido. Escoja un horario.";
-
     private static HeroCard CreateHeroCard(string title = null, string text = null)
         => new()
         {
@@ -76,7 +74,7 @@ public class HeroCardFactory
         return new PromptOptions
         {
             Prompt = reply as Activity,
-            RetryPrompt = MessageFactory.Text(RetryPromptMessage)
+            RetryPrompt = MessageFactory.Text(SelectScheduleMessage)
         };
     }
 }

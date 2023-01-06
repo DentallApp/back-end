@@ -2,12 +2,6 @@
 
 public partial class RootDialog : ComponentDialog
 {
-    private const string SelectDentalServiceMessage   = "Error. Escoja un servicio dental";
-    private const string SelectDentistMessage         = "Error. Escoja un odontólogo";
-    private const string SelectPatientMessage         = "Error. Escoja un paciente";
-    private const string SelectOfficeMessage          = "Error. Escoja un consultorio";
-    private const string SelectAppointmentDateMessage = "Error. Escoja una fecha válida";
-    private const string SelectScheduleMessage        = "Error. Escoja un horario";
     private readonly IAppointmentBotService _botService;
     private readonly IDateTimeProvider _dateTimeProvider;
 
@@ -136,7 +130,7 @@ public partial class RootDialog : ComponentDialog
         var cardJsonTask        = TemplateCardLoader.LoadAppointmentDateCardAsync();
         var dentistSchedule     = await dentistScheduleTask;
         var cardJson            = await cardJsonTask;
-        await stepContext.Context.SendActivityAsync($"El odontólogo atiende los {dentistSchedule}");
+        await stepContext.Context.SendActivityAsync(string.Format(ShowScheduleToUserMessage, dentistSchedule));
         return await stepContext.PromptAsync(
             nameof(AdaptiveCardPrompt),
             AdaptiveCardFactory.CreateDateCard(cardJson, _dateTimeProvider),
@@ -167,7 +161,7 @@ public partial class RootDialog : ComponentDialog
             return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
 
         var availableHours = response.Data as List<AvailableTimeRangeDto>;
-        await stepContext.Context.SendActivityAsync($"Total de horas disponibles: {availableHours.Count}.\n\nSeleccione la hora para su cita:");
+        await stepContext.Context.SendActivityAsync(string.Format(TotalHoursAvailableMessage, availableHours.Count));
         return await stepContext.PromptAsync(
             nameof(TextPrompt),
             HeroCardFactory.CreateSchedulesCarousel(availableHours),
@@ -180,8 +174,8 @@ public partial class RootDialog : ComponentDialog
         var appointment = stepContext.GetAppointment();
         try
         {
-            var selectedTimeRange = stepContext.GetSelectedTimeRange();
-            var timeRange         = selectedTimeRange.Split("-");
+            var selectedTimeRange  = stepContext.GetSelectedTimeRange();
+            var timeRange          = selectedTimeRange.Split("-");
             appointment.StartHour  = TimeSpan.Parse(timeRange[0]);
             appointment.EndHour    = TimeSpan.Parse(timeRange[1]);
         }
@@ -194,9 +188,8 @@ public partial class RootDialog : ComponentDialog
         var response = await _botService.CreateScheduledAppointmentAsync(appointment);
         if (!response.Success)
             return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
-        await stepContext.Context.SendActivityAsync($"Cita agendada con éxito. {appointment.RangeToPay}.", cancellationToken: cancellationToken);
-        await stepContext.Context.SendActivityAsync("Gracias por usar nuestro servicio.\n\n" +
-                "Si desea agendar otra cita, escriba algo para empezar de nuevo el proceso.", cancellationToken: cancellationToken);
+        await stepContext.Context.SendActivityAsync(string.Format(SuccessfullyScheduledAppointmentMessage, appointment.RangeToPay), cancellationToken: cancellationToken);
+        await stepContext.Context.SendActivityAsync(ThanksForUsingServiceMessage, cancellationToken: cancellationToken);
         return await stepContext.EndDialogAsync(cancellationToken: cancellationToken);
     }
 }

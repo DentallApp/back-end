@@ -7,6 +7,6 @@ public class SpecificTreatmentRangeToPayDto
 
     public override string ToString()
         => PriceMin != PriceMax ?
-                    $"El rango a pagar es de ${PriceMin} a ${PriceMax}" :
-                    $"El valor a pagar es de ${PriceMax}";
+                    string.Format(RangeToPayMinMaxMessage, PriceMin, PriceMax) :
+                    string.Format(RangeToPayMessage, PriceMax);
 }
