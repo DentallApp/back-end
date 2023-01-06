@@ -35,3 +35,4 @@ global using DentallApp.Features.SpecificTreatments.DTOs;
 global using static DentallApp.Constants.ResponseMessages;
 
 global using static DentallApp.Tests.Features.Chatbot.BotServiceMockFactory;
+global using static DentallApp.Tests.Features.Chatbot.ActivityFactory;
