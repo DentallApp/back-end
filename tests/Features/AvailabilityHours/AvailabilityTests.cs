@@ -140,4 +140,62 @@ public partial class AvailabilityTests
             Assert.AreEqual(expected[i].EndHour,   actual: availableHours[i].EndHour);
         }
     }
+
+    [DataTestMethod]
+    [DataRow("08:20", "09:00", 
+             "09:00", "09:30")]
+    [DataRow("11:40", "12:20",
+             "11:00", "11:40")]
+    [DataRow("10:00", "10:30",
+             "10:40", "11:20")]
+    [DataRow("10:00", "10:30",
+             "09:00", "09:40")]
+    public void IsNotAvailable_WhenNewTimeRangeIsAvailable_ShouldReturnFalse(string newStartHour,
+                                                                             string newEndHour, 
+                                                                             string startHourNotAvailable,
+                                                                             string startEndNotAvailable)
+    {
+        var unavailableTimeRange = new UnavailableTimeRangeDto
+        {
+            StartHour = TimeSpan.Parse(startHourNotAvailable),
+            EndHour   = TimeSpan.Parse(startEndNotAvailable)
+        };
+        var newStartHourSpan = TimeSpan.Parse(newStartHour);
+        var newEndHourSpan   = TimeSpan.Parse(newEndHour);
+
+        bool result = Availability.IsNotAvailable(ref newStartHourSpan, ref newEndHourSpan, unavailableTimeRange);
+
+        Assert.IsFalse(result);
+    }
+
+    [DataTestMethod]
+    [DataRow("09:00", "09:30",
+             "09:00", "09:30")]
+    [DataRow("09:00", "09:30",
+             "09:20", "09:35")]
+    [DataRow("10:00", "10:30",
+             "10:25", "11:20")]
+    [DataRow("10:00", "10:30",
+             "09:00", "10:10")]
+    [DataRow("10:00", "10:30",
+             "10:29", "12:00")]
+    [DataRow("12:20", "12:50",
+             "12:00", "13:00")]
+    public void IsNotAvailable_WhenNewTimeRangeIsNotAvailable_ShouldReturnTrue(string newStartHour,
+                                                                               string newEndHour,
+                                                                               string startHourNotAvailable,
+                                                                               string startEndNotAvailable)
+    {
+        var unavailableTimeRange = new UnavailableTimeRangeDto
+        {
+            StartHour = TimeSpan.Parse(startHourNotAvailable),
+            EndHour   = TimeSpan.Parse(startEndNotAvailable)
+        };
+        var newStartHourSpan = TimeSpan.Parse(newStartHour);
+        var newEndHourSpan   = TimeSpan.Parse(newEndHour);
+
+        bool result = Availability.IsNotAvailable(ref newStartHourSpan, ref newEndHourSpan, unavailableTimeRange);
+
+        Assert.IsTrue(result);
+    }
 }

@@ -13,7 +13,7 @@ public static class Availability
     /// <param name="newEndHour">La nueva hora de finalización generada.</param>
     /// <param name="unavailableTimeRange">Una instancia con el rango de tiempo no disponible.</param>
     /// <returns><c>true</c> sí la nueva franja de horario no está disponible, de lo contrario devuelve <c>false</c>.</returns>
-    private static bool IsNotAvailable(ref TimeSpan newStartHour, ref TimeSpan newEndHour, UnavailableTimeRangeDto unavailableTimeRange)
+    public static bool IsNotAvailable(ref TimeSpan newStartHour, ref TimeSpan newEndHour, UnavailableTimeRangeDto unavailableTimeRange)
         => unavailableTimeRange.StartHour < newEndHour && newStartHour < unavailableTimeRange.EndHour;
 
     /// <summary>
