@@ -1,0 +1,28 @@
+{
+  "channelData": {
+    "clientActivityID": "1662850663024pjqxmkpnny",
+    "clientTimestamp": "2022-09-10T22:57:43.024Z",
+    "personId": "1",
+    "fullName": "Roberto Emilio Placencio Pinto"
+  },
+  "text": "hi",
+  "textFormat": "plain",
+  "type": "message",
+  "channelId": "emulator",
+  "from": {
+    "id": "1",
+    "name": "User",
+    "role": "user"
+  },
+  "locale": "en-US",
+  "localTimestamp": "2022-09-10T17:57:43-05:00",
+  "localTimezone": "America/Guayaquil",
+  "timestamp": "2022-09-10T22:57:43.658Z",
+  "id": "fab95bb0-315b-11ed-ae40-3725657d9323",
+  "recipient": {
+    "id": "f1bc0710-315b-11ed-b50d-7184a95824ff",
+    "name": "Bot",
+    "role": "bot"
+  },
+  "serviceUrl": "http://localhost:63617"
+}
