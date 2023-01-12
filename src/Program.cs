@@ -34,6 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(options => options.SwaggerEndpoint("v1/swagger.json", "DentallApi V1"));
+    IdentityModelEventSource.ShowPII = true;
 }
 
 app.UseDefaultFiles()
