@@ -116,6 +116,7 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 global using Microsoft.EntityFrameworkCore.Storage;
 global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.IdentityModel.Logging;
 global using Microsoft.OpenApi.Models;
 
 global using Newtonsoft.Json.Linq;
