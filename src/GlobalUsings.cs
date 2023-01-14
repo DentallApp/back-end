@@ -89,6 +89,7 @@ global using static DentallApp.Constants.MessageTemplates;
 
 global using System.Data;
 global using System.Text;
+global using System.Text.Encodings.Web;
 global using System.Linq.Expressions;
 global using System.Reflection;
 global using System.Security.Claims;
@@ -106,6 +107,7 @@ global using Microsoft.Bot.Connector.Authentication;
 global using AdaptiveCards;
 
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Authorization;
 
@@ -118,6 +120,7 @@ global using Microsoft.EntityFrameworkCore.Storage;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.IdentityModel.Logging;
 global using Microsoft.OpenApi.Models;
+global using Microsoft.Extensions.Options;
 
 global using Newtonsoft.Json.Linq;
 global using Newtonsoft.Json;

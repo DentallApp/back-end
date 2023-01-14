@@ -9,7 +9,7 @@ public static class AuthenticationJwtBearer
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme    = JwtBearerDefaults.AuthenticationScheme;
         })
-        .AddJwtBearer(options =>
+        .AddCustomJwtBearer(options =>
         {
             options.RequireHttpsMetadata = false;
             options.SaveToken = true;
@@ -25,5 +25,21 @@ public static class AuthenticationJwtBearer
         });
         services.AddAuthorization();
         return services;
+    }
+
+    private static AuthenticationBuilder AddCustomJwtBearer(this AuthenticationBuilder builder, Action<JwtBearerOptions> configureOptions)
+        => builder.AddScheme<JwtBearerOptions, CustomJwtBearerHandler>(JwtBearerDefaults.AuthenticationScheme, displayName: null, configureOptions);
+
+    private class CustomJwtBearerHandler : JwtBearerHandler
+    {
+        public CustomJwtBearerHandler(IOptionsMonitor<JwtBearerOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
+            : base(options, logger, encoder, clock) { }
+
+        // This class was created so that when DirectLine channel sends a request to the bot, it does not throw an exception:
+        // SecurityTokenSignatureKeyNotFoundException.
+        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+            => Context.Request.Path.StartsWithSegments("/messages") ? 
+                AuthenticateResult.NoResult() : 
+                await base.HandleAuthenticateAsync();
     }
 }
