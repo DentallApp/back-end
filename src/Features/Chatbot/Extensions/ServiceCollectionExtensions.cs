@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Chatbot;
+﻿namespace DentallApp.Features.Chatbot.Extensions;
 
 public static class ServiceCollectionExtensions
 {
