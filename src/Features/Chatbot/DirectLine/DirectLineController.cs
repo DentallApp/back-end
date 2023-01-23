@@ -13,9 +13,9 @@ public class DirectLineController : ControllerBase
 
     [AuthorizeByRole(RolesName.BasicUser)]
     [HttpGet]
-    public async Task<ActionResult<Response<DirectLineGetTokenDto>>> Get()
+    public async Task<ActionResult> Get()
     {
         var response = await _directLineService.GetTokenAsync(User.GetUserId());
-        return response.Success ? Ok(response) : BadRequest(response);
+        return response.Success ? Ok(response.Data.Token) : BadRequest(response.Message);
     }
 }
