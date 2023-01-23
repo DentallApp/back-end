@@ -1,4 +1,7 @@
 global using DentallApp.Features.Chatbot;
+global using DentallApp.Features.Chatbot.DirectLine;
+global using DentallApp.Features.Chatbot.DirectLine.Providers;
+global using DentallApp.Features.Chatbot.DirectLine.DTOs;
 global using DentallApp.Features.Chatbot.Dialogs;
 global using DentallApp.Features.Chatbot.Factories;
 global using DentallApp.Features.Chatbot.Helpers;
@@ -90,6 +93,7 @@ global using static DentallApp.Constants.MessageTemplates;
 
 global using System.Data;
 global using System.Text;
+global using System.Net.Mime;
 global using System.Text.Encodings.Web;
 global using System.Linq.Expressions;
 global using System.Reflection;
@@ -111,7 +115,6 @@ global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Authorization;
-
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Diagnostics;
