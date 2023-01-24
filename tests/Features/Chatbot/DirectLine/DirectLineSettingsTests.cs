@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.Configuration;
+﻿namespace DentallApp.Tests.Features.Chatbot.DirectLine;
 
 [TestClass]
 public class DirectLineSettingsTests

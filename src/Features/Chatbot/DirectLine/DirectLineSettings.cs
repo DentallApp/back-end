@@ -1,18 +1,18 @@
-﻿namespace DentallApp.Configuration;
+﻿namespace DentallApp.Features.Chatbot.DirectLine;
 
 public class DirectLineSettings
 {
     public const string DirectLineSecretSetting  = "DIRECT_LINE_SECRET";
     public const string DirectLineBaseUrlSetting = "DIRECT_LINE_BASE_URL";
-    public const string DefaultBaseUrl           = "https://directline.botframework.com/"; 
+    public const string DefaultBaseUrl           = "https://directline.botframework.com/";
     public const string DefaultServiceName       = nameof(DirectLineAzureService);
 
     public string DirectLineSecret { get; set; }
     private string DirectLineBaseUrl { get; set; }
 
     public string GetDirectLineBaseUrl()
-        => string.IsNullOrWhiteSpace(DirectLineBaseUrl) ? 
-                  DefaultBaseUrl : 
+        => string.IsNullOrWhiteSpace(DirectLineBaseUrl) ?
+                  DefaultBaseUrl :
                   DirectLineBaseUrl.TrimEnd('/') + "/";
 
     /// <summary>

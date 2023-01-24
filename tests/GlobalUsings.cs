@@ -27,6 +27,7 @@ global using DentallApp.Features.PublicHolidays.Offices;
 global using DentallApp.Features.Chatbot;
 global using DentallApp.Features.Chatbot.Dialogs;
 global using DentallApp.Features.Chatbot.Models;
+global using DentallApp.Features.Chatbot.DirectLine;
 global using DentallApp.Features.Chatbot.DirectLine.Services;
 
 global using DentallApp.Entities;
