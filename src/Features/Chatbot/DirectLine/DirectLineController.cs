@@ -16,6 +16,8 @@ public class DirectLineController : ControllerBase
     public async Task<ActionResult> Get()
     {
         var response = await _directLineService.GetTokenAsync(User.GetUserId());
-        return response.Success ? Ok(response.Data.Token) : BadRequest(response.Message);
+        return response.Success ? 
+			   Ok(new { response.Data.Token }) : 
+			   BadRequest(new { response.Message });
     }
 }
