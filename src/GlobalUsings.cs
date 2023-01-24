@@ -8,6 +8,7 @@ global using DentallApp.Features.Chatbot.Helpers;
 global using DentallApp.Features.Chatbot.Models;
 global using DentallApp.Features.Chatbot.Handlers;
 global using DentallApp.Features.Chatbot.Extensions;
+global using DentallApp.Features.Chatbot.Configuration;
 global using DentallApp.Features.GeneralTreatments;
 global using DentallApp.Features.GeneralTreatments.DTOs;
 global using DentallApp.Features.SpecificTreatments;

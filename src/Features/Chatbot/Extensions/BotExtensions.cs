@@ -2,7 +2,7 @@
 
 public static class BotExtensions
 {
-    public static IServiceCollection AddBotServices(this IServiceCollection services)
+    public static IServiceCollection AddBotServices(this IServiceCollection services, IConfiguration configuration)
     {
         var storage = new MemoryStorage();
 
@@ -15,6 +15,7 @@ public static class BotExtensions
         services.AddScoped<IBotQueryRepository, BotQueryRepository>();
 
         services.AddDirectLineService();
+        configuration.SetBotCredentials();
 
         // Create the Bot Framework Authentication to be used with the Bot Adapter.
         services.AddSingleton<BotFrameworkAuthentication, ConfigurationBotFrameworkAuthentication>();

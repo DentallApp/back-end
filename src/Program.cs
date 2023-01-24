@@ -23,8 +23,7 @@ builder.Services.AddDbContext(settings);
 builder.Services.AddSendGrid(options => options.ApiKey = settings.SendGridApiKey);
 builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(settings);
-builder.Configuration.SetBotCredentials();
-builder.Services.AddBotServices();
+builder.Services.AddBotServices(builder.Configuration);
 builder.Services.AddQuartzJobs(settings);
 
 var app = builder.Build();
