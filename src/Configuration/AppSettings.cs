@@ -1,9 +1,12 @@
 namespace DentallApp.Configuration;
 
+/// <summary>
+/// Represents the general configuration of the application.
+/// </summary>
 public class AppSettings
 {
     public const string MaxDaysInCalendar = "MAX_DAYS_IN_CALENDAR";
-    public const string BusinessName = "BUSINESS_NAME";
+    public const string BusinessName      = "BUSINESS_NAME";
 
     public string ConnectionString { get; set; }
     public string AccessTokenKey { get; set; }
