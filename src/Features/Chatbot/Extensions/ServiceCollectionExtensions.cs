@@ -14,6 +14,8 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IAppointmentBotService, AppointmentBotService>();
         services.AddScoped<IBotQueryRepository, BotQueryRepository>();
 
+        services.AddDirectLineService();
+
         // Create the Bot Framework Authentication to be used with the Bot Adapter.
         services.AddSingleton<BotFrameworkAuthentication, ConfigurationBotFrameworkAuthentication>();
 
@@ -22,7 +24,6 @@ public static class ServiceCollectionExtensions
 
         // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
         services.AddTransient<IBot, AppointmentBotHandler<RootDialog>>();
-
         return services;
     }
 }
