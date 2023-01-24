@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Chatbot.Extensions;
 
-public static class ServiceCollectionExtensions
+public static class BotExtensions
 {
     public static IServiceCollection AddBotServices(this IServiceCollection services)
     {
