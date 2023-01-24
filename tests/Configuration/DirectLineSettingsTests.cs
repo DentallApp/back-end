@@ -39,40 +39,40 @@ public class DirectLineSettingsTests
     }
 
     [TestMethod]
-    public void GetProviderName_WhenBaseUrlIsEmptyOrWhiteSpace_ShouldReturnsDefaultProviderName()
+    public void GetServiceName_WhenBaseUrlIsEmptyOrWhiteSpace_ShouldReturnsDefaultServiceName()
     {
         Environment.SetEnvironmentVariable(DirectLineSettings.DirectLineBaseUrlSetting, " ");
         var settings = _envBinder.Bind<DirectLineSettings>();
 
-        var providerName = settings.GetProviderName();
+        var serviceName = settings.GetServiceName();
 
-        Assert.AreEqual(expected: DirectLineSettings.DefaultProviderName, actual: providerName);
+        Assert.AreEqual(expected: DirectLineSettings.DefaultServiceName, actual: serviceName);
     }
 
     [DataTestMethod]
     [DataRow(DirectLineSettings.DefaultBaseUrl)]
     [DataRow(DirectLineSettings.DefaultBaseUrl + "///")]
-    public void GetProviderName_WhenBaseUrlStartsWithDefaultBaseUrl_ShouldReturnsDefaultProviderName(string baseUrl)
+    public void GetServiceName_WhenBaseUrlStartsWithDefaultBaseUrl_ShouldReturnsDefaultServiceName(string baseUrl)
     {
         Environment.SetEnvironmentVariable(DirectLineSettings.DirectLineBaseUrlSetting, baseUrl);
         var settings = _envBinder.Bind<DirectLineSettings>();
 
-        var providerName = settings.GetProviderName();
+        var serviceName = settings.GetServiceName();
 
-        Assert.AreEqual(expected: DirectLineSettings.DefaultProviderName, actual: providerName);
+        Assert.AreEqual(expected: DirectLineSettings.DefaultServiceName, actual: serviceName);
     }
 
     [DataTestMethod]
     [DataRow(LocalHostBaseUrl + "/")]
     [DataRow(LocalHostBaseUrl)]
     [DataRow(LocalHostBaseUrl + "///")]
-    public void GetProviderName_WhenBaseUrlNotStartsWithDefaultBaseUrl_ShouldReturnsInDirectLineService(string baseUrl)
+    public void GetServiceName_WhenBaseUrlNotStartsWithDefaultBaseUrl_ShouldReturnsInDirectLineService(string baseUrl)
     {
         Environment.SetEnvironmentVariable(DirectLineSettings.DirectLineBaseUrlSetting, baseUrl);
         var settings = _envBinder.Bind<DirectLineSettings>();
 
-        var providerName = settings.GetProviderName();
+        var serviceName = settings.GetServiceName();
 
-        Assert.AreEqual(expected: nameof(InDirectLineService), actual: providerName);
+        Assert.AreEqual(expected: nameof(InDirectLineService), actual: serviceName);
     }
 }

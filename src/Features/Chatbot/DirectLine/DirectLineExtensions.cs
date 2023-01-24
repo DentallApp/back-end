@@ -9,19 +9,19 @@ public static class DirectLineExtensions
                            .Bind<DirectLineSettings>();
 
         services.AddSingleton(settings);
-        var providerName = settings.GetProviderName();
+        var serviceName = settings.GetServiceName();
         services.AddHttpClient(
-            name: providerName, 
+            name: serviceName, 
             httpClient => httpClient.BaseAddress = new Uri(settings.GetDirectLineBaseUrl())
         );
 
         services.AddTransient(
             serviceType:        typeof(DirectLineService),
-            implementationType: Type.GetType(GetProviderTypeName(providerName))
+            implementationType: Type.GetType(typeName: GetServiceNameWithNamespace(serviceName))
         );
         return services;
     }
 
-    private static string GetProviderTypeName(string providerName)
-        => $"{typeof(DirectLineService).Namespace}.{providerName}";
+    private static string GetServiceNameWithNamespace(string serviceName)
+        => $"{typeof(DirectLineService).Namespace}.{serviceName}";
 }
