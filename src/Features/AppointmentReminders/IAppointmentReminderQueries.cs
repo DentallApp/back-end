@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.AppointmentReminders;
 
-public interface IAppointmentReminderRepository
+public interface IAppointmentReminderQueries
 {
     /// <summary>
     /// Obtiene las citas agendadas que están próximas a la fecha estipulada.

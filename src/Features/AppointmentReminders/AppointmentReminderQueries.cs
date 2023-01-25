@@ -2,11 +2,11 @@
 
 namespace DentallApp.Features.AppointmentReminders;
 
-public class AppointmentReminderRepository : IAppointmentReminderRepository
+public class AppointmentReminderQueries : IAppointmentReminderQueries
 {
     private readonly AppDbContext _context;
 
-    public AppointmentReminderRepository(AppDbContext context)
+    public AppointmentReminderQueries(AppDbContext context)
     {
         _context = context;
     }

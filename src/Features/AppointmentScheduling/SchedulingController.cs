@@ -8,11 +8,11 @@
 [ApiController]
 public class SchedulingController : ControllerBase
 {
-	private readonly IBotQueryRepository _botQueryRepository;
+	private readonly IBotQueries _botQueries;
 
-	public SchedulingController(IBotQueryRepository botQueryRepository)
+	public SchedulingController(IBotQueries botQueries)
 	{
-		_botQueryRepository = botQueryRepository;
+		_botQueries = botQueries;
 	}
 
     /// <summary>
@@ -31,7 +31,7 @@ public class SchedulingController : ControllerBase
     /// </remarks>
     [HttpGet("office")]
 	public async Task<List<AdaptiveChoice>> GetOffices()
-		=> await _botQueryRepository.GetOfficesAsync();
+		=> await _botQueries.GetOfficesAsync();
 
     /// <summary>
     /// Obtiene los servicios dentales activos para el agendamiento. 
@@ -49,7 +49,7 @@ public class SchedulingController : ControllerBase
     /// </remarks>
     [HttpGet("dental-service")]
 	public async Task<List<AdaptiveChoice>> GetDentalServices()
-		=> await _botQueryRepository.GetDentalServicesAsync();
+		=> await _botQueries.GetDentalServicesAsync();
 
     /// <summary>
     /// Obtiene los odontólogos activos de un consultorio para el agendamiento.
@@ -57,5 +57,5 @@ public class SchedulingController : ControllerBase
     /// </summary>
     [HttpGet("dentist")]
 	public async Task<List<AdaptiveChoice>> GetDentists([FromQuery]SchedulingGetDentistsDto schedulingDto)
-		=> await _botQueryRepository.GetDentistsAsync(schedulingDto.OfficeId, schedulingDto.DentalServiceId);
+		=> await _botQueries.GetDentistsAsync(schedulingDto.OfficeId, schedulingDto.DentalServiceId);
 }

@@ -48,7 +48,7 @@ public static class ApplicationDependencies
                 .AddScoped<IFavoriteDentistRepository, FavoriteDentistRepository>()
                 .AddScoped<IOfficeScheduleRepository, OfficeScheduleRepository>()
                 .AddScoped<IPersonRepository, PersonRepository>()
-                .AddScoped<IAppointmentReminderRepository, AppointmentReminderRepository>()
+                .AddScoped<IAppointmentReminderQueries, AppointmentReminderQueries>()
                 .AddScoped<IReportQuery, ReportQuery>()
                 .AddScoped<IPublicHolidayRepository, PublicHolidayRepository>()
                 .AddScoped<IHolidayOfficeRepository, HolidayOfficeRepository>()
