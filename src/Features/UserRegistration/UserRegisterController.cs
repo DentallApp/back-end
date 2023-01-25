@@ -16,10 +16,9 @@ public class UserRegisterController : ControllerBase
     public async Task<ActionResult<Response>> CreateBasicUserAccount([FromBody]UserInsertDto userInsertDto)
     {
         var response = await _userRegisterService.CreateBasicUserAccountAsync(userInsertDto);
-        if (response.Success)
-            return CreatedAtAction(nameof(CreateBasicUserAccount), response);
-
-        return BadRequest(response);
+        return response.Success ? 
+               CreatedAtAction(nameof(CreateBasicUserAccount), response) : 
+               BadRequest(response);
     }
 
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
@@ -28,9 +27,8 @@ public class UserRegisterController : ControllerBase
     public async Task<ActionResult<Response<DtoBase>>> CreateEmployeeAccount([FromBody]EmployeeInsertDto employeeInsertDto)
     {
         var response = await _userRegisterService.CreateEmployeeAccountAsync(User, employeeInsertDto);
-        if (response.Success)
-            return CreatedAtAction(nameof(CreateEmployeeAccount), response);
-
-        return BadRequest(response);
+        return response.Success ? 
+               CreatedAtAction(nameof(CreateEmployeeAccount), response) : 
+               BadRequest(response);
     }
 }

@@ -17,9 +17,6 @@ public class AvailabilityController : ControllerBase
 	public async Task<ActionResult<Response<IEnumerable<AvailableTimeRangeDto>>>> Get([FromBody]AvailableTimeRangePostDto availableTimeRangePostDto)
 	{
 		var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
-		if (response.Success)
-			return Ok(response);
-
-		return BadRequest(response);
+		return response.Success ? Ok(response) : BadRequest(response);
 	}
 }

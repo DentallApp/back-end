@@ -22,10 +22,7 @@ public class FavoriteDentistController : ControllerBase
     public async Task<ActionResult<Response>> Post([FromBody]FavoriteDentistInsertDto favoriteDentistInsertDto)
     {
         var response = await _favoriteDentistService.CreateFavoriteDentistAsync(User.GetUserId(), favoriteDentistInsertDto);
-        if (response.Success)
-            return CreatedAtAction(nameof(Post), response);
-
-        return BadRequest(response);
+        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
     }
 
     /// <summary>
@@ -50,10 +47,7 @@ public class FavoriteDentistController : ControllerBase
     public async Task<ActionResult<Response>> DeleteByFavoriteDentistId(int favoriteDentistId)
     {
         var response = await _favoriteDentistService.RemoveByFavoriteDentistIdAsync(User.GetUserId(), favoriteDentistId);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     /// <summary>
@@ -63,9 +57,6 @@ public class FavoriteDentistController : ControllerBase
     public async Task<ActionResult<Response>> DeleteByUserIdAndDentistId(int dentistId)
     {
         var response = await _favoriteDentistService.RemoveByUserIdAndDentistIdAsync(User.GetUserId(), dentistId);
-        if (response.Success)
-            return Ok(response);
-
-        return NotFound(response);
+        return response.Success ? Ok(response) : NotFound(response);
     }
 }

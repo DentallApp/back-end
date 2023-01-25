@@ -37,10 +37,7 @@ public class EmployeeScheduleController : ControllerBase
     public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]EmployeeScheduleInsertDto employeeScheduleDto)
     {
         var response = await _employeeScheduleService.CreateEmployeeScheduleAsync(employeeScheduleDto);
-        if (response.Success)
-            return CreatedAtAction(nameof(Post), response);
-
-        return BadRequest(response);
+        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
     }
 
     /// <summary>
@@ -50,9 +47,6 @@ public class EmployeeScheduleController : ControllerBase
     public async Task<ActionResult<Response>> Put(int scheduleId, [FromBody]EmployeeScheduleUpdateDto employeeScheduleDto)
     {
         var response = await _employeeScheduleService.UpdateEmployeeScheduleAsync(scheduleId, employeeScheduleDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 }

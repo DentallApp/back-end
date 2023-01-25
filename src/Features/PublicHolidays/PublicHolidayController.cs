@@ -19,30 +19,21 @@ public class PublicHolidayController : ControllerBase
     public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]PublicHolidayInsertDto holidayInsertDto)
     {
         var response = await _holidayService.CreatePublicHolidayAsync(holidayInsertDto);
-        if (response.Success)
-            return CreatedAtAction(nameof(Post), response);
-
-        return BadRequest(response);
+        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<Response>> Delete(int id)
     {
         var response = await _holidayService.RemovePublicHolidayAsync(id);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult<Response>> Put(int id, [FromBody]PublicHolidayUpdateDto holidayUpdateDto)
     {
         var response = await _holidayService.UpdatePublicHolidayAsync(id, holidayUpdateDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     [HttpGet]

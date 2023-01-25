@@ -21,10 +21,7 @@ public class PersonController : ControllerBase
 	public async Task<ActionResult<Response>> Post([FromBody]PersonInsertDto personInsertDto)
 	{
 		var response = await _personService.CreatePersonAsync(personInsertDto);
-		if (response.Success)
-			return CreatedAtAction(nameof(Post), response);
-
-		return BadRequest(response);
+		return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
 	}
 
     /// <summary>

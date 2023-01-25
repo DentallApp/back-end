@@ -15,10 +15,7 @@ public class PasswordResetController : ControllerBase
     public async Task<ActionResult<Response>> ResetPassword(PasswordResetDto passwordDto)
     {
         var response = await _service.ResetPasswordAsync(passwordDto.Token, passwordDto.NewPassword);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     [Route("password-reset/send")]
@@ -26,9 +23,6 @@ public class PasswordResetController : ControllerBase
     public async Task<ActionResult<Response>> SendPasswordResetLink(PasswordResetSendDto passwordDto)
     {
         var response = await _service.SendPasswordResetLinkAsync(passwordDto.Email);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 }
