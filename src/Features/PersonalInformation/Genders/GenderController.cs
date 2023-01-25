@@ -4,14 +4,16 @@
 [ApiController]
 public class GenderController : ControllerBase
 {
-    private readonly IGenderRepository _repository;
+    private readonly DbContext _context;
 
-    public GenderController(IGenderRepository repository)
+    public GenderController(DbContext context)
     {
-        _repository = repository;
+        _context = context;
     }
 
     [HttpGet]
     public async Task<IEnumerable<GenderGetDto>> Get()
-        => await _repository.GetGendersAsync();
+        => await _context.Set<Gender>()
+                         .Select(gender => gender.MapToGenderGetDto())
+                         .ToListAsync();
 }

@@ -4,14 +4,16 @@
 [ApiController]
 public class KinshipController : ControllerBase
 {
-    private readonly IKinshipRepository _repository;
+    private readonly DbContext _context;
 
-    public KinshipController(IKinshipRepository repository)
+    public KinshipController(DbContext context)
     {
-        _repository = repository;
+        _context = context;
     }
 
     [HttpGet]
     public async Task<IEnumerable<KinshipGetDto>> Get()
-        => await _repository.GetKinshipsAsync();
+        => await _context.Set<Kinship>()
+                         .Select(kinship => kinship.MapToKinshipGetDto())
+                         .ToListAsync();
 }
