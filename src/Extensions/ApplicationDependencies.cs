@@ -39,7 +39,6 @@ public static class ApplicationDependencies
         services.AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IDependentRepository, DependentRepository>()
                 .AddScoped<IEmployeeRepository, EmployeeRepository>()
-                .AddScoped<IGenderRepository, GenderRepository>()
                 .AddScoped<IAppointmentStatusRepository, AppointmentStatusRepository>()
                 .AddScoped<IRoleRepository, RoleRepository>()
                 .AddScoped<IOfficeRepository, OfficeRepository>()
