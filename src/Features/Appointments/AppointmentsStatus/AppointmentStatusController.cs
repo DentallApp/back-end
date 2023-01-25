@@ -4,14 +4,16 @@
 [ApiController]
 public class AppointmentStatusController : ControllerBase
 {
-    private readonly IAppointmentStatusRepository _repository;
+    private readonly DbContext _context;
 
-    public AppointmentStatusController(IAppointmentStatusRepository repository)
+    public AppointmentStatusController(DbContext context)
     {
-        _repository = repository;
+        _context = context;
     }
 
     [HttpGet]
     public async Task<IEnumerable<AppointmentStatusGetDto>> Get()
-        => await _repository.GetAllStatusAsync();
+        => await _context.Set<AppointmentStatus>()
+                         .Select(appointmentStatus => appointmentStatus.MapToAppointmentStatusGetDto())
+                         .ToListAsync();
 }
