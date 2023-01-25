@@ -16,10 +16,7 @@ public class UserController : ControllerBase
     public async Task<ActionResult<Response>> Put([FromBody]UserUpdateDto userUpdateDto)
     {
         var response = await _userService.EditUserProfileAsync(User.GetPersonId(), userUpdateDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     [Route("password")]
@@ -27,9 +24,6 @@ public class UserController : ControllerBase
     public async Task<ActionResult<Response>> Put([FromBody]UserUpdatePasswordDto userUpdatePasswordDto)
     {
         var response = await _userService.ChangePasswordAsync(User.GetUserId(), userUpdatePasswordDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 }

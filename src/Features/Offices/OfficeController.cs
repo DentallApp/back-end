@@ -43,10 +43,7 @@ public class OfficeController : ControllerBase
     public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]OfficeInsertDto officeInsertDto)
     {
         var response = await _officeService.CreateOfficeAsync(officeInsertDto);
-        if (response.Success)
-            return CreatedAtAction(nameof(Post), response);
-
-        return BadRequest(response);
+        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
     }
 
     /// <summary>
@@ -57,9 +54,6 @@ public class OfficeController : ControllerBase
     public async Task<ActionResult<Response>> Put(int id, [FromBody]OfficeUpdateDto officeUpdateDto)
     {
         var response = await _officeService.UpdateOfficeAsync(id, User.GetEmployeeId(), officeUpdateDto);
-        if (response.Success)
-            return Ok(response);
-
-        return NotFound(response);
+        return response.Success ? Ok(response) : NotFound(response);
     }
 }

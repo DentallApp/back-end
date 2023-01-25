@@ -20,10 +20,7 @@ public class AppointmentCancellationController : ControllerBase
     public async Task<ActionResult<Response>> CancelBasicUserAppointment(int id)
     {
         var response = await _appointmentService.CancelBasicUserAppointmentAsync(id, User.GetUserId());
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     /// <summary>
@@ -40,9 +37,6 @@ public class AppointmentCancellationController : ControllerBase
     public async Task<ActionResult<Response<AppointmentsThatCannotBeCanceledDto>>> CancelAppointments([FromBody]AppointmentCancelDto appointmentCancelDto)
     {
         var response = await _appointmentService.CancelAppointmentsAsync(User, appointmentCancelDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 }

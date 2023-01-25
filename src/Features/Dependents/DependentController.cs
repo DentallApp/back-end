@@ -18,10 +18,7 @@ public class DependentController : ControllerBase
     public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]DependentInsertDto dependentDto)
     {
         var response = await _dependentService.CreateDependentAsync(User.GetUserId(), dependentDto);
-        if (response.Success)
-            return CreatedAtAction(nameof(Post), response);
-
-        return BadRequest(response);
+        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
     }
 
     [Route("user")]
@@ -33,19 +30,13 @@ public class DependentController : ControllerBase
     public async Task<ActionResult<Response>> Delete(int id)
     {
         var response = await _dependentService.RemoveDependentAsync(id, User.GetUserId());
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult<Response>> Put(int id, [FromBody]DependentUpdateDto dependentDto)
     {
         var response = await _dependentService.UpdateDependentAsync(id, User.GetUserId(), dependentDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 }

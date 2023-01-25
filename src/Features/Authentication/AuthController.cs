@@ -15,9 +15,6 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<Response>> Post([FromBody]AuthPostDto authPostDto)
     {
         var response = await _authService.LoginAsync(authPostDto.UserName, authPostDto.Password);
-        if(response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 }

@@ -29,10 +29,7 @@ public class SpecificTreatmentController : ControllerBase
     public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]SpecificTreatmentInsertDto treatmentInsertDto)
     {
         var response = await _treatmentService.CreateSpecificTreatmentAsync(treatmentInsertDto);
-        if (response.Success)
-            return CreatedAtAction(nameof(Post), response);
-
-        return BadRequest(response);
+        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
@@ -40,10 +37,7 @@ public class SpecificTreatmentController : ControllerBase
     public async Task<ActionResult<Response>> Put(int id, [FromBody]SpecificTreatmentUpdateDto treatmentUpdateDto)
     {
         var response = await _treatmentService.UpdateSpecificTreatmentAsync(id, treatmentUpdateDto);
-        if (response.Success)
-            return Ok(response);
-
-        return NotFound(response);
+        return response.Success ? Ok(response) : NotFound(response);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
@@ -51,9 +45,6 @@ public class SpecificTreatmentController : ControllerBase
     public async Task<ActionResult<Response>> Delete(int id)
     {
         var response = await _treatmentService.RemoveSpecificTreatmentAsync(id);
-        if (response.Success)
-            return Ok(response);
-
-        return NotFound(response);
+        return response.Success ? Ok(response) : NotFound(response);
     }
 }

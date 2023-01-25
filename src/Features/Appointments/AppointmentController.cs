@@ -29,10 +29,7 @@ public class AppointmentController : ControllerBase
     public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]AppointmentInsertDto appointmentInsertDto)
     {
         var response = await _appointmentService.CreateAppointmentAsync(appointmentInsertDto);
-        if (response.Success)
-            return CreatedAtAction(nameof(Post), response);
-
-        return BadRequest(response);
+        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
     }
 
     /// <summary>
@@ -43,10 +40,7 @@ public class AppointmentController : ControllerBase
     public async Task<ActionResult<Response>> Put(int id, [FromBody]AppointmentUpdateDto appointmentUpdateDto)
     {
         var response = await _appointmentService.UpdateAppointmentAsync(id, User, appointmentUpdateDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     /// <summary>
@@ -63,9 +57,6 @@ public class AppointmentController : ControllerBase
     public async Task<ActionResult<Response<IEnumerable<AppointmentGetByEmployeeDto>>>> GetAppointmentsForEmployee([FromBody]AppointmentPostDateDto appointmentPostDto)
     {
         var response = await _appointmentService.GetAppointmentsForEmployeeAsync(User, appointmentPostDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 }

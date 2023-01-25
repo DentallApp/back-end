@@ -16,10 +16,7 @@ public class TokenRefreshController : ControllerBase
     public async Task<ActionResult<Response<TokenDto>>> Post([FromBody]TokenDto tokenDto)
     {
         var response = await _service.RefreshTokenAsync(tokenDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     [Route("revoke")]
@@ -27,9 +24,6 @@ public class TokenRefreshController : ControllerBase
     public async Task<ActionResult<Response>> Post()
     {
         var response = await _service.RevokeTokenAsync(User.GetUserId());
-        if (response.Success)
-            return Ok(response);
-
-        return NotFound(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 }

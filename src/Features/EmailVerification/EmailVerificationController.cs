@@ -15,9 +15,6 @@ public class EmailVerificationController : ControllerBase
     public async Task<ActionResult<Response<UserLoginDto>>> VerifyEmail([FromBody]EmailVerificationDto emailDto)
     {
         var response = await _service.VerifyEmailAsync(emailDto.Token);
-        if (response.Success)
-            return Ok(response);
-
-        return Unauthorized(response);
+        return response.Success ? Ok(response) : Unauthorized(response);
     }
 }

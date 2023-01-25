@@ -21,10 +21,7 @@ public class EmployeeController : ControllerBase
             return BadRequest(new Response(CannotRemoveYourOwnProfileMessage));
 
         var response = await _employeeService.RemoveEmployeeAsync(id, User);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
@@ -37,10 +34,7 @@ public class EmployeeController : ControllerBase
     public async Task<ActionResult<Response>> Put([FromBody]EmployeeUpdateDto employeeUpdateDto)
     {
         var response = await _employeeService.EditProfileByCurrentEmployeeAsync(User.GetEmployeeId(), employeeUpdateDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
@@ -51,10 +45,7 @@ public class EmployeeController : ControllerBase
             return BadRequest(new Response(CannotEditYourOwnProfileMessage));
 
         var response = await _employeeService.EditProfileByAdminAsync(id, User, employeeUpdateDto);
-        if (response.Success)
-            return Ok(response);
-
-        return BadRequest(response);
+        return response.Success ? Ok(response) : BadRequest(response);
     }
 
     /// <summary>

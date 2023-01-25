@@ -30,10 +30,7 @@ public class GeneralTreatmentController : ControllerBase
     public async Task<ActionResult<Response<GeneralTreatmentGetDto>>> Get(int id)
     {
         var response = await _treatmentService.GetTreatmentByIdAsync(id);
-        if (response.Success)
-            return Ok(response);
-
-        return NotFound(response);
+        return response.Success ? Ok(response) :  NotFound(response);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
@@ -41,10 +38,7 @@ public class GeneralTreatmentController : ControllerBase
     public async Task<ActionResult<Response<DtoBase>>> Post([FromForm]GeneralTreatmentInsertDto treatmentInsertDto)
     {
         var response = await _treatmentService.CreateTreatmentAsync(treatmentInsertDto);
-        if (response.Success)
-            return CreatedAtAction(nameof(Post), response);
-
-        return BadRequest(response);
+        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
@@ -52,10 +46,7 @@ public class GeneralTreatmentController : ControllerBase
     public async Task<ActionResult<Response>> Put(int id, [FromForm]GeneralTreatmentUpdateDto treatmentUpdateDto)
     {
         var response = await _treatmentService.UpdateTreatmentAsync(id, treatmentUpdateDto);
-        if (response.Success)
-            return Ok(response);
-
-        return NotFound(response);
+        return response.Success ? Ok(response) : NotFound(response);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
@@ -63,9 +54,6 @@ public class GeneralTreatmentController : ControllerBase
     public async Task<ActionResult<Response>> Delete(int id)
     {
         var response = await _treatmentService.RemoveTreatmentAsync(id);
-        if (response.Success)
-            return Ok(response);
-
-        return NotFound(response);
+        return response.Success ? Ok(response) : NotFound(response);
     }
 }
