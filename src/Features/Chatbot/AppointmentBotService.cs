@@ -12,29 +12,29 @@ public class AppointmentBotService : IAppointmentBotService
     public async Task<List<AdaptiveChoice>> GetDentalServicesAsync()
     {
 		using var scope = _serviceProvider.CreateScope();
-        var repository = scope.ServiceProvider.GetRequiredService<IBotQueryRepository>();
-        return await repository.GetDentalServicesAsync();
+        var botQuery = scope.ServiceProvider.GetRequiredService<IBotQueries>();
+        return await botQuery.GetDentalServicesAsync();
     }
 
     public async Task<List<AdaptiveChoice>> GetDentistsAsync(int officeId, int specialtyId)
     {
 		using var scope = _serviceProvider.CreateScope();
-        var repository = scope.ServiceProvider.GetRequiredService<IBotQueryRepository>();
-        return await repository.GetDentistsAsync(officeId, specialtyId);
+        var botQuery = scope.ServiceProvider.GetRequiredService<IBotQueries>();
+        return await botQuery.GetDentistsAsync(officeId, specialtyId);
     }
 
     public async Task<List<AdaptiveChoice>> GetOfficesAsync()
     {
 		using var scope = _serviceProvider.CreateScope();
-        var repository = scope.ServiceProvider.GetRequiredService<IBotQueryRepository>();
-        return await repository.GetOfficesAsync();
+        var botQuery = scope.ServiceProvider.GetRequiredService<IBotQueries>();
+        return await botQuery.GetOfficesAsync();
     }
 
     public async Task<List<AdaptiveChoice>> GetPatientsAsync(UserProfile userProfile)
     {
 		using var scope = _serviceProvider.CreateScope();
-        var repository = scope.ServiceProvider.GetRequiredService<IBotQueryRepository>();
-        return await repository.GetPatientsAsync(userProfile);
+        var botQuery = scope.ServiceProvider.GetRequiredService<IBotQueries>();
+        return await botQuery.GetPatientsAsync(userProfile);
     }
 
     public async Task<Response<IEnumerable<AvailableTimeRangeDto>>> GetAvailableHoursAsync(AvailableTimeRangePostDto availableTimeRangeDto)

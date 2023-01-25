@@ -1,10 +1,10 @@
 ﻿namespace DentallApp.Features.Chatbot;
 
-public class BotQueryRepository : IBotQueryRepository
+public class BotQueries : IBotQueries
 {
     private readonly AppDbContext _context;
 
-    public BotQueryRepository(AppDbContext context)
+    public BotQueries(AppDbContext context)
     {
         _context = context;
     }

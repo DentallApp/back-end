@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Chatbot;
 
-public interface IBotQueryRepository
+public interface IBotQueries
 {
     Task<List<AdaptiveChoice>> GetPatientsAsync(UserProfile userProfile);
     Task<List<AdaptiveChoice>> GetOfficesAsync();
