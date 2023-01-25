@@ -17,7 +17,7 @@ public class WhatsAppMessaging : IInstantMessaging
     {
         TwilioClient.Init(_settings.TwilioAccountSid, _settings.TwilioAuthToken);
         var util    = PhoneNumberUtil.GetInstance();
-        var number  = util.Parse(phoneNumber, _settings.DefaultRegion);
+        var number  = util.Parse(phoneNumber, _settings.TwilioRegionCode);
         var to      = util.Format(number, PhoneNumberFormat.E164);
         var messageOptions = new CreateMessageOptions(
             new Twilio.Types.PhoneNumber($"whatsapp:{to}"));
