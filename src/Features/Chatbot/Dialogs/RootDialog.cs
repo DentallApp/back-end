@@ -41,7 +41,7 @@ public partial class RootDialog : ComponentDialog
         var userProfile = stepContext.CreateUserProfileInstance();
         stepContext.CreateAppointmentInstance().UserId = userProfile.Id;
         var choicesTask  = _botService.GetPatientsAsync(userProfile);
-        var cardJsonTask = TemplateCardLoader.LoadPatientCardAsync();
+        var cardJsonTask = AdaptiveCardsLoader.LoadPatientCardAsync();
         var choices      = await choicesTask;
         var cardJson     = await cardJsonTask;
         return await stepContext.PromptAsync(
@@ -62,7 +62,7 @@ public partial class RootDialog : ComponentDialog
         stepContext.GetAppointment().PersonId = int.Parse(selectedPatientId);
         await stepContext.SendTypingActivityAsync();
         var choicesTask  = _botService.GetOfficesAsync();
-        var cardJsonTask = TemplateCardLoader.LoadOfficeCardAsync();
+        var cardJsonTask = AdaptiveCardsLoader.LoadOfficeCardAsync();
         var choices      = await choicesTask;
         var cardJson     = await cardJsonTask;
         return await stepContext.PromptAsync(
@@ -83,7 +83,7 @@ public partial class RootDialog : ComponentDialog
         stepContext.GetAppointment().OfficeId = int.Parse(selectedOfficeId);
         await stepContext.SendTypingActivityAsync();
         var choicesTask  = _botService.GetDentalServicesAsync();
-        var cardJsonTask = TemplateCardLoader.LoadDentalServiceCardAsync();
+        var cardJsonTask = AdaptiveCardsLoader.LoadDentalServiceCardAsync();
         var choices      = await choicesTask;
         var cardJson     = await cardJsonTask;
         return await stepContext.PromptAsync(
@@ -106,7 +106,7 @@ public partial class RootDialog : ComponentDialog
         int officeId     = stepContext.GetAppointment().OfficeId;
         int specialtyId  = stepContext.GetAppointment().GeneralTreatmentId;
         var choicesTask  = _botService.GetDentistsAsync(officeId, specialtyId);
-        var cardJsonTask = TemplateCardLoader.LoadDentistCardAsync();
+        var cardJsonTask = AdaptiveCardsLoader.LoadDentistCardAsync();
         var choices      = await choicesTask;
         var cardJson     = await cardJsonTask;
         return await stepContext.PromptAsync(
@@ -127,7 +127,7 @@ public partial class RootDialog : ComponentDialog
         stepContext.GetAppointment().DentistId = int.Parse(selectedDentistId);
         await stepContext.SendTypingActivityAsync();
         var dentistScheduleTask = _botService.GetDentistScheduleAsync(stepContext.GetAppointment().DentistId);
-        var cardJsonTask        = TemplateCardLoader.LoadAppointmentDateCardAsync();
+        var cardJsonTask        = AdaptiveCardsLoader.LoadAppointmentDateCardAsync();
         var dentistSchedule     = await dentistScheduleTask;
         var cardJson            = await cardJsonTask;
         await stepContext.Context.SendActivityAsync(string.Format(ShowScheduleToUserMessage, dentistSchedule));
