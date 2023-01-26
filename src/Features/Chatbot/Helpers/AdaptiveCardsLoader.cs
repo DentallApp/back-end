@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Chatbot.Helpers;
 
-public class TemplateCardLoader
+public class AdaptiveCardsLoader
 {
     private const string BasePath = "./Features/Chatbot/AdaptiveCards/";
 
