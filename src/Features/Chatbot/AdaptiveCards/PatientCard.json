@@ -13,6 +13,7 @@
     {
       "type": "Input.ChoiceSet",
       "choices": [],
+      "style": "filtered",
       "isRequired": true,
       "separator": true,
       "id": "patientId",
