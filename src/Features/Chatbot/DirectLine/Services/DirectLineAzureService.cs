@@ -13,14 +13,6 @@ public class DirectLineAzureService : DirectLineService
         _directLineSettings = directLineSettings;
     }
 
-    /// <summary>
-    /// Adds the prefix <c>dl_</c> to the user ID, as required by the Direct Line API.
-    /// </summary>
-    /// <param name="userId">The user ID to add the prefix.</param>
-    /// <returns>The user ID with the prefix.</returns>
-    private static string AddPrefixToUserId(int userId)
-        => $"dl_{userId}";
-
     /// <inheritdoc />
     public async override Task<Response<DirectLineGetTokenDto>> GetTokenAsync(int userId)
     {
