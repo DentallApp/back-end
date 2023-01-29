@@ -38,6 +38,6 @@ global using DentallApp.DataAccess.Repositories;
 global using DentallApp.Responses;
 global using static DentallApp.Constants.ResponseMessages;
 
-global using static DentallApp.Tests.Features.Chatbot.Dialogs.BotServiceMockFactory;
-global using static DentallApp.Tests.Features.Chatbot.Dialogs.ActivityFactory;
+global using static DentallApp.UnitTests.Features.Chatbot.Dialogs.BotServiceMockFactory;
+global using static DentallApp.UnitTests.Features.Chatbot.Dialogs.ActivityFactory;
 

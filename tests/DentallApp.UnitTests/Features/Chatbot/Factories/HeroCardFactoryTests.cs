@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.Features.Chatbot.Factories;
+﻿namespace DentallApp.UnitTests.Features.Chatbot.Factories;
 
 [TestClass]
 public class HeroCardFactoryTests

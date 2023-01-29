@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.DataAccess.Repositories;
+﻿namespace DentallApp.UnitTests.DataAccess.Repositories;
 
 [TestClass]
 public class RepositoryExtensionsTests

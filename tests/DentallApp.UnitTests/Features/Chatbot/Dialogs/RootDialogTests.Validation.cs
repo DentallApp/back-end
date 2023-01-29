@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.Features.Chatbot.Dialogs;
+﻿namespace DentallApp.UnitTests.Features.Chatbot.Dialogs;
 
 public partial class RootDialogTests
 {
