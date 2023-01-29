@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.Features.AppointmentCancellation;
+﻿namespace DentallApp.UnitTests.Features.AppointmentCancellation;
 
 [TestClass]
 public class AppointmentCancellationServiceTests

@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.Features.Chatbot;
+﻿namespace DentallApp.UnitTests.Features.Chatbot.Factories;
 
 [TestClass]
 public class HeroCardFactoryTests
@@ -48,7 +48,7 @@ public class HeroCardFactoryTests
         var heroCards = HeroCardFactory.CreateSchedulesHeroCard(availableHours);
 
         Assert.AreEqual(heroCardsExpected.Count, actual: heroCards.Count);
-        for(int i = 0; i < heroCards.Count; i++)
+        for (int i = 0; i < heroCards.Count; i++)
         {
             var heroCard         = heroCards[i];
             var heroCardExpected = heroCardsExpected[i];

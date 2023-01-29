@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.Features.WeekDays;
+﻿namespace DentallApp.UnitTests.Features.WeekDays;
 
 [TestClass]
 public partial class WeekDayFormatTests

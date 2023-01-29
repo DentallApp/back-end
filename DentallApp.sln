@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp", "src\DentallApp.csproj", "{E354A181-1E6C-4F76-8D99-96E5A6824FC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp.Tests", "tests\DentallApp.Tests.csproj", "{BE6318A1-900B-4E8E-8AAE-C391F881C844}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp.Tests", "tests\DentallApp.UnitTests\DentallApp.UnitTests.csproj", "{BE6318A1-900B-4E8E-8AAE-C391F881C844}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
