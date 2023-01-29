@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.Features.Chatbot;
+﻿namespace DentallApp.Tests.Features.Chatbot.Dialogs;
 
 [TestClass]
 public partial class RootDialogTests
@@ -74,7 +74,7 @@ public partial class RootDialogTests
         Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
         replyNext     = _testClient.GetNextReply<IMessageActivity>();
         Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
-        var heroCard = (HeroCard)replyNext.Attachments[0].Content;
+        var heroCard  = (HeroCard)replyNext.Attachments[0].Content;
         Assert.AreEqual(expected: $"{StartHour} - {EndHour}", actual: heroCard.Buttons[0].Title);
         Assert.AreEqual(expected: $"{StartHour} - {EndHour}", actual: heroCard.Buttons[0].Value);
     }

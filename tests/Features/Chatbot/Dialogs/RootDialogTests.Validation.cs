@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.Features.Chatbot;
+﻿namespace DentallApp.Tests.Features.Chatbot.Dialogs;
 
 public partial class RootDialogTests
 {
@@ -13,7 +13,7 @@ public partial class RootDialogTests
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedPatientId());
         _testClient.GetNextReply<IMessageActivity>();
-        reply     = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
+        reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         Assert.AreEqual(expected: SelectOfficeMessage, actual: reply.Text);
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedOfficeId());

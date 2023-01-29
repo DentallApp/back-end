@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Tests.Features.Chatbot;
+﻿namespace DentallApp.Tests.Features.Chatbot.Factories;
 
 [TestClass]
 public class HeroCardFactoryTests
@@ -48,9 +48,9 @@ public class HeroCardFactoryTests
         var heroCards = HeroCardFactory.CreateSchedulesHeroCard(availableHours);
 
         Assert.AreEqual(heroCardsExpected.Count, actual: heroCards.Count);
-        for(int i = 0; i < heroCards.Count; i++)
+        for (int i = 0; i < heroCards.Count; i++)
         {
-            var heroCard         = heroCards[i];
+            var heroCard = heroCards[i];
             var heroCardExpected = heroCardsExpected[i];
             Assert.AreEqual(heroCardExpected.Buttons.Count, actual: heroCard.Buttons.Count);
             for (int j = 0; j < heroCard.Buttons.Count; j++)
@@ -101,7 +101,7 @@ public class HeroCardFactoryTests
         Assert.AreEqual(heroCardsExpected.Count, actual: heroCards.Count);
         for (int i = 0; i < heroCards.Count; i++)
         {
-            var heroCard         = heroCards[i];
+            var heroCard = heroCards[i];
             var heroCardExpected = heroCardsExpected[i];
             Assert.AreEqual(heroCardExpected.Buttons.Count, actual: heroCard.Buttons.Count);
             for (int j = 0; j < heroCard.Buttons.Count; j++)
@@ -130,9 +130,9 @@ public class HeroCardFactoryTests
         var heroCards = HeroCardFactory.CreateSchedulesHeroCard(availableHours);
 
         Assert.AreEqual(heroCardsExpected.Count, actual: heroCards.Count);
-        var heroCard         = heroCards[0];
+        var heroCard = heroCards[0];
         var heroCardExpected = heroCardsExpected[0];
-        Assert.AreEqual(heroCardExpected.Buttons.Count,    actual: heroCard.Buttons.Count);
+        Assert.AreEqual(heroCardExpected.Buttons.Count, actual: heroCard.Buttons.Count);
         Assert.AreEqual(heroCardExpected.Buttons[0].Value, actual: heroCard.Buttons[0].Value);
     }
 }
