@@ -4,9 +4,9 @@
 [ApiController]
 public class AppointmentStatusController : ControllerBase
 {
-    private readonly DbContext _context;
+    private readonly AppDbContext _context;
 
-    public AppointmentStatusController(DbContext context)
+    public AppointmentStatusController(AppDbContext context)
     {
         _context = context;
     }

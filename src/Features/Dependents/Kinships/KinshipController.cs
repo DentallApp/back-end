@@ -4,9 +4,9 @@
 [ApiController]
 public class KinshipController : ControllerBase
 {
-    private readonly DbContext _context;
+    private readonly AppDbContext _context;
 
-    public KinshipController(DbContext context)
+    public KinshipController(AppDbContext context)
     {
         _context = context;
     }

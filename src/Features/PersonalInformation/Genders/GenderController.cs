@@ -4,9 +4,9 @@
 [ApiController]
 public class GenderController : ControllerBase
 {
-    private readonly DbContext _context;
+    private readonly AppDbContext _context;
 
-    public GenderController(DbContext context)
+    public GenderController(AppDbContext context)
     {
         _context = context;
     }
