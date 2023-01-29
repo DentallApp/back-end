@@ -36,7 +36,7 @@ public static class BotServiceMockFactory
             {
                 Success = true,
                 Message = GetResourceMessage,
-                Data = new List<AvailableTimeRangeDto>
+                Data    = new List<AvailableTimeRangeDto>
                 {
                     new() { StartHour = StartHour, EndHour = EndHour }
                 }
@@ -53,7 +53,7 @@ public static class BotServiceMockFactory
             .ReturnsAsync(new Response<DtoBase>
             {
                 Success = true,
-                Data = new DtoBase { Id = int.Parse(Id) },
+                Data    = new DtoBase { Id = int.Parse(Id) },
                 Message = CreateResourceMessage
             });
         return botService;
