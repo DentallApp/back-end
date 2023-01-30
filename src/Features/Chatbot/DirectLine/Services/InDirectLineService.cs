@@ -10,11 +10,11 @@ public class InDirectLineService : DirectLineService
         : base(httpFactory, namedClient: nameof(InDirectLineService)) { }
 
     /// <inheritdoc />
-    public async override Task<Response<DirectLineGetTokenDto>> GetTokenAsync(int userId)
+    public async override Task<Response<DirectLineGetTokenDto>> GetTokenAsync(UserProfile userProfile)
     {
         var requestBody = new
         {
-            userId   = userId.ToString(),
+            userId   = GenerateUserIdForDirectLine(userProfile),
             password = ""
         };
         var tokenRequest = new HttpRequestMessage(HttpMethod.Post, RequestUri)

@@ -14,13 +14,13 @@ public class DirectLineAzureService : DirectLineService
     }
 
     /// <inheritdoc />
-    public async override Task<Response<DirectLineGetTokenDto>> GetTokenAsync(int userId)
+    public async override Task<Response<DirectLineGetTokenDto>> GetTokenAsync(UserProfile userProfile)
     {
         var requestBody = new 
-        { 
-            user = new 
+        {
+            user = new
             { 
-                id = AddPrefixToUserId(userId)
+                id = $"{Prefix}{GenerateUserIdForDirectLine(userProfile)}"
             } 
         };
         var tokenRequest = new HttpRequestMessage(HttpMethod.Post, RequestUri)

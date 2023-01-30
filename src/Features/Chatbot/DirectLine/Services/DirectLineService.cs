@@ -29,17 +29,18 @@ public abstract class DirectLineService
         => _client = httpFactory.CreateClient(namedClient);
 
     /// <summary>
-    /// Adds the prefix <c>dl_</c> to the user ID, as required by the Direct Line API.
+    /// Generates user ID for Direct Line using the format <c>{userID}-{personID}</c>.
     /// </summary>
-    /// <param name="userId">The user ID to add the prefix.</param>
-    /// <returns>The user ID with the prefix.</returns>
-    protected static string AddPrefixToUserId(int userId)
-        => $"{Prefix}{userId}";
+    /// <param name="userProfile">The authenticated user.</param>
+    /// <returns></returns>
+    protected static string GenerateUserIdForDirectLine(UserProfile userProfile)
+        => $"{userProfile.UserId}-{userProfile.PersonId}";
+
 
     /// <summary>
     /// Gets the Direct Line token to access a single conversation associated with the bot.
     /// </summary>
-    /// <param name="userId">The ID of the authenticated user.</param>
+    /// <param name="userProfile">The authenticated user.</param>
     /// <returns></returns>
-    public abstract Task<Response<DirectLineGetTokenDto>> GetTokenAsync(int userId);
+    public abstract Task<Response<DirectLineGetTokenDto>> GetTokenAsync(UserProfile userProfile);
 }
