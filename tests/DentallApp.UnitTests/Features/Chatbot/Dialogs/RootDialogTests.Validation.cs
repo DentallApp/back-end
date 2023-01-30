@@ -89,4 +89,80 @@ public partial class RootDialogTests
         Assert.AreEqual(expected: SelectScheduleMessage, actual: reply.Text);
         _testClient.GetNextReply<IMessageActivity>();
     }
+
+    [TestMethod]
+    public async Task Bot_WhenThereAreNoHoursAvailable_ShouldSendAnErrorMessage()
+    {
+        Mock.Arrange(() => _botService.GetAvailableHoursAsync(Arg.IsAny<AvailableTimeRangePostDto>()))
+            .ReturnsAsync(new Response<IEnumerable<AvailableTimeRangeDto>>
+            {
+                Success = false,
+                Message = NoSchedulesAvailableMessage
+            });
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateInitialActivity());
+        _testClient.GetNextReply<IMessageActivity>();
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedPatientId());
+        _testClient.GetNextReply<IMessageActivity>();
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedOfficeId());
+        _testClient.GetNextReply<IMessageActivity>();
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentalServiceId());
+        _testClient.GetNextReply<IMessageActivity>();
+
+        Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentistId());
+        _testClient.GetNextReply<IMessageActivity>();
+        _testClient.GetNextReply<IMessageActivity>();
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDate());
+        _testClient.GetNextReply<IMessageActivity>();
+        var replyNext = _testClient.GetNextReply<IMessageActivity>();
+        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        Assert.AreEqual(expected: NoSchedulesAvailableMessage, actual: replyNext.Text);
+        replyNext = _testClient.GetNextReply<IMessageActivity>();
+        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+    }
+
+    [TestMethod]
+    public async Task Bot_WhenDateAndTimeAppointmentIsNotAvailable_ShouldSendAnErrorMessage()
+    {
+        Mock.Arrange(() => _botService.CreateScheduledAppointmentAsync(Arg.IsAny<AppointmentInsertDto>()))
+            .ReturnsAsync(new Response<DtoBase>
+            {
+                Success = false,
+                Message = DateAndTimeAppointmentIsNotAvailableMessage
+            });
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateInitialActivity());
+        _testClient.GetNextReply<IMessageActivity>();
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedPatientId());
+        _testClient.GetNextReply<IMessageActivity>();
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedOfficeId());
+        _testClient.GetNextReply<IMessageActivity>();
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentalServiceId());
+        _testClient.GetNextReply<IMessageActivity>();
+
+        Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentistId());
+        _testClient.GetNextReply<IMessageActivity>();
+        _testClient.GetNextReply<IMessageActivity>();
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDate());
+        _testClient.GetNextReply<IMessageActivity>();
+        _testClient.GetNextReply<IMessageActivity>();
+
+        await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedSchedule());
+        _testClient.GetNextReply<IMessageActivity>();
+        var replyNext = _testClient.GetNextReply<IMessageActivity>();
+        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        Assert.AreEqual(expected: DateAndTimeAppointmentIsNotAvailableMessage, actual: replyNext.Text);
+        replyNext = _testClient.GetNextReply<IMessageActivity>();
+        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+    }
 }
