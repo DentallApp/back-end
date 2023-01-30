@@ -39,7 +39,7 @@ public partial class RootDialog : ComponentDialog
 
         await stepContext.SendTypingActivityAsync();
         var userProfile = stepContext.CreateUserProfileInstance();
-        stepContext.CreateAppointmentInstance().UserId = userProfile.Id;
+        stepContext.CreateAppointmentInstance().UserId = userProfile.UserId;
         var choicesTask  = _botService.GetPatientsAsync(userProfile);
         var cardJsonTask = AdaptiveCardsLoader.LoadPatientCardAsync();
         var choices      = await choicesTask;

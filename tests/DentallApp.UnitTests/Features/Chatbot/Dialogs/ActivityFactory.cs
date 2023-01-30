@@ -5,11 +5,10 @@ public static class ActivityFactory
     public static Activity CreateInitialActivity()
         => new()
         {
-            Text = "Hi",
-            From = new ChannelAccount { Id = "1", Name = "daveseva2010@hotmail.es" },
+            Text        = "Hi",
+            From        = new ChannelAccount { Id = "dl_1000-2000", Name = "daveseva2010@hotmail.es" },
             ChannelData = JObject.Parse(@"
             {
-                personId: 1,
                 fullName: 'Dave Roman'
             }")
         };

@@ -2,7 +2,7 @@
 
 public static class BotServiceMockFactory
 {
-    public const string Id                = "1";
+    public const string Id                = "2000";
     public const string PatientName       = "Dave Roman";
     public const string OfficeName        = "Mapasingue";
     public const string DentistName       = "Alice Roy";
@@ -17,7 +17,7 @@ public static class BotServiceMockFactory
     {
         var botService = Mock.Create<IAppointmentBotService>();
         Mock.Arrange(() => botService.GetPatientsAsync(Arg.IsAny<UserProfile>()))
-            .ReturnsAsync(CreateChoiceLists(PatientName, Id));
+            .ReturnsAsync((UserProfile user) => CreateChoiceLists(user.FullName, user.PersonId.ToString()));
 
         Mock.Arrange(() => botService.GetOfficesAsync())
             .ReturnsAsync(CreateChoiceLists(OfficeName, Id));

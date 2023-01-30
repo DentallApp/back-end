@@ -59,7 +59,7 @@ public class BotQueries : IBotQueries
         var choices = await _context.Set<Dependent>()
                                     .Include(dependent => dependent.Kinship)
                                     .Include(dependent => dependent.Person)
-                                    .Where(dependent => dependent.UserId == userProfile.Id)
+                                    .Where(dependent => dependent.UserId == userProfile.UserId)
                                     .Select(dependent => new AdaptiveChoice
                                     {
                                         Title = dependent.Person.FullName + " / " + dependent.Kinship.Name,
