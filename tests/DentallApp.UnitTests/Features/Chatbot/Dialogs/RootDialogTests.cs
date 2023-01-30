@@ -5,13 +5,14 @@ public partial class RootDialogTests
 {
     private DialogTestClient _testClient;
     private IDateTimeProvider _dateTimeProvider;
+    private IAppointmentBotService _botService;
 
     [TestInitialize]
     public void TestInitialize()
     {
-        var botService    = CreateMock();
+        _botService       = CreateMock();
         _dateTimeProvider = Mock.Create<IDateTimeProvider>();
-        _testClient = new(Channels.Webchat, new RootDialog(botService, _dateTimeProvider));
+        _testClient       = new(Channels.Webchat, new RootDialog(_botService, _dateTimeProvider));
     }
 
     [TestMethod]
