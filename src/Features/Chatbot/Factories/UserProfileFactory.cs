@@ -1,5 +1,8 @@
 ﻿namespace DentallApp.Features.Chatbot.Factories;
 
+/// <summary>
+/// A factory that can create <see cref="UserProfile" /> instances.
+/// </summary>
 public class UserProfileFactory
 {
     public const string IdentifiersCouldNotBeExtractedSeparatelyMessage
@@ -7,6 +10,15 @@ public class UserProfileFactory
           "This error may be caused by not following the format: " +
           "{userID}-{personID}";
 
+    /// <summary>
+    /// Creates an instance of type <see cref="UserProfile" />.
+    /// </summary>
+    /// <param name="channelData">The channel data.</param>
+    /// <param name="channelId">The channel ID.</param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException">
+    /// The identifiers cannot be extracted separately from the channel ID.
+    /// </exception>
     public static UserProfile Create(ChannelData channelData, string channelId)
     {
         var idWithoutPrefix = channelId.Replace(oldValue: DirectLineService.Prefix, newValue: string.Empty);
