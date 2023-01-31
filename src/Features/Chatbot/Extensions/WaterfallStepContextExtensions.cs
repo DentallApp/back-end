@@ -8,21 +8,8 @@ public static class WaterfallStepContextExtensions
 
     public static UserProfile CreateUserProfileInstance(this WaterfallStepContext stepContext)
     {
-        var channelData     = stepContext.Context.Activity.GetChannelData<ChannelData>();
-        var idWithoutPrefix = stepContext.Context
-                                         .Activity
-                                         .From
-                                         .Id
-                                         .Replace(oldValue: DirectLineService.Prefix, 
-                                                  newValue: string.Empty);
-
-        var result = idWithoutPrefix.Split("-");
-        var userProfile = new UserProfile
-        {
-            UserId   = int.Parse(result[0]),
-            PersonId = int.Parse(result[1]),
-            FullName = channelData?.FullName
-        };
+        var channelData              = stepContext.Context.Activity.GetChannelData<ChannelData>();
+        var userProfile              = UserProfileFactory.Create(channelData, stepContext.Context.Activity.From.Id);
         stepContext.Values[UserInfo] = userProfile;
         return userProfile;
     }

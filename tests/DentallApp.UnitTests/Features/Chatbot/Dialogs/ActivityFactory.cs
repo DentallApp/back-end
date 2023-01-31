@@ -2,11 +2,14 @@
 
 public static class ActivityFactory
 {
+    private const string UserId   = "1000";
+    private const string PersonId = "2000";
+
     public static Activity CreateInitialActivity()
         => new()
         {
             Text        = "Hi",
-            From        = new ChannelAccount { Id = "dl_1000-2000", Name = "daveseva2010@hotmail.es" },
+            From        = new ChannelAccount { Id = $"dl_{UserId}-{PersonId}", Name = "daveseva2010@hotmail.es" },
             ChannelData = JObject.Parse(@"
             {
                 fullName: 'Dave Roman'
