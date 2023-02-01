@@ -68,8 +68,8 @@ public class ResponseMessages
     public const string SelectAppointmentDateMessage                       = "Error. Escoja una fecha válida";
     public const string SelectScheduleMessage                              = "Error. Escoja un horario";
     public const string ShowScheduleToUserMessage                          = "El odontólogo atiende los {0}";
-    public const string RangeToPayMinMaxMessage                            = "El rango a pagar es de {0} a {1}";
-    public const string RangeToPayMessage                                  = "El valor a pagar es de {0}";
+    public const string RangeToPayMinMaxMessage                            = "El rango a pagar es de ${0} a ${1}";
+    public const string RangeToPayMessage                                  = "El valor a pagar es de ${0}";
     public const string SuccessfullyScheduledAppointmentMessage            = "Cita agendada con éxito. {0}.";
     public const string TotalHoursAvailableMessage                         = "Total de horas disponibles: {0}.\n\nSeleccione la hora para su cita:";
     public const string ThanksForUsingServiceMessage                       = "Gracias por usar nuestro servicio.\n\n" +
