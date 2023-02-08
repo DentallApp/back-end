@@ -10,8 +10,9 @@ builder.Services.AddServices()
                 .AddRepositories()
                 .AddHelpers();
 
+var databaseSettings = new EnvBinder(envVars).Bind<DatabaseSettings>();
 builder.Services.AddSingleton(settings)
-                .AddSingleton<IDbConnector>(new MariaDbConnector(settings.ConnectionString));
+                .AddSingleton<IDbConnector>(new MariaDbConnector(databaseSettings.DbConnectionString));
 
 builder.Services.AddHttpClient()
                 .AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
@@ -19,7 +20,7 @@ builder.Services.AddHttpClient()
                 .AddNewtonsoftJson();
 
 
-builder.Services.AddDbContext(settings);
+builder.Services.AddDbContext(databaseSettings);
 builder.Services.AddSendGrid(options => options.ApiKey = settings.SendGridApiKey);
 builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(settings);

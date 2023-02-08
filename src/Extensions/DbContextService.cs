@@ -4,18 +4,18 @@ namespace DentallApp.Extensions;
 
 public static class DbContextService
 {
-    public static IServiceCollection AddDbContext(this IServiceCollection services, AppSettings settings)
+    public static IServiceCollection AddDbContext(this IServiceCollection services, DatabaseSettings settings)
     {
         LinqToDBForEFTools.Initialize();
-        var cs = settings.ConnectionString;
+        var cs = settings.DbConnectionString;
         services.AddDbContext<AppDbContext>(options =>
         {
             options.UseMySql(cs, ServerVersion.AutoDetect(cs),
                     mySqlOptionsAction: sqlOptions =>
                     {
                         sqlOptions.EnableRetryOnFailure(
-                            maxRetryCount: 10,
-                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            maxRetryCount:     settings.DbMaxRetryCount,
+                            maxRetryDelay:     TimeSpan.FromSeconds(settings.DbMaxRetryDelay),
                             errorNumbersToAdd: null);
                     })
                    .UseSnakeCaseNamingConvention();
