@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.TokenRefresh;
 
-public class TokenRefreshService : ITokenRefreshService
+public class TokenRefreshService
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;

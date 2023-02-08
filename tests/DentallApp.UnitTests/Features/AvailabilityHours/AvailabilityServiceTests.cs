@@ -7,7 +7,7 @@ public class AvailabilityServiceTests
     private IEmployeeScheduleRepository _employeeScheduleRepository;
     private IGeneralTreatmentRepository _dentalServiceRepository;
     private IHolidayOfficeRepository _holidayOfficeRepository;
-    private IAvailabilityService _availabilityService;
+    private AvailabilityService _availabilityService;
     private IDateTimeProvider _dateTimeProvider;
 
     [TestInitialize]

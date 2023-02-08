@@ -4,10 +4,10 @@
 [ApiController]
 public class SpecificTreatmentController : ControllerBase
 {
-    private readonly ISpecificTreatmentService _treatmentService;
+    private readonly SpecificTreatmentService _treatmentService;
     private readonly ISpecificTreatmentRepository _treatmentRepository;
 
-    public SpecificTreatmentController(ISpecificTreatmentService treatmentService, 
+    public SpecificTreatmentController(SpecificTreatmentService treatmentService, 
                                        ISpecificTreatmentRepository treatmentRepository)
     {
         _treatmentService = treatmentService;

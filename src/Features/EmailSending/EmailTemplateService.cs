@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.EmailSending;
 
-public class EmailTemplateService : IEmailTemplateService
+public class EmailTemplateService
 {
     public async Task<string> LoadTemplateForEmailVerificationAsync(string url, string recipientName)
     {

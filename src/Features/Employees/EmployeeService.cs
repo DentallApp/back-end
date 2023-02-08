@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Employees;
 
-public class EmployeeService : IEmployeeService
+public class EmployeeService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordHasher _passwordHasher;

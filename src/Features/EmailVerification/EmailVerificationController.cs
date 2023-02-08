@@ -3,9 +3,9 @@
 [ApiController]
 public class EmailVerificationController : ControllerBase
 {
-    private readonly IEmailVerificationService _service;
+    private readonly EmailVerificationService _service;
 
-    public EmailVerificationController(IEmailVerificationService service)
+    public EmailVerificationController(EmailVerificationService service)
     {
         _service = service;
     }

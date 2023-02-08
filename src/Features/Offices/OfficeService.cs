@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Offices;
 
-public class OfficeService : IOfficeService
+public class OfficeService
 {
     private readonly IOfficeRepository _officeRepository;
 

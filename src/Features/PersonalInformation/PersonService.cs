@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.PersonalInformation;
 
-public class PersonService : IPersonService
+public class PersonService
 {
 	private readonly IPersonRepository _personRepository;
 

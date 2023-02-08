@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.EmailVerification;
 
-public class EmailVerificationService : IEmailVerificationService
+public class EmailVerificationService
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;

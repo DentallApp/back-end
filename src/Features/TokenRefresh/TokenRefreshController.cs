@@ -4,9 +4,9 @@
 [ApiController]
 public class TokenRefreshController : ControllerBase
 {
-    private readonly ITokenRefreshService _service;
+    private readonly TokenRefreshService _service;
 
-    public TokenRefreshController(ITokenRefreshService service)
+    public TokenRefreshController(TokenRefreshService service)
     {
         _service = service;
     }

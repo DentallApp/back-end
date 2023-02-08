@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Roles;
 
-public class RoleService : IRoleService
+public class RoleService
 {
     private readonly IRoleRepository _roleRepository;
 

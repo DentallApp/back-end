@@ -4,9 +4,9 @@
 [ApiController]
 public class UserRegisterController : ControllerBase
 {
-    private readonly IUserRegisterService _userRegisterService;
+    private readonly UserRegisterService _userRegisterService;
 
-    public UserRegisterController(IUserRegisterService userRegisterService)
+    public UserRegisterController(UserRegisterService userRegisterService)
     {
         _userRegisterService = userRegisterService;
     }

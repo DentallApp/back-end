@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.PasswordReset;
 
-public class PasswordResetService : IPasswordResetService
+public class PasswordResetService
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;

@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.EmployeeSchedules;
 
-public class EmployeeScheduleService : IEmployeeScheduleService
+public class EmployeeScheduleService
 {
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
 

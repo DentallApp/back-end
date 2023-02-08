@@ -5,10 +5,10 @@
 [ApiController]
 public class PersonController : ControllerBase
 {
-	private readonly IPersonService _personService;
+	private readonly PersonService _personService;
 	private readonly IPersonRepository _personRepository;
 
-	public PersonController(IPersonService personService, IPersonRepository personRepository)
+	public PersonController(PersonService personService, IPersonRepository personRepository)
 	{
 		_personService = personService;
 		_personRepository = personRepository;

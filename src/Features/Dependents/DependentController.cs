@@ -5,10 +5,10 @@
 [ApiController]
 public class DependentController : ControllerBase
 {
-    private readonly IDependentService _dependentService;
+    private readonly DependentService _dependentService;
     private readonly IDependentRepository _dependentRepository;
         
-    public DependentController(IDependentService dependentService, IDependentRepository dependentRepository)
+    public DependentController(DependentService dependentService, IDependentRepository dependentRepository)
     {
         _dependentService = dependentService;
         _dependentRepository = dependentRepository;

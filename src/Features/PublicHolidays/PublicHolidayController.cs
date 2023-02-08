@@ -5,10 +5,10 @@
 [ApiController]
 public class PublicHolidayController : ControllerBase
 {
-    private readonly IPublicHolidayService _holidayService;
+    private readonly PublicHolidayService _holidayService;
     private readonly IPublicHolidayRepository _holidayRepository;
 
-    public PublicHolidayController(IPublicHolidayService holidayService,
+    public PublicHolidayController(PublicHolidayService holidayService,
                                    IPublicHolidayRepository holidayRepository)
     {
         _holidayService = holidayService;

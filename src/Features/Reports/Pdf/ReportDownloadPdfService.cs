@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Reports.Pdf;
 
-public class ReportDownloadPdfService : IReportDownloadPdfService
+public class ReportDownloadPdfService
 {
     private const string Path = "./Templates/{0}.html";
     private readonly IHtmlTemplateLoader _htmlTemplateLoader;

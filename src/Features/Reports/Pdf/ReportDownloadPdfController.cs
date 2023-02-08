@@ -5,9 +5,9 @@
 [ApiController]
 public class ReportDownloadPdfController : ControllerBase
 {
-	private readonly IReportDownloadPdfService _reportDownloadPdf;
+	private readonly ReportDownloadPdfService _reportDownloadPdf;
 
-	public ReportDownloadPdfController(IReportDownloadPdfService reportDownloadPdf)
+	public ReportDownloadPdfController(ReportDownloadPdfService reportDownloadPdf)
 	{
 		_reportDownloadPdf = reportDownloadPdf;
 	}

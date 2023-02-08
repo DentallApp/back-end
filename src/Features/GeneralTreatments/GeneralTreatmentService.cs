@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.GeneralTreatments;
 
-public class GeneralTreatmentService : IGeneralTreatmentService
+public class GeneralTreatmentService
 {
     private readonly IGeneralTreatmentRepository _treatmentRepository;
     private readonly string _basePath;

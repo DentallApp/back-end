@@ -4,9 +4,9 @@
 [ApiController]
 public class AvailabilityController : ControllerBase
 {
-	private readonly IAvailabilityService _availabilityService;
+	private readonly AvailabilityService _availabilityService;
 
-	public AvailabilityController(IAvailabilityService availabilityService)
+	public AvailabilityController(AvailabilityService availabilityService)
 	{
 		_availabilityService = availabilityService;
 	}

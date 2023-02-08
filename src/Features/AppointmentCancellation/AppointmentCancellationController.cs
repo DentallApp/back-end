@@ -4,9 +4,9 @@
 [ApiController]
 public class AppointmentCancellationController : ControllerBase
 {
-    private readonly IAppointmentCancellationService _appointmentService;
+    private readonly AppointmentCancellationService _appointmentService;
 
-    public AppointmentCancellationController(IAppointmentCancellationService appointmentService)
+    public AppointmentCancellationController(AppointmentCancellationService appointmentService)
     {
         _appointmentService = appointmentService;
     }

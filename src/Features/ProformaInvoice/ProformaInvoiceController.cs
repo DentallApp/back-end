@@ -4,9 +4,9 @@
 [ApiController]
 public class ProformaInvoiceController : ControllerBase
 {
-    private readonly IProformaInvoiceService _proformaInvoiceService;
+    private readonly ProformaInvoiceService _proformaInvoiceService;
 
-    public ProformaInvoiceController(IProformaInvoiceService proformaInvoiceService)
+    public ProformaInvoiceController(ProformaInvoiceService proformaInvoiceService)
     {
         _proformaInvoiceService = proformaInvoiceService;
     }

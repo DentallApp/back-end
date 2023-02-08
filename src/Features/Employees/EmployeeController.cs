@@ -4,10 +4,10 @@
 [ApiController]
 public class EmployeeController : ControllerBase
 {
-    private readonly IEmployeeService _employeeService;
+    private readonly EmployeeService _employeeService;
     private readonly IEmployeeRepository _employeeRepository;
 
-    public EmployeeController(IEmployeeService employeeService, IEmployeeRepository employeeRepository)
+    public EmployeeController(EmployeeService employeeService, IEmployeeRepository employeeRepository)
     {
         _employeeService = employeeService;
         _employeeRepository = employeeRepository;
