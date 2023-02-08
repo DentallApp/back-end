@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Authentication;
 
-public class AuthService : IAuthService
+public class AuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly IEmployeeRepository _employeeRepository;

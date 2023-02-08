@@ -5,10 +5,10 @@
 [ApiController]
 public class FavoriteDentistController : ControllerBase
 {
-    private readonly IFavoriteDentistService _favoriteDentistService;
+    private readonly FavoriteDentistService _favoriteDentistService;
     private readonly IFavoriteDentistRepository _favoriteDentistRepository;
 
-    public FavoriteDentistController(IFavoriteDentistService favoriteDentistService, 
+    public FavoriteDentistController(FavoriteDentistService favoriteDentistService, 
                                      IFavoriteDentistRepository favoriteDentistRepository)
     {
         _favoriteDentistService = favoriteDentistService;

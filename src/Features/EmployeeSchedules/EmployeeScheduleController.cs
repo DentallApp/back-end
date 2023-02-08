@@ -5,10 +5,10 @@
 [ApiController]
 public class EmployeeScheduleController : ControllerBase
 {
-    private readonly IEmployeeScheduleService _employeeScheduleService;
+    private readonly EmployeeScheduleService _employeeScheduleService;
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
 
-    public EmployeeScheduleController(IEmployeeScheduleService employeeScheduleService, 
+    public EmployeeScheduleController(EmployeeScheduleService employeeScheduleService, 
                                       IEmployeeScheduleRepository employeeScheduleRepository)
     {
         _employeeScheduleService = employeeScheduleService;

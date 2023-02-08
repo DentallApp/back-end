@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Dependents;
 
-public class DependentService : IDependentService
+public class DependentService
 {
     private readonly IUnitOfWork _unitOfWork;
 

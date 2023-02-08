@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.UserRegistration;
 
-public class UserRegisterService : IUserRegisterService
+public class UserRegisterService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IEmailService _emailService;

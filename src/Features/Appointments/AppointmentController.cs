@@ -4,10 +4,10 @@
 [ApiController]
 public class AppointmentController : ControllerBase
 {
-    private readonly IAppointmentService _appointmentService;
+    private readonly AppointmentService _appointmentService;
     private readonly IAppointmentRepository _appointmentRepository;
 
-    public AppointmentController(IAppointmentService appointmentService, IAppointmentRepository appointmentRepository)
+    public AppointmentController(AppointmentService appointmentService, IAppointmentRepository appointmentRepository)
     {
         _appointmentService = appointmentService;
         _appointmentRepository = appointmentRepository;

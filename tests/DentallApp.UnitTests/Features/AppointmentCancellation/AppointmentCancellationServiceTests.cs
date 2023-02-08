@@ -5,7 +5,7 @@ public class AppointmentCancellationServiceTests
 {
     private IAppointmentCancellationRepository _appointmentRepository;
     private IDateTimeProvider _dateTimeProvider;
-    private IAppointmentCancellationService _appointmentService;
+    private AppointmentCancellationService _appointmentService;
 
     [TestInitialize]
     public void TestInitialize()

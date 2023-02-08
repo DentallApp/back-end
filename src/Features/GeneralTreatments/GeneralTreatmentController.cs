@@ -4,10 +4,10 @@
 [ApiController]
 public class GeneralTreatmentController : ControllerBase
 {
-    private readonly IGeneralTreatmentService _treatmentService;
+    private readonly GeneralTreatmentService _treatmentService;
     private readonly IGeneralTreatmentRepository _treatmentRepository;
 
-    public GeneralTreatmentController(IGeneralTreatmentService treatmentService, 
+    public GeneralTreatmentController(GeneralTreatmentService treatmentService, 
                                       IGeneralTreatmentRepository treatmentRepository)
     {
         _treatmentService = treatmentService;

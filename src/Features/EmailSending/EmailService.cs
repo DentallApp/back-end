@@ -3,10 +3,10 @@
 public class EmailService : IEmailService
 {
     private readonly ISendGridClient _client;
-    private readonly IEmailTemplateService _emailTemplate;
+    private readonly EmailTemplateService _emailTemplate;
     private readonly AppSettings _settings;
 
-    public EmailService(ISendGridClient client, IEmailTemplateService emailTemplate, AppSettings settings)
+    public EmailService(ISendGridClient client, EmailTemplateService emailTemplate, AppSettings settings)
     {
         _client = client;
         _settings = settings;

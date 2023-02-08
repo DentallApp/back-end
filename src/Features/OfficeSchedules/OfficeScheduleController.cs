@@ -4,10 +4,10 @@
 [ApiController]
 public class OfficeScheduleController : ControllerBase
 {
-    private readonly IOfficeScheduleService _officeScheduleService;
+    private readonly OfficeScheduleService _officeScheduleService;
     private readonly IOfficeScheduleRepository _officeScheduleRepository;
 
-    public OfficeScheduleController(IOfficeScheduleService officeScheduleService, 
+    public OfficeScheduleController(OfficeScheduleService officeScheduleService, 
                                     IOfficeScheduleRepository officeScheduleRepository)
     {
         _officeScheduleService = officeScheduleService;

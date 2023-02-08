@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.OfficeSchedules;
 
-public class OfficeScheduleService : IOfficeScheduleService
+public class OfficeScheduleService
 {
     private readonly IOfficeScheduleRepository _officeScheduleRepository;
 

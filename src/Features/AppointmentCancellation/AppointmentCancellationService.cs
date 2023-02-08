@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.AppointmentCancellation;
 
-public partial class AppointmentCancellationService : IAppointmentCancellationService
+public partial class AppointmentCancellationService
 {
     private readonly IAppointmentCancellationRepository _appointmentRepository;
     private readonly IInstantMessaging _instantMessaging;

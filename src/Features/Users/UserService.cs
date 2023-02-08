@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Users;
 
-public class UserService : IUserService
+public class UserService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordHasher _passwordHasher;

@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.SpecificTreatments;
 
-public class SpecificTreatmentService : ISpecificTreatmentService
+public class SpecificTreatmentService
 {
     private readonly ISpecificTreatmentRepository _treatmentRepository;
 

@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.FavoriteDentists;
 
-public class FavoriteDentistService : IFavoriteDentistService
+public class FavoriteDentistService
 {
     private readonly IFavoriteDentistRepository _favoriteDentistRepository;
 

@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Appointments;
 
-public class AppointmentService : IAppointmentService
+public class AppointmentService
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IDateTimeProvider _dateTimeProvider;

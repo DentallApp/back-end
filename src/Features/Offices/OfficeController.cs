@@ -4,10 +4,10 @@
 [ApiController]
 public class OfficeController : ControllerBase
 {
-    private readonly IOfficeService _officeService;
+    private readonly OfficeService _officeService;
     private readonly IOfficeRepository _officeRepository;
 
-    public OfficeController(IOfficeService officeService, IOfficeRepository officeRepository)
+    public OfficeController(OfficeService officeService, IOfficeRepository officeRepository)
     {
         _officeService = officeService;
         _officeRepository = officeRepository;

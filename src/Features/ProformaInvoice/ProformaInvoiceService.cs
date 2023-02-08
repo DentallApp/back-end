@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.ProformaInvoice;
 
-public class ProformaInvoiceService : IProformaInvoiceService
+public class ProformaInvoiceService
 {
     private readonly IHtmlTemplateLoader _htmlTemplateLoader;
     private readonly IHtmlConverter _htmlConverter;

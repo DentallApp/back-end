@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.PublicHolidays;
 
-public class PublicHolidayService : IPublicHolidayService
+public class PublicHolidayService
 {
     private readonly IUnitOfWork _unitOfWork;
 

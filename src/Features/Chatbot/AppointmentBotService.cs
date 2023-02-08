@@ -40,14 +40,14 @@ public class AppointmentBotService : IAppointmentBotService
     public async Task<Response<IEnumerable<AvailableTimeRangeDto>>> GetAvailableHoursAsync(AvailableTimeRangePostDto availableTimeRangeDto)
     {
         using var scope = _serviceProvider.CreateScope();
-        var availabilityService = scope.ServiceProvider.GetRequiredService<IAvailabilityService>();
+        var availabilityService = scope.ServiceProvider.GetRequiredService<AvailabilityService>();
         return await availabilityService.GetAvailableHoursAsync(availableTimeRangeDto);
     }
 
     public async Task<Response<DtoBase>> CreateScheduledAppointmentAsync(AppointmentInsertDto appointment)
     {
         using var scope = _serviceProvider.CreateScope();
-        var appointmentService = scope.ServiceProvider.GetRequiredService<IAppointmentService>();
+        var appointmentService = scope.ServiceProvider.GetRequiredService<AppointmentService>();
         return await appointmentService.CreateAppointmentAsync(appointment);
     }
 

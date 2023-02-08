@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.AvailabilityHours;
 
-public class AvailabilityService : IAvailabilityService
+public class AvailabilityService
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;

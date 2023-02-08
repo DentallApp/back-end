@@ -3,9 +3,9 @@
 [ApiController]
 public class PasswordResetController : ControllerBase
 {
-    private readonly IPasswordResetService _service;
+    private readonly PasswordResetService _service;
 
-    public PasswordResetController(IPasswordResetService service)
+    public PasswordResetController(PasswordResetService service)
     {
         _service = service;
     }
