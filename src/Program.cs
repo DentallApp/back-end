@@ -1,8 +1,8 @@
 ﻿// ASPNETCORE_ENVIRONMENT must be set from the .env file before initializing a new instance of WebApplicationBuilder. 
 // If the environment isn't set, it defaults to Production, which disables most debugging features.
-var envVars  = new EnvLoader().Load();
-var settings = new EnvBinder(envVars).Bind<AppSettings>();
-var builder  = WebApplication.CreateBuilder(args);
+var envVars     = new EnvLoader().Load();
+var appSettings = new EnvBinder(envVars).Bind<AppSettings>();
+var builder     = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -11,7 +11,7 @@ builder.Services.AddServices()
                 .AddHelpers();
 
 var databaseSettings = new EnvBinder(envVars).Bind<DatabaseSettings>();
-builder.Services.AddSingleton(settings)
+builder.Services.AddSingleton(appSettings)
                 .AddSingleton<IDbConnector>(new MariaDbConnector(databaseSettings.DbConnectionString));
 
 builder.Services.AddHttpClient()
@@ -21,11 +21,11 @@ builder.Services.AddHttpClient()
 
 
 builder.Services.AddDbContext(databaseSettings);
-builder.Services.AddSendGrid(options => options.ApiKey = settings.SendGridApiKey);
+builder.Services.AddSendGrid(options => options.ApiKey = appSettings.SendGridApiKey);
 builder.Services.AddSwagger();
-builder.Services.AddAuthenticationJwtBearer(settings);
+builder.Services.AddAuthenticationJwtBearer(appSettings);
 builder.Services.AddBotServices(builder.Configuration);
-builder.Services.AddQuartzJobs(settings);
+builder.Services.AddQuartzJobs(appSettings);
 
 var app = builder.Build();
 
