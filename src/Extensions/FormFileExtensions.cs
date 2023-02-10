@@ -14,6 +14,14 @@ public static class FormFileExtensions
     public static string GetExtension(this IFormFile file)
         => Path.GetExtension(file.FileName);
 
+    /// <summary>
+    /// Gets a random name for an image without white-spaces.
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns>
+    /// <para>A random name for an image without white-spaces.</para>
+    /// Each white-space will be replaced by an underscore.
+    /// </returns>
     public static string GetRandomImageName(this IFormFile file)
 	{
 		var fileNameWithoutWhiteSpaces = file.GetFileNameWithoutExtension().Replace(" ", "_");
