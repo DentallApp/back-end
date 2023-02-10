@@ -15,5 +15,8 @@ public static class FormFileExtensions
         => Path.GetExtension(file.FileName);
 
     public static string GetRandomImageName(this IFormFile file)
-        => $"{file.GetFileNameWithoutExtension()}_{Guid.NewGuid()}{file.GetExtension()}";
+	{
+		var fileNameWithoutWhiteSpaces = file.GetFileNameWithoutExtension().Replace(" ", "_");
+		return $"{fileNameWithoutWhiteSpaces}_{Guid.NewGuid()}{file.GetExtension()}";
+	}
 }
