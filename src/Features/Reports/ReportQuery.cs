@@ -72,7 +72,7 @@ public class ReportQuery : IReportQuery
         });
     }
 
-    public async Task<IEnumerable<ReportGetMostRequestedServicesResponse>> GetMostRequestedServicesAsync(ReportPostDto reportPostDto)
+    public async Task<IEnumerable<ReportGetMostRequestedServiceResponse>> GetMostRequestedServicesAsync(ReportPostDto reportPostDto)
         => await _context.Set<Appointment>()
                          .Include(appointment => appointment.GeneralTreatment)
                          .Where(appointment =>
@@ -80,7 +80,7 @@ public class ReportQuery : IReportQuery
                                (appointment.Date >= reportPostDto.From && appointment.Date <= reportPostDto.To))
                          .OptionalWhere(reportPostDto.OfficeId, appointment => appointment.OfficeId == reportPostDto.OfficeId)
                          .GroupBy(appointment => new { appointment.GeneralTreatmentId, appointment.GeneralTreatment.Name })
-                         .Select(group => new ReportGetMostRequestedServicesResponse
+                         .Select(group => new ReportGetMostRequestedServiceResponse
                           {
                              DentalServiceName          = group.Key.Name,
                              TotalAppointmentsAssisted   = group.Count()
