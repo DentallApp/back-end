@@ -26,9 +26,9 @@ public class ReportDownloadPdfController : ControllerBase
     /// Descarga el reporte sobre el total de citas agendadas por odontólogo.
     /// </summary>
     [HttpPost("appointment/scheduled")]
-    public async Task<ActionResult> ReportTotalScheduledAppointmentDownload([FromBody]ReportPostScheduledDownloadDto reportPostDownloadDto)
+    public async Task<ActionResult> ReportTotalScheduledAppointmentDownload([FromBody]ReportTotalScheduledAppointmentDownloadRequest request)
     {
-        var contents = await _reportDownloadPdf.CreateReportTotalScheduledAppointmentPdfAsync(reportPostDownloadDto);
+        var contents = await _reportDownloadPdf.CreateReportTotalScheduledAppointmentPdfAsync(request);
         return File(contents, "application/pdf", "Reporte sobre el total de citas agendadas.pdf");
     }
 
