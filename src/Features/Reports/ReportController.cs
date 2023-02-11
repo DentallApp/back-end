@@ -38,7 +38,7 @@ public class ReportController : ControllerBase
 	/// Obtiene el reporte de los servicios dentales más solicitados.
 	/// </summary>
 	[HttpPost("most-requested/services")]
-	public async Task<ActionResult<IEnumerable<ReportGetMostRequestedServicesDto>>> GetMostRequestedServices([FromBody]ReportPostDto reportPostDto)
+	public async Task<ActionResult<IEnumerable<ReportGetMostRequestedServicesResponse>>> GetMostRequestedServices([FromBody]ReportPostDto reportPostDto)
 	{
         if (User.IsAdmin() && User.IsNotInOffice(reportPostDto.OfficeId))
             return Unauthorized();
