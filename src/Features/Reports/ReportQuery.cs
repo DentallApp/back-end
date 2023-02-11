@@ -45,7 +45,7 @@ public class ReportQuery : IReportQuery
         return result.First();
     }
 
-    public async Task<IEnumerable<ReportGetTotalScheduledAppointmentDto>> GetTotalScheduledAppointmentsByDateRangeAsync(ReportPostDto reportPostDto)
+    public async Task<IEnumerable<ReportGetTotalScheduledAppointmentResponse>> GetTotalScheduledAppointmentsByDateRangeAsync(ReportPostDto reportPostDto)
     {
         using var connection = _dbConnector.CreateConnection();
         var sql = @"
@@ -63,7 +63,7 @@ public class ReportQuery : IReportQuery
             GROUP BY a.dentist_id
             ORDER BY Total DESC
         ";
-        return await connection.QueryAsync<ReportGetTotalScheduledAppointmentDto>(sql, new
+        return await connection.QueryAsync<ReportGetTotalScheduledAppointmentResponse>(sql, new
         {
             AppointmentStatusId.Scheduled,
             reportPostDto.From,

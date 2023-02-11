@@ -27,7 +27,7 @@ public class ReportController : ControllerBase
 	/// Obtiene el reporte sobre el total de citas agendadas por odontólogo.
 	/// </summary>
 	[HttpPost("appointment/scheduled")]
-	public async Task<ActionResult<IEnumerable<ReportGetTotalScheduledAppointmentDto>>> GetTotalScheduledAppointmentsByDateRange([FromBody]ReportPostDto reportPostDto)
+	public async Task<ActionResult<IEnumerable<ReportGetTotalScheduledAppointmentResponse>>> GetTotalScheduledAppointmentsByDateRange([FromBody]ReportPostDto reportPostDto)
 	{
         if (User.IsAdmin() && User.IsNotInOffice(reportPostDto.OfficeId))
             return Unauthorized();
