@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Reports.DTOs;
 
-public class ReportPostTotalAppointmentDownloadDto
+public class ReportTotalAppointmentDownloadRequest
 {
     public string From { get; set; }
     public string To { get; set; }

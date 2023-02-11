@@ -16,9 +16,9 @@ public class ReportDownloadPdfController : ControllerBase
     /// Descarga el reporte sobre el total de citas asistidas, no asistidas y canceladas.
     /// </summary>
 	[HttpPost("appointment")]
-	public async Task<ActionResult> ReportTotalAppointmentsDownload([FromBody]ReportPostTotalAppointmentDownloadDto reportPostDownloadDto)
+	public async Task<ActionResult> ReportTotalAppointmentsDownload([FromBody]ReportTotalAppointmentDownloadRequest request)
 	{
-        var contents = await _reportDownloadPdf.CreateReportTotalAppointmentPdfAsync(reportPostDownloadDto);
+        var contents = await _reportDownloadPdf.CreateReportTotalAppointmentPdfAsync(request);
         return File(contents, "application/pdf", "Reporte sobre el total de citas.pdf");
     }
 

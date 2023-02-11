@@ -2,15 +2,15 @@
 
 public static class ReportMapper
 {
-    public static object MapToObject(this ReportPostTotalAppointmentDownloadDto reportPostDownloadDto)
+    public static object MapToObject(this ReportTotalAppointmentDownloadRequest request)
     {
         var model = new
         {
-            reportPostDownloadDto.From,
-            reportPostDownloadDto.To,
-            reportPostDownloadDto.OfficeName,
-            reportPostDownloadDto.DentistName,
-            reportPostDownloadDto.Totals
+            request.From,
+            request.To,
+            request.OfficeName,
+            request.DentistName,
+            request.Totals
         };
         return model;
     }

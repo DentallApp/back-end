@@ -12,9 +12,9 @@ public class ReportDownloadPdfService
         _htmlConverter = htmlConverter;
     }
 
-    public async Task<byte[]> CreateReportTotalAppointmentPdfAsync(ReportPostTotalAppointmentDownloadDto reportPostDownloadDto)
+    public async Task<byte[]> CreateReportTotalAppointmentPdfAsync(ReportTotalAppointmentDownloadRequest request)
     {
-        var html = await _htmlTemplateLoader.LoadAsync(string.Format(Path, "ReportAppointment"), reportPostDownloadDto.MapToObject());
+        var html = await _htmlTemplateLoader.LoadAsync(string.Format(Path, "ReportAppointment"), request.MapToObject());
         return _htmlConverter.ConvertToPdf(html, new MemoryStream());
     }
 
