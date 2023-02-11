@@ -16,9 +16,9 @@ public class ReportDownloadPdfController : ControllerBase
     /// Descarga el reporte sobre el total de citas asistidas, no asistidas y canceladas.
     /// </summary>
 	[HttpPost("appointment")]
-	public async Task<ActionResult> ReportTotalAppointmentsDownload([FromBody]ReportPostTotalAppointmentDownloadDto reportPostDownloadDto)
+	public async Task<ActionResult> ReportTotalAppointmentsDownload([FromBody]ReportTotalAppointmentDownloadRequest request)
 	{
-        var contents = await _reportDownloadPdf.CreateReportTotalAppointmentPdfAsync(reportPostDownloadDto);
+        var contents = await _reportDownloadPdf.CreateReportTotalAppointmentPdfAsync(request);
         return File(contents, "application/pdf", "Reporte sobre el total de citas.pdf");
     }
 
@@ -26,9 +26,9 @@ public class ReportDownloadPdfController : ControllerBase
     /// Descarga el reporte sobre el total de citas agendadas por odontólogo.
     /// </summary>
     [HttpPost("appointment/scheduled")]
-    public async Task<ActionResult> ReportTotalScheduledAppointmentDownload([FromBody]ReportPostScheduledDownloadDto reportPostDownloadDto)
+    public async Task<ActionResult> ReportTotalScheduledAppointmentDownload([FromBody]ReportTotalScheduledAppointmentDownloadRequest request)
     {
-        var contents = await _reportDownloadPdf.CreateReportTotalScheduledAppointmentPdfAsync(reportPostDownloadDto);
+        var contents = await _reportDownloadPdf.CreateReportTotalScheduledAppointmentPdfAsync(request);
         return File(contents, "application/pdf", "Reporte sobre el total de citas agendadas.pdf");
     }
 
@@ -36,9 +36,9 @@ public class ReportDownloadPdfController : ControllerBase
     /// Descarga el reporte sobre los servicios dentales más solicitados.
     /// </summary>
     [HttpPost("most-requested/services")]
-    public async Task<ActionResult> ReportDentalServiceDownload([FromBody]ReportPostDentalServiceDto reportPostDto)
+    public async Task<ActionResult> ReportDentalServiceDownload([FromBody]ReportDentalServicesDownloadRequest request)
     {
-        var contents = await _reportDownloadPdf.CreateReportDentalServiceDownloadPdfAsync(reportPostDto);
+        var contents = await _reportDownloadPdf.CreateReportDentalServiceDownloadPdfAsync(request);
         return File(contents, "application/pdf", "Reporte sobre los servicios mas solicitados.pdf");
     }
 }

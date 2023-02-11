@@ -132,6 +132,7 @@ global using Newtonsoft.Json;
 
 global using DotEnv.Core;
 global using Dapper;
+global using MediatR;
 
 global using SendGrid;
 global using SendGrid.Helpers.Mail;
