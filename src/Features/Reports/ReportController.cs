@@ -16,7 +16,7 @@ public class ReportController : ControllerBase
 	/// Obtiene el reporte sobre el total de citas asistidas, no asistidas y canceladas.
 	/// </summary>
 	[HttpPost("appointment")]
-	public async Task<ActionResult<ReportGetTotalAppointmentDto>> GetTotalAppointmentsByDateRange([FromBody]ReportPostWithDentistDto reportPostDto)
+	public async Task<ActionResult<ReportGetTotalAppointmentResponse>> GetTotalAppointmentsByDateRange([FromBody]ReportPostWithDentistDto reportPostDto)
 	{
 		if (User.IsAdmin() && User.IsNotInOffice(reportPostDto.OfficeId))
 			return Unauthorized();

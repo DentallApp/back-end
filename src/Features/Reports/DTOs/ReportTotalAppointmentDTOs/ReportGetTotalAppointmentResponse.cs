@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Reports.DTOs;
 
-public class ReportGetTotalAppointmentDto
+public class ReportGetTotalAppointmentResponse
 {
     public int Total { get; set; }
     public int TotalAppointmentsAssisted { get; set; }

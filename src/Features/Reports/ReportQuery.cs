@@ -11,7 +11,7 @@ public class ReportQuery : IReportQuery
         _dbConnector = dbConnector;
     }
 
-    public async Task<ReportGetTotalAppointmentDto> GetTotalAppointmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
+    public async Task<ReportGetTotalAppointmentResponse> GetTotalAppointmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto)
     {
         using var connection = _dbConnector.CreateConnection();
         var sql = @"
@@ -31,7 +31,7 @@ public class ReportQuery : IReportQuery
                   (a.office_id = @OfficeId OR @OfficeId = 0) AND
                   (a.dentist_id = @DentistId OR @DentistId = 0)
         ";
-        var result = await connection.QueryAsync<ReportGetTotalAppointmentDto>(sql, new
+        var result = await connection.QueryAsync<ReportGetTotalAppointmentResponse>(sql, new
         {
             AppointmentStatusId.Assisted,
             AppointmentStatusId.NotAssisted,

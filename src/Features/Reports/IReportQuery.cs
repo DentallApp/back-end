@@ -2,7 +2,7 @@
 
 public interface IReportQuery
 {
-    Task<ReportGetTotalAppointmentDto> GetTotalAppointmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto);
+    Task<ReportGetTotalAppointmentResponse> GetTotalAppointmentsByDateRangeAsync(ReportPostWithDentistDto reportPostDto);
     Task<IEnumerable<ReportGetTotalScheduledAppointmentDto>> GetTotalScheduledAppointmentsByDateRangeAsync(ReportPostDto reportPostDto);
     Task<IEnumerable<ReportGetMostRequestedServicesResponse>> GetMostRequestedServicesAsync(ReportPostDto reportPostDto);
 }

@@ -6,5 +6,5 @@ public class ReportPostTotalAppointmentDownloadDto
     public string To { get; set; }
     public string OfficeName { get; set; }
     public string DentistName { get; set; }
-    public ReportGetTotalAppointmentDto Totals { get; set; }
+    public ReportGetTotalAppointmentResponse Totals { get; set; }
 }
