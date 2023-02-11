@@ -26,14 +26,14 @@ public static class ReportMapper
         return model;
     }
 
-    public static object MapToObject(this ReportPostDentalServiceDto reportPostDto)
+    public static object MapToObject(this ReportDentalServicesDownloadRequest request)
     {
         var model = new
         {
-            reportPostDto.From,
-            reportPostDto.To,
-            reportPostDto.OfficeName,
-            reportPostDto.Services
+            request.From,
+            request.To,
+            request.OfficeName,
+            request.Services
         };
         return model;
     }

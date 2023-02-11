@@ -24,9 +24,9 @@ public class ReportDownloadPdfService
         return _htmlConverter.ConvertToPdf(html, new MemoryStream());
     }
 
-    public async Task<byte[]> CreateReportDentalServiceDownloadPdfAsync(ReportPostDentalServiceDto reportPostDto)
+    public async Task<byte[]> CreateReportDentalServiceDownloadPdfAsync(ReportDentalServicesDownloadRequest request)
     {
-        var html = await _htmlTemplateLoader.LoadAsync(string.Format(Path, "ReportDentalServices"), reportPostDto.MapToObject());
+        var html = await _htmlTemplateLoader.LoadAsync(string.Format(Path, "ReportDentalServices"), request.MapToObject());
         return _htmlConverter.ConvertToPdf(html, new MemoryStream());
     }
 }

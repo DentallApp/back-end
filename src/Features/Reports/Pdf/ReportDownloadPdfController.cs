@@ -36,9 +36,9 @@ public class ReportDownloadPdfController : ControllerBase
     /// Descarga el reporte sobre los servicios dentales más solicitados.
     /// </summary>
     [HttpPost("most-requested/services")]
-    public async Task<ActionResult> ReportDentalServiceDownload([FromBody]ReportPostDentalServiceDto reportPostDto)
+    public async Task<ActionResult> ReportDentalServiceDownload([FromBody]ReportDentalServicesDownloadRequest request)
     {
-        var contents = await _reportDownloadPdf.CreateReportDentalServiceDownloadPdfAsync(reportPostDto);
+        var contents = await _reportDownloadPdf.CreateReportDentalServiceDownloadPdfAsync(request);
         return File(contents, "application/pdf", "Reporte sobre los servicios mas solicitados.pdf");
     }
 }
