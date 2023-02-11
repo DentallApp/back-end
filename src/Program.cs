@@ -26,6 +26,7 @@ builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(appSettings);
 builder.Services.AddBotServices(builder.Configuration);
 builder.Services.AddQuartzJobs(appSettings);
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
