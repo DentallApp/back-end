@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Dependents;
+﻿namespace DentallApp.DataAccess.EntityConfigurations;
 
 public class DependentConfiguration : IEntityTypeConfiguration<Dependent>
 {

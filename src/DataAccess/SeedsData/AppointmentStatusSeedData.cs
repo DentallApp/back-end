@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Appointments.AppointmentsStatus;
+﻿namespace DentallApp.DataAccess.SeedsData;
 
 public static class AppointmentStatusSeedData
 {

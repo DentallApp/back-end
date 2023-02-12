@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.OfficeSchedules;
+﻿namespace DentallApp.DataAccess.EntityConfigurations;
 
 public class OfficeScheduleConfiguration : IEntityTypeConfiguration<OfficeSchedule>
 {

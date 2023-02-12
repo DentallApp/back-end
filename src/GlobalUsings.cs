@@ -75,6 +75,7 @@ global using DentallApp.DataAccess.Repositories;
 global using DentallApp.DataAccess.UnitOfWork;
 global using DentallApp.DataAccess.DbConnectors;
 global using DentallApp.DataAccess.DbTransactions;
+global using DentallApp.DataAccess.SeedsData;
 global using DentallApp.Entities;
 global using DentallApp.Entities.BaseClasses;
 global using DentallApp.Entities.Interfaces;

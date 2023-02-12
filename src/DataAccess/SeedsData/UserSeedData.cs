@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Users;
+﻿namespace DentallApp.DataAccess.SeedsData;
 
 public static class UserSeedData
 {

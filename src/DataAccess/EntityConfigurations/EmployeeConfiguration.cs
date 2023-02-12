@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Employees;
+﻿namespace DentallApp.DataAccess.EntityConfigurations;
 
 public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 {

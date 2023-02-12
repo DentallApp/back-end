@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.OfficeSchedules;
+﻿namespace DentallApp.DataAccess.SeedsData;
 
 public static class OfficeScheduleSeedData
 {

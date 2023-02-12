@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Offices;
+﻿namespace DentallApp.DataAccess.SeedsData;
 
 public static class OfficeSeedData
 {
