@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.GeneralTreatments;
+﻿namespace DentallApp.DataAccess.EntitiesConfiguration;
 
 public class GeneralTreatmentConfiguration : IEntityTypeConfiguration<GeneralTreatment>
 {

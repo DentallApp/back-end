@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.PublicHolidays;
+﻿namespace DentallApp.DataAccess.EntitiesConfiguration;
 
 public class PublicHolidayConfiguration : IEntityTypeConfiguration<PublicHoliday>
 {

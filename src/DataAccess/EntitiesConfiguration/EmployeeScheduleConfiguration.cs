@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.EmployeeSchedules;
+﻿namespace DentallApp.DataAccess.EntitiesConfiguration;
 
 public class EmployeeScheduleConfiguration : IEntityTypeConfiguration<EmployeeSchedule>
 {

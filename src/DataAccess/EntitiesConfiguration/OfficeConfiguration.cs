@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Offices;
+﻿namespace DentallApp.DataAccess.EntitiesConfiguration;
 
 public class OfficeConfiguration : IEntityTypeConfiguration<Office>
 {
