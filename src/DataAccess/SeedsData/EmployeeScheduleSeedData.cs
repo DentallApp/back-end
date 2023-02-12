@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.EmployeeSchedules;
+﻿namespace DentallApp.DataAccess.SeedsData;
 
 public static class EmployeeScheduleSeedData
 {

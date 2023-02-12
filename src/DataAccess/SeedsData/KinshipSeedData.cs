@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Dependents.Kinships;
+﻿namespace DentallApp.DataAccess.SeedsData;
 
 public static class KinshipSeedData
 {

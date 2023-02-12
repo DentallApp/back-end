@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.Roles;
+﻿namespace DentallApp.DataAccess.SeedsData;
 
 public static class RoleSeedData
 {

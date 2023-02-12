@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.WeekDays;
+﻿namespace DentallApp.DataAccess.SeedsData;
 
 public static class WeekDaySeedData
 {

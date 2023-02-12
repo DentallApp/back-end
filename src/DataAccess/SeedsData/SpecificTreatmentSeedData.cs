@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.SpecificTreatments;
+﻿namespace DentallApp.DataAccess.SeedsData;
 
 public static class SpecificTreatmentSeedData
 {

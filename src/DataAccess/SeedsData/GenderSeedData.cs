@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.PersonalInformation.Genders;
+﻿namespace DentallApp.DataAccess.SeedsData;
 
 public static class GenderSeedData
 {
