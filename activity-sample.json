@@ -2,7 +2,6 @@
   "channelData": {
     "clientActivityID": "1662850663024pjqxmkpnny",
     "clientTimestamp": "2022-09-10T22:57:43.024Z",
-    "personId": "1",
     "fullName": "Roberto Emilio Placencio Pinto"
   },
   "text": "hi",
@@ -10,7 +9,7 @@
   "type": "message",
   "channelId": "emulator",
   "from": {
-    "id": "1",
+    "id": "1-1",
     "name": "User",
     "role": "user"
   },
