@@ -93,6 +93,7 @@ global using DentallApp.Constants;
 global using static DentallApp.Constants.ResponseMessages;
 global using static DentallApp.Constants.MessageTemplates;
 
+global using System.Globalization;
 global using System.Data;
 global using System.Text;
 global using System.Net.Mime;
