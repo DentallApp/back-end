@@ -7,6 +7,7 @@
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1591</NoWarn>
+    <RootNamespace>DentallApp</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
