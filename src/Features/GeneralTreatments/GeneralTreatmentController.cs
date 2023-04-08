@@ -35,7 +35,7 @@ public class GeneralTreatmentController : ControllerBase
 
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<DtoBase>>> Post([FromForm]GeneralTreatmentInsertDto treatmentInsertDto)
+    public async Task<ActionResult<Response<InsertedIdDto>>> Post([FromForm]GeneralTreatmentInsertDto treatmentInsertDto)
     {
         var response = await _treatmentService.CreateTreatmentAsync(treatmentInsertDto);
         return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);

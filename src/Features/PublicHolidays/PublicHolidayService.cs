@@ -9,7 +9,7 @@ public class PublicHolidayService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Response<DtoBase>> CreatePublicHolidayAsync(PublicHolidayInsertDto holidayInsertDto)
+    public async Task<Response<InsertedIdDto>> CreatePublicHolidayAsync(PublicHolidayInsertDto holidayInsertDto)
     {
         var publicHoliday = holidayInsertDto.MapToPublicHoliday();
         _unitOfWork.PublicHolidayRepository.Insert(publicHoliday);
@@ -21,9 +21,9 @@ public class PublicHolidayService
         }
         await _unitOfWork.SaveChangesAsync();
 
-        return new Response<DtoBase>
+        return new Response<InsertedIdDto>
         {
-            Data    = new DtoBase { Id = publicHoliday.Id },
+            Data    = new InsertedIdDto { Id = publicHoliday.Id },
             Success = true,
             Message = CreateResourceMessage
         };

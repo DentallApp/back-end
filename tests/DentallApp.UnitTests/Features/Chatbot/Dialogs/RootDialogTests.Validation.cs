@@ -130,7 +130,7 @@ public partial class RootDialogTests
     public async Task Bot_WhenDateAndTimeAppointmentIsNotAvailable_ShouldSendAnErrorMessage()
     {
         Mock.Arrange(() => _botService.CreateScheduledAppointmentAsync(Arg.IsAny<AppointmentInsertDto>()))
-            .ReturnsAsync(new Response<DtoBase>
+            .ReturnsAsync(new Response<InsertedIdDto>
             {
                 Success = false,
                 Message = DateAndTimeAppointmentIsNotAvailableMessage

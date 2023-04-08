@@ -34,7 +34,7 @@ public class EmployeeScheduleController : ControllerBase
     /// Crea un nuevo horario para el empleado.
     /// </summary>
     [HttpPost]
-    public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]EmployeeScheduleInsertDto employeeScheduleDto)
+    public async Task<ActionResult<Response<InsertedIdDto>>> Post([FromBody]EmployeeScheduleInsertDto employeeScheduleDto)
     {
         var response = await _employeeScheduleService.CreateEmployeeScheduleAsync(employeeScheduleDto);
         return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);

@@ -44,7 +44,7 @@ public class AppointmentBotService : IAppointmentBotService
         return await availabilityService.GetAvailableHoursAsync(availableTimeRangeDto);
     }
 
-    public async Task<Response<DtoBase>> CreateScheduledAppointmentAsync(AppointmentInsertDto appointment)
+    public async Task<Response<InsertedIdDto>> CreateScheduledAppointmentAsync(AppointmentInsertDto appointment)
     {
         using var scope = _serviceProvider.CreateScope();
         var appointmentService = scope.ServiceProvider.GetRequiredService<AppointmentService>();

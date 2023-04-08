@@ -16,7 +16,7 @@ public class PublicHolidayController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]PublicHolidayInsertDto holidayInsertDto)
+    public async Task<ActionResult<Response<InsertedIdDto>>> Post([FromBody]PublicHolidayInsertDto holidayInsertDto)
     {
         var response = await _holidayService.CreatePublicHolidayAsync(holidayInsertDto);
         return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);

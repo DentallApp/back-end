@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Responses;
 
-public class DtoBase
+public class InsertedIdDto
 {
     public int Id { get; set; }
 }

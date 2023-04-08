@@ -9,15 +9,15 @@ public class OfficeService
         _officeRepository = officeRepository;
     }
 
-    public async Task<Response<DtoBase>> CreateOfficeAsync(OfficeInsertDto officeInsertDto)
+    public async Task<Response<InsertedIdDto>> CreateOfficeAsync(OfficeInsertDto officeInsertDto)
     {
         var office = officeInsertDto.MapToOffice();
         _officeRepository.Insert(office);
         await _officeRepository.SaveAsync();
 
-        return new Response<DtoBase>
+        return new Response<InsertedIdDto>
         {
-            Data    = new DtoBase { Id = office .Id },
+            Data    = new InsertedIdDto { Id = office .Id },
             Success = true,
             Message = CreateResourceMessage
         };

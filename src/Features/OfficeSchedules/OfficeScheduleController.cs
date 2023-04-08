@@ -41,7 +41,7 @@ public class OfficeScheduleController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]OfficeScheduleInsertDto officeScheduleInsertDto)
+    public async Task<ActionResult<Response<InsertedIdDto>>> Post([FromBody]OfficeScheduleInsertDto officeScheduleInsertDto)
     {
         var response = await _officeScheduleService.CreateOfficeScheduleAsync(User, officeScheduleInsertDto);
         return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);

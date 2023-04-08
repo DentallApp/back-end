@@ -40,7 +40,7 @@ public class OfficeController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<DtoBase>>> Post([FromBody]OfficeInsertDto officeInsertDto)
+    public async Task<ActionResult<Response<InsertedIdDto>>> Post([FromBody]OfficeInsertDto officeInsertDto)
     {
         var response = await _officeService.CreateOfficeAsync(officeInsertDto);
         return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);

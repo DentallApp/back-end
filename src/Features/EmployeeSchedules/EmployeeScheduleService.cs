@@ -9,15 +9,15 @@ public class EmployeeScheduleService
         _employeeScheduleRepository = employeeScheduleRepository;
     }
 
-    public async Task<Response<DtoBase>> CreateEmployeeScheduleAsync(EmployeeScheduleInsertDto employeeScheduleDto)
+    public async Task<Response<InsertedIdDto>> CreateEmployeeScheduleAsync(EmployeeScheduleInsertDto employeeScheduleDto)
     {
         var employeeSchedule = employeeScheduleDto.MapToEmployeeSchedule();
         _employeeScheduleRepository.Insert(employeeSchedule);
         await _employeeScheduleRepository.SaveAsync();
 
-        return new Response<DtoBase>
+        return new Response<InsertedIdDto>
         {
-            Data    = new DtoBase { Id = employeeSchedule.Id },
+            Data    = new InsertedIdDto { Id = employeeSchedule.Id },
             Success = true,
             Message = CreateResourceMessage
         };
