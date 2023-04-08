@@ -12,17 +12,17 @@ public class AppointmentService
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public async Task<Response<DtoBase>> CreateAppointmentAsync(AppointmentInsertDto appointmentInsertDto)
+    public async Task<Response<InsertedIdDto>> CreateAppointmentAsync(AppointmentInsertDto appointmentInsertDto)
     {
         if (await _appointmentRepository.IsNotAvailableAsync(appointmentInsertDto))
-            return new Response<DtoBase>(DateAndTimeAppointmentIsNotAvailableMessage);
+            return new Response<InsertedIdDto>(DateAndTimeAppointmentIsNotAvailableMessage);
 
         var appointment = appointmentInsertDto.MapToAppointment();
         _appointmentRepository.Insert(appointment);
         await _appointmentRepository.SaveAsync();
-        return new Response<DtoBase>
+        return new Response<InsertedIdDto>
         {
-            Data    = new DtoBase { Id = appointment.Id },
+            Data    = new InsertedIdDto { Id = appointment.Id },
             Success = true,
             Message = CreateResourceMessage
         };

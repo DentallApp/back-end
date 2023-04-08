@@ -9,15 +9,15 @@ public class SpecificTreatmentService
         _treatmentRepository = treatmentRepository;
     }
 
-    public async Task<Response<DtoBase>> CreateSpecificTreatmentAsync(SpecificTreatmentInsertDto treatmentInsertDto)
+    public async Task<Response<InsertedIdDto>> CreateSpecificTreatmentAsync(SpecificTreatmentInsertDto treatmentInsertDto)
     {
         var specificTreatment = treatmentInsertDto.MapToSpecificTreatment();
         _treatmentRepository.Insert(specificTreatment);
         await _treatmentRepository.SaveAsync();
 
-        return new Response<DtoBase>
+        return new Response<InsertedIdDto>
         {
-            Data    = new DtoBase { Id = specificTreatment.Id },
+            Data    = new InsertedIdDto { Id = specificTreatment.Id },
             Success = true,
             Message = CreateResourceMessage
         };

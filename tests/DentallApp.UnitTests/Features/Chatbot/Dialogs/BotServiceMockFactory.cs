@@ -50,10 +50,10 @@ public static class BotServiceMockFactory
             });
 
         Mock.Arrange(() => botService.CreateScheduledAppointmentAsync(Arg.IsAny<AppointmentInsertDto>()))
-            .ReturnsAsync(new Response<DtoBase>
+            .ReturnsAsync(new Response<InsertedIdDto>
             {
                 Success = true,
-                Data    = new DtoBase { Id = int.Parse(Id) },
+                Data    = new InsertedIdDto { Id = int.Parse(Id) },
                 Message = CreateResourceMessage
             });
         return botService;

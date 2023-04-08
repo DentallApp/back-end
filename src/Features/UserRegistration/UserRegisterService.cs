@@ -53,16 +53,16 @@ public class UserRegisterService
         };
     }
 
-    public async Task<Response<DtoBase>> CreateEmployeeAccountAsync(ClaimsPrincipal currentEmployee, EmployeeInsertDto employeeInsertDto)
+    public async Task<Response<InsertedIdDto>> CreateEmployeeAccountAsync(ClaimsPrincipal currentEmployee, EmployeeInsertDto employeeInsertDto)
     {
         if (await _unitOfWork.UserRepository.UserExistsAsync(employeeInsertDto.UserName))
-            return new Response<DtoBase>(UsernameAlreadyExistsMessage);
+            return new Response<InsertedIdDto>(UsernameAlreadyExistsMessage);
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employeeInsertDto.OfficeId))
-            return new Response<DtoBase>(OfficeNotAssignedMessage);
+            return new Response<InsertedIdDto>(OfficeNotAssignedMessage);
 
         if (currentEmployee.HasNotPermissions(employeeInsertDto.Roles))
-            return new Response<DtoBase>(PermitsNotGrantedMessage);
+            return new Response<InsertedIdDto>(PermitsNotGrantedMessage);
 
         var user = CreateUserAccount(employeeInsertDto, employeeInsertDto.Roles.RemoveDuplicates());
         var employee = employeeInsertDto.MapToEmployee();
@@ -78,9 +78,9 @@ public class UserRegisterService
         }
         await _unitOfWork.SaveChangesAsync();
 
-        return new Response<DtoBase>
+        return new Response<InsertedIdDto>
         {
-            Data    = new DtoBase { Id = employee.Id },
+            Data    = new InsertedIdDto { Id = employee.Id },
             Success = true,
             Message = CreateEmployeeAccountMessage
         };
