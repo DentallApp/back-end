@@ -7,13 +7,24 @@ public static class QuartzJobs
         services.AddQuartz(q =>
         {
             q.UseMicrosoftDependencyInjectionJobFactory();
-            var reminderJobKey = new JobKey(nameof(ReminderJob));
-            q.AddJob<ReminderJob>(options => options.WithIdentity(reminderJobKey));
-            q.AddTrigger(options => options
-                .ForJob(reminderJobKey)
-                .WithCronSchedule(settings.ReminderCronExpr));
+            q.AddJobAndTrigger<ReminderJob>(settings.ReminderCronExpr);;
         });
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
         return services;
+    }
+
+    private static IServiceCollectionQuartzConfigurator AddJobAndTrigger<TJob>(
+        this IServiceCollectionQuartzConfigurator configurator, 
+        string cronExpression) where TJob : IJob
+    {
+        var jobName = typeof(TJob).Name;
+        var jobKey  = new JobKey(jobName);
+        configurator.AddJob<TJob>(options => options.WithIdentity(jobKey));
+        configurator.AddTrigger(options => options
+            .ForJob(jobKey)
+            .WithIdentity(jobName + "-trigger")
+            .WithCronSchedule(cronExpression));
+
+        return configurator;
     }
 }
