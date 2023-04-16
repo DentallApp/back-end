@@ -1,4 +1,5 @@
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
+global using FluentAssertions;
 global using AdaptiveCards;
 global using Microsoft.Bot.Connector;
 global using Microsoft.Bot.Schema;
