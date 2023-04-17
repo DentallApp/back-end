@@ -5,22 +5,20 @@ public partial class AvailabilityTests
 {
     [DataTestMethod]
     [DynamicData(nameof(GetData), DynamicDataSourceType.Method)]
-    public void GetAvailableHours_WhenNumberOfUnavailableHoursIsGreaterThanOrEqualToZero_ShouldReturnAvailableHours(
-        string testId, AvailabilityOptions options, List<AvailableTimeRangeDto> expected)
+    public void GetAvailableHours_WhenNumberOfUnavailableHoursIsGreaterThanOrEqualToZero_ShouldReturnsAvailableHours(
+        string testId, AvailabilityOptions options, List<AvailableTimeRangeDto> expectedList)
     {
+        // Act
         var availableHours = Availability.GetAvailableHours(options);
 
-        Assert.AreEqual(expected.Count, actual: availableHours.Count);
-        for(int i = 0; i < availableHours.Count; i++)
-        {
-            Assert.AreEqual(expected[i].StartHour, actual: availableHours[i].StartHour);
-            Assert.AreEqual(expected[i].EndHour,   actual: availableHours[i].EndHour);
-        }
+        // Assert
+        availableHours.Should().BeEquivalentTo(expectedList);
     }
 
     [TestMethod]
     public void GetAvailableHours_WhenDentistHasSomeTimeoffOrRestTime_ShouldTakeItAsRangeOfUnavailableTime()
     {
+        // Arrange
         var unavailables = new List<UnavailableTimeRangeDto>
         {
             new() { StartHour = TimeSpan.Parse("8:00"),  EndHour = TimeSpan.Parse("9:00") },
@@ -29,7 +27,7 @@ public partial class AvailabilityTests
             new() { StartHour = TimeSpan.Parse("14:30"), EndHour = TimeSpan.Parse("15:00") },
             new() { StartHour = TimeSpan.Parse("17:00"), EndHour = TimeSpan.Parse("17:30") }
         };
-        var expected = new List<AvailableTimeRangeDto>
+        var expectedList = new List<AvailableTimeRangeDto>
         {
             new() { StartHour = "07:00", EndHour = "08:00" },
             new() { StartHour = "09:00", EndHour = "10:00" },
@@ -52,19 +50,17 @@ public partial class AvailabilityTests
         options.Unavailables = unavailables.OrderBy(timeRange => timeRange.StartHour)
                                            .ThenBy(timeRange => timeRange.EndHour).ToList();
 
+        // Act
         var availableHours = Availability.GetAvailableHours(options);
 
-        Assert.AreEqual(expected.Count, actual: availableHours.Count);
-        for (int i = 0; i < availableHours.Count; i++)
-        {
-            Assert.AreEqual(expected[i].StartHour, actual: availableHours[i].StartHour);
-            Assert.AreEqual(expected[i].EndHour,   actual: availableHours[i].EndHour);
-        }
+        // Assert
+        availableHours.Should().BeEquivalentTo(expectedList);
     }
 
     [TestMethod]
     public void GetAvailableHours_WhenDurationOfDentalServiceIsEqualToZero_ShouldThrowArgumentException()
     {
+        // Arrange
         var options = new AvailabilityOptions
         {
             Unavailables     = new List<UnavailableTimeRangeDto>(),
@@ -73,14 +69,17 @@ public partial class AvailabilityTests
             ServiceDuration  = TimeSpan.FromMinutes(0)
         };
 
-        void action() => Availability.GetAvailableHours(options);
+        // Act
+        Action act = () => Availability.GetAvailableHours(options);
 
-        Assert.ThrowsException<InvalidOperationException>(action);
+        // Assert
+        act.Should().Throw<InvalidOperationException>();
     }
 
     [TestMethod]
-    public void GetAvailableHours_WhenNumberOfAvailableHoursIsZero_ShouldReturnNull()
+    public void GetAvailableHours_WhenNumberOfAvailableHoursIsZero_ShouldReturnsNull()
     {
+        // Arrange
         var unavailables = new List<UnavailableTimeRangeDto>
         {
             new() { StartHour = TimeSpan.Parse("8:00"),  EndHour = TimeSpan.Parse("9:00") },
@@ -96,14 +95,17 @@ public partial class AvailabilityTests
             ServiceDuration  = TimeSpan.FromMinutes(60)
         };
 
+        // Act
         var availableHours = Availability.GetAvailableHours(options);
 
-        Assert.IsNull(availableHours);
+        // Assert
+        availableHours.Should().BeNull();
     }
 
     [TestMethod]
     public void GetAvailableHours_WhenAppointmentDateIsEqualToTheCurrentDate_ShouldDiscardAvailableHoursThatAreLessThanTheCurrentTime()
     {
+        // Arrange
         var unavailables = new List<UnavailableTimeRangeDto>
         {
             new() { StartHour = TimeSpan.Parse("10:00"),  EndHour = TimeSpan.Parse("10:30") },
@@ -118,7 +120,7 @@ public partial class AvailabilityTests
             AppointmentDate    = new DateTime(2022, 08, 01, 0, 0, 0),
             CurrentTimeAndDate = new DateTime(2022, 08, 01, 12, 0, 0)
         };
-        var expected = new List<AvailableTimeRangeDto>
+        var expectedList = new List<AvailableTimeRangeDto>
         {
             new() { StartHour = "12:30", EndHour = "13:00" },
             new() { StartHour = "13:00", EndHour = "13:30" },
@@ -131,14 +133,11 @@ public partial class AvailabilityTests
             new() { StartHour = "16:30", EndHour = "17:00" }
         };
 
+        // Act
         var availableHours = Availability.GetAvailableHours(options);
 
-        Assert.AreEqual(expected.Count, actual: availableHours.Count);
-        for (int i = 0; i < availableHours.Count; i++)
-        {
-            Assert.AreEqual(expected[i].StartHour, actual: availableHours[i].StartHour);
-            Assert.AreEqual(expected[i].EndHour,   actual: availableHours[i].EndHour);
-        }
+        // Assert
+        availableHours.Should().BeEquivalentTo(expectedList);
     }
 
     [DataTestMethod]
@@ -150,11 +149,13 @@ public partial class AvailabilityTests
              "10:40", "11:20")]
     [DataRow("10:00", "10:30",
              "09:00", "09:40")]
-    public void IsNotAvailable_WhenNewTimeRangeIsAvailable_ShouldReturnFalse(string newStartHour,
-                                                                             string newEndHour, 
-                                                                             string startHourNotAvailable,
-                                                                             string startEndNotAvailable)
+    public void IsNotAvailable_WhenNewTimeRangeIsAvailable_ShouldReturnsFalse(
+        string newStartHour,
+        string newEndHour, 
+        string startHourNotAvailable,
+        string startEndNotAvailable)
     {
+        // Arrange
         var unavailableTimeRange = new UnavailableTimeRangeDto
         {
             StartHour = TimeSpan.Parse(startHourNotAvailable),
@@ -163,9 +164,11 @@ public partial class AvailabilityTests
         var newStartHourSpan = TimeSpan.Parse(newStartHour);
         var newEndHourSpan   = TimeSpan.Parse(newEndHour);
 
+        // Act
         bool result = Availability.IsNotAvailable(ref newStartHourSpan, ref newEndHourSpan, unavailableTimeRange);
 
-        Assert.IsFalse(result);
+        // Assert
+        result.Should().BeFalse();
     }
 
     [DataTestMethod]
@@ -181,11 +184,13 @@ public partial class AvailabilityTests
              "10:29", "12:00")]
     [DataRow("12:20", "12:50",
              "12:00", "13:00")]
-    public void IsNotAvailable_WhenNewTimeRangeIsNotAvailable_ShouldReturnTrue(string newStartHour,
-                                                                               string newEndHour,
-                                                                               string startHourNotAvailable,
-                                                                               string startEndNotAvailable)
+    public void IsNotAvailable_WhenNewTimeRangeIsNotAvailable_ShouldReturnsTrue(
+        string newStartHour,
+        string newEndHour,
+        string startHourNotAvailable,
+        string startEndNotAvailable)
     {
+        // Arrange
         var unavailableTimeRange = new UnavailableTimeRangeDto
         {
             StartHour = TimeSpan.Parse(startHourNotAvailable),
@@ -194,8 +199,10 @@ public partial class AvailabilityTests
         var newStartHourSpan = TimeSpan.Parse(newStartHour);
         var newEndHourSpan   = TimeSpan.Parse(newEndHour);
 
+        // Act
         bool result = Availability.IsNotAvailable(ref newStartHourSpan, ref newEndHourSpan, unavailableTimeRange);
 
-        Assert.IsTrue(result);
+        // Assert
+        result.Should().BeTrue();
     }
 }

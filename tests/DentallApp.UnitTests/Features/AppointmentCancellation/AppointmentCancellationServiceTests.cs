@@ -18,8 +18,9 @@ public class AppointmentCancellationServiceTests
     }
 
     [TestMethod]
-    public async Task CancelAppointmentsAsync_WhenAllAppointmentsCanBeCancelled_ShouldReturnAnResponseWithoutAppointmentsId()
+    public async Task CancelAppointmentsAsync_WhenAllAppointmentsCanBeCancelled_ShouldReturnsAnResponseWithoutAppointmentsId()
     {
+        // Arrange
         var dto = new AppointmentCancelDto
         {
             Appointments = new List<AppointmentCancelDetailsDto>
@@ -38,16 +39,19 @@ public class AppointmentCancellationServiceTests
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
+        // Act
         var response = await _appointmentService.CancelAppointmentsAsync(claimsPrincipal, dto);
 
-        Assert.IsTrue(response.Success);
-        Assert.AreEqual(expected: SuccessfullyCancelledAppointmentsMessage, actual: response.Message);
-        Assert.IsNull(response.Data);
+        // Asserts
+        response.Success.Should().BeTrue();
+        response.Message.Should().Be(SuccessfullyCancelledAppointmentsMessage);
+        response.Data.Should().BeNull();
     }
 
     [TestMethod]
-    public async Task CancelAppointmentsAsync_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnAnResponseWithAppointmentsId()
+    public async Task CancelAppointmentsAsync_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
     {
+        // Arrange
         var dto = new AppointmentCancelDto
         {
             Appointments = new List<AppointmentCancelDetailsDto>
@@ -68,20 +72,24 @@ public class AppointmentCancellationServiceTests
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
+        // Act
         var response = await _appointmentService.CancelAppointmentsAsync(claimsPrincipal, dto);
 
-        var message = string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 2);
-        var appointmentsId = response.Data.AppointmentsId.ToList();
-        Assert.IsFalse(response.Success);
-        Assert.AreEqual(expected: message, actual: response.Message);
-        Assert.AreEqual(expected: 2, actual: appointmentsId.Count);
-        Assert.AreEqual(expected: 4, actual: appointmentsId[0]);
-        Assert.AreEqual(expected: 5, actual: appointmentsId[1]);
+        // Asserts
+        response.Success.Should().BeFalse();
+        response.Message
+                .Should()
+                .Be(string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 2));
+
+        response.Data.AppointmentsId
+                     .Should()
+                     .BeEquivalentTo(new[] { 4, 5 });
     }
 
     [TestMethod]
-    public async Task CancelAppointmentsAsync_WhenAppointmentsCannotBeCancelled_ShouldReturnAnResponseWithAppointmentsId()
+    public async Task CancelAppointmentsAsync_WhenAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
     {
+        // Arrange
         var dto = new AppointmentCancelDto
         {
             Appointments = new List<AppointmentCancelDetailsDto>
@@ -102,23 +110,24 @@ public class AppointmentCancellationServiceTests
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 02, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
+        // Act
         var response = await _appointmentService.CancelAppointmentsAsync(claimsPrincipal, dto);
 
-        var message = string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 5);
-        var appointmentsId = response.Data.AppointmentsId.ToList();
-        Assert.IsFalse(response.Success);
-        Assert.AreEqual(expected: message, actual: response.Message);
-        Assert.AreEqual(expected: 5, actual: appointmentsId.Count);
-        Assert.AreEqual(expected: 1, actual: appointmentsId[0]);
-        Assert.AreEqual(expected: 2, actual: appointmentsId[1]);
-        Assert.AreEqual(expected: 3, actual: appointmentsId[2]);
-        Assert.AreEqual(expected: 4, actual: appointmentsId[3]);
-        Assert.AreEqual(expected: 5, actual: appointmentsId[4]);
+        // Asserts
+        response.Success.Should().BeFalse();
+        response.Message
+                .Should()
+                .Be(string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 5));
+            
+        response.Data.AppointmentsId
+                     .Should()
+                     .BeEquivalentTo(new[] { 1, 2, 3, 4, 5 });
     }
 
     [TestMethod]
-    public async Task CancelBasicUserAppointmentAsync_WhenAppointmentCannotBeCancelled_ShouldReturnFailureResponse()
+    public async Task CancelBasicUserAppointmentAsync_WhenAppointmentCannotBeCancelled_ShouldReturnsFailureResponse()
     {
+        // Arrange
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 04, 15, 0, 0));
         Mock.Arrange(() => _appointmentRepository.GetByIdAsync(Arg.AnyInt))
             .ReturnsAsync((int id) => new Appointment
@@ -127,9 +136,11 @@ public class AppointmentCancellationServiceTests
                 StartHour = new TimeSpan(13, 0, 0)
             });
 
+        // Act
         var response = await _appointmentService.CancelBasicUserAppointmentAsync(default, default);
 
-        Assert.IsFalse(response.Success);
-        Assert.AreEqual(expected: AppointmentThatHasAlreadyPassedBasicUserMessage, actual: response.Message);
+        // Asserts
+        response.Success.Should().BeFalse();
+        response.Message.Should().Be(AppointmentThatHasAlreadyPassedBasicUserMessage);
     }
 }

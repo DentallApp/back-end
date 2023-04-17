@@ -14,6 +14,7 @@ public class RepositoryExtensionsTests
     [TestMethod]
     public void AddOrUpdateOrDelete_WhenNumberOfElementsAreEqual_ShouldMergeSequenceOfElements()
     {
+        // Arrange
         const int count  = 2;
         const int userId = 1;
         // These are the current roles of an employee.
@@ -31,20 +32,23 @@ public class RepositoryExtensionsTests
             RolesId.Dentist 
         };
 
+        // Act
         // Update employee roles.
         _repository.AddOrUpdateOrDelete(key: userId, source: ref currentUserRoles, identifiers: ref rolesId);
 
-        Assert.AreEqual(expected: count, actual: currentUserRoles.Count);
-        Assert.AreEqual(expected: count, actual: rolesId.Count);
-        Assert.AreEqual(expected: RolesId.Dentist, actual: currentUserRoles[0].RoleId);
-        Assert.AreEqual(expected: RolesId.Admin,   actual: currentUserRoles[1].RoleId);
-        Assert.AreEqual(expected: RolesId.Dentist, actual: rolesId[0]);
-        Assert.AreEqual(expected: RolesId.Admin,   actual: rolesId[1]);
+        // Asserts
+        currentUserRoles.Should().HaveCount(count);
+        rolesId.Should().HaveCount(count);
+        currentUserRoles[0].RoleId.Should().Be(RolesId.Dentist);
+        currentUserRoles[1].RoleId.Should().Be(RolesId.Admin);
+        rolesId[0].Should().Be(RolesId.Dentist);
+        rolesId[1].Should().Be(RolesId.Admin);
     }
 
     [TestMethod]
     public void AddOrUpdateOrDelete_WhenIdentifiersDoNotContainsTheSecondaryForeignKey_ShouldDeleteCurrentEntity()
     {
+        // Arrange
         const int userId = 1;
         // These are the current roles of an employee.
         var currentUserRoles = new List<UserRole>()
@@ -68,18 +72,21 @@ public class RepositoryExtensionsTests
                 currentUserRoles.RemoveAt(index);
             });
         
+        // Act
         // Update employee roles.
         _repository.AddOrUpdateOrDelete(key: userId, source: ref data, identifiers: ref rolesId);
 
-        Assert.AreEqual(expected: 2, actual: currentUserRoles.Count);
-        Assert.AreEqual(expected: RolesId.Secretary, actual: currentUserRoles[0].RoleId);
-        Assert.AreEqual(expected: RolesId.Dentist,   actual: currentUserRoles[1].RoleId);
+        // Asserts
+        currentUserRoles.Should().HaveCount(2);
+        currentUserRoles[0].RoleId.Should().Be(RolesId.Secretary);
+        currentUserRoles[1].RoleId.Should().Be(RolesId.Dentist);
     }
 
 
     [TestMethod]
     public void AddOrUpdateOrDelete_WhenSourceDoNotContainsTheIdentifier_ShouldInsertCurrentEntity()
     {
+        // Arrange
         const int userId = 1;
         // These are the current roles of an employee.
         var currentUserRoles = new List<UserRole>()
@@ -98,12 +105,14 @@ public class RepositoryExtensionsTests
         Mock.Arrange(() => _repository.Insert(Arg.IsAny<UserRole>()))
             .DoInstead((UserRole entity) => currentUserRoles.Add(entity));
 
+        // Act
         // Update employee roles.
         _repository.AddOrUpdateOrDelete(key: userId, source: ref data, identifiers: ref rolesId);
 
-        Assert.AreEqual(expected: 3, actual: currentUserRoles.Count);
-        Assert.AreEqual(expected: RolesId.Secretary, actual: currentUserRoles[0].RoleId);
-        Assert.AreEqual(expected: RolesId.Dentist,   actual: currentUserRoles[1].RoleId);
-        Assert.AreEqual(expected: RolesId.Admin,     actual: currentUserRoles[2].RoleId);
+        // Asserts
+        currentUserRoles.Should().HaveCount(3);
+        currentUserRoles[0].RoleId.Should().Be(RolesId.Secretary);
+        currentUserRoles[1].RoleId.Should().Be(RolesId.Dentist);
+        currentUserRoles[2].RoleId.Should().Be(RolesId.Admin);
     }
 }
