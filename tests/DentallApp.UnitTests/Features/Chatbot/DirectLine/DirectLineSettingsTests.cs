@@ -16,12 +16,15 @@ public class DirectLineSettingsTests
     [TestMethod]
     public void GetDirectLineBaseUrl_WhenDirectLineBaseUrlIsEmptyOrWhiteSpace_ShouldReturnsDefaultBaseUrl()
     {
+        // Arrange
         Environment.SetEnvironmentVariable(DirectLineSettings.DirectLineBaseUrlSetting, " ");
         var settings = _envBinder.Bind<DirectLineSettings>();
 
+        // Act
         var baseUrl = settings.GetDirectLineBaseUrl();
 
-        Assert.AreEqual(expected: DirectLineSettings.DefaultBaseUrl, actual: baseUrl);
+        // Assert
+        baseUrl.Should().Be(DirectLineSettings.DefaultBaseUrl);
     }
 
     [DataTestMethod]
@@ -30,23 +33,29 @@ public class DirectLineSettingsTests
     [DataRow(LocalHostBaseUrl + "///")]
     public void GetDirectLineBaseUrl_WhenDirectLineBaseUrlIsNotEmpty_ShouldReturnsBaseUrlWithSlashAtEnd(string value)
     {
+        // Arrange
         Environment.SetEnvironmentVariable(DirectLineSettings.DirectLineBaseUrlSetting, value);
         var settings = _envBinder.Bind<DirectLineSettings>();
 
+        // Act
         var baseUrl = settings.GetDirectLineBaseUrl();
 
-        Assert.AreEqual(expected: "http://localhost:5000/", actual: baseUrl);
+        // Assert
+        baseUrl.Should().Be("http://localhost:5000/");
     }
 
     [TestMethod]
     public void GetServiceName_WhenBaseUrlIsEmptyOrWhiteSpace_ShouldReturnsDefaultServiceName()
     {
+        // Arrange
         Environment.SetEnvironmentVariable(DirectLineSettings.DirectLineBaseUrlSetting, " ");
         var settings = _envBinder.Bind<DirectLineSettings>();
 
+        // Act
         var serviceName = settings.GetServiceName();
 
-        Assert.AreEqual(expected: DirectLineSettings.DefaultServiceName, actual: serviceName);
+        // Assert
+        serviceName.Should().Be(DirectLineSettings.DefaultServiceName);
     }
 
     [DataTestMethod]
@@ -54,12 +63,15 @@ public class DirectLineSettingsTests
     [DataRow(DirectLineSettings.DefaultBaseUrl + "///")]
     public void GetServiceName_WhenBaseUrlStartsWithDefaultBaseUrl_ShouldReturnsDefaultServiceName(string baseUrl)
     {
+        // Arrange
         Environment.SetEnvironmentVariable(DirectLineSettings.DirectLineBaseUrlSetting, baseUrl);
         var settings = _envBinder.Bind<DirectLineSettings>();
 
+        // Act
         var serviceName = settings.GetServiceName();
 
-        Assert.AreEqual(expected: DirectLineSettings.DefaultServiceName, actual: serviceName);
+        // Assert
+        serviceName.Should().Be(DirectLineSettings.DefaultServiceName);
     }
 
     [DataTestMethod]
@@ -68,11 +80,14 @@ public class DirectLineSettingsTests
     [DataRow(LocalHostBaseUrl + "///")]
     public void GetServiceName_WhenBaseUrlNotStartsWithDefaultBaseUrl_ShouldReturnsInDirectLineService(string baseUrl)
     {
+        // Arrange
         Environment.SetEnvironmentVariable(DirectLineSettings.DirectLineBaseUrlSetting, baseUrl);
         var settings = _envBinder.Bind<DirectLineSettings>();
 
+        // Act
         var serviceName = settings.GetServiceName();
 
-        Assert.AreEqual(expected: nameof(InDirectLineService), actual: serviceName);
+        // Assert
+        serviceName.Should().Be(nameof(InDirectLineService));
     }
 }
