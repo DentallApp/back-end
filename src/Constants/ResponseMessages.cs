@@ -9,6 +9,9 @@ public class ResponseMessages
     public const string ResourceNotFoundMessage                            = "Recurso no encontrado.";
     public const string ResourceFromAnotherUserMessage                     = "El recurso es de otro usuario.";
 
+    public const string UnexpectedErrorMessage                             = "Hubo un error inesperado, por favor intente de nuevo.";
+    public const string UnexpectedErrorsMessage                            = "Se encontraron errores inesperados, por favor intente de nuevo.";
+
     public const string DirectLineTokenFailedMessage                       = "Direct Line token API call failed.";
     public const string InactiveUserAccountMessage                         = "Cuenta de usuario inactiva.";
     public const string EmailSuccessfullyVerifiedMessage                   = "Correo electrónico verificado con éxito.";

@@ -69,6 +69,7 @@ global using DentallApp.Features.PublicHolidays;
 global using DentallApp.Features.PublicHolidays.DTOs;
 global using DentallApp.Features.PublicHolidays.Offices;
 
+global using DentallApp.Middlewares;
 global using DentallApp.Configuration;
 global using DentallApp.DataAccess;
 global using DentallApp.DataAccess.Repositories;
@@ -94,6 +95,7 @@ global using static DentallApp.Constants.ResponseMessages;
 global using static DentallApp.Constants.MessageTemplates;
 
 global using System.Globalization;
+global using System.Net;
 global using System.Data;
 global using System.Text;
 global using System.Net.Mime;
@@ -118,6 +120,7 @@ global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Diagnostics;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Diagnostics;
