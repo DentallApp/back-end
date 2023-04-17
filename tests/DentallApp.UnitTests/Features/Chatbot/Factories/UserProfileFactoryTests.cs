@@ -1,9 +1,8 @@
 ﻿namespace DentallApp.UnitTests.Features.Chatbot.Factories;
 
-[TestClass]
 public class UserProfileFactoryTests
 {
-    [TestMethod]
+    [TestCase]
     public void Create_WhenChannelIdStartsWithPrefix_ShouldReturnsUserProfileInstance()
     {
         // Arrange
@@ -19,7 +18,7 @@ public class UserProfileFactoryTests
         userProfile.FullName.Should().BeNull();
     }
 
-    [TestMethod]
+    [TestCase]
     public void Create_WhenChannelIdHasNotPrefix_ShouldReturnsUserProfileInstance()
     {
         // Arrange
@@ -35,16 +34,15 @@ public class UserProfileFactoryTests
         userProfile.FullName.Should().BeNull();
     }
 
-    [DataTestMethod]
-    [DataRow("dl_")]
-    [DataRow("dl_1000_2000")]
-    [DataRow("1000_2000")]
-    [DataRow("1000")]
-    [DataRow("dl_1000-2000-1-2")]
-    [DataRow("1000-2000-1-2")]
-    [DataRow("--")]
-    [DataRow("")]
-    [DataRow("  ")]
+    [TestCase("dl_")]
+    [TestCase("dl_1000_2000")]
+    [TestCase("1000_2000")]
+    [TestCase("1000")]
+    [TestCase("dl_1000-2000-1-2")]
+    [TestCase("1000-2000-1-2")]
+    [TestCase("--")]
+    [TestCase("")]
+    [TestCase("  ")]
     public void Create_WhenIdentifiersCouldNotBeExtractedSeparately_ShouldThrowInvalidOperationException(string channelId)
     {
         // Arrange
@@ -60,7 +58,7 @@ public class UserProfileFactoryTests
            .WithMessage(expectedMessage);
     }
 
-    [TestMethod]
+    [TestCase]
     public void Create_WhenChannelDataIsNull_ShouldReturnsFullNameWithNullValue()
     {
         // Arrange
@@ -74,9 +72,8 @@ public class UserProfileFactoryTests
         userProfile.FullName.Should().BeNull();
     }
 
-    [DataTestMethod]
-    [DataRow("")]
-    [DataRow("Dave Roman")]
+    [TestCase("")]
+    [TestCase("Dave Roman")]
     public void Create_WhenChannelDataIsNotNull_ShouldReturnsFullNameWithValidValue(string expectedValue)
     {
         // Arrange

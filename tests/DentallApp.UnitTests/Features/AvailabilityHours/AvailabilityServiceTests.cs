@@ -1,6 +1,5 @@
 ﻿namespace DentallApp.UnitTests.Features.AvailabilityHours;
 
-[TestClass]
 public class AvailabilityServiceTests
 {
     private IAppointmentRepository _appointmentRepository;
@@ -10,7 +9,7 @@ public class AvailabilityServiceTests
     private AvailabilityService _availabilityService;
     private IDateTimeProvider _dateTimeProvider;
 
-    [TestInitialize]
+    [SetUp]
     public void TestInitialize()
     {
         _appointmentRepository      = Mock.Create<IAppointmentRepository>();
@@ -25,7 +24,7 @@ public class AvailabilityServiceTests
                                                               _dateTimeProvider);
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenAppointmentDateIsPublicHoliday_ShouldReturnsAnErrorMessage()
     {
         // Arrange
@@ -42,7 +41,7 @@ public class AvailabilityServiceTests
         response.Message.Should().Be(AppointmentDateIsPublicHolidayMessage);
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenDentistIsNotAvailableOnGivenDay_ShouldReturnsAnErrorMessage()
     {
         // Arrange
@@ -60,7 +59,7 @@ public class AvailabilityServiceTests
         response.Message.Should().Be(expectedMessage);
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenEmployeeScheduleIsInactive_ShouldReturnsAnErrorMessage()
     {
         // Arrange
@@ -78,7 +77,7 @@ public class AvailabilityServiceTests
         response.Message.Should().Be(expectedMessage);
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenOfficeScheduleIsInactive_ShouldReturnsAnErrorMessage()
     {
         // Arrange
@@ -96,7 +95,7 @@ public class AvailabilityServiceTests
         response.Message.Should().Be(expectedMessage);
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenOfficeIsInactive_ShouldReturnsAnErrorMessage()
     {
         // Arrange
@@ -114,7 +113,7 @@ public class AvailabilityServiceTests
         response.Message.Should().Be(expectedMessage);;
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenEmployeeDoesNotHaveMorningOrAfternoonSchedule_ShouldReturnsAnErrorMessage()
     {
         // Arrange
@@ -131,7 +130,7 @@ public class AvailabilityServiceTests
         response.Message.Should().Be(NoMorningOrAfternoonHoursMessage);
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenDentalServiceIdIsInvalid_ShouldReturnsAnErrorMessage()
     {
         // Arrange
@@ -154,7 +153,7 @@ public class AvailabilityServiceTests
         response.Message.Should().Be(DentalServiceNotAvailableMessage);
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenEmployeeHasMorningAndAfternoonSchedule_ShouldReturnsAvailableHours()
     {
         // Arrange
@@ -199,7 +198,7 @@ public class AvailabilityServiceTests
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenEmployeeHasMorningSchedule_ShouldReturnsAvailableHours()
     {
         // Arrange
@@ -237,7 +236,7 @@ public class AvailabilityServiceTests
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenEmployeeHasAfternoonSchedule_ShouldReturnsAvailableHours()
     {
         // Arrange
@@ -273,7 +272,7 @@ public class AvailabilityServiceTests
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
-    [TestMethod]
+    [Test]
     public async Task GetAvailableHoursAsync_WhenSchedulesAreNotAvailable_ShouldReturnsResponseWithoutAvailableHours()
     {
         // Arrange

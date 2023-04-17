@@ -1,13 +1,12 @@
 ﻿namespace DentallApp.UnitTests.Features.AppointmentCancellation;
 
-[TestClass]
 public class AppointmentCancellationServiceTests
 {
     private IAppointmentCancellationRepository _appointmentRepository;
     private IDateTimeProvider _dateTimeProvider;
     private AppointmentCancellationService _appointmentService;
 
-    [TestInitialize]
+    [SetUp]
     public void TestInitialize()
     {
         _appointmentRepository = Mock.Create<IAppointmentCancellationRepository>();
@@ -17,7 +16,7 @@ public class AppointmentCancellationServiceTests
                                                                     _dateTimeProvider); 
     }
 
-    [TestMethod]
+    [Test]
     public async Task CancelAppointmentsAsync_WhenAllAppointmentsCanBeCancelled_ShouldReturnsAnResponseWithoutAppointmentsId()
     {
         // Arrange
@@ -48,7 +47,7 @@ public class AppointmentCancellationServiceTests
         response.Data.Should().BeNull();
     }
 
-    [TestMethod]
+    [Test]
     public async Task CancelAppointmentsAsync_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
     {
         // Arrange
@@ -86,7 +85,7 @@ public class AppointmentCancellationServiceTests
                      .BeEquivalentTo(new[] { 4, 5 });
     }
 
-    [TestMethod]
+    [Test]
     public async Task CancelAppointmentsAsync_WhenAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
     {
         // Arrange
@@ -124,7 +123,7 @@ public class AppointmentCancellationServiceTests
                      .BeEquivalentTo(new[] { 1, 2, 3, 4, 5 });
     }
 
-    [TestMethod]
+    [Test]
     public async Task CancelBasicUserAppointmentAsync_WhenAppointmentCannotBeCancelled_ShouldReturnsFailureResponse()
     {
         // Arrange

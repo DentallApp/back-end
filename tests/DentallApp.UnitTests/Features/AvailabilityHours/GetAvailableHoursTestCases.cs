@@ -1,8 +1,8 @@
-﻿namespace DentallApp.UnitTests.Features.AvailabilityHours;
+namespace DentallApp.UnitTests.Features.AvailabilityHours;
 
-public partial class AvailabilityTests
+public class GetAvailableHoursTestCases : IEnumerable
 {
-    public static IEnumerable<object[]> GetData()
+    public IEnumerator GetEnumerator()
     {
         var dentistStartHour = TimeSpan.Parse("7:00");
         var dentistEndHour   = TimeSpan.Parse("13:10");
@@ -16,7 +16,6 @@ public partial class AvailabilityTests
 
         yield return new object[]
         {
-            "test1",
             new AvailabilityOptions
             {
                 DentistStartHour = dentistStartHour,
@@ -39,7 +38,6 @@ public partial class AvailabilityTests
 
         yield return new object[]
         {
-            "test2",
             new AvailabilityOptions
             {
                 DentistStartHour = dentistStartHour,
@@ -58,7 +56,6 @@ public partial class AvailabilityTests
 
         yield return new object[]
         {
-            "test3",
             new AvailabilityOptions
             {
                 DentistStartHour = dentistStartHour,
@@ -76,7 +73,6 @@ public partial class AvailabilityTests
 
         yield return new object[]
         {
-            "test4",
             new AvailabilityOptions
             {
                 DentistStartHour = dentistStartHour,
@@ -92,7 +88,6 @@ public partial class AvailabilityTests
 
         yield return new object[]
         {
-            "test5",
             new AvailabilityOptions
             {
                 DentistStartHour = dentistStartHour,
@@ -109,7 +104,6 @@ public partial class AvailabilityTests
 
         yield return new object[]
         {
-            "test6",
             new AvailabilityOptions
             {
                 DentistStartHour = TimeSpan.Parse("9:30"),
@@ -134,7 +128,6 @@ public partial class AvailabilityTests
 
         yield return new object[]
         {
-            "test7",
             new AvailabilityOptions
             {
                 DentistStartHour = TimeSpan.Parse("9:30"),
@@ -161,7 +154,6 @@ public partial class AvailabilityTests
 
         yield return new object[]
         {
-            "test8",
             new AvailabilityOptions
             {
                 DentistStartHour = dentistStartHour,
@@ -188,7 +180,6 @@ public partial class AvailabilityTests
 
         yield return new object[]
         {
-            "test9",
             new AvailabilityOptions
             {
                 DentistStartHour = TimeSpan.Parse("8:00"),

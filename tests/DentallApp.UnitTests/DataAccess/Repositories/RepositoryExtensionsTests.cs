@@ -1,17 +1,16 @@
 ﻿namespace DentallApp.UnitTests.DataAccess.Repositories;
 
-[TestClass]
 public class RepositoryExtensionsTests
 {
     private IRepository<UserRole> _repository;
 
-    [TestInitialize]
+    [SetUp]
     public void TestInitialize()
     {
         _repository = Mock.Create<IRepository<UserRole>>();
     }
 
-    [TestMethod]
+    [Test]
     public void AddOrUpdateOrDelete_WhenNumberOfElementsAreEqual_ShouldMergeSequenceOfElements()
     {
         // Arrange
@@ -45,7 +44,7 @@ public class RepositoryExtensionsTests
         rolesId[1].Should().Be(RolesId.Admin);
     }
 
-    [TestMethod]
+    [Test]
     public void AddOrUpdateOrDelete_WhenIdentifiersDoNotContainsTheSecondaryForeignKey_ShouldDeleteCurrentEntity()
     {
         // Arrange
@@ -83,7 +82,7 @@ public class RepositoryExtensionsTests
     }
 
 
-    [TestMethod]
+    [Test]
     public void AddOrUpdateOrDelete_WhenSourceDoNotContainsTheIdentifier_ShouldInsertCurrentEntity()
     {
         // Arrange

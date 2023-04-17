@@ -1,13 +1,12 @@
 ﻿namespace DentallApp.UnitTests.Features.Chatbot.Dialogs;
 
-[TestClass]
 public partial class RootDialogTests
 {
     private DialogTestClient _testClient;
     private IDateTimeProvider _dateTimeProvider;
     private IAppointmentBotService _botService;
 
-    [TestInitialize]
+    [SetUp]
     public void TestInitialize()
     {
         _botService       = CreateMock();
@@ -15,7 +14,7 @@ public partial class RootDialogTests
         _testClient       = new(Channels.Webchat, new RootDialog(_botService, _dateTimeProvider));
     }
 
-    [TestMethod]
+    [TestCase]
     public async Task Bot_WhenAnIncomingActivityIsSent_ShouldRespondWithAnOutgoingActivity()
     {
         await SendReplyWithChoiceSetAsync(choiceType: PatientName,       incomingActivity: CreateInitialActivity());
