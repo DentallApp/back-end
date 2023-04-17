@@ -18,7 +18,7 @@ public partial class WeekDayFormatTests
     }
 
     [TestMethod]
-    public void GetWeekDaysFormat_WhenWeekDaysIsOne_ShouldReturnNewFormat()
+    public void GetWeekDaysFormat_WhenWeekDaysIsOne_ShouldReturnsNewFormat()
     {
         // Arrange
         var weekDays = new List<WeekDayDto>() 
@@ -35,7 +35,7 @@ public partial class WeekDayFormatTests
     }
 
     [TestMethod]
-    public void GetWeekDaysFormat_WhenWeekDaysIsTwo_ShouldReturnNewFormat()
+    public void GetWeekDaysFormat_WhenWeekDaysIsTwo_ShouldReturnsNewFormat()
     {
         // Arrange
         var weekDays = new List<WeekDayDto>()
@@ -54,7 +54,7 @@ public partial class WeekDayFormatTests
 
     [DataTestMethod]
     [DynamicData(nameof(GetDataConsecutive), DynamicDataSourceType.Method)]
-    public void GetWeekDaysFormat_WhenDaysAreConsecutive_ShouldReturnNewFormat(string testId, List<WeekDayDto> weekDays, string expected)
+    public void GetWeekDaysFormat_WhenDaysAreConsecutive_ShouldReturnsNewFormat(string testId, List<WeekDayDto> weekDays, string expected)
     {
         // Act
         var format = WeekDayFormat.GetWeekDaysFormat(weekDays);
@@ -65,7 +65,7 @@ public partial class WeekDayFormatTests
 
     [DataTestMethod]
     [DynamicData(nameof(GetDataNotConsecutive), DynamicDataSourceType.Method)]
-    public void GetWeekDaysFormat_WhenDaysAreNotConsecutive_ShouldReturnNewFormat(string testId, List<WeekDayDto> weekDays, string expected)
+    public void GetWeekDaysFormat_WhenDaysAreNotConsecutive_ShouldReturnsNewFormat(string testId, List<WeekDayDto> weekDays, string expected)
     {
         // Act
         var format = WeekDayFormat.GetWeekDaysFormat(weekDays);
