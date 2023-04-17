@@ -36,60 +36,73 @@ public partial class RootDialogTests
     private async Task SendReplyWithChoiceSetAsync(string choiceType, Activity incomingActivity)
     {
         var reply     = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        Assert.AreEqual(expected: ActivityTypes.Typing, actual: reply.Type);
+        reply.Type.Should().Be(ActivityTypes.Typing);
+
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        replyNext.Type.Should().Be(ActivityTypes.Message);
+
         var content   = JObject.Parse(replyNext.Attachments[0].Content.ToString());
         var choices   = content.SelectToken("body[1].choices").ToObject<List<AdaptiveChoice>>();
-        Assert.AreEqual(expected: 1,          actual: choices.Count);
-        Assert.AreEqual(expected: choiceType, actual: choices[0].Title);
-        Assert.AreEqual(expected: Id,         actual: choices[0].Value);
+        choices.Should().HaveCount(1);
+        choices[0].Title.Should().Be(choiceType);
+        choices[0].Value.Should().Be(Id);
     }
 
     private async Task SendReplyWithInputDateAsync(Activity incomingActivity)
     {
         Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2023, 01, 01));
+
         var reply     = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        Assert.AreEqual(expected: ActivityTypes.Typing, actual: reply.Type);
+        reply.Type.Should().Be(ActivityTypes.Typing);
+
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: string.Format(ShowScheduleToUserMessage, Schedule), actual: replyNext.Text);
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        replyNext.Text.Should().Be(string.Format(ShowScheduleToUserMessage, Schedule));
+        replyNext.Type.Should().Be(ActivityTypes.Message);
+
         replyNext     = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        replyNext.Type.Should().Be(ActivityTypes.Message);
+
         var content   = JObject.Parse(replyNext.Attachments[0].Content.ToString());
         var type      = content.SelectToken("body[1].type").ToObject<string>();
-        Assert.AreEqual(expected: "Input.Date", actual: type);
+        type.Should().Be("Input.Date");
         var min       = content.SelectToken("body[1].min").ToObject<string>();
-        Assert.AreEqual(expected: "2023-01-01", actual: min);
+        min.Should().Be("2023-01-01");
         var max       = content.SelectToken("body[1].max").ToObject<string>();
-        Assert.AreEqual(expected: "2023-03-02", actual: max);
+        max.Should().Be("2023-03-02");
     }
 
     private async Task SendReplyWithHeroCardAsync(Activity incomingActivity)
     {
         var reply     = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        Assert.AreEqual(expected: ActivityTypes.Typing, actual: reply.Type);
+        reply.Type.Should().Be(ActivityTypes.Typing);
+
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: string.Format(TotalHoursAvailableMessage, 1), actual: replyNext.Text);
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        replyNext.Text.Should().Be(string.Format(TotalHoursAvailableMessage, 1));
+        replyNext.Type.Should().Be(ActivityTypes.Message);
+
         replyNext     = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        replyNext.Type.Should().Be(ActivityTypes.Message);
+
         var heroCard  = (HeroCard)replyNext.Attachments[0].Content;
-        Assert.AreEqual(expected: $"{StartHour} - {EndHour}", actual: heroCard.Buttons[0].Title);
-        Assert.AreEqual(expected: $"{StartHour} - {EndHour}", actual: heroCard.Buttons[0].Value);
+        heroCard.Buttons[0].Title.Should().Be($"{StartHour} - {EndHour}");
+        heroCard.Buttons[0].Value.Should().Be($"{StartHour} - {EndHour}");
     }
 
     private async Task SendLastReplyAsync(Activity incomingActivity)
     {
         var reply         = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        Assert.AreEqual(expected: ActivityTypes.Typing,  actual: reply.Type);
+        reply.Type.Should().Be(ActivityTypes.Typing);
+
         var replyNext     = _testClient.GetNextReply<IMessageActivity>();
         var rangeToPayMsg = string.Format(RangeToPayMinMaxMessage, PriceMin, PriceMax);
-        Assert.AreEqual(expected: string.Format(SuccessfullyScheduledAppointmentMessage, rangeToPayMsg), actual: replyNext.Text);
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        replyNext.Text
+                 .Should()
+                 .Be(string.Format(SuccessfullyScheduledAppointmentMessage, rangeToPayMsg));
+        replyNext.Type.Should().Be(ActivityTypes.Message);
+
         replyNext         = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: ThanksForUsingServiceMessage, actual: replyNext.Text);
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        replyNext.Text.Should().Be(ThanksForUsingServiceMessage);
+        replyNext.Type.Should().Be(ActivityTypes.Message);
     }
 }

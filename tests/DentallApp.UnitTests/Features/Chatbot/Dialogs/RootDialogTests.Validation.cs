@@ -9,35 +9,35 @@ public partial class RootDialogTests
         await _testClient.SendActivityAsync<IMessageActivity>(CreateInitialActivity());
         _testClient.GetNextReply<IMessageActivity>();
         var reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        Assert.AreEqual(expected: SelectPatientMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectPatientMessage);
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedPatientId());
         _testClient.GetNextReply<IMessageActivity>();
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        Assert.AreEqual(expected: SelectOfficeMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectOfficeMessage);
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedOfficeId());
         _testClient.GetNextReply<IMessageActivity>();
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        Assert.AreEqual(expected: SelectDentalServiceMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectDentalServiceMessage);
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentalServiceId());
         _testClient.GetNextReply<IMessageActivity>();
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        Assert.AreEqual(expected: SelectDentistMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectDentistMessage);
 
         Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentistId());
         _testClient.GetNextReply<IMessageActivity>();
         _testClient.GetNextReply<IMessageActivity>();
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        Assert.AreEqual(expected: SelectAppointmentDateMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectAppointmentDateMessage);
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDate());
         _testClient.GetNextReply<IMessageActivity>();
         _testClient.GetNextReply<IMessageActivity>();
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        Assert.AreEqual(expected: SelectScheduleMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectScheduleMessage);
     }
 
     [TestMethod]
@@ -48,28 +48,28 @@ public partial class RootDialogTests
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         var reply = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: SelectPatientMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectPatientMessage);
         _testClient.GetNextReply<IMessageActivity>();
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedPatientId());
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: SelectOfficeMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectOfficeMessage);
         _testClient.GetNextReply<IMessageActivity>();
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedOfficeId());
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: SelectDentalServiceMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectDentalServiceMessage);
         _testClient.GetNextReply<IMessageActivity>();
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentalServiceId());
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: SelectDentistMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectDentistMessage);
         _testClient.GetNextReply<IMessageActivity>();
 
         Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
@@ -78,7 +78,7 @@ public partial class RootDialogTests
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: SelectAppointmentDateMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectAppointmentDateMessage);
         _testClient.GetNextReply<IMessageActivity>();
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDate());
@@ -86,7 +86,7 @@ public partial class RootDialogTests
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: SelectScheduleMessage, actual: reply.Text);
+        reply.Text.Should().Be(SelectScheduleMessage);
         _testClient.GetNextReply<IMessageActivity>();
     }
 
@@ -120,10 +120,10 @@ public partial class RootDialogTests
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDate());
         _testClient.GetNextReply<IMessageActivity>();
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
-        Assert.AreEqual(expected: NoSchedulesAvailableMessage, actual: replyNext.Text);
+        replyNext.Type.Should().Be(ActivityTypes.Message);
+        replyNext.Text.Should().Be(NoSchedulesAvailableMessage);
         replyNext = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        replyNext.Type.Should().Be(ActivityTypes.Message);
     }
 
     [TestMethod]
@@ -160,9 +160,9 @@ public partial class RootDialogTests
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedSchedule());
         _testClient.GetNextReply<IMessageActivity>();
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
-        Assert.AreEqual(expected: DateAndTimeAppointmentIsNotAvailableMessage, actual: replyNext.Text);
+        replyNext.Type.Should().Be(ActivityTypes.Message);
+        replyNext.Text.Should().Be(DateAndTimeAppointmentIsNotAvailableMessage);
         replyNext = _testClient.GetNextReply<IMessageActivity>();
-        Assert.AreEqual(expected: ActivityTypes.Message, actual: replyNext.Type);
+        replyNext.Type.Should().Be(ActivityTypes.Message);
     }
 }
