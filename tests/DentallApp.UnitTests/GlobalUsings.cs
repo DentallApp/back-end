@@ -1,4 +1,5 @@
-global using Microsoft.VisualStudio.TestTools.UnitTesting;
+global using System.Collections;
+global using NUnit.Framework;
 global using FluentAssertions;
 global using AdaptiveCards;
 global using Microsoft.Bot.Connector;
