@@ -39,6 +39,8 @@ if (app.Environment.IsDevelopment())
     IdentityModelEventSource.ShowPII = true;
 }
 
+app.UseExceptionHandling();
+
 app.UseDefaultFiles()
    .UseStaticFiles()
    .UseWebSockets()
