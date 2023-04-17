@@ -1,19 +1,18 @@
 ﻿namespace DentallApp.UnitTests.Features.Chatbot.DirectLine;
 
-[TestClass]
 public class DirectLineSettingsTests
 {
     private const string LocalHostBaseUrl = "http://localhost:5000";
     private IEnvBinder _envBinder;
 
-    [TestInitialize]
+    [SetUp]
     public void TestInitialize()
     {
         _envBinder = new EnvBinder().AllowBindNonPublicProperties();
         Environment.SetEnvironmentVariable(DirectLineSettings.DirectLineSecretSetting, "SECRET");
     }
 
-    [TestMethod]
+    [Test]
     public void GetDirectLineBaseUrl_WhenDirectLineBaseUrlIsEmptyOrWhiteSpace_ShouldReturnsDefaultBaseUrl()
     {
         // Arrange
@@ -27,10 +26,9 @@ public class DirectLineSettingsTests
         baseUrl.Should().Be(DirectLineSettings.DefaultBaseUrl);
     }
 
-    [DataTestMethod]
-    [DataRow(LocalHostBaseUrl + "/")]
-    [DataRow(LocalHostBaseUrl)]
-    [DataRow(LocalHostBaseUrl + "///")]
+    [TestCase(LocalHostBaseUrl + "/")]
+    [TestCase(LocalHostBaseUrl)]
+    [TestCase(LocalHostBaseUrl + "///")]
     public void GetDirectLineBaseUrl_WhenDirectLineBaseUrlIsNotEmpty_ShouldReturnsBaseUrlWithSlashAtEnd(string value)
     {
         // Arrange
@@ -44,7 +42,7 @@ public class DirectLineSettingsTests
         baseUrl.Should().Be("http://localhost:5000/");
     }
 
-    [TestMethod]
+    [Test]
     public void GetServiceName_WhenBaseUrlIsEmptyOrWhiteSpace_ShouldReturnsDefaultServiceName()
     {
         // Arrange
@@ -58,9 +56,8 @@ public class DirectLineSettingsTests
         serviceName.Should().Be(DirectLineSettings.DefaultServiceName);
     }
 
-    [DataTestMethod]
-    [DataRow(DirectLineSettings.DefaultBaseUrl)]
-    [DataRow(DirectLineSettings.DefaultBaseUrl + "///")]
+    [TestCase(DirectLineSettings.DefaultBaseUrl)]
+    [TestCase(DirectLineSettings.DefaultBaseUrl + "///")]
     public void GetServiceName_WhenBaseUrlStartsWithDefaultBaseUrl_ShouldReturnsDefaultServiceName(string baseUrl)
     {
         // Arrange
@@ -74,10 +71,9 @@ public class DirectLineSettingsTests
         serviceName.Should().Be(DirectLineSettings.DefaultServiceName);
     }
 
-    [DataTestMethod]
-    [DataRow(LocalHostBaseUrl + "/")]
-    [DataRow(LocalHostBaseUrl)]
-    [DataRow(LocalHostBaseUrl + "///")]
+    [TestCase(LocalHostBaseUrl + "/")]
+    [TestCase(LocalHostBaseUrl)]
+    [TestCase(LocalHostBaseUrl + "///")]
     public void GetServiceName_WhenBaseUrlNotStartsWithDefaultBaseUrl_ShouldReturnsInDirectLineService(string baseUrl)
     {
         // Arrange

@@ -1,12 +1,11 @@
 ﻿namespace DentallApp.UnitTests.Features.AvailabilityHours;
 
-[TestClass]
 public partial class AvailabilityTests
 {
-    [DataTestMethod]
-    [DynamicData(nameof(GetData), DynamicDataSourceType.Method)]
+    [TestCaseSource(typeof(GetAvailableHoursTestCases))]
     public void GetAvailableHours_WhenNumberOfUnavailableHoursIsGreaterThanOrEqualToZero_ShouldReturnsAvailableHours(
-        string testId, AvailabilityOptions options, List<AvailableTimeRangeDto> expectedList)
+        AvailabilityOptions options, 
+        List<AvailableTimeRangeDto> expectedList)
     {
         // Act
         var availableHours = Availability.GetAvailableHours(options);
@@ -15,7 +14,7 @@ public partial class AvailabilityTests
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
-    [TestMethod]
+    [TestCase]
     public void GetAvailableHours_WhenDentistHasSomeTimeoffOrRestTime_ShouldTakeItAsRangeOfUnavailableTime()
     {
         // Arrange
@@ -57,7 +56,7 @@ public partial class AvailabilityTests
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
-    [TestMethod]
+    [TestCase]
     public void GetAvailableHours_WhenDurationOfDentalServiceIsEqualToZero_ShouldThrowArgumentException()
     {
         // Arrange
@@ -76,7 +75,7 @@ public partial class AvailabilityTests
         act.Should().Throw<InvalidOperationException>();
     }
 
-    [TestMethod]
+    [TestCase]
     public void GetAvailableHours_WhenNumberOfAvailableHoursIsZero_ShouldReturnsNull()
     {
         // Arrange
@@ -102,7 +101,7 @@ public partial class AvailabilityTests
         availableHours.Should().BeNull();
     }
 
-    [TestMethod]
+    [TestCase]
     public void GetAvailableHours_WhenAppointmentDateIsEqualToTheCurrentDate_ShouldDiscardAvailableHoursThatAreLessThanTheCurrentTime()
     {
         // Arrange
@@ -140,14 +139,13 @@ public partial class AvailabilityTests
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
-    [DataTestMethod]
-    [DataRow("08:20", "09:00", 
+    [TestCase("08:20", "09:00", 
              "09:00", "09:30")]
-    [DataRow("11:40", "12:20",
+    [TestCase("11:40", "12:20",
              "11:00", "11:40")]
-    [DataRow("10:00", "10:30",
+    [TestCase("10:00", "10:30",
              "10:40", "11:20")]
-    [DataRow("10:00", "10:30",
+    [TestCase("10:00", "10:30",
              "09:00", "09:40")]
     public void IsNotAvailable_WhenNewTimeRangeIsAvailable_ShouldReturnsFalse(
         string newStartHour,
@@ -171,18 +169,17 @@ public partial class AvailabilityTests
         result.Should().BeFalse();
     }
 
-    [DataTestMethod]
-    [DataRow("09:00", "09:30",
+    [TestCase("09:00", "09:30",
              "09:00", "09:30")]
-    [DataRow("09:00", "09:30",
+    [TestCase("09:00", "09:30",
              "09:20", "09:35")]
-    [DataRow("10:00", "10:30",
+    [TestCase("10:00", "10:30",
              "10:25", "11:20")]
-    [DataRow("10:00", "10:30",
+    [TestCase("10:00", "10:30",
              "09:00", "10:10")]
-    [DataRow("10:00", "10:30",
+    [TestCase("10:00", "10:30",
              "10:29", "12:00")]
-    [DataRow("12:20", "12:50",
+    [TestCase("12:20", "12:50",
              "12:00", "13:00")]
     public void IsNotAvailable_WhenNewTimeRangeIsNotAvailable_ShouldReturnsTrue(
         string newStartHour,

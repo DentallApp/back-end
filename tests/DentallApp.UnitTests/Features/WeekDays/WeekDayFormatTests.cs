@@ -1,9 +1,8 @@
 ﻿namespace DentallApp.UnitTests.Features.WeekDays;
 
-[TestClass]
 public partial class WeekDayFormatTests
 {
-    [TestMethod]
+    [Test]
     public void GetWeekDaysFormat_WhenWeekDaysIsZero_ShouldReturnsStringEmpty()
     {
         // Arrange
@@ -17,7 +16,7 @@ public partial class WeekDayFormatTests
         format.Should().Be(expected);
     }
 
-    [TestMethod]
+    [Test]
     public void GetWeekDaysFormat_WhenWeekDaysIsOne_ShouldReturnsNewFormat()
     {
         // Arrange
@@ -34,7 +33,7 @@ public partial class WeekDayFormatTests
         format.Should().Be(expected);
     }
 
-    [TestMethod]
+    [Test]
     public void GetWeekDaysFormat_WhenWeekDaysIsTwo_ShouldReturnsNewFormat()
     {
         // Arrange
@@ -52,9 +51,8 @@ public partial class WeekDayFormatTests
         format.Should().Be(expected);
     }
 
-    [DataTestMethod]
-    [DynamicData(nameof(GetDataConsecutive), DynamicDataSourceType.Method)]
-    public void GetWeekDaysFormat_WhenDaysAreConsecutive_ShouldReturnsNewFormat(string testId, List<WeekDayDto> weekDays, string expected)
+    [TestCaseSource(typeof(GetConsecutiveDaysTestCases))]
+    public void GetWeekDaysFormat_WhenDaysAreConsecutive_ShouldReturnsNewFormat(List<WeekDayDto> weekDays, string expected)
     {
         // Act
         var format = WeekDayFormat.GetWeekDaysFormat(weekDays);
@@ -63,9 +61,8 @@ public partial class WeekDayFormatTests
         format.Should().Be(expected);
     }
 
-    [DataTestMethod]
-    [DynamicData(nameof(GetDataNotConsecutive), DynamicDataSourceType.Method)]
-    public void GetWeekDaysFormat_WhenDaysAreNotConsecutive_ShouldReturnsNewFormat(string testId, List<WeekDayDto> weekDays, string expected)
+    [TestCaseSource(typeof(GetNonConsecutiveDaysTestCases))]
+    public void GetWeekDaysFormat_WhenDaysAreNotConsecutive_ShouldReturnsNewFormat(List<WeekDayDto> weekDays, string expected)
     {
         // Act
         var format = WeekDayFormat.GetWeekDaysFormat(weekDays);

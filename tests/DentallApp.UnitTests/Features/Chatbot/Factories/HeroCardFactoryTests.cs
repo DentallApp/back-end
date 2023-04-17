@@ -1,9 +1,8 @@
 ﻿namespace DentallApp.UnitTests.Features.Chatbot.Factories;
 
-[TestClass]
 public class HeroCardFactoryTests
 {
-    [TestMethod]
+    [TestCase]
     public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsMultiplesOfFive_ShouldReturnsHeroCardsWithAvailableHours()
     {
         // Arrange
@@ -54,7 +53,7 @@ public class HeroCardFactoryTests
         heroCards.Should().BeEquivalentTo(expectedHeroCards);
     }
 
-    [TestMethod]
+    [TestCase]
     public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsNotMultiplesOfFive_ShouldReturnsHeroCardsWithAvailableHours()
     {
         // Arrange
@@ -101,7 +100,7 @@ public class HeroCardFactoryTests
         heroCards.Should().BeEquivalentTo(expectedHeroCards);
     }
 
-    [TestMethod]
+    [TestCase]
     public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsLessThanFive_ShouldReturnsHeroCardsWithAvailableHours()
     {
         // Arrange

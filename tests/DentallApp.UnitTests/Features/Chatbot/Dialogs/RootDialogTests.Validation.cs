@@ -2,7 +2,7 @@
 
 public partial class RootDialogTests
 {
-    [TestMethod]
+    [Test]
     public async Task Bot_WhenIncomingActivityHasValuePropertyWithNull_ShouldSendAnErrorMessage()
     {
         var incomingActivity = new Activity { Value = default };
@@ -40,7 +40,7 @@ public partial class RootDialogTests
         reply.Text.Should().Be(SelectScheduleMessage);
     }
 
-    [TestMethod]
+    [Test]
     public async Task Bot_WhenIncomingActivityHasValuePropertyWithoutJsonFormat_ShouldSendAnErrorMessage()
     {
         var incomingActivity = new Activity { Value = "TestValue" };
@@ -90,7 +90,7 @@ public partial class RootDialogTests
         _testClient.GetNextReply<IMessageActivity>();
     }
 
-    [TestMethod]
+    [Test]
     public async Task Bot_WhenThereAreNoHoursAvailable_ShouldSendAnErrorMessage()
     {
         Mock.Arrange(() => _botService.GetAvailableHoursAsync(Arg.IsAny<AvailableTimeRangePostDto>()))
@@ -126,7 +126,7 @@ public partial class RootDialogTests
         replyNext.Type.Should().Be(ActivityTypes.Message);
     }
 
-    [TestMethod]
+    [Test]
     public async Task Bot_WhenDateAndTimeAppointmentIsNotAvailable_ShouldSendAnErrorMessage()
     {
         Mock.Arrange(() => _botService.CreateScheduledAppointmentAsync(Arg.IsAny<AppointmentInsertDto>()))
