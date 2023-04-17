@@ -18,7 +18,7 @@ public class AppointmentCancellationServiceTests
     }
 
     [TestMethod]
-    public async Task CancelAppointmentsAsync_WhenAllAppointmentsCanBeCancelled_ShouldReturnAnResponseWithoutAppointmentsId()
+    public async Task CancelAppointmentsAsync_WhenAllAppointmentsCanBeCancelled_ShouldReturnsAnResponseWithoutAppointmentsId()
     {
         // Arrange
         var dto = new AppointmentCancelDto
@@ -49,7 +49,7 @@ public class AppointmentCancellationServiceTests
     }
 
     [TestMethod]
-    public async Task CancelAppointmentsAsync_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnAnResponseWithAppointmentsId()
+    public async Task CancelAppointmentsAsync_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
     {
         // Arrange
         var dto = new AppointmentCancelDto
@@ -87,7 +87,7 @@ public class AppointmentCancellationServiceTests
     }
 
     [TestMethod]
-    public async Task CancelAppointmentsAsync_WhenAppointmentsCannotBeCancelled_ShouldReturnAnResponseWithAppointmentsId()
+    public async Task CancelAppointmentsAsync_WhenAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
     {
         // Arrange
         var dto = new AppointmentCancelDto
@@ -125,7 +125,7 @@ public class AppointmentCancellationServiceTests
     }
 
     [TestMethod]
-    public async Task CancelBasicUserAppointmentAsync_WhenAppointmentCannotBeCancelled_ShouldReturnFailureResponse()
+    public async Task CancelBasicUserAppointmentAsync_WhenAppointmentCannotBeCancelled_ShouldReturnsFailureResponse()
     {
         // Arrange
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 04, 15, 0, 0));
