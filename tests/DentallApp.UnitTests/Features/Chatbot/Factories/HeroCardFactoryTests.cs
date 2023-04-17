@@ -4,7 +4,7 @@
 public class HeroCardFactoryTests
 {
     [TestMethod]
-    public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsMultiplesOfFive_ShouldReturnHeroCardsWithAvailableHours()
+    public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsMultiplesOfFive_ShouldReturnsHeroCardsWithAvailableHours()
     {
         // Arrange
         const string type = ActionTypes.MessageBack;
@@ -55,7 +55,7 @@ public class HeroCardFactoryTests
     }
 
     [TestMethod]
-    public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsNotMultiplesOfFive_ShouldReturnHeroCardsWithAvailableHours()
+    public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsNotMultiplesOfFive_ShouldReturnsHeroCardsWithAvailableHours()
     {
         // Arrange
         const string type = ActionTypes.MessageBack;
@@ -102,7 +102,7 @@ public class HeroCardFactoryTests
     }
 
     [TestMethod]
-    public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsLessThanFive_ShouldReturnHeroCardWithAvailableHours()
+    public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsLessThanFive_ShouldReturnsHeroCardsWithAvailableHours()
     {
         // Arrange
         const string type = ActionTypes.MessageBack;
