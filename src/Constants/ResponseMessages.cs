@@ -11,6 +11,8 @@ public class ResponseMessages
 
     public const string UnexpectedErrorMessage                             = "Hubo un error inesperado, por favor intente de nuevo.";
     public const string UnexpectedErrorsMessage                            = "Se encontraron errores inesperados, por favor intente de nuevo.";
+    public const string UniqueConstraintViolatedMessage                    = "Se detectó una violación a una restricción única (UNIQUE INDEX). " +
+                                                                             "Por favor, no envíe una entrada duplicada.";
 
     public const string DirectLineTokenFailedMessage                       = "Direct Line token API call failed.";
     public const string InactiveUserAccountMessage                         = "Cuenta de usuario inactiva.";

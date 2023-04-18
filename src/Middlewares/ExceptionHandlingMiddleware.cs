@@ -34,6 +34,12 @@ public class ExceptionHandlingMiddleware
                 Message = UnexpectedErrorMessage
             };
 
+            if (exception is UniqueConstraintException)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                response.Errors = new[] { UniqueConstraintViolatedMessage };
+            }
+
             await context.Response.WriteAsJsonAsync(response);
         }
     }
