@@ -12,6 +12,7 @@ public partial class AppDbContext : CustomDbContext
                 // See https://github.com/DentallApp/back-end/issues/25.
                 warnings.Ignore(CoreEventId.PossibleIncorrectRequiredNavigationWithQueryFilterInteractionWarning));
         optionsBuilder.AddDelegateDecompiler();
+        optionsBuilder.UseExceptionProcessor();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
