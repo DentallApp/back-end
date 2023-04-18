@@ -26,7 +26,6 @@ public partial class RootDialogTests
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply.Text.Should().Be(SelectDentistMessage);
 
-        Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentistId());
         _testClient.GetNextReply<IMessageActivity>();
         _testClient.GetNextReply<IMessageActivity>();
@@ -72,7 +71,6 @@ public partial class RootDialogTests
         reply.Text.Should().Be(SelectDentistMessage);
         _testClient.GetNextReply<IMessageActivity>();
 
-        Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentistId());
         _testClient.GetNextReply<IMessageActivity>();
         _testClient.GetNextReply<IMessageActivity>();
@@ -112,7 +110,6 @@ public partial class RootDialogTests
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentalServiceId());
         _testClient.GetNextReply<IMessageActivity>();
 
-        Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentistId());
         _testClient.GetNextReply<IMessageActivity>();
         _testClient.GetNextReply<IMessageActivity>();
@@ -148,7 +145,6 @@ public partial class RootDialogTests
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentalServiceId());
         _testClient.GetNextReply<IMessageActivity>();
 
-        Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentistId());
         _testClient.GetNextReply<IMessageActivity>();
         _testClient.GetNextReply<IMessageActivity>();

@@ -12,6 +12,7 @@ public partial class RootDialogTests
         _botService       = CreateMock();
         _dateTimeProvider = Mock.Create<IDateTimeProvider>();
         _testClient       = new(Channels.Webchat, new RootDialog(_botService, _dateTimeProvider));
+        Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
     }
 
     [TestCase]
@@ -49,7 +50,6 @@ public partial class RootDialogTests
 
     private async Task SendReplyWithInputDateAsync(Activity incomingActivity)
     {
-        Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2023, 01, 01));
 
         var reply     = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
