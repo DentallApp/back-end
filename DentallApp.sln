@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp", "src\DentallApp.csproj", "{E354A181-1E6C-4F76-8D99-96E5A6824FC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp.Tests", "tests\DentallApp.UnitTests\DentallApp.UnitTests.csproj", "{BE6318A1-900B-4E8E-8AAE-C391F881C844}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp.UnitTests", "tests\DentallApp.UnitTests\DentallApp.UnitTests.csproj", "{BE6318A1-900B-4E8E-8AAE-C391F881C844}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp.IntegrationTests", "tests\DentallApp.IntegrationTests\DentallApp.IntegrationTests.csproj", "{3897DDB9-5C4F-4664-94D7-756A5E673951}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +26,9 @@ Global
 		{BE6318A1-900B-4E8E-8AAE-C391F881C844}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE6318A1-900B-4E8E-8AAE-C391F881C844}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE6318A1-900B-4E8E-8AAE-C391F881C844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3897DDB9-5C4F-4664-94D7-756A5E673951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3897DDB9-5C4F-4664-94D7-756A5E673951}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3897DDB9-5C4F-4664-94D7-756A5E673951}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3897DDB9-5C4F-4664-94D7-756A5E673951}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
