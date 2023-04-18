@@ -143,6 +143,8 @@ global using SendGrid;
 global using SendGrid.Helpers.Mail;
 global using SendGrid.Extensions.DependencyInjection;
 
+global using EntityFramework.Exceptions.Common;
+global using EntityFramework.Exceptions.MySQL.Pomelo;
 global using DelegateDecompiler;
 global using FileTypeChecker;
 global using FileTypeChecker.Extensions;
