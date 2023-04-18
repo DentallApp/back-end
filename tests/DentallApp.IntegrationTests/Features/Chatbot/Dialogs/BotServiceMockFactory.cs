@@ -13,7 +13,7 @@ public static class BotServiceMockFactory
     public const int PriceMin             = 5;
     public const int PriceMax             = 10;
 
-    public static IAppointmentBotService CreateMock()
+    public static IAppointmentBotService CreateBotServiceMock()
     {
         var botService = Mock.Create<IAppointmentBotService>();
         Mock.Arrange(() => botService.GetPatientsAsync(Arg.IsAny<UserProfile>()))

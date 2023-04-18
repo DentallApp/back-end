@@ -9,7 +9,7 @@ public partial class RootDialogTests
     [SetUp]
     public void TestInitialize()
     {
-        _botService       = CreateMock();
+        _botService       = CreateBotServiceMock();
         _dateTimeProvider = Mock.Create<IDateTimeProvider>();
         _testClient       = new(Channels.Webchat, new RootDialog(_botService, _dateTimeProvider));
         Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
