@@ -15,7 +15,7 @@ public partial class RootDialogTests
         Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
     }
 
-    [TestCase]
+    [Test]
     public async Task Bot_WhenAnIncomingActivityIsSent_ShouldRespondWithAnOutgoingActivity()
     {
         await SendReplyWithChoiceSetAsync(choiceType: PatientName,       incomingActivity: CreateInitialActivity());

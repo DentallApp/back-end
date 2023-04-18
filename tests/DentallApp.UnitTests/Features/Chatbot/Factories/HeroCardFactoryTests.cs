@@ -2,7 +2,7 @@
 
 public class HeroCardFactoryTests
 {
-    [TestCase]
+    [Test]
     public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsMultiplesOfFive_ShouldReturnsHeroCardsWithAvailableHours()
     {
         // Arrange
@@ -53,7 +53,7 @@ public class HeroCardFactoryTests
         heroCards.Should().BeEquivalentTo(expectedHeroCards);
     }
 
-    [TestCase]
+    [Test]
     public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsNotMultiplesOfFive_ShouldReturnsHeroCardsWithAvailableHours()
     {
         // Arrange
@@ -100,7 +100,7 @@ public class HeroCardFactoryTests
         heroCards.Should().BeEquivalentTo(expectedHeroCards);
     }
 
-    [TestCase]
+    [Test]
     public void CreateSchedulesHeroCard_WhenNumberOfAvailableHoursIsLessThanFive_ShouldReturnsHeroCardsWithAvailableHours()
     {
         // Arrange

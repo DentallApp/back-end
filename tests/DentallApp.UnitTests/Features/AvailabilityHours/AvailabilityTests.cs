@@ -14,7 +14,7 @@ public partial class AvailabilityTests
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
-    [TestCase]
+    [Test]
     public void GetAvailableHours_WhenDentistHasSomeTimeoffOrRestTime_ShouldTakeItAsRangeOfUnavailableTime()
     {
         // Arrange
@@ -56,7 +56,7 @@ public partial class AvailabilityTests
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
-    [TestCase]
+    [Test]
     public void GetAvailableHours_WhenDurationOfDentalServiceIsEqualToZero_ShouldThrowArgumentException()
     {
         // Arrange
@@ -75,7 +75,7 @@ public partial class AvailabilityTests
         act.Should().Throw<InvalidOperationException>();
     }
 
-    [TestCase]
+    [Test]
     public void GetAvailableHours_WhenNumberOfAvailableHoursIsZero_ShouldReturnsNull()
     {
         // Arrange
@@ -101,7 +101,7 @@ public partial class AvailabilityTests
         availableHours.Should().BeNull();
     }
 
-    [TestCase]
+    [Test]
     public void GetAvailableHours_WhenAppointmentDateIsEqualToTheCurrentDate_ShouldDiscardAvailableHoursThatAreLessThanTheCurrentTime()
     {
         // Arrange

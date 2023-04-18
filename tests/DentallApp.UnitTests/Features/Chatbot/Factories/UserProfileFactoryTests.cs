@@ -2,7 +2,7 @@
 
 public class UserProfileFactoryTests
 {
-    [TestCase]
+    [Test]
     public void Create_WhenChannelIdStartsWithPrefix_ShouldReturnsUserProfileInstance()
     {
         // Arrange
@@ -18,7 +18,7 @@ public class UserProfileFactoryTests
         userProfile.FullName.Should().BeNull();
     }
 
-    [TestCase]
+    [Test]
     public void Create_WhenChannelIdHasNotPrefix_ShouldReturnsUserProfileInstance()
     {
         // Arrange
@@ -58,7 +58,7 @@ public class UserProfileFactoryTests
            .WithMessage(expectedMessage);
     }
 
-    [TestCase]
+    [Test]
     public void Create_WhenChannelDataIsNull_ShouldReturnsFullNameWithNullValue()
     {
         // Arrange
