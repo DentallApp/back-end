@@ -16,11 +16,11 @@ public static class MvcBuilderExtensions
                                   ErrorMessages = state.Value.Errors.Select(modelError => modelError.ErrorMessage)
                               }).ToDictionary(x => x.Key, x => x.ErrorMessages);
 
-                var result = new Response
+                var result = new
                 {
                     Success = false,
                     Message = InvalidModelStateMessage,
-                    Errors = errors
+                    Errors  = errors
                 };
                 return new BadRequestObjectResult(result);
             };
