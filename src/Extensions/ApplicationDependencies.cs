@@ -12,7 +12,6 @@ public static class ApplicationDependencies
                 .AddScoped<GeneralTreatmentService>()
                 .AddScoped<ProformaInvoiceService>()
                 .AddScoped<PasswordResetService>()
-                .AddScoped<DependentService>()
                 .AddScoped<TokenRefreshService>()
                 .AddScoped<EmployeeService>()
                 .AddScoped<RoleService>()
@@ -37,7 +36,6 @@ public static class ApplicationDependencies
     {
         services.AddScoped<IUnitOfWork, UnitOfWorkEFCore>();
         services.AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<IDependentRepository, DependentRepository>()
                 .AddScoped<IEmployeeRepository, EmployeeRepository>()
                 .AddScoped<IRoleRepository, RoleRepository>()
                 .AddScoped<IOfficeRepository, OfficeRepository>()
