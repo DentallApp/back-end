@@ -16,11 +16,11 @@ public class GetDependentsByUserIdResponse
     public int KinshipId { get; init; }
 }
 
-public class GetDependentsByUserIdHandler
+public class GetDependentsByUserIdUseCase
 {
     private readonly AppDbContext _context;
 
-    public GetDependentsByUserIdHandler(AppDbContext context)
+    public GetDependentsByUserIdUseCase(AppDbContext context)
     {
         _context = context;
     }

@@ -1,10 +1,10 @@
 ﻿namespace DentallApp.Features.Dependents;
 
-public class DeleteDependentHandler
+public class DeleteDependentUseCase
 {
     private readonly AppDbContext _context;
 
-    public DeleteDependentHandler(AppDbContext context)
+    public DeleteDependentUseCase(AppDbContext context)
     {
         _context = context;
     }

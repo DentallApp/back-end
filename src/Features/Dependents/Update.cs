@@ -11,11 +11,11 @@ public class UpdateDependentRequest
     public string Email { get; init; }
 }
 
-public class UpdateDependentHandler
+public class UpdateDependentUseCase
 {
     private readonly AppDbContext _context;
 
-    public UpdateDependentHandler(AppDbContext context)
+    public UpdateDependentUseCase(AppDbContext context)
     {
         _context = context;
     }

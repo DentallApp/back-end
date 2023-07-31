@@ -12,11 +12,11 @@ public class CreateDependentRequest
     public int KinshipId { get; init; }
 }
 
-public class CreateDependentHandler
+public class CreateDependentUseCase
 {
     private readonly AppDbContext _context;
 
-    public CreateDependentHandler(AppDbContext context)
+    public CreateDependentUseCase(AppDbContext context)
     {
         _context = context;
     }

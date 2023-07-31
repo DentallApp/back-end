@@ -6,11 +6,11 @@ public class GetAllKinshipsResponse
     public string Name { get; init; }
 }
 
-public class GetAllKinshipsHandler
+public class GetAllKinshipsUseCase
 {
     private readonly AppDbContext _context;
 
-    public GetAllKinshipsHandler(AppDbContext context)
+    public GetAllKinshipsUseCase(AppDbContext context)
     {
         _context = context;
     }
