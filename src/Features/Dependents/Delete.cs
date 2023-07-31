@@ -12,8 +12,8 @@ public class DeleteDependentUseCase
     public async Task<Response> Execute(int dependentId, int userId)
     {
         var dependent = await _context.Set<Dependent>()
-                        .Include(dependent => dependent.Person)
                         .Where(dependent => dependent.Id == dependentId)
+                        .Select(dependent => new { dependent.UserId })
                         .FirstOrDefaultAsync();
 
         if (dependent is null)
@@ -22,9 +22,7 @@ public class DeleteDependentUseCase
         if (dependent.UserId != userId)
             return new Response(ResourceFromAnotherUserMessage);
 
-        _context.SoftDelete(dependent);
-        await _context.SaveChangesAsync();
-
+        await _context.SoftDeleteAsync<Dependent>(dependentId);
         return new Response
         {
             Success = true,
