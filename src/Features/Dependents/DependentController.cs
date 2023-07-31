@@ -8,18 +8,18 @@ public class DependentController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Response<InsertedIdDto>>> Create(
         [FromBody]CreateDependentRequest request,
-        [FromServices]CreateDependentUseCase handler)
+        [FromServices]CreateDependentUseCase useCase)
     {
-        var response = await handler.Execute(User.GetUserId(), request);
+        var response = await useCase.Execute(User.GetUserId(), request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<Response>> Delete(
         int id,
-        [FromServices]DeleteDependentUseCase handler)
+        [FromServices]DeleteDependentUseCase useCase)
     {
-        var response = await handler.Execute(id, User.GetUserId());
+        var response = await useCase.Execute(id, User.GetUserId());
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -27,17 +27,17 @@ public class DependentController : ControllerBase
     public async Task<ActionResult<Response>> Update(
         int id,
         [FromBody]UpdateDependentRequest request,
-        [FromServices]UpdateDependentUseCase handler)
+        [FromServices]UpdateDependentUseCase useCase)
     {
-        var response = await handler.Execute(id, User.GetUserId(), request);
+        var response = await useCase.Execute(id, User.GetUserId(), request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
     [Route("user")]
     [HttpGet]
     public async Task<IEnumerable<GetDependentsByUserIdResponse>> GetByUserId(
-        [FromServices]GetDependentsByUserIdUseCase handler)
+        [FromServices]GetDependentsByUserIdUseCase useCase)
     {
-        return await handler.Execute(User.GetUserId());
+        return await useCase.Execute(User.GetUserId());
     }
 }
