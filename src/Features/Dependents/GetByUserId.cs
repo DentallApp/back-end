@@ -25,7 +25,7 @@ public class GetDependentsByUserIdUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetDependentsByUserIdResponse>> HandleAsync(int userId)
+    public async Task<IEnumerable<GetDependentsByUserIdResponse>> Execute(int userId)
     {
         return await _context.Set<Dependent>()
                              .Include(dependent => dependent.Person)

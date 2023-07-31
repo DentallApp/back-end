@@ -8,6 +8,6 @@ public class KinshipController : ControllerBase
     public async Task<IEnumerable<GetAllKinshipsResponse>> GetAll(
         [FromServices]GetAllKinshipsUseCase handler)
     {
-        return await handler.HandleAsync();
+        return await handler.Execute();
     }
 }

@@ -21,7 +21,7 @@ public class CreateDependentUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> HandleAsync(int userId, CreateDependentRequest request)
+    public async Task<Response<InsertedIdDto>> Execute(int userId, CreateDependentRequest request)
     {
         var person = new Person()
         {

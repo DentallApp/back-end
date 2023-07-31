@@ -9,7 +9,7 @@ public class DeleteDependentUseCase
         _context = context;
     }
 
-    public async Task<Response> HandleAsync(int dependentId, int userId)
+    public async Task<Response> Execute(int dependentId, int userId)
     {
         var dependent = await _context.Set<Dependent>()
                         .Include(dependent => dependent.Person)

@@ -10,7 +10,7 @@ public class DependentController : ControllerBase
         [FromBody]CreateDependentRequest request,
         [FromServices]CreateDependentUseCase handler)
     {
-        var response = await handler.HandleAsync(User.GetUserId(), request);
+        var response = await handler.Execute(User.GetUserId(), request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
@@ -19,7 +19,7 @@ public class DependentController : ControllerBase
         int id,
         [FromServices]DeleteDependentUseCase handler)
     {
-        var response = await handler.HandleAsync(id, User.GetUserId());
+        var response = await handler.Execute(id, User.GetUserId());
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -29,7 +29,7 @@ public class DependentController : ControllerBase
         [FromBody]UpdateDependentRequest request,
         [FromServices]UpdateDependentUseCase handler)
     {
-        var response = await handler.HandleAsync(id, User.GetUserId(), request);
+        var response = await handler.Execute(id, User.GetUserId(), request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -38,6 +38,6 @@ public class DependentController : ControllerBase
     public async Task<IEnumerable<GetDependentsByUserIdResponse>> GetByUserId(
         [FromServices]GetDependentsByUserIdUseCase handler)
     {
-        return await handler.HandleAsync(User.GetUserId());
+        return await handler.Execute(User.GetUserId());
     }
 }

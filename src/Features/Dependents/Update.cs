@@ -20,7 +20,7 @@ public class UpdateDependentUseCase
         _context = context;
     }
 
-    public async Task<Response> HandleAsync(int dependentId, int userId, UpdateDependentRequest request)
+    public async Task<Response> Execute(int dependentId, int userId, UpdateDependentRequest request)
     {
         var dependent = await _context.Set<Dependent>()
                         .Include(dependent => dependent.Person)
