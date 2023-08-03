@@ -27,26 +27,28 @@ public class GetDependentsByUserIdUseCase
 
     public async Task<IEnumerable<GetDependentsByUserIdResponse>> Execute(int userId)
     {
-        return await _context.Set<Dependent>()
-                             .Include(dependent => dependent.Person)
-                                .ThenInclude(person => person.Gender)
-                             .Include(dependent => dependent.Kinship)
-                             .Where(dependent => dependent.UserId == userId)
-                             .Select(dependent => new GetDependentsByUserIdResponse
-                             {
-                                 DependentId = dependent.Id,
-                                 Document    = dependent.Person.Document,
-                                 Names       = dependent.Person.Names,
-                                 LastNames   = dependent.Person.LastNames,
-                                 CellPhone   = dependent.Person.CellPhone,
-                                 DateBirth   = dependent.Person.DateBirth,
-                                 Email       = dependent.Person.Email,
-                                 GenderId    = dependent.Person.GenderId,
-                                 GenderName  = dependent.Person.Gender.Name,
-                                 KinshipId   = dependent.KinshipId,
-                                 KinshipName = dependent.Kinship.Name
-                             })
-                             .AsNoTracking()
-                             .ToListAsync();
+        var dependents = await _context.Set<Dependent>()
+            .Include(dependent => dependent.Person)
+              .ThenInclude(person => person.Gender)
+            .Include(dependent => dependent.Kinship)
+            .Where(dependent => dependent.UserId == userId)
+            .Select(dependent => new GetDependentsByUserIdResponse
+            {
+                DependentId = dependent.Id,
+                Document    = dependent.Person.Document,
+                Names       = dependent.Person.Names,
+                LastNames   = dependent.Person.LastNames,
+                CellPhone   = dependent.Person.CellPhone,
+                DateBirth   = dependent.Person.DateBirth,
+                Email       = dependent.Person.Email,
+                GenderId    = dependent.Person.GenderId,
+                GenderName  = dependent.Person.Gender.Name,
+                KinshipId   = dependent.KinshipId,
+                KinshipName = dependent.Kinship.Name
+            })
+            .AsNoTracking()
+            .ToListAsync();
+
+        return dependents;
     }
 }

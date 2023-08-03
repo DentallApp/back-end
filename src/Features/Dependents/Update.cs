@@ -23,9 +23,9 @@ public class UpdateDependentUseCase
     public async Task<Response> Execute(int dependentId, int userId, UpdateDependentRequest request)
     {
         var dependent = await _context.Set<Dependent>()
-                        .Include(dependent => dependent.Person)
-                        .Where(dependent => dependent.Id == dependentId)
-                        .FirstOrDefaultAsync();
+            .Include(dependent => dependent.Person)
+            .Where(dependent => dependent.Id == dependentId)
+            .FirstOrDefaultAsync();
 
         if (dependent is null)
             return new Response(ResourceNotFoundMessage);

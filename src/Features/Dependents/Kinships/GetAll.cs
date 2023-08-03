@@ -17,13 +17,15 @@ public class GetKinshipsUseCase
 
     public async Task<IEnumerable<GetKinshipsResponse>> Execute()
     {
-        return await _context.Set<Kinship>()
-                             .Select(kinship => new GetKinshipsResponse
-                             {
-                                 Id   = kinship.Id,
-                                 Name = kinship.Name
-                             })
-                             .AsNoTracking()
-                             .ToListAsync();
+        var kinships = await _context.Set<Kinship>()
+            .Select(kinship => new GetKinshipsResponse
+            {
+                Id   = kinship.Id,
+                Name = kinship.Name
+            })
+            .AsNoTracking()
+            .ToListAsync();
+
+        return kinships;
     }
 }

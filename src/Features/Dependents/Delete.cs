@@ -12,9 +12,9 @@ public class DeleteDependentUseCase
     public async Task<Response> Execute(int dependentId, int userId)
     {
         var dependent = await _context.Set<Dependent>()
-                        .Where(dependent => dependent.Id == dependentId)
-                        .Select(dependent => new { dependent.UserId })
-                        .FirstOrDefaultAsync();
+            .Where(dependent => dependent.Id == dependentId)
+            .Select(dependent => new { dependent.UserId })
+            .FirstOrDefaultAsync();
 
         if (dependent is null)
             return new Response(ResourceNotFoundMessage);
