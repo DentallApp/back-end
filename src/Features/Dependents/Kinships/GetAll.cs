@@ -23,6 +23,7 @@ public class GetKinshipsUseCase
                                  Id   = kinship.Id,
                                  Name = kinship.Name
                              })
+                             .AsNoTracking()
                              .ToListAsync();
     }
 }

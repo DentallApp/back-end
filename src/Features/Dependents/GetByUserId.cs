@@ -46,6 +46,7 @@ public class GetDependentsByUserIdUseCase
                                  KinshipId   = dependent.KinshipId,
                                  KinshipName = dependent.Kinship.Name
                              })
+                             .AsNoTracking()
                              .ToListAsync();
     }
 }
