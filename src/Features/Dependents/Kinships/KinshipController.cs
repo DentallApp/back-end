@@ -5,8 +5,8 @@
 public class KinshipController : ControllerBase
 {
     [HttpGet]
-    public async Task<IEnumerable<GetAllKinshipsResponse>> GetAll(
-        [FromServices]GetAllKinshipsUseCase useCase)
+    public async Task<IEnumerable<GetKinshipsResponse>> GetAll(
+        [FromServices]GetKinshipsUseCase useCase)
     {
         return await useCase.Execute();
     }
