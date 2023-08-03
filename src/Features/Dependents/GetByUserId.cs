@@ -28,9 +28,6 @@ public class GetDependentsByUserIdUseCase
     public async Task<IEnumerable<GetDependentsByUserIdResponse>> Execute(int userId)
     {
         var dependents = await _context.Set<Dependent>()
-            .Include(dependent => dependent.Person)
-              .ThenInclude(person => person.Gender)
-            .Include(dependent => dependent.Kinship)
             .Where(dependent => dependent.UserId == userId)
             .Select(dependent => new GetDependentsByUserIdResponse
             {
