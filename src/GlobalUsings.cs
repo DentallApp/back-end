@@ -21,7 +21,7 @@ global using DentallApp.Features.PersonalInformation.Genders;
 global using DentallApp.Features.PersonalInformation.Genders.DTOs;
 global using DentallApp.Features.Users;
 global using DentallApp.Features.Users.DTOs;
-global using DentallApp.Features.Dependents.Kinships;
+global using DentallApp.Features.Kinships;
 global using DentallApp.Features.UserRegistration;
 global using DentallApp.Features.Roles;
 global using DentallApp.Features.Roles.DTOs;
