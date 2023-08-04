@@ -1,4 +1,6 @@
-﻿namespace DentallApp.Features.Dependents;
+﻿using DentallApp.Features.Dependents.UseCases;
+
+namespace DentallApp.Features.Dependents;
 
 [AuthorizeByRole(RolesName.BasicUser)]
 [Route("dependent")]
