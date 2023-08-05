@@ -5,7 +5,7 @@ public class GetDependentsByUserIdResponse
     public string Document { get; init; }
     public string Names { get; init; }
     public string LastNames { get; init; }
-    public string FullName => Names + " " + LastNames;
+    public string FullName { get; init; }
     public string CellPhone { get; init; }
     public DateTime? DateBirth { get; init; }
     public int? GenderId { get; init; }
@@ -35,6 +35,7 @@ public class GetDependentsByUserIdUseCase
                 Document    = dependent.Person.Document,
                 Names       = dependent.Person.Names,
                 LastNames   = dependent.Person.LastNames,
+                FullName    = dependent.Person.FullName,
                 CellPhone   = dependent.Person.CellPhone,
                 DateBirth   = dependent.Person.DateBirth,
                 Email       = dependent.Person.Email,

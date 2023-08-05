@@ -6,6 +6,7 @@ public class GetPersonsResponse
     public string Document { get; init; }
     public string Names { get; init; }
     public string LastNames { get; init; }
+    public string FullName { get; init; }
     public string CellPhone { get; init; }
     public string Email { get; init; }
 }
@@ -32,6 +33,7 @@ public class GetPersonsUseCase
                 Document    = person.Document,
                 Names       = person.Names,
                 LastNames   = person.LastNames,
+                FullName    = person.FullName,
                 CellPhone   = person.CellPhone,
                 Email       = person.Email
             })
