@@ -14,6 +14,7 @@ public class DeleteDependentUseCase
         var dependent = await _context.Set<Dependent>()
             .Where(dependent => dependent.Id == dependentId)
             .Select(dependent => new { dependent.UserId })
+            .AsNoTracking()
             .FirstOrDefaultAsync();
 
         if (dependent is null)
