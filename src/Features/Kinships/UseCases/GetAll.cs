@@ -20,7 +20,7 @@ public class GetKinshipsUseCase
         var kinships = await _context.Set<Kinship>()
             .Select(kinship => new GetKinshipsResponse
             {
-                Id = kinship.Id,
+                Id   = kinship.Id,
                 Name = kinship.Name
             })
             .AsNoTracking()

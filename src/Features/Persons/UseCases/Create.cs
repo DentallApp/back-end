@@ -24,13 +24,13 @@ public class CreatePersonUseCase
     {
         var person = new Person()
         {
-            Document = request.Document,
-            Names = request.Names,
+            Document  = request.Document,
+            Names     = request.Names,
             LastNames = request.LastNames,
             DateBirth = request.DateBirth,
-            GenderId = request.GenderId,
+            GenderId  = request.GenderId,
             CellPhone = request.CellPhone,
-            Email = request.Email
+            Email     = request.Email
         };
         _context.Add(person);
         await _context.SaveChangesAsync();

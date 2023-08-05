@@ -32,15 +32,15 @@ public class GetDependentsByUserIdUseCase
             .Select(dependent => new GetDependentsByUserIdResponse
             {
                 DependentId = dependent.Id,
-                Document = dependent.Person.Document,
-                Names = dependent.Person.Names,
-                LastNames = dependent.Person.LastNames,
-                CellPhone = dependent.Person.CellPhone,
-                DateBirth = dependent.Person.DateBirth,
-                Email = dependent.Person.Email,
-                GenderId = dependent.Person.GenderId,
-                GenderName = dependent.Person.Gender.Name,
-                KinshipId = dependent.KinshipId,
+                Document    = dependent.Person.Document,
+                Names       = dependent.Person.Names,
+                LastNames   = dependent.Person.LastNames,
+                CellPhone   = dependent.Person.CellPhone,
+                DateBirth   = dependent.Person.DateBirth,
+                Email       = dependent.Person.Email,
+                GenderId    = dependent.Person.GenderId,
+                GenderName  = dependent.Person.Gender.Name,
+                KinshipId   = dependent.KinshipId,
                 KinshipName = dependent.Kinship.Name
             })
             .AsNoTracking()

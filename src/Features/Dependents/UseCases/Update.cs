@@ -33,13 +33,13 @@ public class UpdateDependentUseCase
         if (dependent.UserId != userId)
             return new Response(ResourceFromAnotherUserMessage);
 
-        dependent.Person.Names = request.Names;
+        dependent.Person.Names     = request.Names;
         dependent.Person.LastNames = request.LastNames;
         dependent.Person.CellPhone = request.CellPhone;
         dependent.Person.DateBirth = request.DateBirth;
-        dependent.Person.GenderId = request.GenderId;
-        dependent.Person.Email = request.Email;
-        dependent.KinshipId = request.KinshipId;
+        dependent.Person.GenderId  = request.GenderId;
+        dependent.Person.Email     = request.Email;
+        dependent.KinshipId        = request.KinshipId;
         await _context.SaveChangesAsync();
 
         return new Response

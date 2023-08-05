@@ -25,20 +25,20 @@ public class CreateDependentUseCase
     {
         var person = new Person()
         {
-            Document = request.Document,
-            Names = request.Names,
+            Document  = request.Document,
+            Names     = request.Names,
             LastNames = request.LastNames,
             CellPhone = request.CellPhone,
-            Email = request.Email,
+            Email     = request.Email,
             DateBirth = request.DateBirth,
-            GenderId = request.GenderId
+            GenderId  = request.GenderId
         };
         _context.Add(person);
         var dependent = new Dependent
         {
             KinshipId = request.KinshipId,
-            UserId = userId,
-            Person = person
+            UserId    = userId,
+            Person    = person
         };
         _context.Add(dependent);
         await _context.SaveChangesAsync();
