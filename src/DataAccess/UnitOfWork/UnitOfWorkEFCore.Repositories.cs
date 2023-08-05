@@ -10,10 +10,6 @@ public partial class UnitOfWorkEFCore
     public IUserRoleRepository UserRoleRepository 
         => _userRoleRepository ??= new UserRoleRepository(_context);
 
-    private IPersonRepository _personRepository;
-    public IPersonRepository PersonRepository 
-        => _personRepository ??= new PersonRepository(_context);
-
     private IEmployeeRepository _employeeRepository;
     public IEmployeeRepository EmployeeRepository
         => _employeeRepository ??= new EmployeeRepository(_context);

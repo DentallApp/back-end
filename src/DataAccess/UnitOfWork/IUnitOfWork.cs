@@ -7,7 +7,6 @@ public interface IUnitOfWork
     Task<int> SaveChangesAsync();
     IUserRepository UserRepository { get; }
     IUserRoleRepository UserRoleRepository { get; }
-    IPersonRepository PersonRepository { get; }
     IEmployeeRepository EmployeeRepository { get; }
     IPublicHolidayRepository PublicHolidayRepository { get; }
     IHolidayOfficeRepository HolidayOfficeRepository { get; }
