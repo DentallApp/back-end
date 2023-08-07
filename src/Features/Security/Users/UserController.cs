@@ -1,6 +1,6 @@
 ﻿using DentallApp.Features.Security.Users.UseCases;
 
-namespace DentallApp.Features.Users;
+namespace DentallApp.Features.Security.Users;
 
 [Authorize]
 [Route("user")]

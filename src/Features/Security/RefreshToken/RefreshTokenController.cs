@@ -1,6 +1,6 @@
 ﻿using DentallApp.Features.Security.RefreshToken.UseCases;
 
-namespace DentallApp.Features.TokenRefresh;
+namespace DentallApp.Features.Security.RefreshToken;
 
 [Route("token")]
 [ApiController]

@@ -1,6 +1,6 @@
 ﻿using DentallApp.Features.Security.Roles.UseCases;
 
-namespace DentallApp.Features.Roles;
+namespace DentallApp.Features.Security.Roles;
 
 [Route("role")]
 [ApiController]

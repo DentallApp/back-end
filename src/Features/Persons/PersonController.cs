@@ -1,6 +1,6 @@
 ﻿using DentallApp.Features.Persons.UseCases;
 
-namespace DentallApp.Features.PersonalInformation;
+namespace DentallApp.Features.Persons;
 
 [AuthorizeByRole(RolesName.Secretary)]
 [Route("person")]
