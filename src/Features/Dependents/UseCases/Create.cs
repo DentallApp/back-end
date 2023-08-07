@@ -12,30 +12,6 @@ public class CreateDependentRequest
     public int KinshipId { get; init; }
 }
 
-public class CreateDependentUseCase
-{
-    private readonly AppDbContext _context;
-
-    public CreateDependentUseCase(AppDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<Response<InsertedIdDto>> Execute(int userId, CreateDependentRequest request)
-    {
-        var dependent = request.MapToDependent(userId);
-        _context.Add(dependent);
-        await _context.SaveChangesAsync();
-
-        return new Response<InsertedIdDto>
-        {
-            Data    = new InsertedIdDto { Id = dependent.Id },
-            Success = true,
-            Message = CreateResourceMessage
-        };
-    }
-}
-
 public static class CreateDependentMapper
 {
     public static Dependent MapToDependent(this CreateDependentRequest request, int userId)
@@ -57,5 +33,29 @@ public static class CreateDependentMapper
             Person    = person
         };
         return dependent;
+    }
+}
+
+public class CreateDependentUseCase
+{
+    private readonly AppDbContext _context;
+
+    public CreateDependentUseCase(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<Response<InsertedIdDto>> Execute(int userId, CreateDependentRequest request)
+    {
+        var dependent = request.MapToDependent(userId);
+        _context.Add(dependent);
+        await _context.SaveChangesAsync();
+
+        return new Response<InsertedIdDto>
+        {
+            Data    = new InsertedIdDto { Id = dependent.Id },
+            Success = true,
+            Message = CreateResourceMessage
+        };
     }
 }

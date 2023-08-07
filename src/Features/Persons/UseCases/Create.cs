@@ -11,6 +11,23 @@ public class CreatePersonRequest
     public string Email { get; init; }
 }
 
+public static class CreatePersonMapper
+{
+    public static Person MapToPerson(this CreatePersonRequest request)
+    {
+        return new()
+        {
+            Document  = request.Document,
+            Names     = request.Names,
+            LastNames = request.LastNames,
+            DateBirth = request.DateBirth,
+            GenderId  = request.GenderId,
+            CellPhone = request.CellPhone,
+            Email     = request.Email
+        };
+    }
+}
+
 public class CreatePersonUseCase
 {
     private readonly AppDbContext _context;
@@ -30,23 +47,6 @@ public class CreatePersonUseCase
         {
             Success = true,
             Message = CreateResourceMessage
-        };
-    }
-}
-
-public static class CreatePersonMapper
-{
-    public static Person MapToPerson(this CreatePersonRequest request)
-    {
-        return new()
-        {
-            Document  = request.Document,
-            Names     = request.Names,
-            LastNames = request.LastNames,
-            DateBirth = request.DateBirth,
-            GenderId  = request.GenderId,
-            CellPhone = request.CellPhone,
-            Email     = request.Email
         };
     }
 }

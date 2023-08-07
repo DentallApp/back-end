@@ -9,6 +9,18 @@ public class UpdateCurrentUserRequest
     public int GenderId { get; init; }
 }
 
+public static class UpdateCurrentUserMapper
+{
+    public static void MapToUser(this UpdateCurrentUserRequest request, Person currentUser)
+    {
+        currentUser.Names     = request.Names;
+        currentUser.LastNames = request.LastNames;
+        currentUser.CellPhone = request.CellPhone;
+        currentUser.DateBirth = request.DateBirth;
+        currentUser.GenderId  = request.GenderId;
+    }
+}
+
 /// <summary>
 /// Current User is the User who is current logged in. The current user can edit his own information.
 /// </summary>
@@ -38,17 +50,5 @@ public class UpdateCurrentUserUseCase
             Success = true,
             Message = UpdateResourceMessage
         };
-    }
-}
-
-public static class UpdateCurrentUserMapper
-{
-    public static void MapToUser(this UpdateCurrentUserRequest request, Person currentUser)
-    {
-        currentUser.Names     = request.Names;
-        currentUser.LastNames = request.LastNames;
-        currentUser.CellPhone = request.CellPhone;
-        currentUser.DateBirth = request.DateBirth;
-        currentUser.GenderId  = request.GenderId;
     }
 }

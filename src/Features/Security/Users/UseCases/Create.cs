@@ -12,6 +12,30 @@ public class CreateBasicUserRequest
     public int? GenderId { get; init; }
 }
 
+public static class CreateBasicUserMapper
+{
+    public static User MapToUser(this CreateBasicUserRequest request, string password)
+    {
+        var person = new Person
+        {
+            Document  = request.Document,
+            Names     = request.Names,
+            LastNames = request.LastNames,
+            CellPhone = request.CellPhone,
+            Email     = request.UserName,
+            DateBirth = request.DateBirth,
+            GenderId  = request.GenderId
+        };
+        var user = new User
+        {
+            UserName = request.UserName,
+            Password = password,
+            Person   = person
+        };
+        return user;
+    }
+}
+
 public class CreateBasicUserUseCase
 {
     private readonly AppDbContext _context;
@@ -60,29 +84,5 @@ public class CreateBasicUserUseCase
             Success = true,
             Message = CreateBasicUserAccountMessage
         };
-    }
-}
-
-public static class CreateBasicUserMapper
-{
-    public static User MapToUser(this CreateBasicUserRequest request, string password)
-    {
-        var person = new Person
-        {
-            Document  = request.Document,
-            Names     = request.Names,
-            LastNames = request.LastNames,
-            CellPhone = request.CellPhone,
-            Email     = request.UserName,
-            DateBirth = request.DateBirth,
-            GenderId  = request.GenderId
-        };
-        var user = new User
-        {
-            UserName = request.UserName,
-            Password = password,
-            Person   = person
-        };
-        return user;
     }
 }

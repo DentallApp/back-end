@@ -11,6 +11,20 @@ public class UpdateDependentRequest
     public string Email { get; init; }
 }
 
+public static class UpdateDependentMapper
+{
+    public static void MapToDependent(this UpdateDependentRequest request, Dependent dependent)
+    {
+        dependent.Person.Names     = request.Names;
+        dependent.Person.LastNames = request.LastNames;
+        dependent.Person.CellPhone = request.CellPhone;
+        dependent.Person.DateBirth = request.DateBirth;
+        dependent.Person.GenderId  = request.GenderId;
+        dependent.Person.Email     = request.Email;
+        dependent.KinshipId        = request.KinshipId;
+    }
+}
+
 public class UpdateDependentUseCase
 {
     private readonly AppDbContext _context;
@@ -41,19 +55,5 @@ public class UpdateDependentUseCase
             Success = true,
             Message = UpdateResourceMessage
         };
-    }
-}
-
-public static class UpdateDependentMapper
-{
-    public static void MapToDependent(this UpdateDependentRequest request, Dependent dependent)
-    {
-        dependent.Person.Names     = request.Names;
-        dependent.Person.LastNames = request.LastNames;
-        dependent.Person.CellPhone = request.CellPhone;
-        dependent.Person.DateBirth = request.DateBirth;
-        dependent.Person.GenderId  = request.GenderId;
-        dependent.Person.Email     = request.Email;
-        dependent.KinshipId        = request.KinshipId;
     }
 }
