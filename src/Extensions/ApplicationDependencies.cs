@@ -4,14 +4,11 @@ public static class ApplicationDependencies
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddScoped<AuthService>()
-                .AddScoped<UserService>()
+        services
                 .AddScoped<UserRegisterService>()
-                .AddScoped<EmailVerificationService>()
                 .AddScoped<SpecificTreatmentService>()
                 .AddScoped<GeneralTreatmentService>()
                 .AddScoped<ProformaInvoiceService>()
-                .AddScoped<PasswordResetService>()
                 .AddScoped<TokenRefreshService>()
                 .AddScoped<EmployeeService>()
                 .AddScoped<RoleService>()
