@@ -39,7 +39,8 @@ public class CreateBasicUserUseCase
         if (await _userRepository.UserExistsAsync(request.UserName))
             return new Response(UsernameAlreadyExistsMessage);
 
-        var user = MapToUser(request);
+        var passwordHash = _passwordHasher.HashPassword(request.Password);
+        var user = request.MapToUser(passwordHash);
         _context.Add(new UserRole { User = user, RoleId = RolesId.Unverified });
         await _context.SaveChangesAsync();
 
@@ -60,8 +61,11 @@ public class CreateBasicUserUseCase
             Message = CreateBasicUserAccountMessage
         };
     }
+}
 
-    private User MapToUser(CreateBasicUserRequest request)
+public static class CreateBasicUserMapper
+{
+    public static User MapToUser(this CreateBasicUserRequest request, string password)
     {
         var person = new Person
         {
@@ -76,7 +80,7 @@ public class CreateBasicUserUseCase
         var user = new User
         {
             UserName = request.UserName,
-            Password = _passwordHasher.HashPassword(request.Password),
+            Password = password,
             Person   = person
         };
         return user;

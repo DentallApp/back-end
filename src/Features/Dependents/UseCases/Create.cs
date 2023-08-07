@@ -23,7 +23,24 @@ public class CreateDependentUseCase
 
     public async Task<Response<InsertedIdDto>> Execute(int userId, CreateDependentRequest request)
     {
-        var person = new Person()
+        var dependent = request.MapToDependent(userId);
+        _context.Add(dependent);
+        await _context.SaveChangesAsync();
+
+        return new Response<InsertedIdDto>
+        {
+            Data    = new InsertedIdDto { Id = dependent.Id },
+            Success = true,
+            Message = CreateResourceMessage
+        };
+    }
+}
+
+public static class CreateDependentMapper
+{
+    public static Dependent MapToDependent(this CreateDependentRequest request, int userId)
+    {
+        var person = new Person
         {
             Document  = request.Document,
             Names     = request.Names,
@@ -33,21 +50,12 @@ public class CreateDependentUseCase
             DateBirth = request.DateBirth,
             GenderId  = request.GenderId
         };
-        _context.Add(person);
         var dependent = new Dependent
         {
             KinshipId = request.KinshipId,
             UserId    = userId,
             Person    = person
         };
-        _context.Add(dependent);
-        await _context.SaveChangesAsync();
-
-        return new Response<InsertedIdDto>
-        {
-            Data = new InsertedIdDto { Id = dependent.Id },
-            Success = true,
-            Message = CreateResourceMessage
-        };
+        return dependent;
     }
 }

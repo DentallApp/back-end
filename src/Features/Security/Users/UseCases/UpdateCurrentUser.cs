@@ -30,11 +30,7 @@ public class UpdateCurrentUserUseCase
         if (currentUser is null)
             return new Response(UsernameNotFoundMessage);
 
-        currentUser.Names     = request.Names;
-        currentUser.LastNames = request.LastNames;
-        currentUser.CellPhone = request.CellPhone;
-        currentUser.DateBirth = request.DateBirth;
-        currentUser.GenderId  = request.GenderId;
+        request.MapToUser(currentUser);
         await _context.SaveChangesAsync();
 
         return new Response
@@ -42,5 +38,17 @@ public class UpdateCurrentUserUseCase
             Success = true,
             Message = UpdateResourceMessage
         };
+    }
+}
+
+public static class UpdateCurrentUserMapper
+{
+    public static void MapToUser(this UpdateCurrentUserRequest request, Person currentUser)
+    {
+        currentUser.Names     = request.Names;
+        currentUser.LastNames = request.LastNames;
+        currentUser.CellPhone = request.CellPhone;
+        currentUser.DateBirth = request.DateBirth;
+        currentUser.GenderId  = request.GenderId;
     }
 }

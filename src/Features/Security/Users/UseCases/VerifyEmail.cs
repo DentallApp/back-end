@@ -34,8 +34,7 @@ public class VerifyEmailUseCase
         if (user.IsVerified())
             return new Response<UserLoginResponse>(AccountAlreadyVerifiedMessage);
 
-        var userLoginResponse = new UserLoginResponse();
-        UserLoginMapper.MapToUserLoginResponse(source: user, destination: userLoginResponse);
+        var userLoginResponse   =  user.MapToUserLoginResponse();
         user.RefreshToken       = _tokenService.CreateRefreshToken();
         user.RefreshTokenExpiry = _tokenService.CreateExpiryForRefreshToken();
         var userRole = user.UserRoles.First();

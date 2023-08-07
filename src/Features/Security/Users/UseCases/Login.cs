@@ -67,9 +67,9 @@ public class UserLoginUseCase
 
         if (user.IsBasicUser())
         {
-            var userLoginResponse = new UserLoginResponse();
-            UserLoginMapper.MapToUserLoginResponse(source: user, destination: userLoginResponse);
-            userLoginResponse.AccessToken = _tokenService.CreateAccessToken(userLoginResponse.MapToUserClaims());
+            var userLoginResponse = user.MapToUserLoginResponse();
+            var userClaims = userLoginResponse.MapToUserClaims();
+            userLoginResponse.AccessToken = _tokenService.CreateAccessToken(userClaims);
             userLoginResponse.RefreshToken = user.RefreshToken;
             return new Response
             {
@@ -89,9 +89,10 @@ public class UserLoginUseCase
         if (employee.IsInactive())
             return new Response(InactiveUserAccountMessage);
 
-        var employeeLoginResponse = MapToEmployeeLoginResponse(employee);
-        UserLoginMapper.MapToUserLoginResponse(source: user, destination: employeeLoginResponse);
-        employeeLoginResponse.AccessToken = _tokenService.CreateAccessToken(MapToEmployeeClaims(employeeLoginResponse));
+        employee.User = user;
+        var employeeLoginResponse = employee.MapToEmployeeLoginResponse();
+        var employeeClaims = employeeLoginResponse.MapToEmployeeClaims();
+        employeeLoginResponse.AccessToken = _tokenService.CreateAccessToken(employeeClaims);
         employeeLoginResponse.RefreshToken = user.RefreshToken;
         return new Response
         {
@@ -100,33 +101,11 @@ public class UserLoginUseCase
             Message = SuccessfulLoginMessage
         };
     }
-
-    private static EmployeeClaims MapToEmployeeClaims(EmployeeLoginResponse source)
-        => new()
-        {
-            UserId     = source.UserId,
-            PersonId   = source.PersonId,
-            EmployeeId = source.EmployeeId,
-            OfficeId   = source.OfficeId,
-            UserName   = source.UserName,
-            FullName   = source.FullName,
-            Roles      = source.Roles
-        };
-
-    private static EmployeeLoginResponse MapToEmployeeLoginResponse(Employee source)
-        => new()
-        {
-            EmployeeId          = source.Id,
-            OfficeId            = source.OfficeId,
-            OfficeName          = source.Office.Name,
-            PostgradeUniversity = source.PostgradeUniversity,
-            PregradeUniversity  = source.PregradeUniversity
-        };
 }
 
 public static class UserLoginMapper
 {
-    public static void MapToUserLoginResponse(User source, UserLoginResponse destination)
+    private static void MapToUserLoginResponse(User source, UserLoginResponse destination)
     {
         destination.Document   = source.Person.Document;
         destination.Names      = source.Person.Names;
@@ -144,13 +123,50 @@ public static class UserLoginMapper
             .Select(role => role.Role.Name);
     }
 
-    public static UserClaims MapToUserClaims(this UserLoginResponse source)
-        => new()
+    public static UserLoginResponse MapToUserLoginResponse(this User user)
+    {
+        var response = new UserLoginResponse();
+        MapToUserLoginResponse(user, response);
+        return response;
+    }
+
+    public static EmployeeLoginResponse MapToEmployeeLoginResponse(this Employee employee)
+    {
+        var response = new EmployeeLoginResponse
         {
-            UserId   = source.UserId,
-            PersonId = source.PersonId,
-            UserName = source.UserName,
-            FullName = source.FullName,
-            Roles    = source.Roles
+            EmployeeId          = employee.Id,
+            OfficeId            = employee.OfficeId,
+            OfficeName          = employee.Office.Name,
+            PostgradeUniversity = employee.PostgradeUniversity,
+            PregradeUniversity  = employee.PregradeUniversity
         };
+        MapToUserLoginResponse(employee.User, response);
+        return response;
+    }
+
+    public static UserClaims MapToUserClaims(this UserLoginResponse response)
+    {
+        return new()
+        {
+            UserId   = response.UserId,
+            PersonId = response.PersonId,
+            UserName = response.UserName,
+            FullName = response.FullName,
+            Roles    = response.Roles
+        };
+    }
+
+    public static EmployeeClaims MapToEmployeeClaims(this EmployeeLoginResponse response)
+    {
+        return new()
+        {
+            UserId     = response.UserId,
+            PersonId   = response.PersonId,
+            EmployeeId = response.EmployeeId,
+            OfficeId   = response.OfficeId,
+            UserName   = response.UserName,
+            FullName   = response.FullName,
+            Roles      = response.Roles
+        };
+    }
 }

@@ -33,13 +33,7 @@ public class UpdateDependentUseCase
         if (dependent.UserId != userId)
             return new Response(ResourceFromAnotherUserMessage);
 
-        dependent.Person.Names     = request.Names;
-        dependent.Person.LastNames = request.LastNames;
-        dependent.Person.CellPhone = request.CellPhone;
-        dependent.Person.DateBirth = request.DateBirth;
-        dependent.Person.GenderId  = request.GenderId;
-        dependent.Person.Email     = request.Email;
-        dependent.KinshipId        = request.KinshipId;
+        request.MapToDependent(dependent);
         await _context.SaveChangesAsync();
 
         return new Response
@@ -47,5 +41,19 @@ public class UpdateDependentUseCase
             Success = true,
             Message = UpdateResourceMessage
         };
+    }
+}
+
+public static class UpdateDependentMapper
+{
+    public static void MapToDependent(this UpdateDependentRequest request, Dependent dependent)
+    {
+        dependent.Person.Names     = request.Names;
+        dependent.Person.LastNames = request.LastNames;
+        dependent.Person.CellPhone = request.CellPhone;
+        dependent.Person.DateBirth = request.DateBirth;
+        dependent.Person.GenderId  = request.GenderId;
+        dependent.Person.Email     = request.Email;
+        dependent.KinshipId        = request.KinshipId;
     }
 }

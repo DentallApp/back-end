@@ -22,7 +22,23 @@ public class CreatePersonUseCase
 
     public async Task<Response> Execute(CreatePersonRequest request)
     {
-        var person = new Person()
+        var person = request.MapToPerson();
+        _context.Add(person);
+        await _context.SaveChangesAsync();
+
+        return new Response
+        {
+            Success = true,
+            Message = CreateResourceMessage
+        };
+    }
+}
+
+public static class CreatePersonMapper
+{
+    public static Person MapToPerson(this CreatePersonRequest request)
+    {
+        return new()
         {
             Document  = request.Document,
             Names     = request.Names,
@@ -31,14 +47,6 @@ public class CreatePersonUseCase
             GenderId  = request.GenderId,
             CellPhone = request.CellPhone,
             Email     = request.Email
-        };
-        _context.Add(person);
-        await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = CreateResourceMessage
         };
     }
 }
