@@ -105,20 +105,20 @@ public class UserLoginUseCase
 
 public static class UserLoginMapper
 {
-    private static void MapToUserLoginResponse(User source, UserLoginResponse destination)
+    private static void MapToUserLoginResponse(User user, UserLoginResponse response)
     {
-        destination.Document   = source.Person.Document;
-        destination.Names      = source.Person.Names;
-        destination.LastNames  = source.Person.LastNames;
-        destination.FullName   = source.Person.FullName;
-        destination.CellPhone  = source.Person.CellPhone;
-        destination.DateBirth  = source.Person.DateBirth;
-        destination.GenderName = source.Person.Gender?.Name;
-        destination.GenderId   = source.Person.GenderId;
-        destination.UserId     = source.Id;
-        destination.PersonId   = source.PersonId;
-        destination.UserName   = source.UserName;
-        destination.Roles      = source.UserRoles
+        response.Document   = user.Person.Document;
+        response.Names      = user.Person.Names;
+        response.LastNames  = user.Person.LastNames;
+        response.FullName   = user.Person.FullName;
+        response.CellPhone  = user.Person.CellPhone;
+        response.DateBirth  = user.Person.DateBirth;
+        response.GenderName = user.Person.Gender?.Name;
+        response.GenderId   = user.Person.GenderId;
+        response.UserId     = user.Id;
+        response.PersonId   = user.PersonId;
+        response.UserName   = user.UserName;
+        response.Roles      = user.UserRoles
             .OrderBy(role => role.RoleId)
             .Select(role => role.Role.Name);
     }
