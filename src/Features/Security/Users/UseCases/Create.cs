@@ -60,7 +60,7 @@ public class CreateBasicUserUseCase
 
     public async Task<Response> Execute(CreateBasicUserRequest request)
     {
-        if (await _userRepository.UserExistsAsync(request.UserName))
+        if (await _userRepository.UserExists(request.UserName))
             return new Response(UsernameAlreadyExistsMessage);
 
         var passwordHash = _passwordHasher.HashPassword(request.Password);

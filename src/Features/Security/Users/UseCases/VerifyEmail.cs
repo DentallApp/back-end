@@ -27,7 +27,7 @@ public class VerifyEmailUseCase
         if (claimPrincipal is null)
             return new Response<UserLoginResponse>(EmailVerificationTokenInvalidMessage);
 
-        var user = await _userRepository.GetFullUserProfileAsync(claimPrincipal.GetUserName());
+        var user = await _userRepository.GetFullUserProfile(claimPrincipal.GetUserName());
         if (user is null)
             return new Response<UserLoginResponse>(UsernameNotFoundMessage);
 
