@@ -5,13 +5,9 @@ public static class ApplicationDependencies
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services
-                .AddScoped<UserRegisterService>()
                 .AddScoped<SpecificTreatmentService>()
                 .AddScoped<GeneralTreatmentService>()
                 .AddScoped<ProformaInvoiceService>()
-                .AddScoped<TokenRefreshService>()
-                .AddScoped<EmployeeService>()
-                .AddScoped<RoleService>()
                 .AddScoped<OfficeService>()
                 .AddScoped<AppointmentService>()
                 .AddScoped<AppointmentCancellationService>()
@@ -32,8 +28,6 @@ public static class ApplicationDependencies
     {
         services.AddScoped<IUnitOfWork, UnitOfWorkEFCore>();
         services.AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<IEmployeeRepository, EmployeeRepository>()
-                .AddScoped<IRoleRepository, RoleRepository>()
                 .AddScoped<IOfficeRepository, OfficeRepository>()
                 .AddScoped<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
                 .AddScoped<IAppointmentRepository, AppointmentRepository>()
