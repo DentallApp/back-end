@@ -11,13 +11,13 @@ public class UpdateCurrentUserRequest
 
 public static class UpdateCurrentUserMapper
 {
-    public static void MapToUser(this UpdateCurrentUserRequest request, Person currentUser)
+    public static void MapToPerson(this UpdateCurrentUserRequest request, Person person)
     {
-        currentUser.Names     = request.Names;
-        currentUser.LastNames = request.LastNames;
-        currentUser.CellPhone = request.CellPhone;
-        currentUser.DateBirth = request.DateBirth;
-        currentUser.GenderId  = request.GenderId;
+        person.Names     = request.Names;
+        person.LastNames = request.LastNames;
+        person.CellPhone = request.CellPhone;
+        person.DateBirth = request.DateBirth;
+        person.GenderId  = request.GenderId;
     }
 }
 
@@ -36,17 +36,17 @@ public class UpdateCurrentUserUseCase
 
     public async Task<Response> Execute(int currentPersonId, UpdateCurrentUserRequest request)
     {
-        var currentUser = await _context.Set<Person>()
+        var person = await _context.Set<Person>()
             .Where(person => person.Id == currentPersonId)
             .FirstOrDefaultAsync();
 
-        if (currentUser is null)
+        if (person is null)
             return new Response(UsernameNotFoundMessage);
 
-        if (currentUser.Id != currentPersonId)
+        if (person.Id != currentPersonId)
             return new Response(CannotUpdateAnotherUserResource);
 
-        request.MapToUser(currentUser);
+        request.MapToPerson(person);
         await _context.SaveChangesAsync();
 
         return new Response
