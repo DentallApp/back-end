@@ -22,7 +22,8 @@ public static class UpdateCurrentUserMapper
 }
 
 /// <summary>
-/// Current User is the User who is current logged in. The current user can edit his own information.
+/// Current User is the User who is current logged in. 
+/// The current user can edit his own information.
 /// </summary>
 public class UpdateCurrentUserUseCase
 {
@@ -41,6 +42,9 @@ public class UpdateCurrentUserUseCase
 
         if (currentUser is null)
             return new Response(UsernameNotFoundMessage);
+
+        if (currentUser.Id != currentPersonId)
+            return new Response(CannotUpdateAnotherUserResource);
 
         request.MapToUser(currentUser);
         await _context.SaveChangesAsync();
