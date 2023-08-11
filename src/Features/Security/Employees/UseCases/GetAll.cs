@@ -67,8 +67,8 @@ public class GetEmployeesUseCase
                 Email               = employee.Person.Email,
                 CellPhone           = employee.Person.CellPhone,
                 DateBirth           = employee.Person.DateBirth,
-                GenderName          = employee.Person.Gender == null ? default : employee.Person.Gender.Name,
-                GenderId            = employee.Person.Gender == null ? default : employee.Person.Gender.Id,
+                GenderId            = employee.Person.Gender.Id,
+                GenderName          = employee.Person.Gender.Name,
                 Status              = employee.GetStatusName(),
                 IsDeleted           = employee.IsDeleted,
 
