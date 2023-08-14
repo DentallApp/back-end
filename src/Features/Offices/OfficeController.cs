@@ -42,7 +42,7 @@ public class OfficeController : ControllerBase
     /// <para>- Sí <c>status</c> es <c>true</c>, traerá los consultorios activos.</para>
     /// <para>- Sí <c>status</c> es <c>false</c>, traerá los consultorios inactivos.</para>
     /// </remarks>
-    [HttpGet]
+    [Route("name")]
     public async Task<IEnumerable<GetOfficeNamesResponse>> GetOfficeNames(
         bool? status,
         [FromServices]GetOfficeNamesUseCase useCase)
@@ -57,6 +57,28 @@ public class OfficeController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<GetOfficesToEditResponse>> GetOfficesToEdit(
         [FromServices]GetOfficesToEditUseCase useCase)
+    {
+        return await useCase.Execute();
+    }
+
+    /// <summary>
+    /// Obtiene los consultorios activos (incluyendo los horarios) para la página de inicio.
+    /// </summary>
+    /// <remarks>El consultorio debe tener al menos un horario activo.</remarks>
+    [Route("home-page")]
+    [HttpGet]
+    public async Task<IEnumerable<GetOfficesForHomePageResponse>> Home(
+        [FromServices]GetOfficesForHomePageUseCase useCase)
+    { 
+        return await useCase.Execute();
+    }
+
+    /// <summary>
+    /// Obtiene una vista general de la información de cada consultorio activo e inactivo.
+    /// </summary>
+    [HttpGet]
+    public async Task<IEnumerable<GetOverviewOfOfficesResponse>> GetOverview(
+        [FromServices]GetOverviewOfOfficesUseCase useCase)
     {
         return await useCase.Execute();
     }
