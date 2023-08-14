@@ -1,50 +1,56 @@
-﻿namespace DentallApp.Features.SpecificTreatments;
+﻿using DentallApp.Features.SpecificTreatments.UseCases;
+
+namespace DentallApp.Features.SpecificTreatments;
 
 [Route("specific-treatment")]
 [ApiController]
 public class SpecificTreatmentController : ControllerBase
 {
-    private readonly SpecificTreatmentService _treatmentService;
-    private readonly ISpecificTreatmentRepository _treatmentRepository;
-
-    public SpecificTreatmentController(SpecificTreatmentService treatmentService, 
-                                       ISpecificTreatmentRepository treatmentRepository)
-    {
-        _treatmentService = treatmentService;
-        _treatmentRepository = treatmentRepository;
-    }
-
-    [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
-    [HttpGet("{generalTreatmentId}")]
-    public async Task<IEnumerable<SpecificTreatmentGetDto>> Get(int generalTreatmentId)
-        => await _treatmentRepository.GetSpecificTreatmentsByGeneralTreatmentIdAsync(generalTreatmentId);
-
-    [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
-    [HttpGet]
-    public async Task<IEnumerable<SpecificTreatmentShowDto>> Get()
-        => await _treatmentRepository.GetSpecificTreatmentsAsync();
-
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Post([FromBody]SpecificTreatmentInsertDto treatmentInsertDto)
+    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+        [FromBody]CreateSpecificTreatmentRequest request,
+        [FromServices]CreateSpecificTreatmentUseCase useCase)
     {
-        var response = await _treatmentService.CreateSpecificTreatmentAsync(treatmentInsertDto);
-        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
+        var response = await useCase.Execute(request);
+        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Put(int id, [FromBody]SpecificTreatmentUpdateDto treatmentUpdateDto)
+    public async Task<ActionResult<Response>> Update(
+        int id, 
+        [FromBody]UpdateSpecificTreatmentRequest request,
+        [FromServices]UpdateSpecificTreatmentUseCase useCase)
     {
-        var response = await _treatmentService.UpdateSpecificTreatmentAsync(id, treatmentUpdateDto);
+        var response = await useCase.Execute(id, request);
         return response.Success ? Ok(response) : NotFound(response);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Response>> Delete(int id)
+    public async Task<ActionResult<Response>> Delete(
+        int id,
+        [FromServices]DeleteSpecificTreatmentUseCase useCase)
     {
-        var response = await _treatmentService.RemoveSpecificTreatmentAsync(id);
+        var response = await useCase.Execute(id);
         return response.Success ? Ok(response) : NotFound(response);
+    }
+
+    [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
+    [HttpGet("{generalTreatmentId}")]
+    public async Task<IEnumerable<GetTreatmentsByGeneralTreatmentIdResponse>> GetByGeneralTreatmentId(
+        int generalTreatmentId,
+        [FromServices]GetTreatmentsByGeneralTreatmentIdUseCase useCase)
+    {
+        return await useCase.Execute(generalTreatmentId);
+    }
+
+    [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
+    [HttpGet]
+    public async Task<IEnumerable<GetSpecificTreatmentsResponse>> GetAll(
+        [FromServices]GetSpecificTreatmentsUseCase useCase)
+    {
+        return await useCase.Execute();
     }
 }
