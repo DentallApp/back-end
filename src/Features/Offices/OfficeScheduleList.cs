@@ -1,5 +1,8 @@
 ﻿namespace DentallApp.Features.Offices;
 
+/// <summary>
+/// Adds extensions to <see cref="List{OfficeScheduleResponse}"/>.
+/// </summary>
 public static class OfficeScheduleList
 {
     /// <summary>
