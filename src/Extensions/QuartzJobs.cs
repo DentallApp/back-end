@@ -7,7 +7,7 @@ public static class QuartzJobs
         services.AddQuartz(q =>
         {
             q.UseMicrosoftDependencyInjectionJobFactory();
-            q.AddJobAndTrigger<ReminderJob>(settings.ReminderCronExpr);;
+            q.AddJobAndTrigger<SendReminderJob>(settings.ReminderCronExpr);;
         });
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
         return services;

@@ -2,19 +2,20 @@
 
 namespace DentallApp.Features.AppointmentReminders;
 
-public class ReminderJob : IJob
+public class SendReminderJob : IJob
 {
-    private readonly ILogger<ReminderJob> _logger;
+    private readonly ILogger<SendReminderJob> _logger;
     private readonly AppSettings _settings;
     private readonly IServiceProvider _serviceProvider;
     private readonly IInstantMessaging _instantMessaging;
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    public ReminderJob(ILogger<ReminderJob> logger, 
-                       AppSettings settings,
-                       IServiceProvider serviceProvider,
-                       IInstantMessaging instantMessaging,
-                       IDateTimeProvider dateTimeProvider)
+    public SendReminderJob(
+        ILogger<SendReminderJob> logger, 
+        AppSettings settings,
+        IServiceProvider serviceProvider,
+        IInstantMessaging instantMessaging,
+        IDateTimeProvider dateTimeProvider)
     {
         _settings = settings;
         _logger = logger;
