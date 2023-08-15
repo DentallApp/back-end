@@ -67,7 +67,7 @@ public class OfficeController : ControllerBase
     /// <remarks>El consultorio debe tener al menos un horario activo.</remarks>
     [Route("home-page")]
     [HttpGet]
-    public async Task<IEnumerable<GetOfficesForHomePageResponse>> Home(
+    public async Task<IEnumerable<GetOfficesForHomePageResponse>> GetOfficesForHomePage(
         [FromServices]GetOfficesForHomePageUseCase useCase)
     { 
         return await useCase.Execute();
