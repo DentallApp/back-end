@@ -2,12 +2,27 @@
 
 public static class QueryableExtensions
 {
-    public static IQueryable<T> OptionalWhere<T>(this IQueryable<T> source, string optionalParam, Expression<Func<T, bool>> predicate)
-        => optionalParam == default ? source : source.Where(predicate);
+    public static IQueryable<T> OptionalWhere<T, U>(
+        this IQueryable<T> source,
+        U applyFilter,
+        Expression<Func<T, bool>> predicate) where U : class
+    {
+        return applyFilter is not null ? source.Where(predicate) : source;
+    }
 
-    public static IQueryable<T> OptionalWhere<T>(this IQueryable<T> source, int optionalParam, Expression<Func<T, bool>> predicate) 
-        => optionalParam == default ? source : source.Where(predicate);
+    public static IQueryable<T> OptionalWhere<T, U>(
+        this IQueryable<T> source,
+        U? applyFilter,
+        Expression<Func<T, bool>> predicate) where U : struct
+    {
+        return applyFilter.HasValue ? source.Where(predicate) : source;
+    }
 
-    public static IQueryable<T> OptionalWhere<T>(this IQueryable<T> source, bool? optionalParam, Expression<Func<T, bool>> predicate)
-        => optionalParam == default ? source : source.Where(predicate);
+    public static IQueryable<T> OptionalWhere<T>(
+        this IQueryable<T> source,
+        int applyFilter,
+        Expression<Func<T, bool>> predicate)
+    { 
+        return applyFilter == default ? source : source.Where(predicate);
+    }
 }
