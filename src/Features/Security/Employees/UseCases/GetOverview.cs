@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Security.Employees.UseCases;
 
-public class GetEmployeesByOfficeIdResponse
+public class GetEmployeeOverviewResponse
 {
     public class Schedule
     {
@@ -17,26 +17,26 @@ public class GetEmployeesByOfficeIdResponse
     public IEnumerable<Schedule> Schedules { get; init; }
 }
 
-public class GetEmployeesByOfficeIdUseCase
+public class GetEmployeeOverviewUseCase
 {
     private readonly AppDbContext _context;
 
-    public GetEmployeesByOfficeIdUseCase(AppDbContext context)
+    public GetEmployeeOverviewUseCase(AppDbContext context)
     {
         _context = context;
     }
 
-    public async Task<IEnumerable<GetEmployeesByOfficeIdResponse>> Execute(int? officeId)
+    public async Task<IEnumerable<GetEmployeeOverviewResponse>> Execute(int? officeId)
     {
         var employeeSchedules = await _context.Set<Employee>()
             .OptionalWhere(officeId, employee => employee.OfficeId == officeId)
             .Where(employee => employee.EmployeeSchedules.Any())
-            .Select(employee => new GetEmployeesByOfficeIdResponse
+            .Select(employee => new GetEmployeeOverviewResponse
             {
                 FullName          = employee.Person.FullName,
                 IsEmployeeDeleted = employee.IsDeleted,
                 Schedules = employee.EmployeeSchedules
-                    .Select(employeeSchedule => new GetEmployeesByOfficeIdResponse.Schedule
+                    .Select(employeeSchedule => new GetEmployeeOverviewResponse.Schedule
                     {
                         WeekDayId          = employeeSchedule.WeekDayId,
                         WeekDayName        = employeeSchedule.WeekDay.Name,

@@ -88,9 +88,9 @@ public class EmployeeController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
-    [HttpGet("schedules")]
-    public async Task<IEnumerable<GetEmployeesByOfficeIdResponse>> GetSchedules(
-        [FromServices]GetEmployeesByOfficeIdUseCase useCase)
+    [HttpGet("overview")]
+    public async Task<IEnumerable<GetEmployeeOverviewResponse>> GetOverview(
+        [FromServices]GetEmployeeOverviewUseCase useCase)
     {
         return await useCase.Execute(User.GetOfficeId());
     }
