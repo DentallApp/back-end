@@ -78,8 +78,8 @@ public class OfficeController : ControllerBase
     /// </summary>
     [Route("overview")]
     [HttpGet]
-    public async Task<IEnumerable<GetOverviewOfOfficesResponse>> GetOverview(
-        [FromServices]GetOverviewOfOfficesUseCase useCase)
+    public async Task<IEnumerable<GetOfficeOverviewResponse>> GetOverview(
+        [FromServices]GetOfficeOverviewUseCase useCase)
     {
         return await useCase.Execute();
     }
