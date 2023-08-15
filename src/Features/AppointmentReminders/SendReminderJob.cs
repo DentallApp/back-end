@@ -34,12 +34,14 @@ public class SendReminderJob : IJob
         var businessName          = EnvReader.Instance[AppSettings.BusinessName];
         foreach (var appointment in scheduledAppointments)
         {
-            var message = string.Format(AppointmentReminderMessageTemplate,
-                                        appointment.PatientName,
-                                        appointment.Date.GetDateInSpanishFormat(),
-                                        appointment.StartHour.GetHourWithoutSeconds(),
-                                        businessName,
-                                        appointment.DentistName);
+            var message = string.Format(
+                AppointmentReminderMessageTemplate,
+                appointment.PatientName,
+                appointment.Date.GetDateInSpanishFormat(),
+                appointment.StartHour.GetHourWithoutSeconds(),
+                businessName,
+                appointment.DentistName
+            );
             _instantMessaging.SendMessage(appointment.PatientCellPhone, message);
         }
         return Task.CompletedTask;
