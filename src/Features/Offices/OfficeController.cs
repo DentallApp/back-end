@@ -76,6 +76,7 @@ public class OfficeController : ControllerBase
     /// <summary>
     /// Obtiene una vista general de la información de cada consultorio activo e inactivo.
     /// </summary>
+    [Route("overview")]
     [HttpGet]
     public async Task<IEnumerable<GetOverviewOfOfficesResponse>> GetOverview(
         [FromServices]GetOverviewOfOfficesUseCase useCase)
