@@ -38,6 +38,7 @@ public class GetDentistsUseCase
                 FullName   = o.person.FullName
             })
             .IgnoreQueryFilters()
+            .AsNoTracking()
             .ToListAsync();
 
         return dentists;

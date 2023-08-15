@@ -38,6 +38,7 @@ public class GetOverviewOfOfficesUseCase
                     .ToList()
             })
             .IgnoreQueryFilters()
+            .AsNoTracking()
             .ToListAsync();
 
         foreach (var office in offices)

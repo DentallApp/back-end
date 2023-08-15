@@ -87,6 +87,7 @@ public class GetEmployeesUseCase
                     })
             })
             .IgnoreQueryFilters()
+            .AsNoTracking()
             .ToListAsync();
 
         return employees;

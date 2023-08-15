@@ -39,6 +39,7 @@ public class GetOfficesForHomePageUseCase
                     .OrderBy(schedule => schedule.WeekDayId)
                     .ToList()
             })
+            .AsNoTracking()
             .ToListAsync();
 
         foreach (var office in offices)

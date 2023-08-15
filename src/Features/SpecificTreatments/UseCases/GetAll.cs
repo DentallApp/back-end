@@ -29,6 +29,7 @@ public class GetSpecificTreatmentsUseCase
                 GeneralTreatmentName  = treatment.GeneralTreatment.Name,
                 Price                 = treatment.Price
             })
+            .AsNoTracking()
             .ToListAsync();
 
         return specificTreatments;

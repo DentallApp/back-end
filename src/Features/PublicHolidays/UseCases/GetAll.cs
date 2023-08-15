@@ -40,6 +40,7 @@ public class GetPublicHolidaysUseCase
                         Name = holidayOffice.Office.Name
                    })
             })
+            .AsNoTracking()
             .ToListAsync();
 
         return holidays;

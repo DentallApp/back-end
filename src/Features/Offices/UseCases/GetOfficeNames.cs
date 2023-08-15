@@ -25,6 +25,7 @@ public class GetOfficeNamesUseCase
                 Name = office.Name
             })
             .IgnoreQueryFilters()
+            .AsNoTracking()
             .ToListAsync();
 
         return offices;

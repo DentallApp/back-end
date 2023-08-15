@@ -23,6 +23,7 @@ public class GetAppointmentStatusesUseCase
                 Id   = appointmentStatus.Id,
                 Name = appointmentStatus.Name
             })
+            .AsNoTracking()
             .ToListAsync();
 
         return statuses;

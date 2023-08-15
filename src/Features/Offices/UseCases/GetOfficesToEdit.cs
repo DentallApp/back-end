@@ -32,6 +32,7 @@ public class GetOfficesToEditUseCase
                 IsCheckboxTicked = office.IsCheckboxTicked
             })
             .IgnoreQueryFilters()
+            .AsNoTracking()
             .ToListAsync();
 
         return offices;

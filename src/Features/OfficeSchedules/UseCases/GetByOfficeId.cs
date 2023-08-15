@@ -36,6 +36,7 @@ public class GetSchedulesByOfficeIdUseCase
                 EndHour     = officeSchedule.EndHour.GetHourWithoutSeconds()
             })
             .IgnoreQueryFilters()
+            .AsNoTracking()
             .ToListAsync();
 
         return schedules;
