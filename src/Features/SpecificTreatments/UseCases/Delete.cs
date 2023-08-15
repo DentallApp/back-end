@@ -11,11 +11,11 @@ public class DeleteSpecificTreatmentUseCase
 
     public async Task<Response> Execute(int id)
     {
-        int updatedRows = await _context.Set<SpecificTreatment>()
+        int deletedRows = await _context.Set<SpecificTreatment>()
             .Where(treatment => treatment.Id == id)
             .ExecuteDeleteAsync();
 
-        if (updatedRows == 0)
+        if (deletedRows == 0)
             return new Response(ResourceNotFoundMessage);
 
         return new Response
