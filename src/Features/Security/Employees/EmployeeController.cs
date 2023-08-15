@@ -54,9 +54,9 @@ public class EmployeeController : ControllerBase
     }
 
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
-    [HttpGet]
-    public async Task<IEnumerable<GetEmployeesResponse>> GetAll(
-        [FromServices]GetEmployeesUseCase useCase)
+    [HttpGet("edit")]
+    public async Task<IEnumerable<GetEmployeesToEditResponse>> GetEmployeesToEdit(
+        [FromServices]GetEmployeesToEditUseCase useCase)
     { 
         return await useCase.Execute(User);
     }

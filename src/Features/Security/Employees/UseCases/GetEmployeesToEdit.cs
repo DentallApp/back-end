@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Security.Employees.UseCases;
 
-public class GetEmployeesResponse
+public class GetEmployeesToEditResponse
 {
     public class Role
     {
@@ -33,16 +33,16 @@ public class GetEmployeesResponse
     public bool IsDeleted { get; init; }
 }
 
-public class GetEmployeesUseCase
+public class GetEmployeesToEditUseCase
 {
     private readonly AppDbContext _context;
 
-    public GetEmployeesUseCase(AppDbContext context)
+    public GetEmployeesToEditUseCase(AppDbContext context)
     {
         _context = context;
     }
 
-    public async Task<IEnumerable<GetEmployeesResponse>> Execute(ClaimsPrincipal currentEmployee)
+    public async Task<IEnumerable<GetEmployeesToEditResponse>> Execute(ClaimsPrincipal currentEmployee)
     {
         var queryable = _context.Set<Employee>().AsQueryable();
 
@@ -54,7 +54,7 @@ public class GetEmployeesUseCase
         }
 
         var employees = await queryable
-            .Select(employee => new GetEmployeesResponse
+            .Select(employee => new GetEmployeesToEditResponse
             {
                 EmployeeId          = employee.Id,
                 OfficeId            = employee.OfficeId,
@@ -73,14 +73,14 @@ public class GetEmployeesUseCase
                 IsDeleted           = employee.IsDeleted,
 
                 Roles = employee.User.UserRoles
-                    .Select(role => new GetEmployeesResponse.Role
+                    .Select(role => new GetEmployeesToEditResponse.Role
                     {
                         Id   = role.Role.Id,
                         Name = role.Role.Name
                     }),
 
                 Specialties = employee.EmployeeSpecialties
-                    .Select(employeeSpecialty => new GetEmployeesResponse.Specialty
+                    .Select(employeeSpecialty => new GetEmployeesToEditResponse.Specialty
                     {
                         Id   = employeeSpecialty.GeneralTreatment.Id,
                         Name = employeeSpecialty.GeneralTreatment.Name
