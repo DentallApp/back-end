@@ -82,4 +82,16 @@ public class EmployeeController : ControllerBase
 
         return Ok(await useCase.Execute(request));
     }
+
+    /// <summary>
+    /// Obtiene todos los horarios de los empleados.
+    /// </summary>
+    /// <returns></returns>
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
+    [HttpGet("schedules")]
+    public async Task<IEnumerable<GetSchedulesByOfficeIdResponse>> GetSchedules(
+        [FromServices]GetSchedulesByOfficeIdUseCase useCase)
+    {
+        return await useCase.Execute(User.GetOfficeId());
+    }
 }
