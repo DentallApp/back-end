@@ -19,6 +19,7 @@ public class SpecificTreatmentRepository : ISpecificTreatmentRepository
                 PriceMin = group.Min(specificTreatment => specificTreatment.Price),
                 PriceMax = group.Max(specificTreatment => specificTreatment.Price)
             })
+            .AsNoTracking()
             .FirstOrDefaultAsync();
 
         return specificTreatments;

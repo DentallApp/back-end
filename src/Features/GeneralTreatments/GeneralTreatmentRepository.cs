@@ -18,6 +18,7 @@ public class GeneralTreatmentRepository : IGeneralTreatmentRepository
                 Duration = treatment.Duration 
             })
             .IgnoreQueryFilters()
+            .AsNoTracking()
             .FirstOrDefaultAsync();
 
         return durations;
