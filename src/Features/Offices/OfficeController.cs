@@ -43,7 +43,7 @@ public class OfficeController : ControllerBase
     /// <para>- Sí <c>status</c> es <c>false</c>, traerá los consultorios inactivos.</para>
     /// </remarks>
     [Route("name")]
-    public async Task<IEnumerable<GetOfficeNamesResponse>> GetOfficeNames(
+    public async Task<IEnumerable<GetOfficeNamesResponse>> GetNames(
         bool? status,
         [FromServices]GetOfficeNamesUseCase useCase)
     {
