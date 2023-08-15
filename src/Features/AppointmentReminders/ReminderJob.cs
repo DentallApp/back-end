@@ -1,4 +1,6 @@
-﻿namespace DentallApp.Features.AppointmentReminders;
+﻿using DentallApp.Features.AppointmentReminders.Queries;
+
+namespace DentallApp.Features.AppointmentReminders;
 
 public class ReminderJob : IJob
 {
@@ -26,18 +28,18 @@ public class ReminderJob : IJob
         _logger.LogInformation("Sending appointment reminder.");
         var currentDateAndTime    = _dateTimeProvider.Now;
         using var scope           = _serviceProvider.CreateScope();
-        var reminderQuery         = scope.ServiceProvider.GetRequiredService<IAppointmentReminderQueries>();
-        var scheduledAppointments = reminderQuery.GetScheduledAppointments(_settings.ReminderTimeInAdvance, currentDateAndTime.Date);
+        var query                 = scope.ServiceProvider.GetRequiredService<GetScheduledAppointmentsQuery>();
+        var scheduledAppointments = query.Execute(_settings.ReminderTimeInAdvance, currentDateAndTime.Date);
         var businessName          = EnvReader.Instance[AppSettings.BusinessName];
-        foreach (var appointmentDto in scheduledAppointments)
+        foreach (var appointment in scheduledAppointments)
         {
             var message = string.Format(AppointmentReminderMessageTemplate,
-                                        appointmentDto.PatientName,
-                                        appointmentDto.Date.GetDateInSpanishFormat(),
-                                        appointmentDto.StartHour.GetHourWithoutSeconds(),
+                                        appointment.PatientName,
+                                        appointment.Date.GetDateInSpanishFormat(),
+                                        appointment.StartHour.GetHourWithoutSeconds(),
                                         businessName,
-                                        appointmentDto.DentistName);
-            _instantMessaging.SendMessage(appointmentDto.PatientCellPhone, message);
+                                        appointment.DentistName);
+            _instantMessaging.SendMessage(appointment.PatientCellPhone, message);
         }
         return Task.CompletedTask;
     }
