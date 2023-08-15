@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Security.Employees.UseCases;
 
-public class GetSchedulesByOfficeIdResponse
+public class GetEmployeesByOfficeIdResponse
 {
     public class Schedule
     {
@@ -17,25 +17,26 @@ public class GetSchedulesByOfficeIdResponse
     public IEnumerable<Schedule> Schedules { get; init; }
 }
 
-public class GetSchedulesByOfficeIdUseCase
+public class GetEmployeesByOfficeIdUseCase
 {
     private readonly AppDbContext _context;
 
-    public GetSchedulesByOfficeIdUseCase(AppDbContext context)
+    public GetEmployeesByOfficeIdUseCase(AppDbContext context)
     {
         _context = context;
     }
 
-    public async Task<IEnumerable<GetSchedulesByOfficeIdResponse>> Execute(int officeId)
+    public async Task<IEnumerable<GetEmployeesByOfficeIdResponse>> Execute(int? officeId)
     {
         var employeeSchedules = await _context.Set<Employee>()
-            .Where(employee => employee.OfficeId == officeId && employee.EmployeeSchedules.Any())
-            .Select(employee => new GetSchedulesByOfficeIdResponse
+            .OptionalWhere(officeId, employee => employee.OfficeId == officeId)
+            .Where(employee => employee.EmployeeSchedules.Any())
+            .Select(employee => new GetEmployeesByOfficeIdResponse
             {
                 FullName          = employee.Person.FullName,
                 IsEmployeeDeleted = employee.IsDeleted,
                 Schedules = employee.EmployeeSchedules
-                    .Select(employeeSchedule => new GetSchedulesByOfficeIdResponse.Schedule
+                    .Select(employeeSchedule => new GetEmployeesByOfficeIdResponse.Schedule
                     {
                         WeekDayId          = employeeSchedule.WeekDayId,
                         WeekDayName        = employeeSchedule.WeekDay.Name,
