@@ -11,7 +11,7 @@ public class ProformaInvoiceService
         _htmlConverter = htmlConverter;
     }
 
-    public async Task<byte[]> CreateProformaInvoicePdfAsync(ProformaInvoiceRequest request)
+    public async Task<byte[]> CreateProformaInvoiceToPdf(ProformaInvoiceRequest request)
     {
         var html = await _htmlTemplateLoader.LoadAsync("./Templates/ProformaInvoice.html", request.MapToObject());
         return _htmlConverter.ConvertToPdf(html, new MemoryStream());

@@ -11,7 +11,7 @@ public class ProformaInvoiceController : ControllerBase
         [FromBody]ProformaInvoiceRequest request,
         [FromServices]ProformaInvoiceService service)
     {
-        var contents = await service.CreateProformaInvoicePdfAsync(request);
+        var contents = await service.CreateProformaInvoiceToPdf(request);
         return File(contents, "application/pdf", "ProformaReporte.pdf");
     }
 }
