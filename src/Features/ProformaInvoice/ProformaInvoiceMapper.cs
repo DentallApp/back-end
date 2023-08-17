@@ -2,16 +2,15 @@
 
 public static class ProformaInvoiceMapper
 {
-    public static object MapToObject(this ProformaInvoiceDto proformaInvoiceDto)
+    public static object MapToObject(this ProformaInvoiceRequest request)
     {
-        var model = new
+        return new
         {
-            proformaInvoiceDto.FullName,
-            proformaInvoiceDto.Document,
-            proformaInvoiceDto.DateIssue,
-            proformaInvoiceDto.TotalPrice,
-            proformaInvoiceDto.DentalTreatments
+            request.FullName,
+            request.Document,
+            request.DateIssue,
+            request.TotalPrice,
+            request.DentalTreatments
         };
-        return model;
     }
 }
