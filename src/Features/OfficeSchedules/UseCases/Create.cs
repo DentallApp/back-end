@@ -6,18 +6,15 @@ public class CreateOfficeScheduleRequest
     public int OfficeId { get; init; }
     public TimeSpan StartHour { get; init; }
     public TimeSpan EndHour { get; init; }
-}
 
-public static class CreateOfficeScheduleMapper
-{
-    public static OfficeSchedule MapToOfficeSchedule(this CreateOfficeScheduleRequest request)
+    public OfficeSchedule MapToOfficeSchedule()
     {
         return new()
         {
-            WeekDayId = request.WeekDayId,
-            OfficeId  = request.OfficeId,
-            StartHour = request.StartHour,
-            EndHour   = request.EndHour
+            WeekDayId = WeekDayId,
+            OfficeId  = OfficeId,
+            StartHour = StartHour,
+            EndHour   = EndHour
         };
     }
 }

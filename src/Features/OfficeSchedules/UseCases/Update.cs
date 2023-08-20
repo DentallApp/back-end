@@ -6,16 +6,13 @@ public class UpdateOfficeScheduleRequest
     public TimeSpan StartHour { get; init; }
     public TimeSpan EndHour { get; init; }
     public bool IsDeleted { get; init; }
-}
 
-public static class UpdateOfficeScheduleMapper
-{
-    public static void MapToOfficeSchedule(this UpdateOfficeScheduleRequest request, OfficeSchedule schedule)
+    public void MapToOfficeSchedule(OfficeSchedule schedule)
     {
-        schedule.WeekDayId = request.WeekDayId;
-        schedule.StartHour = request.StartHour;
-        schedule.EndHour   = request.EndHour;
-        schedule.IsDeleted = request.IsDeleted;
+        schedule.WeekDayId = WeekDayId;
+        schedule.StartHour = StartHour;
+        schedule.EndHour   = EndHour;
+        schedule.IsDeleted = IsDeleted;
     }
 }
 

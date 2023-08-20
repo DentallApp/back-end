@@ -9,19 +9,16 @@ public class UpdateCurrentEmployeeRequest
     public int GenderId { get; init; }
     public string PregradeUniversity { get; init; }
     public string PostgradeUniversity { get; init; }
-}
 
-public static class UpdateCurrentEmployeeMapper
-{
-    public static void MapToEmployee(this UpdateCurrentEmployeeRequest request, Employee employee)
+    public void MapToEmployee(Employee employee)
     {
-        employee.Person.Names        = request.Names;
-        employee.Person.LastNames    = request.LastNames;
-        employee.Person.CellPhone    = request.CellPhone;
-        employee.Person.DateBirth    = request.DateBirth;
-        employee.Person.GenderId     = request.GenderId;
-        employee.PregradeUniversity  = request.PregradeUniversity;
-        employee.PostgradeUniversity = request.PostgradeUniversity;
+        employee.Person.Names        = Names;
+        employee.Person.LastNames    = LastNames;
+        employee.Person.CellPhone    = CellPhone;
+        employee.Person.DateBirth    = DateBirth;
+        employee.Person.GenderId     = GenderId;
+        employee.PregradeUniversity  = PregradeUniversity;
+        employee.PostgradeUniversity = PostgradeUniversity;
     }
 }
 

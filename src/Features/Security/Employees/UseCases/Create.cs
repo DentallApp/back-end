@@ -19,33 +19,30 @@ public class CreateEmployeeRequest
     [MinLength(NumberRoles.MinRole)]
     public IEnumerable<int> Roles { get; init; }
     public IEnumerable<int> SpecialtiesId { get; init; }
-}
 
-public static class CreateEmployeeMapper
-{
-    public static Employee MapToEmployee(this CreateEmployeeRequest request, string password)
+    public Employee MapToEmployee(string password)
     {
         var person = new Person
         {
-            Document  = request.Document,
-            Names     = request.Names,
-            LastNames = request.LastNames,
-            CellPhone = request.CellPhone,
-            Email     = request.UserName,
-            DateBirth = request.DateBirth,
-            GenderId  = request.GenderId
+            Document  = Document,
+            Names     = Names,
+            LastNames = LastNames,
+            CellPhone = CellPhone,
+            Email     = UserName,
+            DateBirth = DateBirth,
+            GenderId  = GenderId
         };
         var user = new User
         {
-            UserName = request.UserName,
+            UserName = UserName,
             Password = password,
             Person   = person
         };
         var employee = new Employee
         {
-            OfficeId            = request.OfficeId,
-            PostgradeUniversity = request.PostgradeUniversity,
-            PregradeUniversity  = request.PregradeUniversity,
+            OfficeId            = OfficeId,
+            PostgradeUniversity = PostgradeUniversity,
+            PregradeUniversity  = PregradeUniversity,
             User                = user,
             Person              = person
         };

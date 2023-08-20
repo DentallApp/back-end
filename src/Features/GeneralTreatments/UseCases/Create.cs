@@ -8,18 +8,15 @@ public class CreateGeneralTreatmentRequest
     [Image]
     public IFormFile Image { get; init; }
     public int Duration { get; init; }
-}
 
-public static class CreateGeneralTreatmentMapper
-{
-    public static GeneralTreatment MapToGeneralTreatment(this CreateGeneralTreatmentRequest request)
+    public GeneralTreatment MapToGeneralTreatment()
     {
         return new()
         {
-            Name        = request.Name,
-            Description = request.Description,
-            Duration    = request.Duration,
-            ImageUrl    = request.Image.GetRandomImageName()
+            Name        = Name,
+            Description = Description,
+            Duration    = Duration,
+            ImageUrl    = Image.GetRandomImageName()
         };
     }
 }

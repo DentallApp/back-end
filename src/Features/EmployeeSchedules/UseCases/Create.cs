@@ -8,20 +8,17 @@ public class CreateEmployeeScheduleRequest
     public TimeSpan? MorningEndHour { get; init; }
     public TimeSpan? AfternoonStartHour { get; init; }
     public TimeSpan? AfternoonEndHour { get; init; }
-}
 
-public static class CreateEmployeeScheduleMapper
-{
-    public static EmployeeSchedule MapToEmployeeSchedule(this CreateEmployeeScheduleRequest request)
+    public EmployeeSchedule MapToEmployeeSchedule()
     {
         return new()
         {
-            EmployeeId         = request.EmployeeId,
-            WeekDayId          = request.WeekDayId,
-            MorningStartHour   = request.MorningStartHour,
-            MorningEndHour     = request.MorningEndHour,
-            AfternoonStartHour = request.AfternoonStartHour,
-            AfternoonEndHour   = request.AfternoonEndHour
+            EmployeeId         = EmployeeId,
+            WeekDayId          = WeekDayId,
+            MorningStartHour   = MorningStartHour,
+            MorningEndHour     = MorningEndHour,
+            AfternoonStartHour = AfternoonStartHour,
+            AfternoonEndHour   = AfternoonEndHour
         };
     }
 }

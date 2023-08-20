@@ -5,17 +5,14 @@ public class CreateSpecificTreatmentRequest
     public string Name { get; init; }
     public double Price { get; init; }
     public int GeneralTreatmentId { get; init; }
-}
 
-public static class CreateSpecificTreatmentMapper
-{
-    public static SpecificTreatment MapToSpecificTreatment(this CreateSpecificTreatmentRequest request)
+    public SpecificTreatment MapToSpecificTreatment()
     {
         return new()
         {
-            Name  = request.Name,
-            Price = request.Price,
-            GeneralTreatmentId = request.GeneralTreatmentId
+            Name  = Name,
+            Price = Price,
+            GeneralTreatmentId = GeneralTreatmentId
         };
     }
 }

@@ -7,16 +7,13 @@ public class UpdateGeneralTreatmentRequest
     [Image]
     public IFormFile Image { get; init; }
     public int Duration { get; init; }
-}
 
-public static class UpdateGeneralTreatmentMapper
-{
-    public static void MapToGeneralTreatment(this UpdateGeneralTreatmentRequest request, GeneralTreatment treatment)
+    public void MapToGeneralTreatment(GeneralTreatment treatment)
     {
-        treatment.Name        = request.Name;
-        treatment.Description = request.Description;
-        treatment.Duration    = request.Duration;
-        treatment.ImageUrl    = request.Image is null ? treatment.ImageUrl : request.Image.GetRandomImageName();
+        treatment.Name        = Name;
+        treatment.Description = Description;
+        treatment.Duration    = Duration;
+        treatment.ImageUrl    = Image is null ? treatment.ImageUrl : Image.GetRandomImageName();
     }
 }
 

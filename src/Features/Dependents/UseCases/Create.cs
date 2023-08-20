@@ -10,25 +10,22 @@ public class CreateDependentRequest
     public int? GenderId { get; init; }
     public string Email { get; init; }
     public int KinshipId { get; init; }
-}
 
-public static class CreateDependentMapper
-{
-    public static Dependent MapToDependent(this CreateDependentRequest request, int userId)
+    public Dependent MapToDependent(int userId)
     {
         var person = new Person
         {
-            Document  = request.Document,
-            Names     = request.Names,
-            LastNames = request.LastNames,
-            CellPhone = request.CellPhone,
-            Email     = request.Email,
-            DateBirth = request.DateBirth,
-            GenderId  = request.GenderId
+            Document  = Document,
+            Names     = Names,
+            LastNames = LastNames,
+            CellPhone = CellPhone,
+            Email     = Email,
+            DateBirth = DateBirth,
+            GenderId  = GenderId
         };
         var dependent = new Dependent
         {
-            KinshipId = request.KinshipId,
+            KinshipId = KinshipId,
             UserId    = userId,
             Person    = person
         };

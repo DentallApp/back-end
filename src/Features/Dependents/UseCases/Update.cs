@@ -9,19 +9,16 @@ public class UpdateDependentRequest
     public int GenderId { get; init; }
     public int KinshipId { get; init; }
     public string Email { get; init; }
-}
 
-public static class UpdateDependentMapper
-{
-    public static void MapToDependent(this UpdateDependentRequest request, Dependent dependent)
+    public void MapToDependent(Dependent dependent)
     {
-        dependent.Person.Names     = request.Names;
-        dependent.Person.LastNames = request.LastNames;
-        dependent.Person.CellPhone = request.CellPhone;
-        dependent.Person.DateBirth = request.DateBirth;
-        dependent.Person.GenderId  = request.GenderId;
-        dependent.Person.Email     = request.Email;
-        dependent.KinshipId        = request.KinshipId;
+        dependent.Person.Names     = Names;
+        dependent.Person.LastNames = LastNames;
+        dependent.Person.CellPhone = CellPhone;
+        dependent.Person.DateBirth = DateBirth;
+        dependent.Person.GenderId  = GenderId;
+        dependent.Person.Email     = Email;
+        dependent.KinshipId        = KinshipId;
     }
 }
 

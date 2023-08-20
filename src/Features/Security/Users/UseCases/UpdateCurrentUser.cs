@@ -7,17 +7,14 @@ public class UpdateCurrentUserRequest
     public string CellPhone { get; init; }
     public DateTime DateBirth { get; init; }
     public int GenderId { get; init; }
-}
 
-public static class UpdateCurrentUserMapper
-{
-    public static void MapToPerson(this UpdateCurrentUserRequest request, Person person)
+    public void MapToPerson(Person person)
     {
-        person.Names     = request.Names;
-        person.LastNames = request.LastNames;
-        person.CellPhone = request.CellPhone;
-        person.DateBirth = request.DateBirth;
-        person.GenderId  = request.GenderId;
+        person.Names     = Names;
+        person.LastNames = LastNames;
+        person.CellPhone = CellPhone;
+        person.DateBirth = DateBirth;
+        person.GenderId  = GenderId;
     }
 }
 

@@ -9,21 +9,18 @@ public class CreatePersonRequest
     public DateTime? DateBirth { get; init; }
     public int? GenderId { get; init; }
     public string Email { get; init; }
-}
 
-public static class CreatePersonMapper
-{
-    public static Person MapToPerson(this CreatePersonRequest request)
+    public Person MapToPerson()
     {
         return new()
         {
-            Document  = request.Document,
-            Names     = request.Names,
-            LastNames = request.LastNames,
-            DateBirth = request.DateBirth,
-            GenderId  = request.GenderId,
-            CellPhone = request.CellPhone,
-            Email     = request.Email
+            Document  = Document,
+            Names     = Names,
+            LastNames = LastNames,
+            DateBirth = DateBirth,
+            GenderId  = GenderId,
+            CellPhone = CellPhone,
+            Email     = Email
         };
     }
 }

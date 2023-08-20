@@ -28,17 +28,14 @@ public class UpdateOfficeRequest
 
     public bool IsActive() => !IsDeleted;
     public bool IsInactive() => IsDeleted;
-}
 
-public static class UpdateOfficeMapper
-{
-    public static void MapToOffice(this UpdateOfficeRequest request, Office office)
+    public void MapToOffice(Office office)
     {
-        office.Name             = request.Name;
-        office.Address          = request.Address;
-        office.ContactNumber    = request.ContactNumber;
-        office.IsDeleted        = request.IsDeleted;
-        office.IsCheckboxTicked = request.IsCheckboxTicked;
+        office.Name             = Name;
+        office.Address          = Address;
+        office.ContactNumber    = ContactNumber;
+        office.IsDeleted        = IsDeleted;
+        office.IsCheckboxTicked = IsCheckboxTicked;
     }
 }
 

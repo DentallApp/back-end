@@ -14,4 +14,16 @@ public class ProformaInvoiceRequest
     public DateTime DateIssue { get; init; }
     public double TotalPrice { get; init; }
     public IEnumerable<DentalTreatment> DentalTreatments { get; init; }
+
+    public object MapToObject()
+    {
+        return new
+        {
+            FullName,
+            Document,
+            DateIssue,
+            TotalPrice,
+            DentalTreatments
+        };
+    }
 }

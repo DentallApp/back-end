@@ -5,15 +5,12 @@ public class UpdateSpecificTreatmentRequest
     public string Name { get; init; }
     public double Price { get; init; }
     public int GeneralTreatmentId { get; init; }
-}
 
-public static class UpdateSpecificTreatmentMapper
-{
-    public static void MapToSpecificTreatment(this UpdateSpecificTreatmentRequest request, SpecificTreatment treatment)
+    public void MapToSpecificTreatment(SpecificTreatment treatment)
     {
-        treatment.Name  = request.Name;
-        treatment.Price = request.Price;
-        treatment.GeneralTreatmentId = request.GeneralTreatmentId;
+        treatment.Name  = Name;
+        treatment.Price = Price;
+        treatment.GeneralTreatmentId = GeneralTreatmentId;
     }
 }
 

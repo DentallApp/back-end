@@ -8,18 +8,15 @@ public class UpdateEmployeeScheduleRequest
     public TimeSpan? MorningEndHour { get; init; }
     public TimeSpan? AfternoonStartHour { get; init; }
     public TimeSpan? AfternoonEndHour { get; init; }
-}
 
-public static class UpdateEmployeeScheduleMapper
-{
-    public static void MapToEmployeeSchedule(this UpdateEmployeeScheduleRequest request, EmployeeSchedule schedule)
+    public void MapToEmployeeSchedule(EmployeeSchedule schedule)
     {
-        schedule.WeekDayId          = request.WeekDayId;
-        schedule.IsDeleted          = request.IsDeleted;
-        schedule.MorningStartHour   = request.MorningStartHour;
-        schedule.MorningEndHour     = request.MorningEndHour;
-        schedule.AfternoonStartHour = request.AfternoonStartHour;
-        schedule.AfternoonEndHour   = request.AfternoonEndHour;
+        schedule.WeekDayId          = WeekDayId;
+        schedule.IsDeleted          = IsDeleted;
+        schedule.MorningStartHour   = MorningStartHour;
+        schedule.MorningEndHour     = MorningEndHour;
+        schedule.AfternoonStartHour = AfternoonStartHour;
+        schedule.AfternoonEndHour   = AfternoonEndHour;
     }
 }
 

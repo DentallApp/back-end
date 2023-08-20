@@ -5,17 +5,14 @@ public class CreateOfficeRequest
     public string Name { get; init; }
     public string Address { get; init; }
     public string ContactNumber { get; init; }
-}
 
-public static class CreateOfficeMapper
-{
-    public static Office MapToOffice(this CreateOfficeRequest request)
+    public Office MapToOffice()
     {
         return new()
         {
-            Name          = request.Name,
-            Address       = request.Address,
-            ContactNumber = request.ContactNumber
+            Name          = Name,
+            Address       = Address,
+            ContactNumber = ContactNumber
         };
     }
 }

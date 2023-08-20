@@ -10,17 +10,14 @@ public class CreatePublicHolidayRequest
     public int Month { get; init; }
     [Required]
     public List<int> OfficesId { get; init; }
-}
 
-public static class CreatePublicHolidayMapper
-{
-    public static PublicHoliday MapToPublicHoliday(this CreatePublicHolidayRequest request)
+    public PublicHoliday MapToPublicHoliday()
     {
         return new()
         {
-            Description = request.Description,
-            Day         = request.Day,
-            Month       = request.Month
+            Description = Description,
+            Day         = Day,
+            Month       = Month
         };
     }
 }

@@ -20,29 +20,21 @@ public class UpdateAnyEmployeeRequest
     public List<int> Roles { get; init; }
     public List<int> SpecialtiesId { get; init; }
     public bool IsDeleted { get; init; }
-}
 
-public static class UpdateAnyEmployeeMapper
-{
-    public static void MapToEmployee(this UpdateAnyEmployeeRequest request, Employee employee)
+    public void MapToEmployee(Employee employee)
     {
-        employee.User.UserName       = request.Email;
-        employee.Person.Email        = request.Email;
-        employee.Person.Document     = request.Document;
-        employee.Person.Names        = request.Names;
-        employee.Person.LastNames    = request.LastNames;
-        employee.Person.CellPhone    = request.CellPhone;
-        employee.Person.DateBirth    = request.DateBirth;
-        employee.Person.GenderId     = request.GenderId;
-        employee.OfficeId            = request.OfficeId;
-        employee.PregradeUniversity  = request.PregradeUniversity;
-        employee.PostgradeUniversity = request.PostgradeUniversity;
-        employee.IsDeleted           = request.IsDeleted;
-        if (employee.IsInactive())
-        {
-            employee.User.RefreshToken = null;
-            employee.User.RefreshTokenExpiry = null;
-        }
+        employee.User.UserName       = Email;
+        employee.Person.Email        = Email;
+        employee.Person.Document     = Document;
+        employee.Person.Names        = Names;
+        employee.Person.LastNames    = LastNames;
+        employee.Person.CellPhone    = CellPhone;
+        employee.Person.DateBirth    = DateBirth;
+        employee.Person.GenderId     = GenderId;
+        employee.OfficeId            = OfficeId;
+        employee.PregradeUniversity  = PregradeUniversity;
+        employee.PostgradeUniversity = PostgradeUniversity;
+        employee.IsDeleted           = IsDeleted;
     }
 }
 
@@ -100,6 +92,11 @@ public class UpdateAnyEmployeeUseCase
             .UpdateUserRoles(employeeToEdit.UserId, employeeToEdit.User.UserRoles, rolesId: request.Roles);
 
         request.MapToEmployee(employeeToEdit);
+        if (employeeToEdit.IsInactive())
+        {
+            employeeToEdit.User.RefreshToken = null;
+            employeeToEdit.User.RefreshTokenExpiry = null;
+        }
         await _context.SaveChangesAsync();
 
         return new Response

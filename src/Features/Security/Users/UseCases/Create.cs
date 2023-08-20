@@ -10,25 +10,22 @@ public class CreateBasicUserRequest
     public string CellPhone { get; init; }
     public DateTime? DateBirth { get; init; }
     public int? GenderId { get; init; }
-}
 
-public static class CreateBasicUserMapper
-{
-    public static User MapToUser(this CreateBasicUserRequest request, string password)
+    public User MapToUser(string password)
     {
         var person = new Person
         {
-            Document  = request.Document,
-            Names     = request.Names,
-            LastNames = request.LastNames,
-            CellPhone = request.CellPhone,
-            Email     = request.UserName,
-            DateBirth = request.DateBirth,
-            GenderId  = request.GenderId
+            Document  = Document,
+            Names     = Names,
+            LastNames = LastNames,
+            CellPhone = CellPhone,
+            Email     = UserName,
+            DateBirth = DateBirth,
+            GenderId  = GenderId
         };
         var user = new User
         {
-            UserName = request.UserName,
+            UserName = UserName,
             Password = password,
             Person   = person
         };
