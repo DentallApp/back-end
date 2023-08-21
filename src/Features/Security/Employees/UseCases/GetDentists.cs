@@ -23,7 +23,8 @@ public class GetDentistsUseCase
 
     public async Task<IEnumerable<GetDentistsResponse>> Execute(GetDentistsRequest request)
     {
-        var queryable = (from employee in _context.Set<Employee>()
+        var queryable = 
+           (from employee in _context.Set<Employee>()
             join person in _context.Set<Person>() on employee.PersonId equals person.Id
             join userRole in _context.Set<UserRole>() on employee.UserId equals userRole.UserId
             where userRole.RoleId == RolesId.Dentist
