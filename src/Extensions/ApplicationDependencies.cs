@@ -8,7 +8,6 @@ public static class ApplicationDependencies
                 .AddScoped<ProformaInvoiceService>()
                 .AddScoped<AppointmentService>()
                 .AddScoped<AppointmentCancellationService>()
-                .AddScoped<FavoriteDentistService>()
                 .AddScoped<AvailabilityService>()
                 .AddScoped<ReportDownloadPdfService>()
                 .AddScoped<EmailTemplateService>()
@@ -26,7 +25,6 @@ public static class ApplicationDependencies
                 .AddScoped<IAppointmentRepository, AppointmentRepository>()
                 .AddScoped<IAppointmentCancellationRepository, AppointmentCancellationRepository>()
                 .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
-                .AddScoped<IFavoriteDentistRepository, FavoriteDentistRepository>()
                 .AddScoped<IHolidayOfficeRepository, HolidayOfficeRepository>()
                 .AddScoped<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
