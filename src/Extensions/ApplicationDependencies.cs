@@ -6,7 +6,6 @@ public static class ApplicationDependencies
     {
         services
                 .AddScoped<ProformaInvoiceService>()
-                .AddScoped<AppointmentService>()
                 .AddScoped<AppointmentCancellationService>()
                 .AddScoped<AvailabilityService>()
                 .AddScoped<ReportDownloadPdfService>()
