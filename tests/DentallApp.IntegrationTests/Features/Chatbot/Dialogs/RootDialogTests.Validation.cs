@@ -1,4 +1,6 @@
-﻿namespace DentallApp.IntegrationTests.Features.Chatbot.Dialogs;
+﻿using DentallApp.Features.Appointments.UseCases;
+
+namespace DentallApp.IntegrationTests.Features.Chatbot.Dialogs;
 
 public partial class RootDialogTests
 {
@@ -126,7 +128,7 @@ public partial class RootDialogTests
     [Test]
     public async Task Bot_WhenDateAndTimeAppointmentIsNotAvailable_ShouldSendAnErrorMessage()
     {
-        Mock.Arrange(() => _botService.CreateScheduledAppointmentAsync(Arg.IsAny<AppointmentInsertDto>()))
+        Mock.Arrange(() => _botService.CreateScheduledAppointmentAsync(Arg.IsAny<CreateAppointmentRequest>()))
             .ReturnsAsync(new Response<InsertedIdDto>
             {
                 Success = false,

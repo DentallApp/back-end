@@ -1,6 +1,8 @@
-﻿namespace DentallApp.Features.Appointments.Notification;
+﻿using DentallApp.Features.Appointments.UseCases;
+
+namespace DentallApp.Features.Appointments.Notification;
 
 public interface IAppointmentInformationSendingService
 {
-    Task SendAppointmentInformationAsync(int appointmentId, AppointmentInsertDto appointmentInsertDto);
+    Task SendAppointmentInformationAsync(int appointmentId, CreateAppointmentRequest request);
 }

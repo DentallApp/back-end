@@ -1,4 +1,6 @@
-﻿namespace DentallApp.Features.Appointments.Notification;
+﻿using DentallApp.Features.Appointments.UseCases;
+
+namespace DentallApp.Features.Appointments.Notification;
 
 public class AppointmentInformationSendingService : IAppointmentInformationSendingService
 {
@@ -15,21 +17,21 @@ public class AppointmentInformationSendingService : IAppointmentInformationSendi
         _treatmentRepository = treatmentRepository;
     }
 
-    public async Task SendAppointmentInformationAsync(int appointmentId, AppointmentInsertDto appointmentInsertDto)
+    public async Task SendAppointmentInformationAsync(int appointmentId, CreateAppointmentRequest request)
     {
         // The query is executed in case the scheduling of appointments is done manually by the secretary.
-        appointmentInsertDto.RangeToPay ??= await _treatmentRepository.GetTreatmentWithRangeToPayAsync(appointmentInsertDto.GeneralTreatmentId);
+        request.RangeToPay ??= await _treatmentRepository.GetTreatmentWithRangeToPayAsync(request.GeneralTreatmentId);
         var businessName = EnvReader.Instance[AppSettings.BusinessName];
         var info = await _appointmentRepository.GetAppointmentInformationAsync(appointmentId);
-        var msg = string.Format(AppointmentInformationMessageTemplate, 
-                                info.PatientName,
-                                businessName,
-                                info.DentistName,
-                                info.OfficeName,
-                                info.DentalServiceName,
-                                appointmentInsertDto.AppointmentDate.GetDateInSpanishFormat(),
-                                appointmentInsertDto.StartHour.GetHourWithoutSeconds(),
-                                appointmentInsertDto.RangeToPay?.ToString());
+        var msg = string.Format(AppointmentInformationMessageTemplate,
+            info.PatientName,
+            businessName,
+            info.DentistName,
+            info.OfficeName,
+            info.DentalServiceName,
+            request.AppointmentDate.GetDateInSpanishFormat(),
+            request.StartHour.GetHourWithoutSeconds(),
+            request.RangeToPay?.ToString());
         await _instantMessaging.SendMessageAsync(info.CellPhone, msg);
     }
 }

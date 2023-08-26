@@ -1,4 +1,6 @@
-﻿namespace DentallApp.Features.Chatbot;
+﻿using DentallApp.Features.Appointments.UseCases;
+
+namespace DentallApp.Features.Chatbot;
 
 public class AppointmentBotService : IAppointmentBotService
 {
@@ -44,11 +46,11 @@ public class AppointmentBotService : IAppointmentBotService
         return await availabilityService.GetAvailableHoursAsync(availableTimeRangeDto);
     }
 
-    public async Task<Response<InsertedIdDto>> CreateScheduledAppointmentAsync(AppointmentInsertDto appointment)
+    public async Task<Response<InsertedIdDto>> CreateScheduledAppointmentAsync(CreateAppointmentRequest request)
     {
         using var scope = _serviceProvider.CreateScope();
-        var appointmentService = scope.ServiceProvider.GetRequiredService<AppointmentService>();
-        return await appointmentService.CreateAppointmentAsync(appointment);
+        var useCase = scope.ServiceProvider.GetRequiredService<CreateAppointmentUseCase>();
+        return await useCase.Execute(request);
     }
 
     public async Task<SpecificTreatmentRangeToPayDto> GetRangeToPayAsync(int dentalServiceId)

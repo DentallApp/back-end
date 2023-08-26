@@ -1,4 +1,6 @@
-﻿namespace DentallApp.IntegrationTests.Features.Chatbot.Dialogs;
+﻿using DentallApp.Features.Appointments.UseCases;
+
+namespace DentallApp.IntegrationTests.Features.Chatbot.Dialogs;
 
 public static class BotServiceMockFactory
 {
@@ -49,7 +51,7 @@ public static class BotServiceMockFactory
                 PriceMax = PriceMax
             });
 
-        Mock.Arrange(() => botService.CreateScheduledAppointmentAsync(Arg.IsAny<AppointmentInsertDto>()))
+        Mock.Arrange(() => botService.CreateScheduledAppointmentAsync(Arg.IsAny<CreateAppointmentRequest>()))
             .ReturnsAsync(new Response<InsertedIdDto>
             {
                 Success = true,
