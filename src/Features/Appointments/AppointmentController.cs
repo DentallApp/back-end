@@ -34,6 +34,38 @@ public class AppointmentController : ControllerBase
     }
 
     /// <summary>
+    /// Permite al usuario básico cancelar su cita agendada.
+    /// </summary>
+    [AuthorizeByRole(RolesName.BasicUser)]
+    [HttpDelete("{id}/basic-user")]
+    public async Task<ActionResult<Response>> CancelBasicUserAppointment(
+        int id,
+        [FromServices]CancelBasicUserAppointmentUseCase useCase)
+    {
+        var response = await useCase.Execute(id, User.GetUserId());
+        return response.Success ? Ok(response) : BadRequest(response);
+    }
+
+    /// <summary>
+    /// Permite cancelar las citas agendadas de los odontólogos.
+    /// </summary>
+    /// <remarks>
+    /// Detalles a tomar en cuenta:
+    /// <para>- El odontólogo solo podrá cancelar sus propias citas.</para>
+    /// <para>- La secretaria/admin solo pueden cancelar las citas del consultorio al que pertenecen.</para>
+    /// <para>- El superadmin puede cancelar las citas de cualquier consultorio.</para>
+    /// </remarks>
+    [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
+    [HttpPost("cancel/dentist")]
+    public async Task<ActionResult<Response<CancelAppointmentsResponse>>> CancelAppointments(
+        [FromBody]CancelAppointmentsRequest request,
+        [FromServices]CancelAppointmentsUseCase useCase)
+    {
+        var response = await useCase.Execute(User, request);
+        return response.Success ? Ok(response) : BadRequest(response);
+    }
+
+    /// <summary>
     /// Obtiene el historial de citas del usuario básico.
     /// </summary>
     [AuthorizeByRole(RolesName.BasicUser)]
