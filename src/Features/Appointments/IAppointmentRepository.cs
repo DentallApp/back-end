@@ -1,7 +1,6 @@
 ﻿namespace DentallApp.Features.Appointments;
 
-public interface IAppointmentRepository : IRepository<Appointment>
+public interface IAppointmentRepository
 {
-    Task<AppointmentInfoDto> GetAppointmentInformationAsync(int id);
     Task<List<UnavailableTimeRangeDto>> GetUnavailableHoursAsync(int dentistId, DateTime appointmentDate);
 }
