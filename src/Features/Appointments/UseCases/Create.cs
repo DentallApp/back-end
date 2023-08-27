@@ -41,11 +41,16 @@ public class CreateAppointmentUseCase
 {
     private readonly AppDbContext _context;
     private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly SendAppointmentInformationUseCase _sendInformationUseCase;
 
-    public CreateAppointmentUseCase(AppDbContext context, IDateTimeProvider dateTimeProvider)
+    public CreateAppointmentUseCase(
+        AppDbContext context, 
+        IDateTimeProvider dateTimeProvider, 
+        SendAppointmentInformationUseCase sendInformationUseCase)
     {
         _context = context;
         _dateTimeProvider = dateTimeProvider;
+        _sendInformationUseCase = sendInformationUseCase;
     }
 
     public async Task<Response<InsertedIdDto>> Execute(CreateAppointmentRequest request)
@@ -71,6 +76,7 @@ public class CreateAppointmentUseCase
         var appointment = request.MapToAppointment();
         _context.Add(appointment);
         await _context.SaveChangesAsync();
+        await _sendInformationUseCase.Execute(appointment.Id, request);
 
         return new Response<InsertedIdDto>
         {
