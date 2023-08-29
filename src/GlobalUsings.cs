@@ -35,8 +35,6 @@ global using DentallApp.Features.EmployeeSchedules.DTOs;
 global using DentallApp.Features.WeekDays;
 global using DentallApp.Features.AppointmentReminders;
 global using DentallApp.Features.AppointmentScheduling.DTOs;
-global using DentallApp.Features.Reports.DTOs;
-global using DentallApp.Features.Reports.Pdf;
 global using DentallApp.Features.PublicHolidays.Offices;
 
 global using DentallApp.Middlewares;
@@ -107,7 +105,6 @@ global using Newtonsoft.Json;
 
 global using DotEnv.Core;
 global using Dapper;
-global using MediatR;
 
 global using SendGrid;
 global using SendGrid.Helpers.Mail;
