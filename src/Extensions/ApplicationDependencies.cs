@@ -8,7 +8,6 @@ public static class ApplicationDependencies
                 .AddScoped<ProformaInvoiceService>()
                 .AddScoped<AppointmentCancellationService>()
                 .AddScoped<AvailabilityService>()
-                .AddScoped<ReportDownloadPdfService>()
                 .AddScoped<EmailTemplateService>()
                 .AddScoped<ITokenService, TokenService>()
                 .AddScoped<IEmailService, EmailService>();
