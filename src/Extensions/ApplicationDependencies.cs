@@ -1,4 +1,6 @@
-﻿namespace DentallApp.Extensions;
+﻿using DentallApp.Features.Dependents.UseCases;
+
+namespace DentallApp.Extensions;
 
 public static class ApplicationDependencies
 {
@@ -22,7 +24,9 @@ public static class ApplicationDependencies
                 .AddScoped<IAppointmentRepository, AppointmentRepository>()
                 .AddScoped<IAppointmentCancellationRepository, AppointmentCancellationRepository>()
                 .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
+                .AddScoped<IEmployeeSpecialtyRepository, EmployeeSpecialtyRepository>()
                 .AddScoped<IHolidayOfficeRepository, HolidayOfficeRepository>()
+                .AddScoped<IUserRoleRepository, UserRoleRepository>()
                 .AddScoped<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
         return services;
@@ -35,6 +39,22 @@ public static class ApplicationDependencies
                 .AddSingleton<IPasswordHasher, PasswordHasherBcrypt>()
                 .AddSingleton<IDateTimeProvider, DateTimeProvider>()
                 .AddSingleton<IInstantMessaging, WhatsAppMessaging>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddUseCases(this IServiceCollection services)
+    {
+        // Specifies the assembly for Scrutor to search for types.
+        var assembly = typeof(GetDependentsByUserIdUseCase).Assembly;
+
+        services.Scan(scan => scan
+            // Search the types from the specified assemblies.
+            .FromAssemblies(assembly)
+              // Register the concrete classes as a service.
+              .AddClasses(classes => classes.Where(type => type.Name.EndsWith("UseCase")))
+                .AsSelf()
+                .WithScopedLifetime()); 
 
         return services;
     }
