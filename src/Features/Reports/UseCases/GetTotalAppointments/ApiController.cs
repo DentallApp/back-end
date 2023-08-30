@@ -23,7 +23,7 @@ public class ReportTotalAppointmentsController : ControllerBase
     /// </summary>
     [Route("pdf/report")]
     [HttpPost("appointment")]
-    public async Task<ActionResult> Download(
+    public async Task<ActionResult> DownloadAsPdf(
         [FromBody]DownloadTotalAppointmentsReportRequest request,
         [FromServices]DownloadTotalAppointmentsReportUseCase useCase)
     {
