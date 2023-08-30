@@ -14,7 +14,7 @@ public class DirectLineAzureService : DirectLineService
     }
 
     /// <inheritdoc />
-    public async override Task<Response<DirectLineGetTokenDto>> GetTokenAsync(UserProfile userProfile)
+    public async override Task<Response<GetDirectLineTokenResponse>> GetTokenAsync(UserProfile userProfile)
     {
         var requestBody = new 
         {
@@ -37,12 +37,12 @@ public class DirectLineAzureService : DirectLineService
         var tokenResponseMessage = await Client.SendAsync(tokenRequest, default);
 
         if (!tokenResponseMessage.IsSuccessStatusCode)
-            return new Response<DirectLineGetTokenDto> { Message = DirectLineTokenFailedMessage };
+            return new Response<GetDirectLineTokenResponse> { Message = DirectLineTokenFailedMessage };
 
         var responseContentString = await tokenResponseMessage.Content.ReadAsStringAsync();
-        var tokenResponse = JsonConvert.DeserializeObject<DirectLineGetTokenDto>(responseContentString);
+        var tokenResponse = JsonConvert.DeserializeObject<GetDirectLineTokenResponse>(responseContentString);
 
-        return new Response<DirectLineGetTokenDto>
+        return new Response<GetDirectLineTokenResponse>
         {
             Success = true,
             Data    = tokenResponse,

@@ -42,5 +42,5 @@ public abstract class DirectLineService
     /// </summary>
     /// <param name="userProfile">The authenticated user.</param>
     /// <returns></returns>
-    public abstract Task<Response<DirectLineGetTokenDto>> GetTokenAsync(UserProfile userProfile);
+    public abstract Task<Response<GetDirectLineTokenResponse>> GetTokenAsync(UserProfile userProfile);
 }
