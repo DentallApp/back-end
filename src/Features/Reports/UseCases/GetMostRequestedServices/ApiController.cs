@@ -6,8 +6,7 @@ public class ReportMostRequestedServicesController : ControllerBase
     /// <summary>
     /// Obtiene el reporte de los servicios dentales más solicitados.
     /// </summary>
-    [Route("report")]
-    [HttpPost("most-requested/services")]
+    [HttpPost("report/most-requested/services")]
     public async Task<ActionResult<IEnumerable<GetMostRequestedServicesResponse>>> Get(
         [FromBody]GetMostRequestedServicesRequest request,
         [FromServices]GetMostRequestedServicesUseCase useCase)
@@ -21,8 +20,7 @@ public class ReportMostRequestedServicesController : ControllerBase
     /// <summary>
     /// Descarga el reporte sobre los servicios dentales más solicitados.
     /// </summary>
-    [Route("pdf/report")]
-    [HttpPost("most-requested/services")]
+    [HttpPost("pdf/report/most-requested/services")]
     public async Task<ActionResult> DownloadAsPdf(
         [FromBody]DownloadDentalServicesReportRequest request,
         [FromServices]DownloadDentalServicesReportUseCase useCase)

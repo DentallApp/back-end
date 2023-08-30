@@ -6,8 +6,7 @@ public class ReportTotalScheduledAppointmentsController : ControllerBase
     /// <summary>
     /// Obtiene el reporte sobre el total de citas agendadas por odontólogo.
     /// </summary>
-    [Route("report")]
-    [HttpPost("appointment/scheduled")]
+    [HttpPost("report/appointment/scheduled")]
     public async Task<ActionResult<IEnumerable<GetTotalScheduledAppointmentsResponse>>> Get(
         [FromBody]GetTotalScheduledAppointmentsRequest request,
         [FromServices]GetTotalScheduledAppointmentsUseCase useCase)
@@ -21,8 +20,7 @@ public class ReportTotalScheduledAppointmentsController : ControllerBase
     /// <summary>
     /// Descarga el reporte sobre el total de citas agendadas por odontólogo.
     /// </summary>
-    [Route("pdf/report")]
-    [HttpPost("appointment/scheduled")]
+    [HttpPost("pdf/report/appointment/scheduled")]
     public async Task<ActionResult> DownloadAsPdf(
         [FromBody]DownloadScheduledAppointmentsReportRequest request,
         [FromServices]DownloadScheduledAppointmentsReportUseCase useCase)

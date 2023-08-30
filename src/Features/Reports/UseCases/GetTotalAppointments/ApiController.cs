@@ -6,8 +6,7 @@ public class ReportTotalAppointmentsController : ControllerBase
     /// <summary>
     /// Obtiene el reporte sobre el total de citas asistidas, no asistidas y canceladas.
     /// </summary>
-    [Route("report")]
-    [HttpPost("appointment")]
+    [HttpPost("report/appointment")]
     public async Task<ActionResult<GetTotalAppointmentsResponse>> Get(
         [FromBody]GetTotalAppointmentsRequest request,
         [FromServices]GetTotalAppointmentsUseCase useCase)
@@ -21,8 +20,7 @@ public class ReportTotalAppointmentsController : ControllerBase
     /// <summary>
     /// Descarga el reporte sobre el total de citas asistidas, no asistidas y canceladas.
     /// </summary>
-    [Route("pdf/report")]
-    [HttpPost("appointment")]
+    [HttpPost("pdf/report/appointment")]
     public async Task<ActionResult> DownloadAsPdf(
         [FromBody]DownloadTotalAppointmentsReportRequest request,
         [FromServices]DownloadTotalAppointmentsReportUseCase useCase)
