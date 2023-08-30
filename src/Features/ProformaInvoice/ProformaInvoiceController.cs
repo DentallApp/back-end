@@ -7,11 +7,11 @@ public class ProformaInvoiceController : ControllerBase
     [AuthorizeByRole(RolesName.BasicUser)]
     [Route("pdf")]
     [HttpPost]
-    public async Task<ActionResult> CreatePdf(
-        [FromBody]ProformaInvoiceRequest request,
-        [FromServices]ProformaInvoiceService service)
+    public async Task<ActionResult> DownloadAsPdf(
+        [FromBody]DownloadProformaInvoiceRequest request,
+        [FromServices]DownloadProformaInvoiceUseCase useCase)
     {
-        var contents = await service.CreateProformaInvoiceToPdf(request);
+        var contents = await useCase.DownloadAsPdf(request);
         return File(contents, "application/pdf", "ProformaReporte.pdf");
     }
 }

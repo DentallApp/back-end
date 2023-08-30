@@ -5,7 +5,6 @@ public static class ApplicationDependencies
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services
-                .AddScoped<ProformaInvoiceService>()
                 .AddScoped<AppointmentCancellationService>()
                 .AddScoped<AvailabilityService>()
                 .AddScoped<EmailTemplateService>()
