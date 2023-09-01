@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.AvailabilityHours;
 
-public class AvailabilityService
+public class GetAvailableHoursUseCase
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
@@ -8,7 +8,7 @@ public class AvailabilityService
     private readonly IHolidayOfficeRepository _holidayOfficeRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    public AvailabilityService(
+    public GetAvailableHoursUseCase(
         IAppointmentRepository appointmentRepository,
         IEmployeeScheduleRepository employeeScheduleRepository,
         IGeneralTreatmentRepository dentalServiceRepository,
@@ -22,18 +22,7 @@ public class AvailabilityService
         _dateTimeProvider = dateTimeProvider;
     }
 
-    /// <summary>
-    /// Obtiene el tiempo libre (o punto de descanso) del empleado. 
-    /// Este tiempo se descarta para el cálculo de los horarios disponibles.
-    /// </summary>
-    private static UnavailableTimeRangeResponse GetTimeOff(EmployeeScheduleByWeekDayDto employeeScheduleDto)
-        => new()
-        {
-            StartHour = (TimeSpan)employeeScheduleDto.MorningEndHour,
-            EndHour   = (TimeSpan)employeeScheduleDto.AfternoonStartHour
-        };
-
-    public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> GetAvailableHours(AvailableTimeRangeRequest request)
+    public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> Execute(AvailableTimeRangeRequest request)
     {
         int officeId             = request.OfficeId;
         int dentistId            = request.DentistId;
@@ -111,6 +100,19 @@ public class AvailabilityService
             Success = true,
             Data    = availableHours,
             Message = GetResourceMessage
+        };
+    }
+
+    /// <summary>
+    /// Obtiene el tiempo libre (o punto de descanso) del empleado. 
+    /// Este tiempo se descarta para el cálculo de los horarios disponibles.
+    /// </summary>
+    private static UnavailableTimeRangeResponse GetTimeOff(EmployeeScheduleByWeekDayDto employeeScheduleDto)
+    { 
+        return new()
+        {
+            StartHour = (TimeSpan)employeeScheduleDto.MorningEndHour,
+            EndHour   = (TimeSpan)employeeScheduleDto.AfternoonStartHour
         };
     }
 }

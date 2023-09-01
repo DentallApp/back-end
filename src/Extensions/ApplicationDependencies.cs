@@ -8,7 +8,6 @@ public static class ApplicationDependencies
     {
         services
                 .AddScoped<AppointmentCancellationService>()
-                .AddScoped<AvailabilityService>()
                 .AddScoped<EmailTemplateService>()
                 .AddScoped<ITokenService, TokenService>()
                 .AddScoped<IEmailService, EmailService>();

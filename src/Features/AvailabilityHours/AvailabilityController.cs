@@ -9,9 +9,9 @@ public class AvailabilityController : ControllerBase
 	[HttpPost]
 	public async Task<ActionResult<Response<IEnumerable<AvailableTimeRangeResponse>>>> Get(
 		[FromBody]AvailableTimeRangeRequest request,
-		[FromServices]AvailabilityService service)
+		[FromServices]GetAvailableHoursUseCase useCase)
 	{
-		var response = await service.GetAvailableHours(request);
+		var response = await useCase.Execute(request);
 		return response.Success ? Ok(response) : BadRequest(response);
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.UnitTests.Features.AvailabilityHours;
 
-public partial class AvailabilityTests
+public class AvailabilityTests
 {
     [TestCaseSource(typeof(GetAvailableHoursTestCases))]
     public void GetAvailableHours_WhenNumberOfUnavailableHoursIsGreaterThanOrEqualToZero_ShouldReturnsAvailableHours(
