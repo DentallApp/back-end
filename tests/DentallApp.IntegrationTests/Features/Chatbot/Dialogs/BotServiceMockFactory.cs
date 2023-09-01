@@ -33,12 +33,12 @@ public static class BotServiceMockFactory
         Mock.Arrange(() => botService.GetDentistScheduleAsync(Arg.AnyInt))
             .ReturnsAsync(Schedule);
 
-        Mock.Arrange(() => botService.GetAvailableHoursAsync(Arg.IsAny<AvailableTimeRangePostDto>()))
-            .ReturnsAsync(new Response<IEnumerable<AvailableTimeRangeDto>>
+        Mock.Arrange(() => botService.GetAvailableHoursAsync(Arg.IsAny<AvailableTimeRangeRequest>()))
+            .ReturnsAsync(new Response<IEnumerable<AvailableTimeRangeResponse>>
             {
                 Success = true,
                 Message = GetResourceMessage,
-                Data    = new List<AvailableTimeRangeDto>
+                Data    = new List<AvailableTimeRangeResponse>
                 {
                     new() { StartHour = StartHour, EndHour = EndHour }
                 }

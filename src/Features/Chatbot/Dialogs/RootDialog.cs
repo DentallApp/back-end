@@ -149,7 +149,7 @@ public partial class RootDialog : ComponentDialog
         stepContext.GetAppointment().AppointmentDate = DateTime.Parse(selectedAppointmentDate);
         await stepContext.SendTypingActivityAsync();
         var appointment = stepContext.GetAppointment();
-        var response   = await _botService.GetAvailableHoursAsync(new AvailableTimeRangePostDto
+        var response   = await _botService.GetAvailableHoursAsync(new AvailableTimeRangeRequest
         {
             OfficeId        = appointment.OfficeId,
             DentistId       = appointment.DentistId,
@@ -160,7 +160,7 @@ public partial class RootDialog : ComponentDialog
         if (!response.Success)
             return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
 
-        var availableHours = response.Data as List<AvailableTimeRangeDto>;
+        var availableHours = response.Data as List<AvailableTimeRangeResponse>;
         await stepContext.Context.SendActivityAsync(string.Format(TotalHoursAvailableMessage, availableHours.Count));
         return await stepContext.PromptAsync(
             nameof(TextPrompt),

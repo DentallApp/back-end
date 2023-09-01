@@ -5,7 +5,7 @@ public partial class AvailabilityTests
     [TestCaseSource(typeof(GetAvailableHoursTestCases))]
     public void GetAvailableHours_WhenNumberOfUnavailableHoursIsGreaterThanOrEqualToZero_ShouldReturnsAvailableHours(
         AvailabilityOptions options, 
-        List<AvailableTimeRangeDto> expectedList)
+        List<AvailableTimeRangeResponse> expectedList)
     {
         // Act
         var availableHours = Availability.GetAvailableHours(options);
@@ -18,7 +18,7 @@ public partial class AvailabilityTests
     public void GetAvailableHours_WhenDentistHasSomeTimeoffOrRestTime_ShouldTakeItAsRangeOfUnavailableTime()
     {
         // Arrange
-        var unavailables = new List<UnavailableTimeRangeDto>
+        var unavailables = new List<UnavailableTimeRangeResponse>
         {
             new() { StartHour = TimeSpan.Parse("8:00"),  EndHour = TimeSpan.Parse("9:00") },
             new() { StartHour = TimeSpan.Parse("10:00"), EndHour = TimeSpan.Parse("11:00") },
@@ -26,7 +26,7 @@ public partial class AvailabilityTests
             new() { StartHour = TimeSpan.Parse("14:30"), EndHour = TimeSpan.Parse("15:00") },
             new() { StartHour = TimeSpan.Parse("17:00"), EndHour = TimeSpan.Parse("17:30") }
         };
-        var expectedList = new List<AvailableTimeRangeDto>
+        var expectedList = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "07:00", EndHour = "08:00" },
             new() { StartHour = "09:00", EndHour = "10:00" },
@@ -34,20 +34,22 @@ public partial class AvailabilityTests
             new() { StartHour = "15:00", EndHour = "16:00" },
             new() { StartHour = "16:00", EndHour = "17:00" }
         };
-        var options = new AvailabilityOptions
-        {
-            DentistStartHour = TimeSpan.Parse("7:00"),
-            DentistEndHour   = TimeSpan.Parse("18:00"),
-            ServiceDuration  = TimeSpan.FromMinutes(60)
-        };
-        var timeOff = new UnavailableTimeRangeDto
+        var timeOff = new UnavailableTimeRangeResponse
         {
             StartHour = TimeSpan.Parse("12:00"),
             EndHour   = TimeSpan.Parse("13:00")
         };
         unavailables.Add(timeOff);
-        options.Unavailables = unavailables.OrderBy(timeRange => timeRange.StartHour)
-                                           .ThenBy(timeRange => timeRange.EndHour).ToList();
+        var options = new AvailabilityOptions
+        {
+            DentistStartHour = TimeSpan.Parse("7:00"),
+            DentistEndHour   = TimeSpan.Parse("18:00"),
+            ServiceDuration  = TimeSpan.FromMinutes(60),
+            Unavailables     = unavailables
+                .OrderBy(timeRange => timeRange.StartHour)
+                .ThenBy(timeRange => timeRange.EndHour)
+                .ToList()
+        };
 
         // Act
         var availableHours = Availability.GetAvailableHours(options);
@@ -62,7 +64,7 @@ public partial class AvailabilityTests
         // Arrange
         var options = new AvailabilityOptions
         {
-            Unavailables     = new List<UnavailableTimeRangeDto>(),
+            Unavailables     = new List<UnavailableTimeRangeResponse>(),
             DentistStartHour = TimeSpan.Parse("9:30"),
             DentistEndHour   = TimeSpan.Parse("12:30"),
             ServiceDuration  = TimeSpan.FromMinutes(0)
@@ -79,7 +81,7 @@ public partial class AvailabilityTests
     public void GetAvailableHours_WhenNumberOfAvailableHoursIsZero_ShouldReturnsNull()
     {
         // Arrange
-        var unavailables = new List<UnavailableTimeRangeDto>
+        var unavailables = new List<UnavailableTimeRangeResponse>
         {
             new() { StartHour = TimeSpan.Parse("8:00"),  EndHour = TimeSpan.Parse("9:00") },
             new() { StartHour = TimeSpan.Parse("9:00"),  EndHour = TimeSpan.Parse("10:00") },
@@ -105,7 +107,7 @@ public partial class AvailabilityTests
     public void GetAvailableHours_WhenAppointmentDateIsEqualToTheCurrentDate_ShouldDiscardAvailableHoursThatAreLessThanTheCurrentTime()
     {
         // Arrange
-        var unavailables = new List<UnavailableTimeRangeDto>
+        var unavailables = new List<UnavailableTimeRangeResponse>
         {
             new() { StartHour = TimeSpan.Parse("10:00"),  EndHour = TimeSpan.Parse("10:30") },
             new() { StartHour = TimeSpan.Parse("11:00"),  EndHour = TimeSpan.Parse("12:00") }
@@ -119,7 +121,7 @@ public partial class AvailabilityTests
             AppointmentDate    = new DateTime(2022, 08, 01, 0, 0, 0),
             CurrentTimeAndDate = new DateTime(2022, 08, 01, 12, 0, 0)
         };
-        var expectedList = new List<AvailableTimeRangeDto>
+        var expectedList = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "12:30", EndHour = "13:00" },
             new() { StartHour = "13:00", EndHour = "13:30" },
@@ -154,7 +156,7 @@ public partial class AvailabilityTests
         string startEndNotAvailable)
     {
         // Arrange
-        var unavailableTimeRange = new UnavailableTimeRangeDto
+        var unavailableTimeRange = new UnavailableTimeRangeResponse
         {
             StartHour = TimeSpan.Parse(startHourNotAvailable),
             EndHour   = TimeSpan.Parse(startEndNotAvailable)
@@ -188,7 +190,7 @@ public partial class AvailabilityTests
         string startEndNotAvailable)
     {
         // Arrange
-        var unavailableTimeRange = new UnavailableTimeRangeDto
+        var unavailableTimeRange = new UnavailableTimeRangeResponse
         {
             StartHour = TimeSpan.Parse(startHourNotAvailable),
             EndHour   = TimeSpan.Parse(startEndNotAvailable)

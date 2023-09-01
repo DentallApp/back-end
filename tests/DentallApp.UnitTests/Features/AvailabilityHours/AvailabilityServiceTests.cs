@@ -28,12 +28,12 @@ public class AvailabilityServiceTests
     public async Task GetAvailableHoursAsync_WhenAppointmentDateIsPublicHoliday_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto { AppointmentDate = new DateTime(2023, 01, 01) };
+        var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _holidayOfficeRepository.IsPublicHolidayAsync(Arg.AnyInt, Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(true);
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
 
         // Asserts
         response.Success.Should().BeFalse();
@@ -46,12 +46,12 @@ public class AvailabilityServiceTests
     {
         // Arrange
         var expectedMessage = string.Format(DentistNotAvailableMessage, WeekDaysType.WeekDays[0]);
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto { AppointmentDate = new DateTime(2023, 01, 01) };
+        var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
             .DoNothing();
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
 
         // Asserts
         response.Success.Should().BeFalse();
@@ -64,12 +64,12 @@ public class AvailabilityServiceTests
     {
         // Arrange
         var expectedMessage = string.Format(DentistNotAvailableMessage, WeekDaysType.WeekDays[0]);
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto { AppointmentDate = new DateTime(2023, 01, 01) };
+        var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleByWeekDayDto { IsEmployeeScheculeDeleted = true });
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
 
         // Asserts
         response.Success.Should().BeFalse();
@@ -82,12 +82,12 @@ public class AvailabilityServiceTests
     {
         // Arrange
         var expectedMessage = string.Format(OfficeClosedForSpecificDayMessage, WeekDaysType.WeekDays[0]);
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto { AppointmentDate = new DateTime(2023, 01, 01) };
+        var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleByWeekDayDto { IsOfficeScheduleDeleted = true });
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
 
         // Asserts
         response.Success.Should().BeFalse();
@@ -100,12 +100,12 @@ public class AvailabilityServiceTests
     {
         // Arrange
         var expectedMessage = string.Format(OfficeClosedForSpecificDayMessage, WeekDaysType.WeekDays[0]);
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto { AppointmentDate = new DateTime(2023, 01, 01) };
+        var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleByWeekDayDto { IsOfficeDeleted = true });
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
 
         // Asserts
         response.Success.Should().BeFalse();
@@ -117,12 +117,12 @@ public class AvailabilityServiceTests
     public async Task GetAvailableHoursAsync_WhenEmployeeDoesNotHaveMorningOrAfternoonSchedule_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto();
+        var request = new AvailableTimeRangeRequest();
         Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleByWeekDayDto());
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
 
         // Asserts
         response.Success.Should().BeFalse();
@@ -134,7 +134,7 @@ public class AvailabilityServiceTests
     public async Task GetAvailableHoursAsync_WhenDentalServiceIdIsInvalid_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto();
+        var request = new AvailableTimeRangeRequest();
         Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleByWeekDayDto
             { 
@@ -145,7 +145,7 @@ public class AvailabilityServiceTests
             .DoNothing();
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
 
         // Asserts
         response.Success.Should().BeFalse();
@@ -157,8 +157,8 @@ public class AvailabilityServiceTests
     public async Task GetAvailableHoursAsync_WhenEmployeeHasMorningAndAfternoonSchedule_ShouldReturnsAvailableHours()
     {
         // Arrange
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto() { AppointmentDate = new DateTime(2022, 05, 10) };
-        var expectedList = new List<AvailableTimeRangeDto>
+        var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
+        var expectedList = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "09:00", EndHour = "09:40" },
             new() { StartHour = "09:40", EndHour = "10:20" },
@@ -179,7 +179,7 @@ public class AvailabilityServiceTests
                 AfternoonEndHour   = new TimeSpan(17, 0, 0)
             });
         Mock.Arrange(() => _appointmentRepository.GetUnavailableHoursAsync(Arg.AnyInt, Arg.AnyDateTime))
-            .ReturnsAsync(new List<UnavailableTimeRangeDto>
+            .ReturnsAsync(new List<UnavailableTimeRangeResponse>
             {
                 new() { StartHour = TimeSpan.Parse("7:00"),  EndHour = TimeSpan.Parse("7:40") },
                 new() { StartHour = TimeSpan.Parse("7:40"),  EndHour = TimeSpan.Parse("8:20") },
@@ -190,7 +190,7 @@ public class AvailabilityServiceTests
             .ReturnsAsync(new GeneralTreatmentGetDurationDto { Duration = 40 });
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
         var availableHours = response.Data.ToList();
 
         // Asserts
@@ -202,8 +202,8 @@ public class AvailabilityServiceTests
     public async Task GetAvailableHoursAsync_WhenEmployeeHasMorningSchedule_ShouldReturnsAvailableHours()
     {
         // Arrange
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto() { AppointmentDate = new DateTime(2022, 05, 10) };
-        var expectedList = new List<AvailableTimeRangeDto>
+        var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
+        var expectedList = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "09:00", EndHour = "09:40" },
             new() { StartHour = "09:40", EndHour = "10:20" },
@@ -218,7 +218,7 @@ public class AvailabilityServiceTests
                 MorningEndHour   = new TimeSpan(12, 0, 0)
             });
         Mock.Arrange(() => _appointmentRepository.GetUnavailableHoursAsync(Arg.AnyInt, Arg.AnyDateTime))
-            .ReturnsAsync(new List<UnavailableTimeRangeDto>
+            .ReturnsAsync(new List<UnavailableTimeRangeResponse>
             {
                 new() { StartHour = TimeSpan.Parse("7:00"),  EndHour = TimeSpan.Parse("7:40") },
                 new() { StartHour = TimeSpan.Parse("7:40"),  EndHour = TimeSpan.Parse("8:20") },
@@ -228,7 +228,7 @@ public class AvailabilityServiceTests
             .ReturnsAsync(new GeneralTreatmentGetDurationDto { Duration = 40 });
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
         var availableHours = response.Data.ToList();
 
         // Asserts
@@ -240,8 +240,8 @@ public class AvailabilityServiceTests
     public async Task GetAvailableHoursAsync_WhenEmployeeHasAfternoonSchedule_ShouldReturnsAvailableHours()
     {
         // Arrange
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto() { AppointmentDate = new DateTime(2022, 05, 10) };
-        var expectedList = new List<AvailableTimeRangeDto>
+        var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
+        var expectedList = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "13:00", EndHour = "13:40" },
             new() { StartHour = "14:40", EndHour = "15:20" },
@@ -256,7 +256,7 @@ public class AvailabilityServiceTests
                 AfternoonEndHour   = new TimeSpan(17, 0, 0)
             });
         Mock.Arrange(() => _appointmentRepository.GetUnavailableHoursAsync(Arg.AnyInt, Arg.AnyDateTime))
-            .ReturnsAsync(new List<UnavailableTimeRangeDto>
+            .ReturnsAsync(new List<UnavailableTimeRangeResponse>
             {
                 new() { StartHour = TimeSpan.Parse("14:00"), EndHour = TimeSpan.Parse("14:40") }
             });
@@ -264,7 +264,7 @@ public class AvailabilityServiceTests
             .ReturnsAsync(new GeneralTreatmentGetDurationDto { Duration = 40 });
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
         var availableHours = response.Data.ToList();
 
         // Asserts
@@ -276,7 +276,7 @@ public class AvailabilityServiceTests
     public async Task GetAvailableHoursAsync_WhenSchedulesAreNotAvailable_ShouldReturnsResponseWithoutAvailableHours()
     {
         // Arrange
-        var availableTimeRangePostDto = new AvailableTimeRangePostDto() { AppointmentDate = new DateTime(2022, 05, 10) };
+        var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
         Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleByWeekDayDto
@@ -285,7 +285,7 @@ public class AvailabilityServiceTests
                 AfternoonEndHour   = new TimeSpan(17, 0, 0)
             });
         Mock.Arrange(() => _appointmentRepository.GetUnavailableHoursAsync(Arg.AnyInt, Arg.AnyDateTime))
-            .ReturnsAsync(new List<UnavailableTimeRangeDto>
+            .ReturnsAsync(new List<UnavailableTimeRangeResponse>
             {
                 new() { StartHour = TimeSpan.Parse("13:00"), EndHour = TimeSpan.Parse("13:40") },
                 new() { StartHour = TimeSpan.Parse("14:00"), EndHour = TimeSpan.Parse("14:40") },
@@ -297,7 +297,7 @@ public class AvailabilityServiceTests
             .ReturnsAsync(new GeneralTreatmentGetDurationDto { Duration = 40 });
 
         // Act
-        var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+        var response = await _availabilityService.GetAvailableHours(request);
 
         // Asserts
         response.Success.Should().BeFalse();

@@ -28,7 +28,7 @@ global using DentallApp.Features.AppointmentStatuses;
 global using DentallApp.Features.AppointmentCancellation;
 global using DentallApp.Features.AppointmentCancellation.DTOs;
 global using DentallApp.Features.AvailabilityHours;
-global using DentallApp.Features.AvailabilityHours.DTOs;
+global using DentallApp.Features.AvailabilityHours.Models;
 global using DentallApp.Features.EmployeeSchedules;
 global using DentallApp.Features.EmployeeSchedules.DTOs;
 global using DentallApp.Features.WeekDays;

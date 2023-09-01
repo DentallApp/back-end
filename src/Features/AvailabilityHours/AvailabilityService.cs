@@ -8,11 +8,12 @@ public class AvailabilityService
     private readonly IHolidayOfficeRepository _holidayOfficeRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    public AvailabilityService(IAppointmentRepository appointmentRepository,
-                               IEmployeeScheduleRepository employeeScheduleRepository,
-                               IGeneralTreatmentRepository dentalServiceRepository,
-                               IHolidayOfficeRepository holidayOfficeRepository,
-                               IDateTimeProvider dateTimeProvider)
+    public AvailabilityService(
+        IAppointmentRepository appointmentRepository,
+        IEmployeeScheduleRepository employeeScheduleRepository,
+        IGeneralTreatmentRepository dentalServiceRepository,
+        IHolidayOfficeRepository holidayOfficeRepository,
+        IDateTimeProvider dateTimeProvider)
     {
         _appointmentRepository = appointmentRepository;
         _employeeScheduleRepository = employeeScheduleRepository;
@@ -25,41 +26,41 @@ public class AvailabilityService
     /// Obtiene el tiempo libre (o punto de descanso) del empleado. 
     /// Este tiempo se descarta para el cálculo de los horarios disponibles.
     /// </summary>
-    private UnavailableTimeRangeDto GetTimeOff(EmployeeScheduleByWeekDayDto employeeScheduleDto)
+    private static UnavailableTimeRangeResponse GetTimeOff(EmployeeScheduleByWeekDayDto employeeScheduleDto)
         => new()
         {
             StartHour = (TimeSpan)employeeScheduleDto.MorningEndHour,
             EndHour   = (TimeSpan)employeeScheduleDto.AfternoonStartHour
         };
 
-    public async Task<Response<IEnumerable<AvailableTimeRangeDto>>> GetAvailableHoursAsync(AvailableTimeRangePostDto availableTimeRangePostDto)
+    public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> GetAvailableHours(AvailableTimeRangeRequest request)
     {
-        int officeId             = availableTimeRangePostDto.OfficeId;
-        int dentistId            = availableTimeRangePostDto.DentistId;
-        int serviceId            = availableTimeRangePostDto.DentalServiceId;
-        var appointmentDate      = availableTimeRangePostDto.AppointmentDate;
+        int officeId             = request.OfficeId;
+        int dentistId            = request.DentistId;
+        int serviceId            = request.DentalServiceId;
+        var appointmentDate      = request.AppointmentDate;
         int weekDayId            = (int)appointmentDate.DayOfWeek;
         var weekDayName          = WeekDaysType.WeekDays[weekDayId];
         if (await _holidayOfficeRepository.IsPublicHolidayAsync(officeId, appointmentDate.Day, appointmentDate.Month))
-            return new Response<IEnumerable<AvailableTimeRangeDto>>(AppointmentDateIsPublicHolidayMessage);
+            return new Response<IEnumerable<AvailableTimeRangeResponse>>(AppointmentDateIsPublicHolidayMessage);
 
         var employeeScheduleDto  = await _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(dentistId, weekDayId);
         if (employeeScheduleDto is null || employeeScheduleDto.IsEmployeeScheculeDeleted)
-            return new Response<IEnumerable<AvailableTimeRangeDto>>(string.Format(DentistNotAvailableMessage, weekDayName));
+            return new Response<IEnumerable<AvailableTimeRangeResponse>>(string.Format(DentistNotAvailableMessage, weekDayName));
 
         if (employeeScheduleDto.IsOfficeScheduleDeleted || employeeScheduleDto.IsOfficeDeleted)
-            return new Response<IEnumerable<AvailableTimeRangeDto>>(string.Format(OfficeClosedForSpecificDayMessage, weekDayName));
+            return new Response<IEnumerable<AvailableTimeRangeResponse>>(string.Format(OfficeClosedForSpecificDayMessage, weekDayName));
 
         if (employeeScheduleDto.HasNotSchedule())
-            return new Response<IEnumerable<AvailableTimeRangeDto>>(NoMorningOrAfternoonHoursMessage);
+            return new Response<IEnumerable<AvailableTimeRangeResponse>>(NoMorningOrAfternoonHoursMessage);
 
         var unavailables      = await _appointmentRepository.GetUnavailableHoursAsync(dentistId, appointmentDate);
         var dentalServiceDto  = await  _dentalServiceRepository.GetTreatmentWithDurationAsync(serviceId);
         if (dentalServiceDto is null)
-            return new Response<IEnumerable<AvailableTimeRangeDto>>(DentalServiceNotAvailableMessage);
+            return new Response<IEnumerable<AvailableTimeRangeResponse>>(DentalServiceNotAvailableMessage);
 
         TimeSpan serviceDuration = TimeSpan.FromMinutes(dentalServiceDto.Duration);
-        List<AvailableTimeRangeDto> availableHours = null;
+        List<AvailableTimeRangeResponse> availableHours = null;
 
         if (employeeScheduleDto.HasFullSchedule())
         {
@@ -71,9 +72,10 @@ public class AvailabilityService
                 ServiceDuration    = serviceDuration,
                 AppointmentDate    = appointmentDate,
                 CurrentTimeAndDate = _dateTimeProvider.Now,
-                Unavailables       = unavailables.OrderBy(timeRange => timeRange.StartHour)
-                                                 .ThenBy(timeRange => timeRange.EndHour)
-                                                 .ToList()
+                Unavailables       = unavailables
+                    .OrderBy(timeRange => timeRange.StartHour)
+                    .ThenBy(timeRange => timeRange.EndHour)
+                    .ToList()
             });
         }
         else if(employeeScheduleDto.IsMorningSchedule())
@@ -102,12 +104,12 @@ public class AvailabilityService
         }
 
         if(availableHours is null)
-            return new Response<IEnumerable<AvailableTimeRangeDto>>(NoSchedulesAvailableMessage);
+            return new Response<IEnumerable<AvailableTimeRangeResponse>>(NoSchedulesAvailableMessage);
 
-        return new Response<IEnumerable<AvailableTimeRangeDto>>
+        return new Response<IEnumerable<AvailableTimeRangeResponse>>
         {
             Success = true,
-            Data = availableHours,
+            Data    = availableHours,
             Message = GetResourceMessage
         };
     }

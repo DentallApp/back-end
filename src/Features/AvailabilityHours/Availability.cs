@@ -13,7 +13,7 @@ public static class Availability
     /// <param name="newEndHour">La nueva hora de finalización generada.</param>
     /// <param name="unavailableTimeRange">Una instancia con el rango de tiempo no disponible.</param>
     /// <returns><c>true</c> sí la nueva franja de horario no está disponible, de lo contrario devuelve <c>false</c>.</returns>
-    public static bool IsNotAvailable(ref TimeSpan newStartHour, ref TimeSpan newEndHour, UnavailableTimeRangeDto unavailableTimeRange)
+    public static bool IsNotAvailable(ref TimeSpan newStartHour, ref TimeSpan newEndHour, UnavailableTimeRangeResponse unavailableTimeRange)
         => unavailableTimeRange.StartHour < newEndHour && newStartHour < unavailableTimeRange.EndHour;
 
     /// <summary>
@@ -21,12 +21,12 @@ public static class Availability
     /// </summary>
     /// <param name="options">Una instancia con las opciones requeridas para obtener las horas disponibles.</param>
     /// <returns>Una colección con las horas disponibles, de lo contrario devuelve <c>null</c>.</returns>
-    public static List<AvailableTimeRangeDto> GetAvailableHours(AvailabilityOptions options)
+    public static List<AvailableTimeRangeResponse> GetAvailableHours(AvailabilityOptions options)
     {
         if (options.ServiceDuration == TimeSpan.Zero)
             throw new InvalidOperationException("The duration of the dental service may not be 00:00");
 
-        var availableHours                   = new List<AvailableTimeRangeDto>();
+        var availableHours                   = new List<AvailableTimeRangeResponse>();
         int unavailableTimeRangeIndex        = 0;
         int totalUnavailableHours            = options.Unavailables.Count;
         // Para verificar sí la fecha de la cita no es la fecha actual.
@@ -52,7 +52,7 @@ public static class Availability
 
                 if (appointmentDateIsNotCurrentDate || newStartHour > currentTime)
                 {
-                    availableHours.Add(new AvailableTimeRangeDto
+                    availableHours.Add(new AvailableTimeRangeResponse
                     {
                         StartHour = newStartHour.GetHourWithoutSeconds(),
                         EndHour   = newEndHour.GetHourWithoutSeconds()

@@ -11,7 +11,7 @@ public class AppointmentRepository : IAppointmentRepository
         _context = context;
     }
 
-    public async Task<List<UnavailableTimeRangeDto>> GetUnavailableHoursAsync(int dentistId, DateTime appointmentDate)
+    public async Task<List<UnavailableTimeRangeResponse>> GetUnavailableHoursAsync(int dentistId, DateTime appointmentDate)
     {
         var response = await _context.Set<Appointment>()
             .Where(appointment =>
@@ -22,7 +22,11 @@ public class AppointmentRepository : IAppointmentRepository
                    // Checks if the canceled appointment is not available.
                    // This check allows patients to choose a time slot for an appointment canceled by another basic user.
                    _dateTimeProvider.Now > _context.AddTime(_context.ToDateTime(appointment.Date), appointment.StartHour)))
-            .Select(appointment => appointment.MapToUnavailableTimeRangeDto())
+            .Select(appointment => new UnavailableTimeRangeResponse
+            {
+                StartHour = appointment.StartHour,
+                EndHour   = appointment.EndHour
+            })
             .Distinct()
             .OrderBy(appointment => appointment.StartHour)
               .ThenBy(appointment => appointment.EndHour)

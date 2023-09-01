@@ -7,7 +7,7 @@ global using System.Security.Claims;
 global using DotEnv.Core;
 
 global using DentallApp.Features.AvailabilityHours;
-global using DentallApp.Features.AvailabilityHours.DTOs;
+global using DentallApp.Features.AvailabilityHours.Models;
 global using DentallApp.Features.Chatbot.Factories;
 global using DentallApp.Features.WeekDays;
 global using DentallApp.Features.AppointmentCancellation;
