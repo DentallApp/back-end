@@ -6,18 +6,22 @@ var builder     = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddServices()
-                .AddRepositories()
-                .AddHelpers();
+builder.Services
+    .AddServices()
+    .AddRepositories()
+    .AddHelpers()
+    .AddUseCases();
 
 var databaseSettings = new EnvBinder(envVars).Bind<DatabaseSettings>();
-builder.Services.AddSingleton(appSettings)
-                .AddSingleton<IDbConnector>(new MariaDbConnector(databaseSettings.DbConnectionString));
+builder.Services
+    .AddSingleton(appSettings)
+    .AddSingleton<IDbConnector>(new MariaDbConnector(databaseSettings.DbConnectionString));
 
-builder.Services.AddHttpClient()
-                .AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
-                .AddCustomInvalidModelStateResponse()
-                .AddNewtonsoftJson();
+builder.Services
+    .AddHttpClient()
+    .AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
+    .AddCustomInvalidModelStateResponse()
+    .AddNewtonsoftJson();
 
 
 builder.Services.AddDbContext(databaseSettings);
@@ -26,7 +30,6 @@ builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(appSettings);
 builder.Services.AddBotServices(builder.Configuration);
 builder.Services.AddQuartzJobs(appSettings);
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

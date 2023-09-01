@@ -7,7 +7,7 @@ public class HeroCardFactoryTests
     {
         // Arrange
         const string type = ActionTypes.MessageBack;
-        var availableHours = new List<AvailableTimeRangeDto>
+        var availableHours = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "07:00",  EndHour = "08:00" },
             new() { StartHour = "08:00",  EndHour = "09:00" },
@@ -58,7 +58,7 @@ public class HeroCardFactoryTests
     {
         // Arrange
         const string type = ActionTypes.MessageBack;
-        var availableHours = new List<AvailableTimeRangeDto>
+        var availableHours = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "07:00",  EndHour = "08:00" },
             new() { StartHour = "08:00",  EndHour = "09:00" },
@@ -105,7 +105,7 @@ public class HeroCardFactoryTests
     {
         // Arrange
         const string type = ActionTypes.MessageBack;
-        var availableHours = new List<AvailableTimeRangeDto>
+        var availableHours = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "07:00",  EndHour = "08:00" }
         };

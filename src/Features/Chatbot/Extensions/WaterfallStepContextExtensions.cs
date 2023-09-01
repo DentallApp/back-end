@@ -1,4 +1,6 @@
-﻿namespace DentallApp.Features.Chatbot.Extensions;
+﻿using DentallApp.Features.Appointments.UseCases;
+
+namespace DentallApp.Features.Chatbot.Extensions;
 
 public static class WaterfallStepContextExtensions
 {
@@ -17,15 +19,15 @@ public static class WaterfallStepContextExtensions
     public static UserProfile GetUserProfile(this WaterfallStepContext stepContext)
         => (UserProfile)stepContext.Values[UserInfo];
 
-    public static AppointmentInsertDto CreateAppointmentInstance(this WaterfallStepContext stepContext)
+    public static CreateAppointmentRequest CreateAppointmentInstance(this WaterfallStepContext stepContext)
     {
-        var appointmentInfo = new AppointmentInsertDto();
+        var appointmentInfo = new CreateAppointmentRequest();
         stepContext.Values[AppointmentInfo] = appointmentInfo;
         return appointmentInfo;
     }
 
-    public static AppointmentInsertDto GetAppointment(this WaterfallStepContext stepContext)
-        => (AppointmentInsertDto)stepContext.Values[AppointmentInfo];
+    public static CreateAppointmentRequest GetAppointment(this WaterfallStepContext stepContext)
+        => (CreateAppointmentRequest)stepContext.Values[AppointmentInfo];
 
     /// <summary>
     /// Obtiene el valor que seleccionó el usuario desde una instancia de tipo <see cref="JObject"/>.

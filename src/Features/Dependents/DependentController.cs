@@ -1,42 +1,45 @@
-﻿namespace DentallApp.Features.Dependents;
+﻿using DentallApp.Features.Dependents.UseCases;
+
+namespace DentallApp.Features.Dependents;
 
 [AuthorizeByRole(RolesName.BasicUser)]
 [Route("dependent")]
 [ApiController]
 public class DependentController : ControllerBase
 {
-    private readonly DependentService _dependentService;
-    private readonly IDependentRepository _dependentRepository;
-        
-    public DependentController(DependentService dependentService, IDependentRepository dependentRepository)
-    {
-        _dependentService = dependentService;
-        _dependentRepository = dependentRepository;
-    }
-
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Post([FromBody]DependentInsertDto dependentDto)
+    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+        [FromBody]CreateDependentRequest request,
+        [FromServices]CreateDependentUseCase useCase)
     {
-        var response = await _dependentService.CreateDependentAsync(User.GetUserId(), dependentDto);
-        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
+        var response = await useCase.Execute(User.GetUserId(), request);
+        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
-
-    [Route("user")]
-    [HttpGet]
-    public async Task<IEnumerable<DependentGetDto>> GetByUserId()
-        => await _dependentRepository.GetDependentsByUserIdAsync(User.GetUserId());
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Response>> Delete(int id)
+    public async Task<ActionResult<Response>> Delete(
+        int id,
+        [FromServices]DeleteDependentUseCase useCase)
     {
-        var response = await _dependentService.RemoveDependentAsync(id, User.GetUserId());
+        var response = await useCase.Execute(id, User.GetUserId());
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Put(int id, [FromBody]DependentUpdateDto dependentDto)
+    public async Task<ActionResult<Response>> Update(
+        int id,
+        [FromBody]UpdateDependentRequest request,
+        [FromServices]UpdateDependentUseCase useCase)
     {
-        var response = await _dependentService.UpdateDependentAsync(id, User.GetUserId(), dependentDto);
+        var response = await useCase.Execute(id, User.GetUserId(), request);
         return response.Success ? Ok(response) : BadRequest(response);
+    }
+
+    [Route("user")]
+    [HttpGet]
+    public async Task<IEnumerable<GetDependentsByUserIdResponse>> GetByUserId(
+        [FromServices]GetDependentsByUserIdUseCase useCase)
+    {
+        return await useCase.Execute(User.GetUserId());
     }
 }

@@ -21,7 +21,6 @@
     <PackageReference Include="itext7.pdfhtml" Version="4.0.5" />
     <PackageReference Include="libphonenumber-csharp" Version="8.13.4" />
     <PackageReference Include="linq2db.EntityFrameworkCore" Version="7.0.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.0" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.19.1" />
@@ -29,6 +28,7 @@
     <PackageReference Include="Quartz" Version="3.5.0" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.5.0" />
     <PackageReference Include="Scriban" Version="5.5.2" />
+    <PackageReference Include="Scrutor" Version="4.2.2" />
     <PackageReference Include="SendGrid.Extensions.DependencyInjection" Version="1.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
     <PackageReference Include="DotEnv.Core" Version="2.3.2" />

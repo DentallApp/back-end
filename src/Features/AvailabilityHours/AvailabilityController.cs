@@ -4,19 +4,14 @@
 [ApiController]
 public class AvailabilityController : ControllerBase
 {
-	private readonly AvailabilityService _availabilityService;
-
-	public AvailabilityController(AvailabilityService availabilityService)
-	{
-		_availabilityService = availabilityService;
-	}
-
 	[AuthorizeByRole(RolesName.Secretary)]
 	[Route("available-hours")]
 	[HttpPost]
-	public async Task<ActionResult<Response<IEnumerable<AvailableTimeRangeDto>>>> Get([FromBody]AvailableTimeRangePostDto availableTimeRangePostDto)
+	public async Task<ActionResult<Response<IEnumerable<AvailableTimeRangeResponse>>>> Get(
+		[FromBody]AvailableTimeRangeRequest request,
+		[FromServices]GetAvailableHoursUseCase useCase)
 	{
-		var response = await _availabilityService.GetAvailableHoursAsync(availableTimeRangePostDto);
+		var response = await useCase.Execute(request);
 		return response.Success ? Ok(response) : BadRequest(response);
 	}
 }

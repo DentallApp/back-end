@@ -1,49 +1,22 @@
-﻿namespace DentallApp.Features.Offices;
+﻿using DentallApp.Features.Offices.UseCases;
+
+namespace DentallApp.Features.Offices;
 
 [Route("office")]
 [ApiController]
 public class OfficeController : ControllerBase
 {
-    private readonly OfficeService _officeService;
-    private readonly IOfficeRepository _officeRepository;
-
-    public OfficeController(OfficeService officeService, IOfficeRepository officeRepository)
-    {
-        _officeService = officeService;
-        _officeRepository = officeRepository;
-    }
-
-    /// <summary>
-    /// Obtiene la información de cada consultorio activo.
-    /// </summary>
-    [HttpGet]
-    public async Task<IEnumerable<OfficeGetDto>> Get()
-        => await _officeRepository.GetOfficesAsync();
-
-    /// <summary>
-    /// Obtiene la información de cada consultorio activo e inactivo.
-    /// </summary>
-    [HttpGet("all")]
-    public async Task<IEnumerable<OfficeGetDto>> GetAll()
-        => await _officeRepository.GetAllOfficesAsync();
-
-    /// <summary>
-    /// Obtiene la información de cada consultorio para el formulario de editar.
-    /// </summary>
-    [Route("edit")]
-    [HttpGet]
-    public async Task<IEnumerable<OfficeShowDto>> GetOfficesForEdit()
-        => await _officeRepository.GetOfficesForEditAsync();
-
     /// <summary>
     /// Crea un nuevo consultorio.
     /// </summary>
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Post([FromBody]OfficeInsertDto officeInsertDto)
+    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+        [FromBody]CreateOfficeRequest request,
+        [FromServices]CreateOfficeUseCase useCase)
     {
-        var response = await _officeService.CreateOfficeAsync(officeInsertDto);
-        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
+        var response = await useCase.Execute(request);
+        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
     /// <summary>
@@ -51,9 +24,64 @@ public class OfficeController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Put(int id, [FromBody]OfficeUpdateDto officeUpdateDto)
+    public async Task<ActionResult<Response>> Update(
+        int id,
+        [FromBody]UpdateOfficeRequest request,
+        [FromServices]UpdateOfficeUseCase useCase)
     {
-        var response = await _officeService.UpdateOfficeAsync(id, User.GetEmployeeId(), officeUpdateDto);
+        var response = await useCase.Execute(id, User.GetEmployeeId(), request);
         return response.Success ? Ok(response) : NotFound(response);
+    }
+
+    /// <summary>
+    /// Obtiene los nombres de cada consultorio.
+    /// </summary>
+    /// <remarks>
+    /// Detalles a tomar en cuenta:
+    /// <para>- Sí <c>status</c> es <c>null</c>, traerá TODOS los consultorios activo e inactivo.</para>
+    /// <para>- Sí <c>status</c> es <c>true</c>, traerá los consultorios activos.</para>
+    /// <para>- Sí <c>status</c> es <c>false</c>, traerá los consultorios inactivos.</para>
+    /// </remarks>
+    [Route("name")]
+    [HttpGet]
+    public async Task<IEnumerable<GetOfficeNamesResponse>> GetNames(
+        bool? status,
+        [FromServices]GetOfficeNamesUseCase useCase)
+    {
+        return await useCase.Execute(status);
+    }
+
+    /// <summary>
+    /// Obtiene la información de cada consultorio para el formulario de editar.
+    /// </summary>
+    [Route("edit")]
+    [HttpGet]
+    public async Task<IEnumerable<GetOfficesToEditResponse>> GetOfficesToEdit(
+        [FromServices]GetOfficesToEditUseCase useCase)
+    {
+        return await useCase.Execute();
+    }
+
+    /// <summary>
+    /// Obtiene los consultorios activos (incluyendo los horarios) para la página de inicio.
+    /// </summary>
+    /// <remarks>El consultorio debe tener al menos un horario activo.</remarks>
+    [Route("home-page")]
+    [HttpGet]
+    public async Task<IEnumerable<GetOfficesForHomePageResponse>> GetOfficesForHomePage(
+        [FromServices]GetOfficesForHomePageUseCase useCase)
+    { 
+        return await useCase.Execute();
+    }
+
+    /// <summary>
+    /// Obtiene una vista general de la información de cada consultorio activo e inactivo.
+    /// </summary>
+    [Route("overview")]
+    [HttpGet]
+    public async Task<IEnumerable<GetOfficeOverviewResponse>> GetOverview(
+        [FromServices]GetOfficeOverviewUseCase useCase)
+    {
+        return await useCase.Execute();
     }
 }

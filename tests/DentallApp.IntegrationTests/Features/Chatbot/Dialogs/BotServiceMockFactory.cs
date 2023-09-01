@@ -1,4 +1,6 @@
-﻿namespace DentallApp.IntegrationTests.Features.Chatbot.Dialogs;
+﻿using DentallApp.Features.Appointments.UseCases;
+
+namespace DentallApp.IntegrationTests.Features.Chatbot.Dialogs;
 
 public static class BotServiceMockFactory
 {
@@ -31,12 +33,12 @@ public static class BotServiceMockFactory
         Mock.Arrange(() => botService.GetDentistScheduleAsync(Arg.AnyInt))
             .ReturnsAsync(Schedule);
 
-        Mock.Arrange(() => botService.GetAvailableHoursAsync(Arg.IsAny<AvailableTimeRangePostDto>()))
-            .ReturnsAsync(new Response<IEnumerable<AvailableTimeRangeDto>>
+        Mock.Arrange(() => botService.GetAvailableHoursAsync(Arg.IsAny<AvailableTimeRangeRequest>()))
+            .ReturnsAsync(new Response<IEnumerable<AvailableTimeRangeResponse>>
             {
                 Success = true,
                 Message = GetResourceMessage,
-                Data    = new List<AvailableTimeRangeDto>
+                Data    = new List<AvailableTimeRangeResponse>
                 {
                     new() { StartHour = StartHour, EndHour = EndHour }
                 }
@@ -49,7 +51,7 @@ public static class BotServiceMockFactory
                 PriceMax = PriceMax
             });
 
-        Mock.Arrange(() => botService.CreateScheduledAppointmentAsync(Arg.IsAny<AppointmentInsertDto>()))
+        Mock.Arrange(() => botService.CreateScheduledAppointmentAsync(Arg.IsAny<CreateAppointmentRequest>()))
             .ReturnsAsync(new Response<InsertedIdDto>
             {
                 Success = true,

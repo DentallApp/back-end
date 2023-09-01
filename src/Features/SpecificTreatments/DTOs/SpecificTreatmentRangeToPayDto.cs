@@ -2,11 +2,13 @@
 
 public class SpecificTreatmentRangeToPayDto
 {
-    public double PriceMin { get; set; }
-    public double PriceMax { get; set; }
+    public double PriceMin { get; init; }
+    public double PriceMax { get; init; }
 
     public override string ToString()
-        => PriceMin != PriceMax ?
-                    string.Format(RangeToPayMinMaxMessage, PriceMin, PriceMax) :
-                    string.Format(RangeToPayMessage, PriceMax);
+    {
+        return PriceMin != PriceMax ?
+            string.Format(RangeToPayMinMaxMessage, PriceMin, PriceMax) :
+            string.Format(RangeToPayMessage, PriceMax);
+    }
 }

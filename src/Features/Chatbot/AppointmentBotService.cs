@@ -1,4 +1,6 @@
-﻿namespace DentallApp.Features.Chatbot;
+﻿using DentallApp.Features.Appointments.UseCases;
+
+namespace DentallApp.Features.Chatbot;
 
 public class AppointmentBotService : IAppointmentBotService
 {
@@ -37,18 +39,18 @@ public class AppointmentBotService : IAppointmentBotService
         return await botQuery.GetPatientsAsync(userProfile);
     }
 
-    public async Task<Response<IEnumerable<AvailableTimeRangeDto>>> GetAvailableHoursAsync(AvailableTimeRangePostDto availableTimeRangeDto)
+    public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> GetAvailableHoursAsync(AvailableTimeRangeRequest request)
     {
         using var scope = _serviceProvider.CreateScope();
-        var availabilityService = scope.ServiceProvider.GetRequiredService<AvailabilityService>();
-        return await availabilityService.GetAvailableHoursAsync(availableTimeRangeDto);
+        var useCase = scope.ServiceProvider.GetRequiredService<GetAvailableHoursUseCase>();
+        return await useCase.Execute(request);
     }
 
-    public async Task<Response<InsertedIdDto>> CreateScheduledAppointmentAsync(AppointmentInsertDto appointment)
+    public async Task<Response<InsertedIdDto>> CreateScheduledAppointmentAsync(CreateAppointmentRequest request)
     {
         using var scope = _serviceProvider.CreateScope();
-        var appointmentService = scope.ServiceProvider.GetRequiredService<AppointmentService>();
-        return await appointmentService.CreateAppointmentAsync(appointment);
+        var useCase = scope.ServiceProvider.GetRequiredService<CreateAppointmentUseCase>();
+        return await useCase.Execute(request);
     }
 
     public async Task<SpecificTreatmentRangeToPayDto> GetRangeToPayAsync(int dentalServiceId)

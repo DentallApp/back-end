@@ -1,28 +1,26 @@
 ﻿namespace DentallApp.Features.GeneralTreatments;
 
-public class GeneralTreatmentRepository : Repository<GeneralTreatment>, IGeneralTreatmentRepository
+public class GeneralTreatmentRepository : IGeneralTreatmentRepository
 {
-    public GeneralTreatmentRepository(AppDbContext context) : base(context) { }
+    private readonly AppDbContext _context;
 
-    public async Task<IEnumerable<GeneralTreatmentGetDto>> GetTreatmentsAsync()
-        => await Context.Set<GeneralTreatment>()
-                        .Select(treatment => treatment.MapToGeneralTreatmentGetDto())
-                        .ToListAsync();
-
-    public async Task<IEnumerable<GeneralTreatmentShowDto>> GetTreatmentsWithoutImageUrlAsync()
-        => await Context.Set<GeneralTreatment>()
-                        .Select(treatment => treatment.MapToGeneralTreatmentShowDto())
-                        .ToListAsync();
-
-    public async Task<IEnumerable<GeneralTreatmentGetNameDto>> GetTreatmentsWithNameAsync()
-        => await Context.Set<GeneralTreatment>()
-                        .Select(treatment => treatment.MapToGeneralTreatmentGetNameDto())
-                        .ToListAsync();
+    public GeneralTreatmentRepository(AppDbContext context)
+    {
+        _context = context;
+    }
 
     public async Task<GeneralTreatmentGetDurationDto> GetTreatmentWithDurationAsync(int treatmentId)
-        => await Context.Set<GeneralTreatment>()
-                        .Where(treatment => treatment.Id == treatmentId)
-                        .Select(treatment => new GeneralTreatmentGetDurationDto { Duration = treatment.Duration })
-                        .IgnoreQueryFilters()
-                        .FirstOrDefaultAsync();
+    {
+        var durations = await _context.Set<GeneralTreatment>()
+            .Where(treatment => treatment.Id == treatmentId)
+            .Select(treatment => new GeneralTreatmentGetDurationDto 
+            { 
+                Duration = treatment.Duration 
+            })
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+
+        return durations;
+    }
 }
