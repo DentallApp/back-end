@@ -30,8 +30,10 @@ public class SchedulingController : ControllerBase
 	/// Nota: La propiedad <c>value</c> almacena el ID del consultorio.
     /// </remarks>
     [HttpGet("office")]
-	public async Task<List<AdaptiveChoice>> GetOffices()
-		=> await _botQueries.GetOfficesAsync();
+    public async Task<List<AdaptiveChoice>> GetOffices()
+    { 
+		return await _botQueries.GetOfficesAsync();
+    }
 
     /// <summary>
     /// Obtiene los servicios dentales activos para el agendamiento. 
@@ -48,14 +50,19 @@ public class SchedulingController : ControllerBase
     /// Nota: La propiedad <c>value</c> almacena el ID del servicio dental.
     /// </remarks>
     [HttpGet("dental-service")]
-	public async Task<List<AdaptiveChoice>> GetDentalServices()
-		=> await _botQueries.GetDentalServicesAsync();
+    public async Task<List<AdaptiveChoice>> GetDentalServices()
+    { 
+		return await _botQueries.GetDentalServicesAsync();
+    }
 
     /// <summary>
     /// Obtiene los odontólogos activos de un consultorio para el agendamiento.
     /// El odontólogo debe tener al menos un horario activo.
     /// </summary>
     [HttpGet("dentist")]
-	public async Task<List<AdaptiveChoice>> GetDentists([FromQuery]SchedulingGetDentistsDto schedulingDto)
-		=> await _botQueries.GetDentistsAsync(schedulingDto.OfficeId, schedulingDto.DentalServiceId);
+    public async Task<List<AdaptiveChoice>> GetDentists(
+        [FromQuery]SchedulingGetDentistsRequest request)
+    { 
+		return await _botQueries.GetDentistsAsync(request.OfficeId, request.DentalServiceId);
+    }
 }

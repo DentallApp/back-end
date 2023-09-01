@@ -33,7 +33,6 @@ global using DentallApp.Features.EmployeeSchedules;
 global using DentallApp.Features.EmployeeSchedules.DTOs;
 global using DentallApp.Features.WeekDays;
 global using DentallApp.Features.AppointmentReminders;
-global using DentallApp.Features.AppointmentScheduling.DTOs;
 global using DentallApp.Features.PublicHolidays.Offices;
 
 global using DentallApp.Middlewares;
