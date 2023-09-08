@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.AppointmentReminders.Queries;
+﻿namespace DentallApp.Features.AppointmentReminders;
 
 public class GetScheduledAppointmentsResponse
 {
@@ -13,11 +13,11 @@ public class GetScheduledAppointmentsResponse
 /// <summary>
 /// Representa una consulta en la cual obtiene las citas agendadas que están próximas a la fecha estipulada.
 /// </summary>
-public class GetScheduledAppointmentsQuery
+public class GetScheduledAppointmentsUseCase
 {
     private readonly AppDbContext _context;
 
-    public GetScheduledAppointmentsQuery(AppDbContext context)
+    public GetScheduledAppointmentsUseCase(AppDbContext context)
     {
         _context = context;
     }
@@ -43,6 +43,7 @@ public class GetScheduledAppointmentsQuery
                 DentistName      = appointment.Employee.Person.FullName
             })
             .IgnoreQueryFilters()
+            .AsNoTracking()
             .ToList();
 
         return appointments;

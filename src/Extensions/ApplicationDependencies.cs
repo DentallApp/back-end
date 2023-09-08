@@ -1,5 +1,4 @@
-﻿using DentallApp.Features.AppointmentReminders.Queries;
-using DentallApp.Features.Dependents.UseCases;
+﻿using DentallApp.Features.Dependents.UseCases;
 
 namespace DentallApp.Extensions;
 
@@ -11,8 +10,7 @@ public static class ApplicationDependencies
                 .AddScoped<AppointmentCancellationService>()
                 .AddScoped<EmailTemplateService>()
                 .AddScoped<ITokenService, TokenService>()
-                .AddScoped<IEmailService, EmailService>()
-                .AddScoped<GetScheduledAppointmentsQuery>();
+                .AddScoped<IEmailService, EmailService>();
 
         return services;
     }
