@@ -54,7 +54,7 @@ public class GetAvailableHoursUseCase
         if (employeeScheduleDto.HasFullSchedule())
         {
             unavailables.Add(GetTimeOff(employeeScheduleDto));
-            availableHours = Availability.GetAvailableHours(new AvailabilityOptions
+            availableHours = Availability.CalculateAvailableHours(new AvailabilityOptions
             {
                 DentistStartHour   = (TimeSpan)employeeScheduleDto.MorningStartHour,
                 DentistEndHour     = (TimeSpan)employeeScheduleDto.AfternoonEndHour,
@@ -69,7 +69,7 @@ public class GetAvailableHoursUseCase
         }
         else if(employeeScheduleDto.IsMorningSchedule())
         {
-            availableHours = Availability.GetAvailableHours(new AvailabilityOptions
+            availableHours = Availability.CalculateAvailableHours(new AvailabilityOptions
             {
                 DentistStartHour   = (TimeSpan)employeeScheduleDto.MorningStartHour,
                 DentistEndHour     = (TimeSpan)employeeScheduleDto.MorningEndHour,
@@ -81,7 +81,7 @@ public class GetAvailableHoursUseCase
         }
         else if(employeeScheduleDto.IsAfternoonSchedule())
         {
-            availableHours = Availability.GetAvailableHours(new AvailabilityOptions
+            availableHours = Availability.CalculateAvailableHours(new AvailabilityOptions
             {
                 DentistStartHour   = (TimeSpan)employeeScheduleDto.AfternoonStartHour,
                 DentistEndHour     = (TimeSpan)employeeScheduleDto.AfternoonEndHour,

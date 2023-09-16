@@ -1,7 +1,7 @@
 ﻿namespace DentallApp.Features.AvailabilityHours.Models;
 
 /// <summary>
-/// Representa las opciones que se utilizan para el método <see cref="Availability.GetAvailableHours(AvailabilityOptions)"/>.
+/// Representa las opciones que se utilizan para el método <see cref="Availability.CalculateAvailableHours(AvailabilityOptions)"/>.
 /// </summary>
 public class AvailabilityOptions
 {

@@ -17,11 +17,11 @@ public static class Availability
         => unavailableTimeRange.StartHour < newEndHour && newStartHour < unavailableTimeRange.EndHour;
 
     /// <summary>
-    /// Obtiene las horas disponibles para la reserva de una cita médica.
+    /// Calcula las horas disponibles para la reserva de una cita médica.
     /// </summary>
     /// <param name="options">Una instancia con las opciones requeridas para obtener las horas disponibles.</param>
     /// <returns>Una colección con las horas disponibles, de lo contrario devuelve <c>null</c>.</returns>
-    public static List<AvailableTimeRangeResponse> GetAvailableHours(AvailabilityOptions options)
+    public static List<AvailableTimeRangeResponse> CalculateAvailableHours(AvailabilityOptions options)
     {
         if (options.ServiceDuration == TimeSpan.Zero)
             throw new InvalidOperationException("The duration of the dental service may not be 00:00");

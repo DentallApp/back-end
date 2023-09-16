@@ -2,20 +2,20 @@
 
 public class AvailabilityTests
 {
-    [TestCaseSource(typeof(GetAvailableHoursTestCases))]
-    public void GetAvailableHours_WhenNumberOfUnavailableHoursIsGreaterThanOrEqualToZero_ShouldReturnsAvailableHours(
+    [TestCaseSource(typeof(CalculateAvailableHoursTestCases))]
+    public void CalculateAvailableHours_WhenNumberOfUnavailableHoursIsGreaterThanOrEqualToZero_ShouldReturnsAvailableHours(
         AvailabilityOptions options, 
         List<AvailableTimeRangeResponse> expectedList)
     {
         // Act
-        var availableHours = Availability.GetAvailableHours(options);
+        var availableHours = Availability.CalculateAvailableHours(options);
 
         // Assert
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
     [Test]
-    public void GetAvailableHours_WhenDentistHasSomeTimeoffOrRestTime_ShouldTakeItAsRangeOfUnavailableTime()
+    public void CalculateAvailableHours_WhenDentistHasSomeTimeoffOrRestTime_ShouldTakeItAsRangeOfUnavailableTime()
     {
         // Arrange
         var unavailables = new List<UnavailableTimeRangeResponse>
@@ -52,14 +52,14 @@ public class AvailabilityTests
         };
 
         // Act
-        var availableHours = Availability.GetAvailableHours(options);
+        var availableHours = Availability.CalculateAvailableHours(options);
 
         // Assert
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
     [Test]
-    public void GetAvailableHours_WhenDurationOfDentalServiceIsEqualToZero_ShouldThrowArgumentException()
+    public void CalculateAvailableHours_WhenDurationOfDentalServiceIsEqualToZero_ShouldThrowArgumentException()
     {
         // Arrange
         var options = new AvailabilityOptions
@@ -71,14 +71,14 @@ public class AvailabilityTests
         };
 
         // Act
-        Action act = () => Availability.GetAvailableHours(options);
+        Action act = () => Availability.CalculateAvailableHours(options);
 
         // Assert
         act.Should().Throw<InvalidOperationException>();
     }
 
     [Test]
-    public void GetAvailableHours_WhenNumberOfAvailableHoursIsZero_ShouldReturnsNull()
+    public void CalculateAvailableHours_WhenNumberOfAvailableHoursIsZero_ShouldReturnsNull()
     {
         // Arrange
         var unavailables = new List<UnavailableTimeRangeResponse>
@@ -97,14 +97,14 @@ public class AvailabilityTests
         };
 
         // Act
-        var availableHours = Availability.GetAvailableHours(options);
+        var availableHours = Availability.CalculateAvailableHours(options);
 
         // Assert
         availableHours.Should().BeNull();
     }
 
     [Test]
-    public void GetAvailableHours_WhenAppointmentDateIsEqualToTheCurrentDate_ShouldDiscardAvailableHoursThatAreLessThanTheCurrentTime()
+    public void CalculateAvailableHours_WhenAppointmentDateIsEqualToTheCurrentDate_ShouldDiscardAvailableHoursThatAreLessThanTheCurrentTime()
     {
         // Arrange
         var unavailables = new List<UnavailableTimeRangeResponse>
@@ -135,20 +135,20 @@ public class AvailabilityTests
         };
 
         // Act
-        var availableHours = Availability.GetAvailableHours(options);
+        var availableHours = Availability.CalculateAvailableHours(options);
 
         // Assert
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
     [TestCase("08:20", "09:00", 
-             "09:00", "09:30")]
+              "09:00", "09:30")]
     [TestCase("11:40", "12:20",
-             "11:00", "11:40")]
+              "11:00", "11:40")]
     [TestCase("10:00", "10:30",
-             "10:40", "11:20")]
+              "10:40", "11:20")]
     [TestCase("10:00", "10:30",
-             "09:00", "09:40")]
+              "09:00", "09:40")]
     public void IsNotAvailable_WhenNewTimeRangeIsAvailable_ShouldReturnsFalse(
         string newStartHour,
         string newEndHour, 
@@ -172,17 +172,17 @@ public class AvailabilityTests
     }
 
     [TestCase("09:00", "09:30",
-             "09:00", "09:30")]
+              "09:00", "09:30")]
     [TestCase("09:00", "09:30",
-             "09:20", "09:35")]
+              "09:20", "09:35")]
     [TestCase("10:00", "10:30",
-             "10:25", "11:20")]
+              "10:25", "11:20")]
     [TestCase("10:00", "10:30",
-             "09:00", "10:10")]
+              "09:00", "10:10")]
     [TestCase("10:00", "10:30",
-             "10:29", "12:00")]
+              "10:29", "12:00")]
     [TestCase("12:20", "12:50",
-             "12:00", "13:00")]
+              "12:00", "13:00")]
     public void IsNotAvailable_WhenNewTimeRangeIsNotAvailable_ShouldReturnsTrue(
         string newStartHour,
         string newEndHour,

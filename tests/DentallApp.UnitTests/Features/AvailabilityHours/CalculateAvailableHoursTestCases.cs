@@ -1,6 +1,6 @@
 namespace DentallApp.UnitTests.Features.AvailabilityHours;
 
-public class GetAvailableHoursTestCases : IEnumerable
+public class CalculateAvailableHoursTestCases : IEnumerable
 {
     public IEnumerator GetEnumerator()
     {
