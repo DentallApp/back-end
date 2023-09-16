@@ -2,5 +2,4 @@
 
 public interface IAppointmentRepository
 {
-    Task<List<UnavailableTimeRangeResponse>> GetUnavailableHoursAsync(int dentistId, DateTime appointmentDate);
 }

@@ -1,6 +1,4 @@
-﻿using DentallApp.Features.Appointments.UseCases;
-
-namespace DentallApp.Features.Chatbot;
+﻿namespace DentallApp.Features.Chatbot;
 
 public interface IAppointmentBotService
 {

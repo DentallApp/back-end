@@ -3,36 +3,9 @@
 public class AppointmentRepository : IAppointmentRepository
 {
     private readonly AppDbContext _context;
-    private readonly IDateTimeProvider _dateTimeProvider;
 
-    public AppointmentRepository(IDateTimeProvider dateTimeProvider, AppDbContext context)
+    public AppointmentRepository(AppDbContext context)
     {
-        _dateTimeProvider = dateTimeProvider;
         _context = context;
-    }
-
-    public async Task<List<UnavailableTimeRangeResponse>> GetUnavailableHoursAsync(int dentistId, DateTime appointmentDate)
-    {
-        var response = await _context.Set<Appointment>()
-            .Where(appointment =>
-                  (appointment.DentistId == dentistId) &&
-                  (appointment.Date == appointmentDate) &&
-                  (appointment.IsNotCanceled() ||
-                   appointment.IsCancelledByEmployee ||
-                   // Checks if the canceled appointment is not available.
-                   // This check allows patients to choose a time slot for an appointment canceled by another basic user.
-                   _dateTimeProvider.Now > _context.AddTime(_context.ToDateTime(appointment.Date), appointment.StartHour)))
-            .Select(appointment => new UnavailableTimeRangeResponse
-            {
-                StartHour = appointment.StartHour,
-                EndHour   = appointment.EndHour
-            })
-            .Distinct()
-            .OrderBy(appointment => appointment.StartHour)
-              .ThenBy(appointment => appointment.EndHour)
-            .AsNoTracking()
-            .ToListAsync();
-
-        return response;
     }
 }

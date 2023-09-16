@@ -1,6 +1,4 @@
-﻿using DentallApp.Features.Appointments.UseCases;
-
-namespace DentallApp.Features.Appointments;
+﻿namespace DentallApp.Features.Appointments;
 
 [Route("appointment")]
 [ApiController]
@@ -92,6 +90,20 @@ public class AppointmentController : ControllerBase
         [FromServices]GetAppointmentsByDateRangeUseCase useCase)
     {
         var response = await useCase.Execute(User, request);
+        return response.Success ? Ok(response) : BadRequest(response);
+    }
+
+    /// <summary>
+    /// Obtiene las horas disponibles para la reserva de una cita.
+    /// </summary>
+    [AuthorizeByRole(RolesName.Secretary)]
+    [Route("available-hours")]
+    [HttpPost]
+    public async Task<ActionResult<Response<IEnumerable<AvailableTimeRangeResponse>>>> GetAvailableHours(
+        [FromBody]AvailableTimeRangeRequest request,
+        [FromServices]GetAvailableHoursUseCase useCase)
+    {
+        var response = await useCase.Execute(request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 }
