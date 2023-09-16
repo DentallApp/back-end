@@ -11,7 +11,7 @@ public interface IGetUnavailableHoursUseCase
     Task<List<UnavailableTimeRangeResponse>> Execute(int dentistId, DateTime appointmentDate);
 }
 
-public class GetUnavailableHoursUseCase
+public class GetUnavailableHoursUseCase : IGetUnavailableHoursUseCase
 {
     private readonly AppDbContext _context;
     private readonly IDateTimeProvider _dateTimeProvider;
