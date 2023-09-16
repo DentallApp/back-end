@@ -17,7 +17,9 @@ public static class ApplicationDependencies
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWorkEFCore>();
-        services.AddScoped<IUserRepository, UserRepository>()
+        services
+                .AddScoped(typeof(IRepository<>), typeof(Repository<>))
+                .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
                 .AddScoped<IAppointmentRepository, AppointmentRepository>()
                 .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
@@ -50,7 +52,7 @@ public static class ApplicationDependencies
             .FromAssemblies(assembly)
               // Register the concrete classes as a service.
               .AddClasses(classes => classes.Where(type => type.Name.EndsWith("UseCase")))
-                .AsSelf()
+                .AsSelfWithInterfaces()
                 .WithScopedLifetime()); 
 
         return services;
