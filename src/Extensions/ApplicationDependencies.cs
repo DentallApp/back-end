@@ -7,7 +7,6 @@ public static class ApplicationDependencies
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services
-                .AddScoped<AppointmentCancellationService>()
                 .AddScoped<EmailTemplateService>()
                 .AddScoped<ITokenService, TokenService>()
                 .AddScoped<IEmailService, EmailService>();
@@ -21,7 +20,6 @@ public static class ApplicationDependencies
         services.AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
                 .AddScoped<IAppointmentRepository, AppointmentRepository>()
-                .AddScoped<IAppointmentCancellationRepository, AppointmentCancellationRepository>()
                 .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
                 .AddScoped<IEmployeeSpecialtyRepository, EmployeeSpecialtyRepository>()
                 .AddScoped<IHolidayOfficeRepository, HolidayOfficeRepository>()
