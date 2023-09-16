@@ -1,6 +1,4 @@
-﻿using LinqToDB;
-
-namespace DentallApp.Features.Appointments.UseCases;
+﻿namespace DentallApp.Features.Appointments.UseCases;
 
 public class CancelAppointmentsRequest
 {
@@ -27,16 +25,16 @@ public class CancelAppointmentsResponse
 
 public class CancelAppointmentsUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly IAppointmentRepository _appointmentRepository;
     private readonly IInstantMessaging _instantMessaging;
     private readonly IDateTimeProvider _dateTimeProvider;
 
     public CancelAppointmentsUseCase(
-        AppDbContext context,
+        IAppointmentRepository appointmentRepository,
         IInstantMessaging instantMessaging,
         IDateTimeProvider dateTimeProvider)
     {
-        _context = context;
+        _appointmentRepository = appointmentRepository;
         _instantMessaging = instantMessaging;
         _dateTimeProvider = dateTimeProvider;
     }
@@ -52,12 +50,14 @@ public class CancelAppointmentsUseCase
 
         if (currentEmployee.IsOnlyDentist())
         {
-            await CancelAppointmentsByDentistId(currentEmployee.GetEmployeeId(), appointmentsIdCanBeCancelled);
+            await _appointmentRepository
+                .CancelAppointmentsByDentistId(currentEmployee.GetEmployeeId(), appointmentsIdCanBeCancelled);
         }
         else
         {
             int officeId = currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId();
-            await CancelAppointmentsByOfficeId(officeId, appointmentsIdCanBeCancelled);
+            await _appointmentRepository
+                .CancelAppointmentsByOfficeId(officeId, appointmentsIdCanBeCancelled);
         }
 
         await SendMessageAboutAppointmentCancellation(appointmentsCanBeCancelled, request.Reason);
@@ -102,39 +102,5 @@ public class CancelAppointmentsUseCase
                 reason);
             await _instantMessaging.SendMessageAsync(appointment.PatientCellPhone, msg);
         }
-    }
-
-    /// <summary>
-    /// Cancela las citas por parte del empleado.
-    /// </summary>
-    private async Task<int> CancelAppointments(int officeId, int dentistId, IEnumerable<int> appointmentsId)
-    {
-        if (appointmentsId.Any())
-        {
-            int updatedRows = await _context.Set<Appointment>()
-                .OptionalWhere(officeId, appointment => appointment.OfficeId == officeId)
-                .OptionalWhere(dentistId, appointment => appointment.DentistId == dentistId)
-                .Where(appointment =>
-                       appointment.AppointmentStatusId == AppointmentStatusId.Scheduled &&
-                       appointmentsId.Contains(appointment.Id))
-                .Set(appointment => appointment.AppointmentStatusId, AppointmentStatusId.Canceled)
-                .Set(appointment => appointment.IsCancelledByEmployee, true)
-                .Set(appointment => appointment.UpdatedAt, _dateTimeProvider.Now)
-                .UpdateAsync();
-
-            return updatedRows;
-        }
-
-        return default;
-    }
-
-    private Task<int> CancelAppointmentsByOfficeId(int officeId, IEnumerable<int> appointmentsId)
-    {
-        return CancelAppointments(officeId, dentistId: default, appointmentsId);
-    }
-
-    private Task<int> CancelAppointmentsByDentistId(int dentistId, IEnumerable<int> appointmentsId)
-    {
-        return CancelAppointments(officeId: default, dentistId, appointmentsId);
     }
 }
