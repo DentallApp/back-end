@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.DataAccess.UnitOfWork;
 
-public partial class UnitOfWork : IUnitOfWork
+public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _context;
 
@@ -9,6 +9,8 @@ public partial class UnitOfWork : IUnitOfWork
         _context = context;
     }
 
-    public async Task<int> SaveChangesAsync()
-        => await _context.SaveChangesAsync();
+    public Task<int> SaveChangesAsync()
+    {
+        return _context.SaveChangesAsync();
+    }
 }
