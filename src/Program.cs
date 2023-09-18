@@ -15,7 +15,7 @@ builder.Services
 var databaseSettings = new EnvBinder(envVars).Bind<DatabaseSettings>();
 builder.Services
     .AddSingleton(appSettings)
-    .AddSingleton<IDbConnector>(new MariaDbConnector(databaseSettings.DbConnectionString));
+    .AddSingleton<IDbConnectionFactory>(new MariaDbConnectionFactory(databaseSettings.DbConnectionString));
 
 builder.Services
     .AddScoped<IDbConnection>(serviceProvider => new MySqlConnection(databaseSettings.DbConnectionString));
