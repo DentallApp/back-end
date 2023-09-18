@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.DataAccess.DbConnectors;
 
-public interface IDbConnector
+public interface IDbConnectionFactory
 {
     IDbConnection CreateConnection();
 }

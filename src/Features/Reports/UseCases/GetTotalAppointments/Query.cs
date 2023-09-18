@@ -19,16 +19,15 @@ public class GetTotalAppointmentsResponse
 
 public class GetTotalAppointmentsUseCase
 {
-    private readonly IDbConnector _dbConnector;
+    private readonly IDbConnection _dbConnection;
 
-    public GetTotalAppointmentsUseCase(IDbConnector dbConnector)
-    { 
-        _dbConnector = dbConnector;
+    public GetTotalAppointmentsUseCase(IDbConnection dbConnection)
+    {
+        _dbConnection = dbConnection;
     }
 
     public async Task<GetTotalAppointmentsResponse> Execute(GetTotalAppointmentsRequest request)
     {
-        using var connection = _dbConnector.CreateConnection();
         var sql = @"
             SELECT 
             COUNT(*) AS Total,
@@ -46,7 +45,7 @@ public class GetTotalAppointmentsUseCase
                   (a.office_id = @OfficeId OR @OfficeId = 0) AND
                   (a.dentist_id = @DentistId OR @DentistId = 0)
         ";
-        var result = await connection.QueryAsync<GetTotalAppointmentsResponse>(sql, new
+        var result = await _dbConnection.QueryAsync<GetTotalAppointmentsResponse>(sql, new
         {
             AppointmentStatusId.Assisted,
             AppointmentStatusId.NotAssisted,

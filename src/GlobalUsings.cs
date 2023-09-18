@@ -110,3 +110,4 @@ global using FileTypeChecker.Extensions;
 global using iText.Html2pdf;
 global using Scriban;
 global using Quartz;
+global using MySqlConnector;
