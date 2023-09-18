@@ -51,7 +51,4 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
 
     public virtual Task<int> SaveAsync()
         => _context.SaveChangesAsync();
-
-    public virtual async Task<IAppDbContextTransaction> BeginTransactionAsync()
-        => new AppDbContextTransactionEFCore(await _context.Database.BeginTransactionAsync());
 }
