@@ -48,9 +48,10 @@ public static class ApplicationDependencies
         var assembly = typeof(GetDependentsByUserIdUseCase).Assembly;
 
         services.Scan(scan => scan
-            // Search the types from the specified assemblies.
+        // Search the types from the specified assemblies.
             .FromAssemblies(assembly)
-              // Register the concrete classes as a service.
+              // Registers the concrete classes as a service, for example: 'CreateUserUseCase'.
+              // It also registers interfaces as a service, for example: 'ICreateUserUseCase'.
               .AddClasses(classes => classes.Where(type => type.Name.EndsWith("UseCase")))
                 .AsSelfWithInterfaces()
                 .WithScopedLifetime()); 
