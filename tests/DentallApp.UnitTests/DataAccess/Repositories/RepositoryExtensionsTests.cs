@@ -64,7 +64,7 @@ public class RepositoryExtensionsTests
             RolesId.Dentist,
             RolesId.Secretary
         };
-        Mock.Arrange(() => _repository.Delete(Arg.IsAny<UserRole>()))
+        Mock.Arrange(() => _repository.Remove(Arg.IsAny<UserRole>()))
             .DoInstead((UserRole entity) =>
             {
                 var index = currentUserRoles.FindIndex(userRole => userRole.Id == entity.Id);
@@ -101,7 +101,7 @@ public class RepositoryExtensionsTests
             RolesId.Dentist,
             RolesId.Secretary
         };
-        Mock.Arrange(() => _repository.Insert(Arg.IsAny<UserRole>()))
+        Mock.Arrange(() => _repository.Add(Arg.IsAny<UserRole>()))
             .DoInstead((UserRole entity) => currentUserRoles.Add(entity));
 
         // Act

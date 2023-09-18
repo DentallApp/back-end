@@ -37,11 +37,11 @@ public static class RepositoryExtensions
         {
             foreach (TEntity currentEntity in source)
                 if(identifiers.NotContains(currentEntity.SecondaryForeignKey))
-                    repository.Delete(currentEntity);
+                    repository.Remove(currentEntity);
 
             foreach (int id in identifiers)
                 if(source.NotContains(id))
-                    repository.Insert(new TEntity { PrimaryForeignKey = key, SecondaryForeignKey = id });
+                    repository.Add(new TEntity { PrimaryForeignKey = key, SecondaryForeignKey = id });
         }
     }
 
