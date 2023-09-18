@@ -14,19 +14,19 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
         _entities = context.Set<TEntity>();
     }
 
-    public virtual Task<TEntity> GetByIdAsync(int id)
+    public Task<TEntity> GetByIdAsync(int id)
     {
         return _entities
             .Where(entity => entity.Id == id)
             .FirstOrDefaultAsync();
     }
 
-    public virtual void Add(TEntity entity)
+    public void Add(TEntity entity)
     { 
         _entities.Add(entity);
     }
 
-    public virtual void Remove(TEntity entity)
+    public void Remove(TEntity entity)
     { 
         _entities.Remove(entity);
     }
