@@ -18,6 +18,9 @@ builder.Services
     .AddSingleton<IDbConnector>(new MariaDbConnector(databaseSettings.DbConnectionString));
 
 builder.Services
+    .AddScoped<IDbConnection>(serviceProvider => new MySqlConnection(databaseSettings.DbConnectionString));
+
+builder.Services
     .AddHttpClient()
     .AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
     .AddCustomInvalidModelStateResponse()

@@ -16,16 +16,15 @@ public class GetTotalScheduledAppointmentsResponse
 
 public class GetTotalScheduledAppointmentsUseCase
 {
-    private readonly IDbConnector _dbConnector;
+    private readonly IDbConnection _dbConnection;
 
-    public GetTotalScheduledAppointmentsUseCase(IDbConnector dbConnector)
+    public GetTotalScheduledAppointmentsUseCase(IDbConnection dbConnection)
     {
-        _dbConnector = dbConnector;
+        _dbConnection = dbConnection;
     }
 
     public async Task<IEnumerable<GetTotalScheduledAppointmentsResponse>> Execute(GetTotalScheduledAppointmentsRequest request)
     {
-        using var connection = _dbConnector.CreateConnection();
         var sql = @"
             SELECT 
             CONCAT(p.names, ' ', p.last_names) AS DentistName,
@@ -41,7 +40,7 @@ public class GetTotalScheduledAppointmentsUseCase
             GROUP BY a.dentist_id
             ORDER BY Total DESC
         ";
-        return await connection.QueryAsync<GetTotalScheduledAppointmentsResponse>(sql, new
+        return await _dbConnection.QueryAsync<GetTotalScheduledAppointmentsResponse>(sql, new
         {
             AppointmentStatusId.Scheduled,
             request.From,
