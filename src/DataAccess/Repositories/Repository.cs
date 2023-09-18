@@ -17,12 +17,20 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         => await _entities.ToListAsync();
 
-    public virtual async Task<TEntity> GetByIdAsync(int id)
-        => await _entities.Where(entity => entity.Id == id).FirstOrDefaultAsync();
+    public virtual Task<TEntity> GetByIdAsync(int id)
+    {
+        return _entities
+            .Where(entity => entity.Id == id)
+            .FirstOrDefaultAsync();
+    }
 
-    public virtual void Insert(TEntity entity)
-        => _entities.Add(entity);
+    public virtual void Add(TEntity entity)
+    { 
+        _entities.Add(entity);
+    }
 
-    public virtual void Delete(TEntity entity)
-        => _entities.Remove(entity);
+    public virtual void Remove(TEntity entity)
+    { 
+        _entities.Remove(entity);
+    }
 }
