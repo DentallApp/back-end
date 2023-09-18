@@ -1,10 +1,10 @@
 ﻿namespace DentallApp.DataAccess.UnitOfWork;
 
-public partial class UnitOfWorkEFCore : IUnitOfWork
+public partial class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _context;
 
-    public UnitOfWorkEFCore(AppDbContext context)
+    public UnitOfWork(AppDbContext context)
     {
         _context = context;
     }

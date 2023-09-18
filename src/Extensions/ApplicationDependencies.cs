@@ -16,7 +16,7 @@ public static class ApplicationDependencies
 
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IUnitOfWork, UnitOfWorkEFCore>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services
                 .AddScoped(typeof(IRepository<>), typeof(Repository<>))
                 .AddScoped<IUserRepository, UserRepository>()
