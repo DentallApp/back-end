@@ -19,7 +19,7 @@ public class CreateAppointmentRequest
     public TimeSpan EndHour { get; set; }
 
     [JsonIgnore]
-    public SpecificTreatmentRangeToPayDto RangeToPay { get; set; }
+    public RangeToPayResponse RangeToPay { get; set; }
 
     public Appointment MapToAppointment()
     {

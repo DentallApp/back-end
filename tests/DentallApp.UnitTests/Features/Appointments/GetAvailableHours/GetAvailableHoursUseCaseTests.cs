@@ -4,7 +4,7 @@ public class GetAvailableHoursUseCaseTests
 {
     private IGetUnavailableHoursUseCase _getUnavailableHoursUseCase;
     private IEmployeeScheduleRepository _employeeScheduleRepository;
-    private IGeneralTreatmentRepository _dentalServiceRepository;
+    private IGeneralTreatmentRepository _treatmentRepository;
     private IHolidayOfficeRepository _holidayOfficeRepository;
     private GetAvailableHoursUseCase _getAvailableHoursUseCase;
     private IDateTimeProvider _dateTimeProvider;
@@ -14,13 +14,13 @@ public class GetAvailableHoursUseCaseTests
     {
         _getUnavailableHoursUseCase = Mock.Create<IGetUnavailableHoursUseCase>();
         _employeeScheduleRepository = Mock.Create<IEmployeeScheduleRepository>();
-        _dentalServiceRepository    = Mock.Create<IGeneralTreatmentRepository>();
+        _treatmentRepository        = Mock.Create<IGeneralTreatmentRepository>();
         _holidayOfficeRepository    = Mock.Create<IHolidayOfficeRepository>();
         _dateTimeProvider           = Mock.Create<IDateTimeProvider>();
         _getAvailableHoursUseCase   = new GetAvailableHoursUseCase(
             _getUnavailableHoursUseCase,
             _employeeScheduleRepository,
-            _dentalServiceRepository,
+            _treatmentRepository,
             _holidayOfficeRepository,
             _dateTimeProvider);
     }
@@ -48,7 +48,7 @@ public class GetAvailableHoursUseCaseTests
         // Arrange
         var expectedMessage = string.Format(DentistNotAvailableMessage, WeekDaysType.WeekDays[0]);
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
-        Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
+        Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
             .DoNothing();
 
         // Act
@@ -66,8 +66,8 @@ public class GetAvailableHoursUseCaseTests
         // Arrange
         var expectedMessage = string.Format(DentistNotAvailableMessage, WeekDaysType.WeekDays[0]);
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
-        Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
-            .ReturnsAsync(new EmployeeScheduleByWeekDayDto { IsEmployeeScheculeDeleted = true });
+        Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
+            .ReturnsAsync(new EmployeeScheduleResponse { IsEmployeeScheculeDeleted = true });
 
         // Act
         var response = await _getAvailableHoursUseCase.Execute(request);
@@ -84,8 +84,8 @@ public class GetAvailableHoursUseCaseTests
         // Arrange
         var expectedMessage = string.Format(OfficeClosedForSpecificDayMessage, WeekDaysType.WeekDays[0]);
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
-        Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
-            .ReturnsAsync(new EmployeeScheduleByWeekDayDto { IsOfficeScheduleDeleted = true });
+        Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
+            .ReturnsAsync(new EmployeeScheduleResponse { IsOfficeScheduleDeleted = true });
 
         // Act
         var response = await _getAvailableHoursUseCase.Execute(request);
@@ -102,8 +102,8 @@ public class GetAvailableHoursUseCaseTests
         // Arrange
         var expectedMessage = string.Format(OfficeClosedForSpecificDayMessage, WeekDaysType.WeekDays[0]);
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
-        Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
-            .ReturnsAsync(new EmployeeScheduleByWeekDayDto { IsOfficeDeleted = true });
+        Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
+            .ReturnsAsync(new EmployeeScheduleResponse { IsOfficeDeleted = true });
 
         // Act
         var response = await _getAvailableHoursUseCase.Execute(request);
@@ -119,8 +119,8 @@ public class GetAvailableHoursUseCaseTests
     {
         // Arrange
         var request = new AvailableTimeRangeRequest();
-        Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
-            .ReturnsAsync(new EmployeeScheduleByWeekDayDto());
+        Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
+            .ReturnsAsync(new EmployeeScheduleResponse());
 
         // Act
         var response = await _getAvailableHoursUseCase.Execute(request);
@@ -136,13 +136,13 @@ public class GetAvailableHoursUseCaseTests
     {
         // Arrange
         var request = new AvailableTimeRangeRequest();
-        Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
-            .ReturnsAsync(new EmployeeScheduleByWeekDayDto
+        Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
+            .ReturnsAsync(new EmployeeScheduleResponse
             { 
                 MorningStartHour = new TimeSpan(8, 0, 0),
                 MorningEndHour   = new TimeSpan(12, 0, 0)
             });
-        Mock.Arrange(() => _dentalServiceRepository.GetTreatmentWithDurationAsync(Arg.AnyInt))
+        Mock.Arrange(() => _treatmentRepository.GetDuration(Arg.AnyInt))
             .DoNothing();
 
         // Act
@@ -171,8 +171,8 @@ public class GetAvailableHoursUseCaseTests
             new() { StartHour = "16:00", EndHour = "16:40" }
         };
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
-        Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
-            .ReturnsAsync(new EmployeeScheduleByWeekDayDto
+        Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
+            .ReturnsAsync(new EmployeeScheduleResponse
             {
                 MorningStartHour   = new TimeSpan(7, 0, 0),
                 MorningEndHour     = new TimeSpan(12, 0, 0),
@@ -187,8 +187,8 @@ public class GetAvailableHoursUseCaseTests
                 new() { StartHour = TimeSpan.Parse("8:20"),  EndHour = TimeSpan.Parse("9:00") },
                 new() { StartHour = TimeSpan.Parse("14:00"), EndHour = TimeSpan.Parse("14:40") }
             });
-        Mock.Arrange(() => _dentalServiceRepository.GetTreatmentWithDurationAsync(Arg.AnyInt))
-            .ReturnsAsync(new GeneralTreatmentGetDurationDto { Duration = 40 });
+        Mock.Arrange(() => _treatmentRepository.GetDuration(Arg.AnyInt))
+            .ReturnsAsync(40);
 
         // Act
         var response = await _getAvailableHoursUseCase.Execute(request);
@@ -212,8 +212,8 @@ public class GetAvailableHoursUseCaseTests
             new() { StartHour = "11:00", EndHour = "11:40" }
         };
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
-        Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
-            .ReturnsAsync(new EmployeeScheduleByWeekDayDto
+        Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
+            .ReturnsAsync(new EmployeeScheduleResponse
             {
                 MorningStartHour = new TimeSpan(7, 0, 0),
                 MorningEndHour   = new TimeSpan(12, 0, 0)
@@ -225,8 +225,8 @@ public class GetAvailableHoursUseCaseTests
                 new() { StartHour = TimeSpan.Parse("7:40"),  EndHour = TimeSpan.Parse("8:20") },
                 new() { StartHour = TimeSpan.Parse("8:20"),  EndHour = TimeSpan.Parse("9:00") }
             });
-        Mock.Arrange(() => _dentalServiceRepository.GetTreatmentWithDurationAsync(Arg.AnyInt))
-            .ReturnsAsync(new GeneralTreatmentGetDurationDto { Duration = 40 });
+        Mock.Arrange(() => _treatmentRepository.GetDuration(Arg.AnyInt))
+            .ReturnsAsync(40);
 
         // Act
         var response = await _getAvailableHoursUseCase.Execute(request);
@@ -250,8 +250,8 @@ public class GetAvailableHoursUseCaseTests
             new() { StartHour = "16:00", EndHour = "16:40" }
         };
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
-        Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
-            .ReturnsAsync(new EmployeeScheduleByWeekDayDto
+        Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
+            .ReturnsAsync(new EmployeeScheduleResponse
             {
                 AfternoonStartHour = new TimeSpan(13, 0, 0),
                 AfternoonEndHour   = new TimeSpan(17, 0, 0)
@@ -261,8 +261,8 @@ public class GetAvailableHoursUseCaseTests
             {
                 new() { StartHour = TimeSpan.Parse("14:00"), EndHour = TimeSpan.Parse("14:40") }
             });
-        Mock.Arrange(() => _dentalServiceRepository.GetTreatmentWithDurationAsync(Arg.AnyInt))
-            .ReturnsAsync(new GeneralTreatmentGetDurationDto { Duration = 40 });
+        Mock.Arrange(() => _treatmentRepository.GetDuration(Arg.AnyInt))
+            .ReturnsAsync(40);
 
         // Act
         var response = await _getAvailableHoursUseCase.Execute(request);
@@ -279,8 +279,8 @@ public class GetAvailableHoursUseCaseTests
         // Arrange
         var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
         Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
-        Mock.Arrange(() => _employeeScheduleRepository.GetEmployeeScheduleByWeekDayIdAsync(Arg.AnyInt, Arg.AnyInt))
-            .ReturnsAsync(new EmployeeScheduleByWeekDayDto
+        Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
+            .ReturnsAsync(new EmployeeScheduleResponse
             {
                 AfternoonStartHour = new TimeSpan(13, 0, 0),
                 AfternoonEndHour   = new TimeSpan(17, 0, 0)
@@ -294,8 +294,8 @@ public class GetAvailableHoursUseCaseTests
                 new() { StartHour = TimeSpan.Parse("15:20"), EndHour = TimeSpan.Parse("16:00") },
                 new() { StartHour = TimeSpan.Parse("16:00"), EndHour = TimeSpan.Parse("16:40") }
             });
-        Mock.Arrange(() => _dentalServiceRepository.GetTreatmentWithDurationAsync(Arg.AnyInt))
-            .ReturnsAsync(new GeneralTreatmentGetDurationDto { Duration = 40 });
+        Mock.Arrange(() => _treatmentRepository.GetDuration(Arg.AnyInt))
+            .ReturnsAsync(40);
 
         // Act
         var response = await _getAvailableHoursUseCase.Execute(request);

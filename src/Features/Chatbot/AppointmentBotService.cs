@@ -51,18 +51,18 @@ public class AppointmentBotService : IAppointmentBotService
         return await useCase.Execute(request);
     }
 
-    public async Task<SpecificTreatmentRangeToPayDto> GetRangeToPayAsync(int dentalServiceId)
+    public async Task<RangeToPayResponse> GetRangeToPayAsync(int dentalServiceId)
     {
         using var scope = _serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<ISpecificTreatmentRepository>();
-        return await repository.GetTreatmentWithRangeToPayAsync(dentalServiceId);
+        return await repository.GetRangeToPay(dentalServiceId);
     }
 
     public async Task<string> GetDentistScheduleAsync(int dentistId)
     {
         using var scope = _serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IEmployeeScheduleRepository>();
-        var weekDays = (await repository.GetEmployeeScheduleWithOnlyWeekDayAsync(dentistId)) as List<WeekDayDto>;
+        var weekDays = (await repository.GetOnlyWeekDays(dentistId)) as List<WeekDayResponse>;
         return WeekDayFormat.GetWeekDaysFormat(weekDays);
     }
 }

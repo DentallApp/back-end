@@ -28,7 +28,7 @@ public class SendAppointmentInformationUseCase
     public async Task Execute(int appointmentId, CreateAppointmentRequest request)
     {
         // The query is executed in case the scheduling of appointments is done manually by the secretary.
-        request.RangeToPay ??= await _treatmentRepository.GetTreatmentWithRangeToPayAsync(request.GeneralTreatmentId);
+        request.RangeToPay ??= await _treatmentRepository.GetRangeToPay(request.GeneralTreatmentId);
         var businessName = EnvReader.Instance[AppSettings.BusinessName];
         var appointmentInfo = await GetAppointmentInformation(appointmentId);
         var msg = string.Format(AppointmentInformationMessageTemplate,

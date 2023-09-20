@@ -6,7 +6,7 @@ public class GetNonConsecutiveDaysTestCases : IEnumerable
     {
         yield return new object[]
         {
-            new List<WeekDayDto>
+            new List<WeekDayResponse>
             {
                 new() { WeekDayId = (int)DayOfWeek.Monday,    WeekDayName = WeekDaysName.Monday },
                 new() { WeekDayId = (int)DayOfWeek.Wednesday, WeekDayName = WeekDaysName.Wednesday },
@@ -17,7 +17,7 @@ public class GetNonConsecutiveDaysTestCases : IEnumerable
 
         yield return new object[]
         {
-            new List<WeekDayDto>
+            new List<WeekDayResponse>
             {
                 new() { WeekDayId = (int)DayOfWeek.Monday,    WeekDayName = WeekDaysName.Monday },
                 new() { WeekDayId = (int)DayOfWeek.Tuesday,   WeekDayName = WeekDaysName.Tuesday },
@@ -28,7 +28,7 @@ public class GetNonConsecutiveDaysTestCases : IEnumerable
 
         yield return new object[]
         {
-            new List<WeekDayDto>
+            new List<WeekDayResponse>
             {
                 new() { WeekDayId = (int)DayOfWeek.Monday,    WeekDayName = WeekDaysName.Monday },
                 new() { WeekDayId = (int)DayOfWeek.Tuesday,   WeekDayName = WeekDaysName.Tuesday },
@@ -39,7 +39,7 @@ public class GetNonConsecutiveDaysTestCases : IEnumerable
 
         yield return new object[]
         {
-            new List<WeekDayDto>
+            new List<WeekDayResponse>
             {
                 new() { WeekDayId = (int)DayOfWeek.Monday,    WeekDayName = WeekDaysName.Monday },
                 new() { WeekDayId = (int)DayOfWeek.Tuesday,   WeekDayName = WeekDaysName.Tuesday },
@@ -51,7 +51,7 @@ public class GetNonConsecutiveDaysTestCases : IEnumerable
 
         yield return new object[]
         {
-            new List<WeekDayDto>
+            new List<WeekDayResponse>
             {
                 new() { WeekDayId = (int)DayOfWeek.Tuesday,   WeekDayName = WeekDaysName.Tuesday },
                 new() { WeekDayId = (int)DayOfWeek.Thursday,  WeekDayName = WeekDaysName.Thursday },

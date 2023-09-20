@@ -6,7 +6,7 @@ public partial class WeekDayFormatTests
     public void GetWeekDaysFormat_WhenWeekDaysIsZero_ShouldReturnsStringEmpty()
     {
         // Arrange
-        var weekDays = new List<WeekDayDto>();
+        var weekDays = new List<WeekDayResponse>();
         var expected = string.Empty;
 
         // Act
@@ -20,7 +20,7 @@ public partial class WeekDayFormatTests
     public void GetWeekDaysFormat_WhenWeekDaysIsOne_ShouldReturnsNewFormat()
     {
         // Arrange
-        var weekDays = new List<WeekDayDto>() 
+        var weekDays = new List<WeekDayResponse>() 
         {
             new() { WeekDayId = (int)DayOfWeek.Monday, WeekDayName = WeekDaysName.Monday }
         };
@@ -37,7 +37,7 @@ public partial class WeekDayFormatTests
     public void GetWeekDaysFormat_WhenWeekDaysIsTwo_ShouldReturnsNewFormat()
     {
         // Arrange
-        var weekDays = new List<WeekDayDto>()
+        var weekDays = new List<WeekDayResponse>()
         {
             new() { WeekDayId = (int)DayOfWeek.Monday,    WeekDayName = WeekDaysName.Monday },
             new() { WeekDayId = (int)DayOfWeek.Wednesday, WeekDayName = WeekDaysName.Wednesday }
@@ -52,7 +52,7 @@ public partial class WeekDayFormatTests
     }
 
     [TestCaseSource(typeof(GetConsecutiveDaysTestCases))]
-    public void GetWeekDaysFormat_WhenDaysAreConsecutive_ShouldReturnsNewFormat(List<WeekDayDto> weekDays, string expected)
+    public void GetWeekDaysFormat_WhenDaysAreConsecutive_ShouldReturnsNewFormat(List<WeekDayResponse> weekDays, string expected)
     {
         // Act
         var format = WeekDayFormat.GetWeekDaysFormat(weekDays);
@@ -62,7 +62,7 @@ public partial class WeekDayFormatTests
     }
 
     [TestCaseSource(typeof(GetNonConsecutiveDaysTestCases))]
-    public void GetWeekDaysFormat_WhenDaysAreNotConsecutive_ShouldReturnsNewFormat(List<WeekDayDto> weekDays, string expected)
+    public void GetWeekDaysFormat_WhenDaysAreNotConsecutive_ShouldReturnsNewFormat(List<WeekDayResponse> weekDays, string expected)
     {
         // Act
         var format = WeekDayFormat.GetWeekDaysFormat(weekDays);

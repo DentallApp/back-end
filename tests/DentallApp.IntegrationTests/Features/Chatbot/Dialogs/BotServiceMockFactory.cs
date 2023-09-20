@@ -45,7 +45,7 @@ public static class BotServiceMockFactory
             });
 
         Mock.Arrange(() => botService.GetRangeToPayAsync(Arg.AnyInt))
-            .ReturnsAsync(new SpecificTreatmentRangeToPayDto
+            .ReturnsAsync(new RangeToPayResponse
             {
                 PriceMin = PriceMin,
                 PriceMax = PriceMax
