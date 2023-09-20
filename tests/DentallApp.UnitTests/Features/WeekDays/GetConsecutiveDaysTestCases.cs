@@ -8,9 +8,9 @@ public class GetConsecutiveDaysTestCases : IEnumerable
         {
             new List<WeekDayResponse>
             {
-                new() { WeekDayId = (int)DayOfWeek.Monday,    WeekDayName = WeekDaysName.Monday },
-                new() { WeekDayId = (int)DayOfWeek.Tuesday,   WeekDayName = WeekDaysName.Tuesday },
-                new() { WeekDayId = (int)DayOfWeek.Wednesday, WeekDayName = WeekDaysName.Wednesday }
+                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
+                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday }
             },
             $"{WeekDaysName.Monday} a {WeekDaysName.Wednesday}"
         };
@@ -19,10 +19,10 @@ public class GetConsecutiveDaysTestCases : IEnumerable
         {
             new List<WeekDayResponse>
             {
-                new() { WeekDayId = (int)DayOfWeek.Monday,    WeekDayName = WeekDaysName.Monday },
-                new() { WeekDayId = (int)DayOfWeek.Tuesday,   WeekDayName = WeekDaysName.Tuesday },
-                new() { WeekDayId = (int)DayOfWeek.Wednesday, WeekDayName = WeekDaysName.Wednesday },
-                new() { WeekDayId = (int)DayOfWeek.Thursday,  WeekDayName = WeekDaysName.Thursday }
+                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
+                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
+                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday }
             },
             $"{WeekDaysName.Monday} a {WeekDaysName.Thursday}"
         };
@@ -31,11 +31,11 @@ public class GetConsecutiveDaysTestCases : IEnumerable
         {
             new List<WeekDayResponse>
             {
-                new() { WeekDayId = (int)DayOfWeek.Monday,    WeekDayName = WeekDaysName.Monday },
-                new() { WeekDayId = (int)DayOfWeek.Tuesday,   WeekDayName = WeekDaysName.Tuesday },
-                new() { WeekDayId = (int)DayOfWeek.Wednesday, WeekDayName = WeekDaysName.Wednesday },
-                new() { WeekDayId = (int)DayOfWeek.Thursday,  WeekDayName = WeekDaysName.Thursday },
-                new() { WeekDayId = (int)DayOfWeek.Friday,    WeekDayName = WeekDaysName.Friday }
+                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
+                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
+                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday },
+                new() { Id = (int)DayOfWeek.Friday,    Name = WeekDaysName.Friday }
             },
             $"{WeekDaysName.Monday} a {WeekDaysName.Friday}"
         };
@@ -44,12 +44,12 @@ public class GetConsecutiveDaysTestCases : IEnumerable
         {
             new List<WeekDayResponse>
             {
-                new() { WeekDayId = (int)DayOfWeek.Monday,    WeekDayName = WeekDaysName.Monday },
-                new() { WeekDayId = (int)DayOfWeek.Tuesday,   WeekDayName = WeekDaysName.Tuesday },
-                new() { WeekDayId = (int)DayOfWeek.Wednesday, WeekDayName = WeekDaysName.Wednesday },
-                new() { WeekDayId = (int)DayOfWeek.Thursday,  WeekDayName = WeekDaysName.Thursday },
-                new() { WeekDayId = (int)DayOfWeek.Friday,    WeekDayName = WeekDaysName.Friday },
-                new() { WeekDayId = (int)DayOfWeek.Saturday,  WeekDayName = WeekDaysName.Saturday }
+                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
+                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
+                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday },
+                new() { Id = (int)DayOfWeek.Friday,    Name = WeekDaysName.Friday },
+                new() { Id = (int)DayOfWeek.Saturday,  Name = WeekDaysName.Saturday }
             },
             $"{WeekDaysName.Monday} a {WeekDaysName.Saturday}"
         };
@@ -58,9 +58,9 @@ public class GetConsecutiveDaysTestCases : IEnumerable
         {
             new List<WeekDayResponse>
             {
-                new() { WeekDayId = (int)DayOfWeek.Tuesday,   WeekDayName = WeekDaysName.Tuesday },
-                new() { WeekDayId = (int)DayOfWeek.Wednesday, WeekDayName = WeekDaysName.Wednesday },
-                new() { WeekDayId = (int)DayOfWeek.Thursday,  WeekDayName = WeekDaysName.Thursday }
+                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
+                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday }
             },
             $"{WeekDaysName.Tuesday} a {WeekDaysName.Thursday}"
         };
@@ -69,9 +69,9 @@ public class GetConsecutiveDaysTestCases : IEnumerable
         {
             new List<WeekDayResponse>
             {
-                new() { WeekDayId = (int)DayOfWeek.Wednesday, WeekDayName = WeekDaysName.Wednesday },
-                new() { WeekDayId = (int)DayOfWeek.Thursday,  WeekDayName = WeekDaysName.Thursday },
-                new() { WeekDayId = (int)DayOfWeek.Friday,    WeekDayName = WeekDaysName.Friday }
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
+                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday },
+                new() { Id = (int)DayOfWeek.Friday,    Name = WeekDaysName.Friday }
             },
             $"{WeekDaysName.Wednesday} a {WeekDaysName.Friday}"
         };
@@ -80,9 +80,9 @@ public class GetConsecutiveDaysTestCases : IEnumerable
         {
             new List<WeekDayResponse>
             {
-                new() { WeekDayId = (int)DayOfWeek.Thursday, WeekDayName = WeekDaysName.Thursday },
-                new() { WeekDayId = (int)DayOfWeek.Friday,   WeekDayName = WeekDaysName.Friday },
-                new() { WeekDayId = (int)DayOfWeek.Saturday, WeekDayName = WeekDaysName.Saturday }
+                new() { Id = (int)DayOfWeek.Thursday, Name = WeekDaysName.Thursday },
+                new() { Id = (int)DayOfWeek.Friday,   Name = WeekDaysName.Friday },
+                new() { Id = (int)DayOfWeek.Saturday, Name = WeekDaysName.Saturday }
             },
             $"{WeekDaysName.Thursday} a {WeekDaysName.Saturday}"
         };

@@ -2,6 +2,6 @@
 
 public class WeekDayResponse
 {
-    public int WeekDayId { get; init; }
-    public string WeekDayName { get; init; }
+    public int Id { get; init; }
+    public string Name { get; init; }
 }

@@ -12,7 +12,7 @@ public class WeekDayFormat
     private static bool HasConsecutiveDays(List<WeekDayResponse> weekDays)
     {
         for(int i = 1, len = weekDays.Count; i < len; i++)
-            if (weekDays[i].WeekDayId - weekDays[i - 1].WeekDayId != 1)
+            if (weekDays[i].Id - weekDays[i - 1].Id != 1)
                 return false;
         return true;
     }
@@ -31,19 +31,19 @@ public class WeekDayFormat
             return string.Empty;
 
         if (weekDaysCount == 1)
-            return weekDays[0].WeekDayName;
+            return weekDays[0].Name;
 
         if (weekDaysCount == 2)
-            return $"{weekDays[0].WeekDayName} y {weekDays[1].WeekDayName}";
+            return $"{weekDays[0].Name} y {weekDays[1].Name}";
 
         if (HasConsecutiveDays(weekDays))
-            return $"{weekDays[0].WeekDayName} a {weekDays[^1].WeekDayName}";
+            return $"{weekDays[0].Name} a {weekDays[^1].Name}";
 
         string format = "";
         int i;
         weekDaysCount -= 2;
         for (i = 0; i < weekDaysCount; i++)
-            format += weekDays[i].WeekDayName + ", ";
-        return $"{format}{weekDays[i].WeekDayName} y {weekDays[^1].WeekDayName}";
+            format += weekDays[i].Name + ", ";
+        return $"{format}{weekDays[i].Name} y {weekDays[^1].Name}";
     }
 }

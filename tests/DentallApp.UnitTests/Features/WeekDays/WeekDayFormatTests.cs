@@ -22,7 +22,7 @@ public partial class WeekDayFormatTests
         // Arrange
         var weekDays = new List<WeekDayResponse>() 
         {
-            new() { WeekDayId = (int)DayOfWeek.Monday, WeekDayName = WeekDaysName.Monday }
+            new() { Id = (int)DayOfWeek.Monday, Name = WeekDaysName.Monday }
         };
         var expected = WeekDaysName.Monday;
 
@@ -39,8 +39,8 @@ public partial class WeekDayFormatTests
         // Arrange
         var weekDays = new List<WeekDayResponse>()
         {
-            new() { WeekDayId = (int)DayOfWeek.Monday,    WeekDayName = WeekDaysName.Monday },
-            new() { WeekDayId = (int)DayOfWeek.Wednesday, WeekDayName = WeekDaysName.Wednesday }
+            new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
+            new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday }
         };
         var expected = $"{WeekDaysName.Monday} y {WeekDaysName.Wednesday}";
 

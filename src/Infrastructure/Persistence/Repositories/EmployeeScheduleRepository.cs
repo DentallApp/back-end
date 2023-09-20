@@ -16,8 +16,8 @@ public class EmployeeScheduleRepository : IEmployeeScheduleRepository
             .OrderBy(employeeSchedule => employeeSchedule.WeekDayId)
             .Select(employeeSchedule => new WeekDayResponse
             {
-                WeekDayId   = employeeSchedule.WeekDayId,
-                WeekDayName = employeeSchedule.WeekDay.Name
+                Id   = employeeSchedule.WeekDayId,
+                Name = employeeSchedule.WeekDay.Name
             })
             .AsNoTracking()
             .ToListAsync();
