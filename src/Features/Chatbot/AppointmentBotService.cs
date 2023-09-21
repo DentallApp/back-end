@@ -54,7 +54,7 @@ public class AppointmentBotService : IAppointmentBotService
     public async Task<PayRange> GetRangeToPayAsync(int dentalServiceId)
     {
         using var scope = _serviceProvider.CreateScope();
-        var repository = scope.ServiceProvider.GetRequiredService<ISpecificTreatmentRepository>();
+        var repository = scope.ServiceProvider.GetRequiredService<ITreatmentRepository>();
         return await repository.GetRangeToPay(dentalServiceId);
     }
 

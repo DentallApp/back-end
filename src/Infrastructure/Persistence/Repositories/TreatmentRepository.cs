@@ -1,12 +1,27 @@
 ﻿namespace DentallApp.Infrastructure.Persistence.Repositories;
 
-public class SpecificTreatmentRepository : ISpecificTreatmentRepository
+public class TreatmentRepository : ITreatmentRepository
 {
     private readonly AppDbContext _context;
 
-    public SpecificTreatmentRepository(AppDbContext context)
-    { 
+    public TreatmentRepository(AppDbContext context)
+    {
         _context = context;
+    }
+
+    public async Task<int?> GetDuration(int generalTreatmentId)
+    {
+        var treatment = await _context.Set<GeneralTreatment>()
+            .Where(treatment => treatment.Id == generalTreatmentId)
+            .Select(treatment => new 
+            { 
+                treatment.Duration 
+            })
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+
+        return treatment?.Duration;
     }
 
     public async Task<PayRange> GetRangeToPay(int generalTreatmentId)
@@ -22,8 +37,8 @@ public class SpecificTreatmentRepository : ISpecificTreatmentRepository
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
-        return treatment is null ? 
-            default : 
+        return treatment is null ?
+            default :
             PayRange.Create(treatment.PriceMin, treatment.PriceMax);
     }
 }

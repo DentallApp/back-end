@@ -13,12 +13,12 @@ public class SendAppointmentInformationUseCase
 {
     private readonly AppDbContext _context;
     private readonly IInstantMessaging _instantMessaging;
-    private readonly ISpecificTreatmentRepository _treatmentRepository;
+    private readonly ITreatmentRepository _treatmentRepository;
 
     public SendAppointmentInformationUseCase(
         AppDbContext context, 
         IInstantMessaging instantMessaging, 
-        ISpecificTreatmentRepository treatmentRepository)
+        ITreatmentRepository treatmentRepository)
     {
         _context = context;
         _instantMessaging = instantMessaging;

@@ -23,14 +23,14 @@ public class GetAvailableHoursUseCase
 {
     private readonly IGetUnavailableHoursUseCase _getUnavailableHoursUseCase;
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
-    private readonly IGeneralTreatmentRepository _treatmentRepository;
+    private readonly ITreatmentRepository _treatmentRepository;
     private readonly IOfficeHolidayRepository _officeHolidayRepository;
     private readonly IDateTimeService _dateTimeService;
 
     public GetAvailableHoursUseCase(
         IGetUnavailableHoursUseCase getUnavailableHoursUseCase,
         IEmployeeScheduleRepository employeeScheduleRepository,
-        IGeneralTreatmentRepository treatmentRepository,
+        ITreatmentRepository treatmentRepository,
         IOfficeHolidayRepository officeHolidayRepository,
         IDateTimeService dateTimeService)
     {

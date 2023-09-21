@@ -4,7 +4,7 @@ public class GetAvailableHoursUseCaseTests
 {
     private IGetUnavailableHoursUseCase _getUnavailableHoursUseCase;
     private IEmployeeScheduleRepository _employeeScheduleRepository;
-    private IGeneralTreatmentRepository _treatmentRepository;
+    private ITreatmentRepository _treatmentRepository;
     private IOfficeHolidayRepository _officeHolidayRepository;
     private GetAvailableHoursUseCase _getAvailableHoursUseCase;
     private IDateTimeService _dateTimeService;
@@ -14,7 +14,7 @@ public class GetAvailableHoursUseCaseTests
     {
         _getUnavailableHoursUseCase = Mock.Create<IGetUnavailableHoursUseCase>();
         _employeeScheduleRepository = Mock.Create<IEmployeeScheduleRepository>();
-        _treatmentRepository        = Mock.Create<IGeneralTreatmentRepository>();
+        _treatmentRepository        = Mock.Create<ITreatmentRepository>();
         _officeHolidayRepository    = Mock.Create<IOfficeHolidayRepository>();
         _dateTimeService            = Mock.Create<IDateTimeService>();
         _getAvailableHoursUseCase   = new GetAvailableHoursUseCase(

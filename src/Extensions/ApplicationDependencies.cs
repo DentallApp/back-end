@@ -20,11 +20,10 @@ public static class ApplicationDependencies
         services
                 .AddScoped(typeof(IRepository<>), typeof(Repository<>))
                 .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
+                .AddScoped<ITreatmentRepository, TreatmentRepository>()
                 .AddScoped<IAppointmentRepository, AppointmentRepository>()
                 .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
-                .AddScoped<IOfficeHolidayRepository, OfficeHolidayRepository>()
-                .AddScoped<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
+                .AddScoped<IOfficeHolidayRepository, OfficeHolidayRepository>();
 
         return services;
     }
