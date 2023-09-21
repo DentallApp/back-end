@@ -35,7 +35,7 @@ public partial class AppDbContext : CustomDbContext
                     .AddEntity<FavoriteDentist>()
                     .AddEntity<OfficeSchedule>()
                     .AddEntity<PublicHoliday>()
-                    .AddEntity<HolidayOffice>();
+                    .AddEntity<OfficeHoliday>();
 
         AddSqlFunctions(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

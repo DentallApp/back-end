@@ -11,12 +11,12 @@ public class OfficeHolidayRepository : IOfficeHolidayRepository
 
     public async Task<bool> IsPublicHoliday(int officeId, int day, int month)
     {
-        var query = (from holidayOffice in _context.Set<HolidayOffice>()
-                     join publicHoliday in _context.Set<PublicHoliday>() on holidayOffice.PublicHolidayId equals publicHoliday.Id
-                     where holidayOffice.OfficeId == officeId &&
-                           publicHoliday.Day == day &&
-                           publicHoliday.Month == month
-                     select holidayOffice.Id);
+        var query = (from officeHoliday in _context.Set<OfficeHoliday>()
+            join publicHoliday in _context.Set<PublicHoliday>() on officeHoliday.PublicHolidayId equals publicHoliday.Id
+            where officeHoliday.OfficeId == officeId &&
+                  publicHoliday.Day == day &&
+                  publicHoliday.Month == month
+            select officeHoliday.Id);
 
         return await query.FirstOrDefaultAsync() > 0;
     }

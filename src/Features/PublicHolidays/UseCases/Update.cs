@@ -22,20 +22,20 @@ public class UpdatePublicHolidayRequest
 public class UpdatePublicHolidayUseCase
 {
     private readonly AppDbContext _context;
-    private readonly IEntityService<HolidayOffice> _holidayOfficeService;
+    private readonly IEntityService<OfficeHoliday> _officeHolidayService;
 
     public UpdatePublicHolidayUseCase(
         AppDbContext context,
-        IEntityService<HolidayOffice> holidayOfficeService)
+        IEntityService<OfficeHoliday> officeHolidayService)
     {
         _context = context;
-        _holidayOfficeService = holidayOfficeService;
+        _officeHolidayService = officeHolidayService;
     }
 
     public async Task<Response> Execute(int id, UpdatePublicHolidayRequest request)
     {
         var holiday = await _context.Set<PublicHoliday>()
-            .Include(publicHoliday => publicHoliday.HolidayOffices)
+            .Include(publicHoliday => publicHoliday.Offices)
             .Where(publicHoliday => publicHoliday.Id == id)
             .FirstOrDefaultAsync();
 
@@ -43,7 +43,7 @@ public class UpdatePublicHolidayUseCase
             return new Response(ResourceNotFoundMessage);
 
         request.MapToPublicHoliday(holiday);
-        UpdateHolidayOffices(holiday.Id, holiday.HolidayOffices, request.OfficesId);
+        AssignOfficesToHoliday(holiday.Id, holiday.Offices, request.OfficesId);
         await _context.SaveChangesAsync();
 
         return new Response
@@ -54,16 +54,16 @@ public class UpdatePublicHolidayUseCase
     }
 
     /// <summary>
-    /// Updates the offices to a public holiday.
+    /// Assigns offices to a public holiday.
     /// </summary>
-    /// <param name="publicHolidayId">The ID of the public holiday to update.</param>
-    /// <param name="currentHolidayOffices">A collection with the offices assigned to a public holiday.</param>
+    /// <param name="publicHolidayId">The ID of the public holiday to assign.</param>
+    /// <param name="currentOffices">A collection with the offices assigned to a public holiday.</param>
     /// <param name="officesId">A collection of office identifiers obtained from a client.</param>
-    private void UpdateHolidayOffices(
+    private void AssignOfficesToHoliday(
         int publicHolidayId, 
-        List<HolidayOffice> currentHolidayOffices, 
+        List<OfficeHoliday> currentOffices, 
         List<int> officesId)
     {
-        _holidayOfficeService.Update(publicHolidayId, ref currentHolidayOffices, ref officesId);
+        _officeHolidayService.Update(publicHolidayId, ref currentOffices, ref officesId);
     }
 }

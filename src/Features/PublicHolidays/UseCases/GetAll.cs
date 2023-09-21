@@ -33,11 +33,11 @@ public class GetPublicHolidaysUseCase
                 Description = publicHoliday.Description,
                 Day         = publicHoliday.Day,
                 Month       = publicHoliday.Month,
-                Offices     = publicHoliday.HolidayOffices
-                   .Select(holidayOffice => new GetPublicHolidaysResponse.Office
+                Offices     = publicHoliday.Offices
+                   .Select(office => new GetPublicHolidaysResponse.Office
                    {
-                        Id   = holidayOffice.OfficeId,
-                        Name = holidayOffice.Office.Name
+                        Id   = office.OfficeId,
+                        Name = office.Office.Name
                    })
             })
             .AsNoTracking()

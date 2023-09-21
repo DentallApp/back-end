@@ -12,5 +12,5 @@ public class Office : SoftDeleteEntity
     public ICollection<Employee> Employees { get; set; }
     public ICollection<Appointment> Appointments { get; set; }
     public ICollection<OfficeSchedule> OfficeSchedules { get; set; }
-    public ICollection<HolidayOffice> HolidayOffices { get; set; }
+    public ICollection<OfficeHoliday> OfficeHolidays { get; set; }
 }

@@ -36,7 +36,7 @@ public class CreatePublicHolidayUseCase
         var publicHoliday = request.MapToPublicHoliday();
         foreach (int officeId in request.OfficesId.RemoveDuplicates())
         {
-            _context.Add(new HolidayOffice { PublicHoliday = publicHoliday, OfficeId = officeId });
+            _context.Add(new OfficeHoliday { PublicHoliday = publicHoliday, OfficeId = officeId });
         }
         await _context.SaveChangesAsync();
 
