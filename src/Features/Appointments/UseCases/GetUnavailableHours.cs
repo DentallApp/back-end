@@ -14,12 +14,12 @@ public interface IGetUnavailableHoursUseCase
 public class GetUnavailableHoursUseCase : IGetUnavailableHoursUseCase
 {
     private readonly AppDbContext _context;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
-    public GetUnavailableHoursUseCase(AppDbContext context, IDateTimeProvider dateTimeProvider)
+    public GetUnavailableHoursUseCase(AppDbContext context, IDateTimeService dateTimeService)
     {
         _context = context;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
     }
 
     public async Task<List<UnavailableTimeRangeResponse>> Execute(int dentistId, DateTime appointmentDate)
@@ -32,7 +32,7 @@ public class GetUnavailableHoursUseCase : IGetUnavailableHoursUseCase
                    appointment.IsCancelledByEmployee ||
                    // Checks if the canceled appointment is not available.
                    // This check allows patients to choose a time slot for an appointment canceled by another basic user.
-                   _dateTimeProvider.Now > _context.AddTime(_context.ToDateTime(appointment.Date), appointment.StartHour)))
+                   _dateTimeService.Now > _context.AddTime(_context.ToDateTime(appointment.Date), appointment.StartHour)))
             .Select(appointment => new UnavailableTimeRangeResponse
             {
                 StartHour = appointment.StartHour,

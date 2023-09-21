@@ -25,20 +25,20 @@ public class GetAvailableHoursUseCase
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
     private readonly IGeneralTreatmentRepository _treatmentRepository;
     private readonly IHolidayOfficeRepository _holidayOfficeRepository;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
     public GetAvailableHoursUseCase(
         IGetUnavailableHoursUseCase getUnavailableHoursUseCase,
         IEmployeeScheduleRepository employeeScheduleRepository,
         IGeneralTreatmentRepository treatmentRepository,
         IHolidayOfficeRepository holidayOfficeRepository,
-        IDateTimeProvider dateTimeProvider)
+        IDateTimeService dateTimeService)
     {
         _getUnavailableHoursUseCase = getUnavailableHoursUseCase;
         _employeeScheduleRepository = employeeScheduleRepository;
         _treatmentRepository = treatmentRepository;
         _holidayOfficeRepository = holidayOfficeRepository;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
     }
 
     public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> Execute(AvailableTimeRangeRequest request)
@@ -79,7 +79,7 @@ public class GetAvailableHoursUseCase
                 DentistEndHour     = (TimeSpan)employeeSchedule.AfternoonEndHour,
                 ServiceDuration    = serviceDuration,
                 AppointmentDate    = appointmentDate,
-                CurrentTimeAndDate = _dateTimeProvider.Now,
+                CurrentTimeAndDate = _dateTimeService.Now,
                 Unavailables       = unavailables
                     .OrderBy(timeRange => timeRange.StartHour)
                     .ThenBy(timeRange => timeRange.EndHour)
@@ -95,7 +95,7 @@ public class GetAvailableHoursUseCase
                 ServiceDuration    = serviceDuration,
                 AppointmentDate    = appointmentDate,
                 Unavailables       = unavailables,
-                CurrentTimeAndDate = _dateTimeProvider.Now
+                CurrentTimeAndDate = _dateTimeService.Now
             });
         }
         else if(employeeSchedule.IsAfternoonSchedule())
@@ -107,7 +107,7 @@ public class GetAvailableHoursUseCase
                 ServiceDuration    = serviceDuration,
                 AppointmentDate    = appointmentDate,
                 Unavailables       = unavailables,
-                CurrentTimeAndDate = _dateTimeProvider.Now
+                CurrentTimeAndDate = _dateTimeService.Now
             });
         }
 

@@ -42,12 +42,12 @@ public class UpdateOfficeRequest
 public class UpdateOfficeUseCase
 {
     private readonly AppDbContext _context;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
-    public UpdateOfficeUseCase(AppDbContext context, IDateTimeProvider dateTimeProvider)
+    public UpdateOfficeUseCase(AppDbContext context, IDateTimeService dateTimeService)
     {
         _context = context;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
     }
 
     public async Task<Response> Execute(int officeId, int currentEmployeeId, UpdateOfficeRequest request)
@@ -90,8 +90,8 @@ public class UpdateOfficeUseCase
         var affectedRows = await _context.Set<Employee>()
             .Where(employee => employee.Id != currentEmployeeId && employee.OfficeId == office.Id)
             .Set(employee => employee.IsDeleted, true)
-            .Set(employee => employee.UpdatedAt, _dateTimeProvider.Now)
-            .Set(employee => employee.User.UpdatedAt, _dateTimeProvider.Now)
+            .Set(employee => employee.UpdatedAt, _dateTimeService.Now)
+            .Set(employee => employee.User.UpdatedAt, _dateTimeService.Now)
             .Set(employee => employee.User.RefreshToken, e => null)
             .Set(employee => employee.User.RefreshTokenExpiry, e => null)
             .UpdateAsync();
@@ -106,7 +106,7 @@ public class UpdateOfficeUseCase
             .Where(employee => employee.OfficeId == office.Id)
             .IgnoreQueryFilters()
             .Set(employee => employee.IsDeleted, false)
-            .Set(employee => employee.UpdatedAt, _dateTimeProvider.Now)
+            .Set(employee => employee.UpdatedAt, _dateTimeService.Now)
             .UpdateAsync();
 
         office.IsEnabledEmployeeAccounts = true;

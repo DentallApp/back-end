@@ -27,23 +27,23 @@ public class CancelAppointmentsUseCase
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IInstantMessaging _instantMessaging;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
     public CancelAppointmentsUseCase(
         IAppointmentRepository appointmentRepository,
         IInstantMessaging instantMessaging,
-        IDateTimeProvider dateTimeProvider)
+        IDateTimeService dateTimeService)
     {
         _appointmentRepository = appointmentRepository;
         _instantMessaging = instantMessaging;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
     }
 
     public async Task<Response<CancelAppointmentsResponse>> Execute(ClaimsPrincipal currentEmployee, CancelAppointmentsRequest request)
     {
         // Stores appointments whose stipulated date and time have not passed.
         var appointmentsCanBeCancelled = request.Appointments
-            .Where(appointmentDto => (appointmentDto.AppointmentDate + appointmentDto.StartHour) > _dateTimeProvider.Now);
+            .Where(appointmentDto => (appointmentDto.AppointmentDate + appointmentDto.StartHour) > _dateTimeService.Now);
 
         var appointmentsIdCanBeCancelled = appointmentsCanBeCancelled
             .Select(appointmentDto => appointmentDto.AppointmentId);

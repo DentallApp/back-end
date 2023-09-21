@@ -2,17 +2,17 @@
 
 public class CancelAppointmentsUseCaseTests
 {
-    private IDateTimeProvider _dateTimeProvider;
+    private IDateTimeService _dateTimeService;
     private CancelAppointmentsUseCase _cancelAppointmentsUseCase;
 
     [SetUp]
     public void TestInitialize()
     {
-        _dateTimeProvider          = Mock.Create<IDateTimeProvider>();
+        _dateTimeService           = Mock.Create<IDateTimeService>();
         _cancelAppointmentsUseCase = new CancelAppointmentsUseCase(
             Mock.Create<IAppointmentRepository>(),
             Mock.Create<IInstantMessaging>(),
-            _dateTimeProvider);
+            _dateTimeService);
     }
 
     [Test]
@@ -34,7 +34,7 @@ public class CancelAppointmentsUseCaseTests
             new (ClaimTypes.Role, RolesName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
@@ -67,7 +67,7 @@ public class CancelAppointmentsUseCaseTests
             new (ClaimTypes.Role, RolesName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
@@ -105,7 +105,7 @@ public class CancelAppointmentsUseCaseTests
             new (ClaimTypes.Role, RolesName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 02, 20, 0, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 02, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act

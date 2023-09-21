@@ -7,7 +7,7 @@ public class GetAvailableHoursUseCaseTests
     private IGeneralTreatmentRepository _treatmentRepository;
     private IHolidayOfficeRepository _holidayOfficeRepository;
     private GetAvailableHoursUseCase _getAvailableHoursUseCase;
-    private IDateTimeProvider _dateTimeProvider;
+    private IDateTimeService _dateTimeService;
 
     [SetUp]
     public void TestInitialize()
@@ -16,13 +16,13 @@ public class GetAvailableHoursUseCaseTests
         _employeeScheduleRepository = Mock.Create<IEmployeeScheduleRepository>();
         _treatmentRepository        = Mock.Create<IGeneralTreatmentRepository>();
         _holidayOfficeRepository    = Mock.Create<IHolidayOfficeRepository>();
-        _dateTimeProvider           = Mock.Create<IDateTimeProvider>();
+        _dateTimeService            = Mock.Create<IDateTimeService>();
         _getAvailableHoursUseCase   = new GetAvailableHoursUseCase(
             _getUnavailableHoursUseCase,
             _employeeScheduleRepository,
             _treatmentRepository,
             _holidayOfficeRepository,
-            _dateTimeProvider);
+            _dateTimeService);
     }
 
     [Test]
@@ -170,7 +170,7 @@ public class GetAvailableHoursUseCaseTests
             new() { StartHour = "15:20", EndHour = "16:00" },
             new() { StartHour = "16:00", EndHour = "16:40" }
         };
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
         Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse
             {
@@ -211,7 +211,7 @@ public class GetAvailableHoursUseCaseTests
             new() { StartHour = "10:20", EndHour = "11:00" },
             new() { StartHour = "11:00", EndHour = "11:40" }
         };
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
         Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse
             {
@@ -249,7 +249,7 @@ public class GetAvailableHoursUseCaseTests
             new() { StartHour = "15:20", EndHour = "16:00" },
             new() { StartHour = "16:00", EndHour = "16:40" }
         };
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
         Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse
             {
@@ -278,7 +278,7 @@ public class GetAvailableHoursUseCaseTests
     {
         // Arrange
         var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
         Mock.Arrange(() => _employeeScheduleRepository.GetByWeekDayId(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse
             {

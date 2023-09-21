@@ -5,12 +5,12 @@ namespace DentallApp.Infrastructure.Persistence.Repositories;
 public class AppointmentRepository : IAppointmentRepository
 {
     private readonly AppDbContext _context;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
-    public AppointmentRepository(AppDbContext context, IDateTimeProvider dateTimeProvider)
+    public AppointmentRepository(AppDbContext context, IDateTimeService dateTimeService)
     {
         _context = context;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
     }
 
     private async Task<int> CancelAppointments(int officeId, int dentistId, IEnumerable<int> appointmentsId)
@@ -25,7 +25,7 @@ public class AppointmentRepository : IAppointmentRepository
                        appointmentsId.Contains(appointment.Id))
                 .Set(appointment => appointment.AppointmentStatusId, AppointmentStatusId.Canceled)
                 .Set(appointment => appointment.IsCancelledByEmployee, true)
-                .Set(appointment => appointment.UpdatedAt, _dateTimeProvider.Now)
+                .Set(appointment => appointment.UpdatedAt, _dateTimeService.Now)
                 .UpdateAsync();
 
             return updatedRows;

@@ -35,7 +35,7 @@ public static class ApplicationDependencies
         services.AddSingleton<IHtmlConverter, HtmlConverterIText>()
                 .AddSingleton<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>()
                 .AddSingleton<IPasswordHasher, PasswordHasherBcrypt>()
-                .AddSingleton<IDateTimeProvider, DateTimeProvider>()
+                .AddSingleton<IDateTimeService, DateTimeService>()
                 .AddSingleton<IInstantMessaging, WhatsAppMessaging>();
 
         return services;
