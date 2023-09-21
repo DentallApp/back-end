@@ -1,17 +1,19 @@
-﻿namespace DentallApp.UnitTests.DataAccess.Repositories;
+﻿namespace DentallApp.UnitTests.Infrastructure.Services;
 
-public class RepositoryExtensionsTests
+public class EntityServiceTests
 {
     private IRepository<UserRole> _repository;
+    private IEntityService<UserRole> _userRoleService;
 
     [SetUp]
     public void TestInitialize()
     {
         _repository = Mock.Create<IRepository<UserRole>>();
+        _userRoleService = new EntityService<UserRole>(_repository);
     }
 
     [Test]
-    public void AddOrUpdateOrDelete_WhenNumberOfElementsAreEqual_ShouldMergeSequenceOfElements()
+    public void Update_WhenNumberOfElementsAreEqual_ShouldMergeSequenceOfElements()
     {
         // Arrange
         const int count  = 2;
@@ -33,7 +35,7 @@ public class RepositoryExtensionsTests
 
         // Act
         // Update employee roles.
-        _repository.AddOrUpdateOrDelete(key: userId, source: ref currentUserRoles, identifiers: ref rolesId);
+        _userRoleService.Update(userId, ref currentUserRoles, ref rolesId);
 
         // Asserts
         currentUserRoles.Should().HaveCount(count);
@@ -45,7 +47,7 @@ public class RepositoryExtensionsTests
     }
 
     [Test]
-    public void AddOrUpdateOrDelete_WhenIdentifiersDoNotContainsTheSecondaryForeignKey_ShouldDeleteCurrentEntity()
+    public void Update_WhenIdentifiersDoNotContainsTheSecondaryKey_ShouldRemoveCurrentEntity()
     {
         // Arrange
         const int userId = 1;
@@ -73,7 +75,7 @@ public class RepositoryExtensionsTests
         
         // Act
         // Update employee roles.
-        _repository.AddOrUpdateOrDelete(key: userId, source: ref data, identifiers: ref rolesId);
+        _userRoleService.Update(userId, ref data, ref rolesId);
 
         // Asserts
         currentUserRoles.Should().HaveCount(2);
@@ -83,7 +85,7 @@ public class RepositoryExtensionsTests
 
 
     [Test]
-    public void AddOrUpdateOrDelete_WhenSourceDoNotContainsTheIdentifier_ShouldInsertCurrentEntity()
+    public void Update_WhenSourceDoNotContainsTheIdentifier_ShouldAddCurrentEntity()
     {
         // Arrange
         const int userId = 1;
@@ -106,7 +108,7 @@ public class RepositoryExtensionsTests
 
         // Act
         // Update employee roles.
-        _repository.AddOrUpdateOrDelete(key: userId, source: ref data, identifiers: ref rolesId);
+        _userRoleService.Update(userId, ref data, ref rolesId);
 
         // Asserts
         currentUserRoles.Should().HaveCount(3);

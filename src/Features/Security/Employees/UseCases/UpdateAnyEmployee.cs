@@ -42,19 +42,19 @@ public class UpdateAnyEmployeeUseCase
 {
     private readonly AppDbContext _context;
     private readonly IPasswordHasher _passwordHasher;
-    private readonly IUserRoleRepository _userRoleRepository;
-    private readonly IEmployeeSpecialtyRepository _employeeSpecialtyRepository;
+    private readonly IEntityService<UserRole> _userRoleService;
+    private readonly IEntityService<EmployeeSpecialty> _employeeSpecialtyService;
 
     public UpdateAnyEmployeeUseCase(
         AppDbContext context, 
-        IPasswordHasher passwordHasher, 
-        IUserRoleRepository userRoleRepository, 
-        IEmployeeSpecialtyRepository employeeSpecialtyRepository)
+        IPasswordHasher passwordHasher,
+        IEntityService<UserRole> userRoleService,
+        IEntityService<EmployeeSpecialty> employeeSpecialtyService)
     {
         _context = context;
         _passwordHasher = passwordHasher;
-        _userRoleRepository = userRoleRepository;
-        _employeeSpecialtyRepository = employeeSpecialtyRepository;
+        _userRoleService = userRoleService;
+        _employeeSpecialtyService = employeeSpecialtyService;
     }
 
     public async Task<Response> Execute(int employeeId, ClaimsPrincipal currentEmployee, UpdateAnyEmployeeRequest request)
@@ -85,11 +85,8 @@ public class UpdateAnyEmployeeUseCase
             employeeToEdit.User.Password = _passwordHasher.HashPassword(request.Password);
 
         var specialtiesId = request.SpecialtiesId ?? Enumerable.Empty<int>().ToList();
-        _employeeSpecialtyRepository
-            .UpdateEmployeeSpecialties(employeeToEdit.Id, employeeToEdit.EmployeeSpecialties, specialtiesId);
-
-        _userRoleRepository
-            .UpdateUserRoles(employeeToEdit.UserId, employeeToEdit.User.UserRoles, rolesId: request.Roles);
+        UpdateEmployeeSpecialties(employeeToEdit.Id, employeeToEdit.EmployeeSpecialties, specialtiesId);
+        UpdateUserRoles(employeeToEdit.UserId, employeeToEdit.User.UserRoles, rolesId: request.Roles);
 
         request.MapToEmployee(employeeToEdit);
         if (employeeToEdit.IsInactive())
@@ -104,5 +101,33 @@ public class UpdateAnyEmployeeUseCase
             Success = true,
             Message = UpdateResourceMessage
         };
+    }
+
+    /// <summary>
+    /// Updates the roles to a user.
+    /// </summary>
+    /// <param name="userId">The ID of the user to update.</param>
+    /// <param name="currentUserRoles">A collection with the current roles of a user.</param>
+    /// <param name="rolesId">A collection of role identifiers obtained from a client.</param>
+    private void UpdateUserRoles(
+        int userId, 
+        List<UserRole> currentUserRoles, 
+        List<int> rolesId)
+    {
+        _userRoleService.Update(userId, ref currentUserRoles, ref rolesId);
+    }
+
+    /// <summary>
+    /// Updates the specialties to a employee.
+    /// </summary>
+    /// <param name="employeeId">The ID of the employee to update.</param>
+    /// <param name="currentEmployeeSpecialties">A collection with the current specialties of a employee.</param>
+    /// <param name="specialtiesId">A collection of specialty identifiers obtained from a client.</param>
+    private void UpdateEmployeeSpecialties(
+        int employeeId, 
+        List<EmployeeSpecialty> currentEmployeeSpecialties, 
+        List<int> specialtiesId)
+    {
+        _employeeSpecialtyService.Update(employeeId, ref currentEmployeeSpecialties, ref specialtiesId);
     }
 }

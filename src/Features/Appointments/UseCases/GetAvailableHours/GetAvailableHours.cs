@@ -24,20 +24,20 @@ public class GetAvailableHoursUseCase
     private readonly IGetUnavailableHoursUseCase _getUnavailableHoursUseCase;
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
     private readonly IGeneralTreatmentRepository _treatmentRepository;
-    private readonly IHolidayOfficeRepository _holidayOfficeRepository;
+    private readonly IHolidayRepository _holidayRepository;
     private readonly IDateTimeService _dateTimeService;
 
     public GetAvailableHoursUseCase(
         IGetUnavailableHoursUseCase getUnavailableHoursUseCase,
         IEmployeeScheduleRepository employeeScheduleRepository,
         IGeneralTreatmentRepository treatmentRepository,
-        IHolidayOfficeRepository holidayOfficeRepository,
+        IHolidayRepository holidayRepository,
         IDateTimeService dateTimeService)
     {
         _getUnavailableHoursUseCase = getUnavailableHoursUseCase;
         _employeeScheduleRepository = employeeScheduleRepository;
         _treatmentRepository = treatmentRepository;
-        _holidayOfficeRepository = holidayOfficeRepository;
+        _holidayRepository = holidayRepository;
         _dateTimeService = dateTimeService;
     }
 
@@ -49,7 +49,7 @@ public class GetAvailableHoursUseCase
         var appointmentDate      = request.AppointmentDate;
         int weekDayId            = (int)appointmentDate.DayOfWeek;
         var weekDayName          = WeekDaysType.WeekDays[weekDayId];
-        if (await _holidayOfficeRepository.IsPublicHolidayAsync(officeId, appointmentDate.Day, appointmentDate.Month))
+        if (await _holidayRepository.IsPublicHoliday(officeId, appointmentDate.Day, appointmentDate.Month))
             return new Response<IEnumerable<AvailableTimeRangeResponse>>(AppointmentDateIsPublicHolidayMessage);
 
         var employeeSchedule  = await _employeeScheduleRepository.GetByWeekDayId(dentistId, weekDayId);

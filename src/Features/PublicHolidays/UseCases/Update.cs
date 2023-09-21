@@ -22,12 +22,14 @@ public class UpdatePublicHolidayRequest
 public class UpdatePublicHolidayUseCase
 {
     private readonly AppDbContext _context;
-    private readonly IHolidayOfficeRepository _holidayRepository;
+    private readonly IEntityService<HolidayOffice> _holidayOfficeService;
 
-    public UpdatePublicHolidayUseCase(AppDbContext context, IHolidayOfficeRepository holidayRepository)
+    public UpdatePublicHolidayUseCase(
+        AppDbContext context,
+        IEntityService<HolidayOffice> holidayOfficeService)
     {
         _context = context;
-        _holidayRepository = holidayRepository;
+        _holidayOfficeService = holidayOfficeService;
     }
 
     public async Task<Response> Execute(int id, UpdatePublicHolidayRequest request)
@@ -41,7 +43,7 @@ public class UpdatePublicHolidayUseCase
             return new Response(ResourceNotFoundMessage);
 
         request.MapToPublicHoliday(holiday);
-        _holidayRepository.UpdateHolidayOffices(holiday.Id, holiday.HolidayOffices, request.OfficesId);
+        UpdateHolidayOffices(holiday.Id, holiday.HolidayOffices, request.OfficesId);
         await _context.SaveChangesAsync();
 
         return new Response
@@ -49,5 +51,19 @@ public class UpdatePublicHolidayUseCase
             Success = true,
             Message = UpdateResourceMessage
         };
+    }
+
+    /// <summary>
+    /// Updates the offices to a public holiday.
+    /// </summary>
+    /// <param name="publicHolidayId">The ID of the public holiday to update.</param>
+    /// <param name="currentHolidayOffices">A collection with the offices assigned to a public holiday.</param>
+    /// <param name="officesId">A collection of office identifiers obtained from a client.</param>
+    private void UpdateHolidayOffices(
+        int publicHolidayId, 
+        List<HolidayOffice> currentHolidayOffices, 
+        List<int> officesId)
+    {
+        _holidayOfficeService.Update(publicHolidayId, ref currentHolidayOffices, ref officesId);
     }
 }
