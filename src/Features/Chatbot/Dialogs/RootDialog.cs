@@ -188,7 +188,13 @@ public partial class RootDialog : ComponentDialog
         var response = await _botService.CreateScheduledAppointmentAsync(appointment);
         if (!response.Success)
             return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
-        await stepContext.Context.SendActivityAsync(string.Format(SuccessfullyScheduledAppointmentMessage, appointment.RangeToPay), cancellationToken: cancellationToken);
+
+        await stepContext
+            .Context
+            .SendActivityAsync(
+                string.Format(SuccessfullyScheduledAppointmentMessage, appointment.RangeToPay?.Description), 
+                cancellationToken: cancellationToken);
+
         await stepContext.Context.SendActivityAsync(ThanksForUsingServiceMessage, cancellationToken: cancellationToken);
         return await stepContext.EndDialogAsync(cancellationToken: cancellationToken);
     }

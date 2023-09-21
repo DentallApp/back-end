@@ -16,6 +16,7 @@ global using DentallApp.Middlewares;
 global using DentallApp.Extensions;
 
 global using DentallApp.Domain;
+global using DentallApp.Domain.ValueObjects;
 global using DentallApp.Domain.Entities;
 global using DentallApp.Domain.Shared;
 

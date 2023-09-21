@@ -9,12 +9,12 @@ public class SpecificTreatmentRepository : ISpecificTreatmentRepository
         _context = context;
     }
 
-    public async Task<RangeToPayResponse> GetRangeToPay(int generalTreatmentId)
+    public async Task<PayRange> GetRangeToPay(int generalTreatmentId)
     {
-        var specificTreatment = await _context.Set<SpecificTreatment>()
+        var treatment = await _context.Set<SpecificTreatment>()
             .Where(specificTreatment => specificTreatment.GeneralTreatmentId == generalTreatmentId)
             .GroupBy(specificTreatment => specificTreatment.GeneralTreatmentId)
-            .Select(group => new RangeToPayResponse
+            .Select(group => new
             {
                 PriceMin = group.Min(specificTreatment => specificTreatment.Price),
                 PriceMax = group.Max(specificTreatment => specificTreatment.Price)
@@ -22,6 +22,8 @@ public class SpecificTreatmentRepository : ISpecificTreatmentRepository
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
-        return specificTreatment;
+        return treatment is null ? 
+            default : 
+            PayRange.Create(treatment.PriceMin, treatment.PriceMax);
     }
 }

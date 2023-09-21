@@ -51,7 +51,7 @@ public class AppointmentBotService : IAppointmentBotService
         return await useCase.Execute(request);
     }
 
-    public async Task<RangeToPayResponse> GetRangeToPayAsync(int dentalServiceId)
+    public async Task<PayRange> GetRangeToPayAsync(int dentalServiceId)
     {
         using var scope = _serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<ISpecificTreatmentRepository>();
