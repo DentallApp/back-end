@@ -2,10 +2,17 @@
 
 public record class PayRange
 {
-    private PayRange() { }
-
     public double PriceMin { get; private set; }
     public double PriceMax { get; private set; }
+
+    public PayRange() { }
+
+    public PayRange(double priceMin, double priceMax) 
+    { 
+        PriceMin = priceMin;
+        PriceMax = priceMax;
+    }
+
     public string Description
     {
         get
@@ -14,10 +21,5 @@ public record class PayRange
                 string.Format(RangeToPayMinMaxMessage, PriceMin, PriceMax) :
                 string.Format(RangeToPayMessage, PriceMax);
         }
-    }
-
-    public static PayRange Create(double priceMin, double priceMax)
-    {
-        return new PayRange { PriceMin = priceMin, PriceMax = priceMax };
     }
 }

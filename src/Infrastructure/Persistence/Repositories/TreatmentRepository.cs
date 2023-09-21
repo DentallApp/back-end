@@ -39,6 +39,6 @@ public class TreatmentRepository : ITreatmentRepository
 
         return treatment is null ?
             default :
-            PayRange.Create(treatment.PriceMin, treatment.PriceMax);
+            new PayRange(treatment.PriceMin, treatment.PriceMax);
     }
 }
