@@ -5,7 +5,7 @@ public class GetAvailableHoursUseCaseTests
     private IGetUnavailableHoursUseCase _getUnavailableHoursUseCase;
     private IEmployeeScheduleRepository _employeeScheduleRepository;
     private IGeneralTreatmentRepository _treatmentRepository;
-    private IHolidayRepository _holidayRepository;
+    private IOfficeHolidayRepository _officeHolidayRepository;
     private GetAvailableHoursUseCase _getAvailableHoursUseCase;
     private IDateTimeService _dateTimeService;
 
@@ -15,13 +15,13 @@ public class GetAvailableHoursUseCaseTests
         _getUnavailableHoursUseCase = Mock.Create<IGetUnavailableHoursUseCase>();
         _employeeScheduleRepository = Mock.Create<IEmployeeScheduleRepository>();
         _treatmentRepository        = Mock.Create<IGeneralTreatmentRepository>();
-        _holidayRepository          = Mock.Create<IHolidayRepository>();
+        _officeHolidayRepository    = Mock.Create<IOfficeHolidayRepository>();
         _dateTimeService            = Mock.Create<IDateTimeService>();
         _getAvailableHoursUseCase   = new GetAvailableHoursUseCase(
             _getUnavailableHoursUseCase,
             _employeeScheduleRepository,
             _treatmentRepository,
-            _holidayRepository,
+            _officeHolidayRepository,
             _dateTimeService);
     }
 
@@ -30,7 +30,7 @@ public class GetAvailableHoursUseCaseTests
     {
         // Arrange
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
-        Mock.Arrange(() => _holidayRepository.IsPublicHoliday(Arg.AnyInt, Arg.AnyInt, Arg.AnyInt))
+        Mock.Arrange(() => _officeHolidayRepository.IsPublicHoliday(Arg.AnyInt, Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(true);
 
         // Act

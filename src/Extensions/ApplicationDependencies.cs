@@ -23,7 +23,7 @@ public static class ApplicationDependencies
                 .AddScoped<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
                 .AddScoped<IAppointmentRepository, AppointmentRepository>()
                 .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
-                .AddScoped<IHolidayRepository, HolidayRepository>()
+                .AddScoped<IOfficeHolidayRepository, OfficeHolidayRepository>()
                 .AddScoped<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
 
         return services;

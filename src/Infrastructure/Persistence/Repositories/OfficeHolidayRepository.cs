@@ -1,10 +1,10 @@
 ﻿namespace DentallApp.Infrastructure.Persistence.Repositories;
 
-public class HolidayRepository : IHolidayRepository
+public class OfficeHolidayRepository : IOfficeHolidayRepository
 {
     private readonly AppDbContext _context;
 
-    public HolidayRepository(AppDbContext context)
+    public OfficeHolidayRepository(AppDbContext context)
     {
         _context = context;
     }
