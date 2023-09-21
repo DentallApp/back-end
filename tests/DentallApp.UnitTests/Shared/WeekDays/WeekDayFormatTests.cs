@@ -1,4 +1,4 @@
-﻿namespace DentallApp.UnitTests.Features.WeekDays;
+﻿namespace DentallApp.UnitTests.Shared.WeekDays;
 
 public partial class WeekDayFormatTests
 {
@@ -20,7 +20,7 @@ public partial class WeekDayFormatTests
     public void GetWeekDaysFormat_WhenWeekDaysIsOne_ShouldReturnsNewFormat()
     {
         // Arrange
-        var weekDays = new List<WeekDayResponse>() 
+        var weekDays = new List<WeekDayResponse>()
         {
             new() { Id = (int)DayOfWeek.Monday, Name = WeekDaysName.Monday }
         };
