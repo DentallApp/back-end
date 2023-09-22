@@ -8,11 +8,11 @@
 [ApiController]
 public class SchedulingController : ControllerBase
 {
-	private readonly IBotQueries _botQueries;
+	private readonly ISchedulingQueries _schedulingQueries;
 
-	public SchedulingController(IBotQueries botQueries)
+	public SchedulingController(ISchedulingQueries schedulingQueries)
 	{
-		_botQueries = botQueries;
+		_schedulingQueries = schedulingQueries;
 	}
 
     /// <summary>
@@ -32,7 +32,7 @@ public class SchedulingController : ControllerBase
     [HttpGet("office")]
     public async Task<List<AdaptiveChoice>> GetOffices()
     { 
-		return await _botQueries.GetOfficesAsync();
+		return await _schedulingQueries.GetOfficesAsync();
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class SchedulingController : ControllerBase
     [HttpGet("dental-service")]
     public async Task<List<AdaptiveChoice>> GetDentalServices()
     { 
-		return await _botQueries.GetDentalServicesAsync();
+		return await _schedulingQueries.GetDentalServicesAsync();
     }
 
     /// <summary>
@@ -63,6 +63,6 @@ public class SchedulingController : ControllerBase
     public async Task<List<AdaptiveChoice>> GetDentists(
         [FromQuery]SchedulingGetDentistsRequest request)
     { 
-		return await _botQueries.GetDentistsAsync(request.OfficeId, request.DentalServiceId);
+		return await _schedulingQueries.GetDentistsAsync(request.OfficeId, request.DentalServiceId);
     }
 }

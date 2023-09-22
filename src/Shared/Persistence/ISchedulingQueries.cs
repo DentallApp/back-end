@@ -1,6 +1,9 @@
-﻿namespace DentallApp.Features.Chatbot;
+﻿namespace DentallApp.Shared.Persistence;
 
-public interface IBotQueries
+/// <summary>
+/// Represents queries for appointment scheduling.
+/// </summary>
+public interface ISchedulingQueries
 {
     Task<List<AdaptiveChoice>> GetPatientsAsync(UserProfile userProfile);
     Task<List<AdaptiveChoice>> GetOfficesAsync();

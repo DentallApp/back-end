@@ -1,10 +1,11 @@
-﻿namespace DentallApp.Features.Chatbot;
+﻿namespace DentallApp.Infrastructure.Persistence;
 
-public class BotQueries : IBotQueries
+/// <inheritdoc cref="ISchedulingQueries" />
+public class SchedulingQueries : ISchedulingQueries
 {
     private readonly AppDbContext _context;
 
-    public BotQueries(AppDbContext context)
+    public SchedulingQueries(AppDbContext context)
     {
         _context = context;
     }
