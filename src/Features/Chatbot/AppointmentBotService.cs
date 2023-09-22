@@ -30,11 +30,11 @@ public class AppointmentBotService : IAppointmentBotService
         return await queries.GetOfficesAsync();
     }
 
-    public async Task<List<AdaptiveChoice>> GetPatientsAsync(UserProfile userProfile)
+    public async Task<List<AdaptiveChoice>> GetPatientsAsync(AuthenticatedUser user)
     {
 		using var scope = _serviceProvider.CreateScope();
         var queries = scope.ServiceProvider.GetRequiredService<ISchedulingQueries>();
-        return await queries.GetPatientsAsync(userProfile);
+        return await queries.GetPatientsAsync(user);
     }
 
     public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> GetAvailableHoursAsync(AvailableTimeRangeRequest request)

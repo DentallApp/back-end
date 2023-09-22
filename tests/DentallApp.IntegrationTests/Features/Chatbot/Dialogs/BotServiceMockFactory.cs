@@ -18,8 +18,8 @@ public static class BotServiceMockFactory
     public static IAppointmentBotService CreateBotServiceMock()
     {
         var botService = Mock.Create<IAppointmentBotService>();
-        Mock.Arrange(() => botService.GetPatientsAsync(Arg.IsAny<UserProfile>()))
-            .ReturnsAsync((UserProfile user) => CreateChoiceLists(user.FullName, user.PersonId.ToString()));
+        Mock.Arrange(() => botService.GetPatientsAsync(Arg.IsAny<AuthenticatedUser>()))
+            .ReturnsAsync((AuthenticatedUser user) => CreateChoiceLists(user.FullName, user.PersonId.ToString()));
 
         Mock.Arrange(() => botService.GetOfficesAsync())
             .ReturnsAsync(CreateChoiceLists(OfficeName, Id));

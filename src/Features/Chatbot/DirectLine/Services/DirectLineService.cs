@@ -31,16 +31,16 @@ public abstract class DirectLineService
     /// <summary>
     /// Generates user ID for Direct Line using the format <c>{userID}-{personID}</c>.
     /// </summary>
-    /// <param name="userProfile">The authenticated user.</param>
+    /// <param name="user">The authenticated user.</param>
     /// <returns></returns>
-    protected static string GenerateUserIdForDirectLine(UserProfile userProfile)
-        => $"{userProfile.UserId}-{userProfile.PersonId}";
+    protected static string GenerateUserIdForDirectLine(AuthenticatedUser user)
+        => $"{user.UserId}-{user.PersonId}";
 
 
     /// <summary>
     /// Gets the Direct Line token to access a single conversation associated with the bot.
     /// </summary>
-    /// <param name="userProfile">The authenticated user.</param>
+    /// <param name="user">The authenticated user.</param>
     /// <returns></returns>
-    public abstract Task<Response<GetDirectLineTokenResponse>> GetTokenAsync(UserProfile userProfile);
+    public abstract Task<Response<GetDirectLineTokenResponse>> GetTokenAsync(AuthenticatedUser user);
 }

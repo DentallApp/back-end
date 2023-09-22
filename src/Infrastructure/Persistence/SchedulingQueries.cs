@@ -73,10 +73,10 @@ public class SchedulingQueries : ISchedulingQueries
         return offices;
     }
 
-    public async Task<List<AdaptiveChoice>> GetPatientsAsync(UserProfile userProfile)
+    public async Task<List<AdaptiveChoice>> GetPatientsAsync(AuthenticatedUser user)
     { 
         var choices = await _context.Set<Dependent>()
-            .Where(dependent => dependent.UserId == userProfile.UserId)
+            .Where(dependent => dependent.UserId == user.UserId)
             .Select(dependent => new AdaptiveChoice
             {
                 Title = dependent.Person.FullName + " / " + dependent.Kinship.Name,
@@ -87,8 +87,8 @@ public class SchedulingQueries : ISchedulingQueries
         
         choices.Insert(0, new AdaptiveChoice
         {
-            Title = userProfile.FullName + " / " + KinshipsName.Default,
-            Value = userProfile.PersonId.ToString()
+            Title = user.FullName + " / " + KinshipsName.Default,
+            Value = user.PersonId.ToString()
         });
 
         return choices;
