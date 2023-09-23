@@ -1,6 +1,4 @@
-﻿using DentallApp.Features.Appointments.UseCases;
-
-namespace DentallApp.IntegrationTests.Features.Chatbot.Dialogs;
+﻿namespace DentallApp.IntegrationTests.Features.Chatbot.Dialogs;
 
 public static class BotServiceMockFactory
 {
