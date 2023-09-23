@@ -14,13 +14,17 @@ public static class ModelBuilderExtensions
         return modelBuilder;
     }
 
-    public static DataBuilder<TEntity> AddSeedData<TEntity>(this ModelBuilder builder, params TEntity[] data) where TEntity : EntityBase
+    public static DataBuilder<TEntity> AddSeedData<TEntity>(
+        this ModelBuilder builder, params TEntity[] entities) where TEntity : class
     {
-        foreach (var entity in data)
+        foreach (var entity in entities)
         {
-            entity.CreatedAt = DateTime.Now;
-            entity.UpdatedAt = DateTime.Now;
+            if (entity is IAuditableEntity auditableEntity)
+            {
+                auditableEntity.CreatedAt = DateTime.Now;
+                auditableEntity.UpdatedAt = DateTime.Now;
+            }
         }
-        return builder.Entity<TEntity>().HasData(data);
+        return builder.Entity<TEntity>().HasData(entities);
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace DentallApp.Domain.Entities;
 using AppointmentType = AppointmentStatusId;
 
-public class Appointment : EntityBase
+public class Appointment : EntityBase, IAuditableEntity
 {
     /// <summary>
     /// El ID del usuario que agendó la cita.
@@ -33,6 +33,8 @@ public class Appointment : EntityBase
     public DateTime Date { get; set; }
     public TimeSpan StartHour { get; set; }
     public TimeSpan EndHour { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     /// <summary>
     /// Comprueba sí la cita fue cancelada por el empleado.

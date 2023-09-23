@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Domain.Entities;
 
-public class Person : EntityBase
+public class Person : EntityBase, IAuditableEntity
 {
     public string Document { get; set; }
     public string Names { get; set; }
@@ -19,4 +19,6 @@ public class Person : EntityBase
     [Decompile]
     [NotMapped]
     public string FullName => Names + " " + LastNames;
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

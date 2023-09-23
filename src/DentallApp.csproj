@@ -13,7 +13,6 @@
     <PackageReference Include="AdaptiveCards" />
     <PackageReference Include="BCrypt.Net-Next" />
     <PackageReference Include="Dapper" />
-    <PackageReference Include="EFCore.CustomDbContext" />
     <PackageReference Include="EFCore.CustomQueryPreprocessor" />
     <PackageReference Include="EFCore.NamingConventions" />
     <PackageReference Include="EntityFrameworkCore.Exceptions.MySQL.Pomelo" />

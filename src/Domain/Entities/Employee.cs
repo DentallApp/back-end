@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Domain.Entities;
     
-public class Employee : SoftDeleteEntity 
+public class Employee : SoftDeleteEntity, IAuditableEntity
 {
     public int UserId { get; set; }
     public User User { get; set; }
@@ -10,6 +10,8 @@ public class Employee : SoftDeleteEntity
     public Office Office { get; set; }
     public string PregradeUniversity { get; set; }
     public string PostgradeUniversity { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
     public ICollection<Appointment> Appointments { get; set; }
     public ICollection<EmployeeSchedule> EmployeeSchedules { get; set; }
     public ICollection<FavoriteDentist> FavoriteDentists { get; set; }

@@ -1,6 +1,9 @@
 ﻿namespace DentallApp.Domain.Entities;
 
-public class UserRole : EntityBase, IIntermediateEntity
+public class UserRole : 
+    EntityBase, 
+    IAuditableEntity,
+    IIntermediateEntity
 {
     public int UserId { get; set; }
     public User User { get; set; }
@@ -22,4 +25,7 @@ public class UserRole : EntityBase, IIntermediateEntity
         get => RoleId; 
         set => RoleId = value; 
     }
+
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

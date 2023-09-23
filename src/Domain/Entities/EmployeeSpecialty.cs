@@ -1,6 +1,9 @@
 ﻿namespace DentallApp.Domain.Entities;
 
-public class EmployeeSpecialty : EntityBase, IIntermediateEntity
+public class EmployeeSpecialty : 
+    EntityBase, 
+    IAuditableEntity,
+    IIntermediateEntity
 {
     public int EmployeeId { get; set; }
     public Employee Employee { get; set; }
@@ -23,4 +26,7 @@ public class EmployeeSpecialty : EntityBase, IIntermediateEntity
         get => SpecialtyId;
         set => SpecialtyId = value;
     }
+
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

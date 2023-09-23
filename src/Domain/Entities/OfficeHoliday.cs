@@ -1,6 +1,9 @@
 ﻿namespace DentallApp.Domain.Entities;
 
-public class OfficeHoliday : EntityBase, IIntermediateEntity
+public class OfficeHoliday : 
+    EntityBase, 
+    IAuditableEntity,
+    IIntermediateEntity
 {
     public int PublicHolidayId { get; set; }
     public PublicHoliday PublicHoliday { get; set; }
@@ -22,4 +25,7 @@ public class OfficeHoliday : EntityBase, IIntermediateEntity
         get => OfficeId;
         set => OfficeId = value;
     }
+
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

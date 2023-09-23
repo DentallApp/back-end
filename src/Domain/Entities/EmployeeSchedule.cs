@@ -1,6 +1,9 @@
 ﻿namespace DentallApp.Domain.Entities;
 
-public class EmployeeSchedule : SoftDeleteEntity, IEmployeeSchedule
+public class EmployeeSchedule : 
+    SoftDeleteEntity, 
+    IAuditableEntity, 
+    IEmployeeSchedule
 {
     public int EmployeeId { get; set; }
     public Employee Employee { get; set; }
@@ -10,4 +13,6 @@ public class EmployeeSchedule : SoftDeleteEntity, IEmployeeSchedule
     public TimeSpan? MorningEndHour { get; set; }
     public TimeSpan? AfternoonStartHour { get; set; }
     public TimeSpan? AfternoonEndHour { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }
