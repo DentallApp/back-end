@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Domain.Shared;
 
-public class SoftDeleteEntity : EntityBase
+public abstract class SoftDeleteEntity : EntityBase
 {
     public bool IsDeleted { get; set; }
 

@@ -1,4 +1,3 @@
-global using DentallApp.Features.Chatbot;
 global using DentallApp.Features.Chatbot.DirectLine;
 global using DentallApp.Features.Chatbot.DirectLine.Services;
 global using DentallApp.Features.Chatbot.Dialogs;
@@ -15,7 +14,6 @@ global using DentallApp.Features.AppointmentReminders;
 global using DentallApp.Middlewares;
 global using DentallApp.Extensions;
 
-global using DentallApp.Domain;
 global using DentallApp.Domain.ValueObjects;
 global using DentallApp.Domain.Entities;
 global using DentallApp.Domain.Shared;
@@ -74,6 +72,7 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Diagnostics;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+global using Microsoft.EntityFrameworkCore.ChangeTracking;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.IdentityModel.Logging;
 global using Microsoft.OpenApi.Models;

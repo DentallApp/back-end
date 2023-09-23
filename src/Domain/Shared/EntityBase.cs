@@ -1,6 +1,6 @@
 namespace DentallApp.Domain.Shared;
 
-public class EntityBase : CustomBaseEntity
+public abstract class EntityBase
 {
     public int Id { get; set; }
 }
