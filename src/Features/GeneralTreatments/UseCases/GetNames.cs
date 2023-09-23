@@ -15,7 +15,7 @@ public class GetGeneralTreatmentNamesUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetGeneralTreatmentNamesResponse>> Execute()
+    public async Task<IEnumerable<GetGeneralTreatmentNamesResponse>> ExecuteAsync()
     {
         var generalTreatments = await _context.Set<GeneralTreatment>()
             .Select(treatment => new GetGeneralTreatmentNamesResponse

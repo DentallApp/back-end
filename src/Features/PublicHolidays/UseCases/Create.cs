@@ -31,7 +31,7 @@ public class CreatePublicHolidayUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(CreatePublicHolidayRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreatePublicHolidayRequest request)
     {
         var publicHoliday = request.MapToPublicHoliday();
         foreach (int officeId in request.OfficesId.RemoveDuplicates())

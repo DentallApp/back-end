@@ -17,7 +17,7 @@ public class GetGeneralTreatmentsForHomePageUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetGeneralTreatmentsForHomePageResponse>> Execute()
+    public async Task<IEnumerable<GetGeneralTreatmentsForHomePageResponse>> ExecuteAsync()
     {
         var generalTreatments = await _context.Set<GeneralTreatment>()
             .Select(treatment => new GetGeneralTreatmentsForHomePageResponse

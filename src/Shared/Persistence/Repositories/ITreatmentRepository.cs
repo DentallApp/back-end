@@ -2,6 +2,6 @@
 
 public interface ITreatmentRepository
 {
-    Task<int?> GetDuration(int generalTreatmentId);
-    Task<PayRange> GetRangeToPay(int generalTreatmentId);
+    Task<int?> GetDurationAsync(int generalTreatmentId);
+    Task<PayRange> GetRangeToPayAsync(int generalTreatmentId);
 }

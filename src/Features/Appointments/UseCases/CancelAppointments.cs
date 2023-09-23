@@ -39,7 +39,7 @@ public class CancelAppointmentsUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response<CancelAppointmentsResponse>> Execute(ClaimsPrincipal currentEmployee, CancelAppointmentsRequest request)
+    public async Task<Response<CancelAppointmentsResponse>> ExecuteAsync(ClaimsPrincipal currentEmployee, CancelAppointmentsRequest request)
     {
         // Stores appointments whose stipulated date and time have not passed.
         var appointmentsCanBeCancelled = request.Appointments
@@ -51,16 +51,16 @@ public class CancelAppointmentsUseCase
         if (currentEmployee.IsOnlyDentist())
         {
             await _appointmentRepository
-                .CancelAppointmentsByDentistId(currentEmployee.GetEmployeeId(), appointmentsIdCanBeCancelled);
+                .CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appointmentsIdCanBeCancelled);
         }
         else
         {
             int officeId = currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId();
             await _appointmentRepository
-                .CancelAppointmentsByOfficeId(officeId, appointmentsIdCanBeCancelled);
+                .CancelAppointmentsByOfficeIdAsync(officeId, appointmentsIdCanBeCancelled);
         }
 
-        await SendMessageAboutAppointmentCancellation(appointmentsCanBeCancelled, request.Reason);
+        await SendMessageAboutAppointmentCancellationAsync(appointmentsCanBeCancelled, request.Reason);
 
         // Verify if there are appointments that cannot be cancelled.
         if (request.Appointments.Count() != appointmentsCanBeCancelled.Count())
@@ -87,7 +87,7 @@ public class CancelAppointmentsUseCase
         };
     }
 
-    private async Task SendMessageAboutAppointmentCancellation(
+    private async Task SendMessageAboutAppointmentCancellationAsync(
         IEnumerable<CancelAppointmentsRequest.Appointment> appointmentsCanBeCancelled,
         string reason)
     {

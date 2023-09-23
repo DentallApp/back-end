@@ -13,7 +13,7 @@ public class AppointmentController : ControllerBase
         [FromBody]CreateAppointmentRequest request,
         [FromServices]CreateAppointmentUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
@@ -27,7 +27,7 @@ public class AppointmentController : ControllerBase
         [FromBody]UpdateAppointmentRequest request,
         [FromServices]UpdateAppointmentUseCase useCase)
     {
-        var response = await useCase.Execute(id, User, request);
+        var response = await useCase.ExecuteAsync(id, User, request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -40,7 +40,7 @@ public class AppointmentController : ControllerBase
         int id,
         [FromServices]CancelBasicUserAppointmentUseCase useCase)
     {
-        var response = await useCase.Execute(id, User.GetUserId());
+        var response = await useCase.ExecuteAsync(id, User.GetUserId());
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -59,7 +59,7 @@ public class AppointmentController : ControllerBase
         [FromBody]CancelAppointmentsRequest request,
         [FromServices]CancelAppointmentsUseCase useCase)
     {
-        var response = await useCase.Execute(User, request);
+        var response = await useCase.ExecuteAsync(User, request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -71,7 +71,7 @@ public class AppointmentController : ControllerBase
     public async Task<IEnumerable<GetAppointmentsByUserIdResponse>> GetByUserId(
         [FromServices]GetAppointmentsByUserIdUseCase useCase)
     {
-        return await useCase.Execute(User.GetUserId());
+        return await useCase.ExecuteAsync(User.GetUserId());
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class AppointmentController : ControllerBase
         [FromBody]GetAppointmentsByDateRangeRequest request,
         [FromServices]GetAppointmentsByDateRangeUseCase useCase)
     {
-        var response = await useCase.Execute(User, request);
+        var response = await useCase.ExecuteAsync(User, request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -103,7 +103,7 @@ public class AppointmentController : ControllerBase
         [FromBody]AvailableTimeRangeRequest request,
         [FromServices]GetAvailableHoursUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 }

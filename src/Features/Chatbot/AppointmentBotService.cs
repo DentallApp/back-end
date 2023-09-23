@@ -41,28 +41,28 @@ public class AppointmentBotService : IAppointmentBotService
     {
         using var scope = _serviceProvider.CreateScope();
         var useCase = scope.ServiceProvider.GetRequiredService<GetAvailableHoursUseCase>();
-        return await useCase.Execute(request);
+        return await useCase.ExecuteAsync(request);
     }
 
     public async Task<Response<InsertedIdDto>> CreateScheduledAppointmentAsync(CreateAppointmentRequest request)
     {
         using var scope = _serviceProvider.CreateScope();
         var useCase = scope.ServiceProvider.GetRequiredService<CreateAppointmentUseCase>();
-        return await useCase.Execute(request);
+        return await useCase.ExecuteAsync(request);
     }
 
     public async Task<PayRange> GetRangeToPayAsync(int dentalServiceId)
     {
         using var scope = _serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<ITreatmentRepository>();
-        return await repository.GetRangeToPay(dentalServiceId);
+        return await repository.GetRangeToPayAsync(dentalServiceId);
     }
 
     public async Task<string> GetDentistScheduleAsync(int dentistId)
     {
         using var scope = _serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IEmployeeScheduleRepository>();
-        var weekDays = (await repository.GetOnlyWeekDays(dentistId)) as List<WeekDayResponse>;
+        var weekDays = (await repository.GetOnlyWeekDaysAsync(dentistId)) as List<WeekDayResponse>;
         return WeekDayFormat.GetWeekDaysFormat(weekDays);
     }
 }

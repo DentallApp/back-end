@@ -15,7 +15,7 @@ public class GetAppointmentStatusesUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetAppointmentStatusesResponse>> Execute()
+    public async Task<IEnumerable<GetAppointmentStatusesResponse>> ExecuteAsync()
     {
         var statuses = await _context.Set<AppointmentStatus>()
             .Select(appointmentStatus => new GetAppointmentStatusesResponse

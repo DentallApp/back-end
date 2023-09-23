@@ -2,6 +2,6 @@
 
 public interface IAppointmentRepository
 {
-    Task<int> CancelAppointmentsByOfficeId(int officeId, IEnumerable<int> appointmentsId);
-    Task<int> CancelAppointmentsByDentistId(int dentistId, IEnumerable<int> appointmentsId);
+    Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appointmentsId);
+    Task<int> CancelAppointmentsByDentistIdAsync(int dentistId, IEnumerable<int> appointmentsId);
 }

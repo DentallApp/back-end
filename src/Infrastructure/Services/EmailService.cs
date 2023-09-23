@@ -28,7 +28,7 @@ public class EmailService : IEmailService
     {
         var confirmationLink = $"{_settings.EmailVerificationUrl}?token={token}";
         var subject = $"Bienvenido {recipientName}!";
-        var body = await EmailTemplateLoader.LoadTemplateForEmailVerification(confirmationLink, recipientName);
+        var body = await EmailTemplateLoader.LoadTemplateForEmailVerificationAsync(confirmationLink, recipientName);
         return await SendEmailAsync(recipientEmail, recipientName, subject, body);
     }
 
@@ -36,7 +36,7 @@ public class EmailService : IEmailService
     {
         var confirmationLink = $"{_settings.PasswordResetUrl}?token={token}";
         var subject = $"Restablecimiento de contraseña";
-        var body = await EmailTemplateLoader.LoadTemplateForResetPassword(confirmationLink, recipientName);
+        var body = await EmailTemplateLoader.LoadTemplateForResetPasswordAsync(confirmationLink, recipientName);
         return await SendEmailAsync(recipientEmail, recipientName, subject, body);
     }
 }

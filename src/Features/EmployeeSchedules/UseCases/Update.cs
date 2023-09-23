@@ -29,7 +29,7 @@ public class UpdateEmployeeScheduleUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(int id, UpdateEmployeeScheduleRequest request)
+    public async Task<Response> ExecuteAsync(int id, UpdateEmployeeScheduleRequest request)
     {
         var employeeSchedule = await _context.Set<EmployeeSchedule>()
             .Where(employeeSchedule => employeeSchedule.Id == id)

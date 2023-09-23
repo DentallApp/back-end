@@ -22,7 +22,7 @@ public class GetMostRequestedServicesUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetMostRequestedServicesResponse>> Execute(GetMostRequestedServicesRequest request)
+    public async Task<IEnumerable<GetMostRequestedServicesResponse>> ExecuteAsync(GetMostRequestedServicesRequest request)
     {
         var appointments = await _context.Set<Appointment>()
             .Where(appointment =>

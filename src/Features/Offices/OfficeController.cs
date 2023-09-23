@@ -15,7 +15,7 @@ public class OfficeController : ControllerBase
         [FromBody]CreateOfficeRequest request,
         [FromServices]CreateOfficeUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
@@ -29,7 +29,7 @@ public class OfficeController : ControllerBase
         [FromBody]UpdateOfficeRequest request,
         [FromServices]UpdateOfficeUseCase useCase)
     {
-        var response = await useCase.Execute(id, User.GetEmployeeId(), request);
+        var response = await useCase.ExecuteAsync(id, User.GetEmployeeId(), request);
         return response.Success ? Ok(response) : NotFound(response);
     }
 
@@ -48,7 +48,7 @@ public class OfficeController : ControllerBase
         bool? status,
         [FromServices]GetOfficeNamesUseCase useCase)
     {
-        return await useCase.Execute(status);
+        return await useCase.ExecuteAsync(status);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class OfficeController : ControllerBase
     public async Task<IEnumerable<GetOfficesToEditResponse>> GetOfficesToEdit(
         [FromServices]GetOfficesToEditUseCase useCase)
     {
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ public class OfficeController : ControllerBase
     public async Task<IEnumerable<GetOfficesForHomePageResponse>> GetOfficesForHomePage(
         [FromServices]GetOfficesForHomePageUseCase useCase)
     { 
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 
     /// <summary>
@@ -82,6 +82,6 @@ public class OfficeController : ControllerBase
     public async Task<IEnumerable<GetOfficeOverviewResponse>> GetOverview(
         [FromServices]GetOfficeOverviewUseCase useCase)
     {
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 }

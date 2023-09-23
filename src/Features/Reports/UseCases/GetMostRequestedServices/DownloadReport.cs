@@ -32,7 +32,7 @@ public class DownloadDentalServicesReportUseCase
         _htmlConverter = htmlConverter;
     }
 
-    public async Task<byte[]> DownloadAsPdf(DownloadDentalServicesReportRequest request)
+    public async Task<byte[]> DownloadAsPdfAsync(DownloadDentalServicesReportRequest request)
     {
         var html = await _htmlTemplateLoader
             .LoadAsync("./Templates/ReportDentalServices.html", request.MapToObject());

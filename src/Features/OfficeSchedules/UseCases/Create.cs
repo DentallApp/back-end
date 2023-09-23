@@ -28,7 +28,7 @@ public class CreateOfficeScheduleUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(ClaimsPrincipal currentEmployee, CreateOfficeScheduleRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateOfficeScheduleRequest request)
     {
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
             return new Response<InsertedIdDto>(OfficeNotAssignedMessage);

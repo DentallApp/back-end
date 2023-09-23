@@ -28,7 +28,7 @@ public class GetAppointmentsByUserIdUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetAppointmentsByUserIdResponse>> Execute(int userId)
+    public async Task<IEnumerable<GetAppointmentsByUserIdResponse>> ExecuteAsync(int userId)
     {
         var appointments = await 
             (from appointment in _context.Set<Appointment>()

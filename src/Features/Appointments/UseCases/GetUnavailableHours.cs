@@ -8,7 +8,7 @@ public class UnavailableTimeRangeResponse
 
 public interface IGetUnavailableHoursUseCase
 {
-    Task<List<UnavailableTimeRangeResponse>> Execute(int dentistId, DateTime appointmentDate);
+    Task<List<UnavailableTimeRangeResponse>> ExecuteAsync(int dentistId, DateTime appointmentDate);
 }
 
 public class GetUnavailableHoursUseCase : IGetUnavailableHoursUseCase
@@ -22,7 +22,7 @@ public class GetUnavailableHoursUseCase : IGetUnavailableHoursUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<List<UnavailableTimeRangeResponse>> Execute(int dentistId, DateTime appointmentDate)
+    public async Task<List<UnavailableTimeRangeResponse>> ExecuteAsync(int dentistId, DateTime appointmentDate)
     {
         var response = await _context.Set<Appointment>()
             .Where(appointment =>

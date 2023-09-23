@@ -13,7 +13,7 @@ public class AppointmentRepository : IAppointmentRepository
         _dateTimeService = dateTimeService;
     }
 
-    private async Task<int> CancelAppointments(int officeId, int dentistId, IEnumerable<int> appointmentsId)
+    private async Task<int> CancelAppointmentsAsync(int officeId, int dentistId, IEnumerable<int> appointmentsId)
     {
         if (appointmentsId.Any())
         {
@@ -34,13 +34,13 @@ public class AppointmentRepository : IAppointmentRepository
         return default;
     }
 
-    public Task<int> CancelAppointmentsByOfficeId(int officeId, IEnumerable<int> appointmentsId)
+    public Task<int> CancelAppointmentsByOfficeIdAsync(int officeId, IEnumerable<int> appointmentsId)
     {
-        return CancelAppointments(officeId, dentistId: default, appointmentsId);
+        return CancelAppointmentsAsync(officeId, dentistId: default, appointmentsId);
     }
 
-    public Task<int> CancelAppointmentsByDentistId(int dentistId, IEnumerable<int> appointmentsId)
+    public Task<int> CancelAppointmentsByDentistIdAsync(int dentistId, IEnumerable<int> appointmentsId)
     {
-        return CancelAppointments(officeId: default, dentistId, appointmentsId);
+        return CancelAppointmentsAsync(officeId: default, dentistId, appointmentsId);
     }
 }

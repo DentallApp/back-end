@@ -35,7 +35,7 @@ public class UpdateCurrentEmployeeUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(int currentEmployeeId, UpdateCurrentEmployeeRequest request)
+    public async Task<Response> ExecuteAsync(int currentEmployeeId, UpdateCurrentEmployeeRequest request)
     {
         var employee = await _context.Set<Employee>()
             .Include(employee => employee.Person)

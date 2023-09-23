@@ -22,7 +22,7 @@ public class SendReminderJob : IJob
         _dateTimeService = dateTimeService;
     }
 
-    public Task Execute(IJobExecutionContext context)
+    public async Task Execute(IJobExecutionContext context)
     {
         _logger.LogInformation("Sending appointment reminder.");
         var currentDateAndTime    = _dateTimeService.Now;
@@ -40,8 +40,7 @@ public class SendReminderJob : IJob
                 businessName,
                 appointment.DentistName
             );
-            _instantMessaging.SendMessage(appointment.PatientCellPhone, message);
+            await _instantMessaging.SendMessageAsync(appointment.PatientCellPhone, message);
         }
-        return Task.CompletedTask;
     }
 }

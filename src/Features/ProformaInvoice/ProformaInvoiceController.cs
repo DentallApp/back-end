@@ -11,7 +11,7 @@ public class ProformaInvoiceController : ControllerBase
         [FromBody]DownloadProformaInvoiceRequest request,
         [FromServices]DownloadProformaInvoiceUseCase useCase)
     {
-        var contents = await useCase.DownloadAsPdf(request);
+        var contents = await useCase.DownloadAsPdfAsync(request);
         return File(contents, "application/pdf", "ProformaReporte.pdf");
     }
 }

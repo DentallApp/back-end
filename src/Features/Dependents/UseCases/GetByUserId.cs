@@ -25,7 +25,7 @@ public class GetDependentsByUserIdUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetDependentsByUserIdResponse>> Execute(int userId)
+    public async Task<IEnumerable<GetDependentsByUserIdResponse>> ExecuteAsync(int userId)
     {
         var dependents = await _context.Set<Dependent>()
             .Where(dependent => dependent.UserId == userId)

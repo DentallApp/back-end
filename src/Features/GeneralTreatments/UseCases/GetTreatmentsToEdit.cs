@@ -17,7 +17,7 @@ public class GetGeneralTreatmentsToEditUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetGeneralTreatmentsToEditResponse>> Execute()
+    public async Task<IEnumerable<GetGeneralTreatmentsToEditResponse>> ExecuteAsync()
     {
         var generalTreatments = await _context.Set<GeneralTreatment>()
             .Select(treatment => new GetGeneralTreatmentsToEditResponse

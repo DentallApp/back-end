@@ -16,7 +16,7 @@ public class CancelBasicUserAppointmentUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response> Execute(int appointmentId, int currentUserId)
+    public async Task<Response> ExecuteAsync(int appointmentId, int currentUserId)
     {
         var appointment = await _repository.GetByIdAsync(appointmentId);
 

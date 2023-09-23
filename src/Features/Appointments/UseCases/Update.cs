@@ -16,7 +16,7 @@ public class UpdateAppointmentUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response> Execute(int id, ClaimsPrincipal currentEmployee, UpdateAppointmentRequest request)
+    public async Task<Response> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateAppointmentRequest request)
     {
         var appointment = await _context.Set<Appointment>()
             .Where(appointment => appointment.Id == id)

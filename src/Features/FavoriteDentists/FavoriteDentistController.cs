@@ -15,7 +15,7 @@ public class FavoriteDentistController : ControllerBase
         [FromBody]CreateFavoriteDentistRequest request,
         [FromServices]CreateFavoriteDentistUseCase useCase)
     {
-        var response = await useCase.Execute(User.GetUserId(), request);
+        var response = await useCase.ExecuteAsync(User.GetUserId(), request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
@@ -32,7 +32,7 @@ public class FavoriteDentistController : ControllerBase
             UserId = User.GetUserId(),
             FavoriteDentistId = favoriteDentistId
         };
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -44,7 +44,7 @@ public class FavoriteDentistController : ControllerBase
         int dentistId,
         [FromServices]DeleteFavoriteDentistUseCase useCase)
     {
-        var response = await useCase.Execute(User.GetUserId(), dentistId);
+        var response = await useCase.ExecuteAsync(User.GetUserId(), dentistId);
         return response.Success ? Ok(response) : NotFound(response);
     }
 
@@ -56,7 +56,7 @@ public class FavoriteDentistController : ControllerBase
     public async Task<IEnumerable<GetFavoriteAndUnfavoriteDentistsResponse>> GetFavoritesAndUnfavorites(
         [FromServices]GetFavoriteAndUnfavoriteDentistsUseCase useCase)
     {
-        return await useCase.Execute(User.GetUserId());
+        return await useCase.ExecuteAsync(User.GetUserId());
     }
 
     /// <summary>
@@ -66,6 +66,6 @@ public class FavoriteDentistController : ControllerBase
     public async Task<IEnumerable<GetFavoriteDentistsByUserIdResponse>> GetFavoriteDentists(
         [FromServices]GetFavoriteDentistsByUserIdUseCase useCase)
     { 
-        return await useCase.Execute(User.GetUserId());
+        return await useCase.ExecuteAsync(User.GetUserId());
     }
 }

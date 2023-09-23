@@ -15,7 +15,7 @@ public class GetKinshipsUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetKinshipsResponse>> Execute()
+    public async Task<IEnumerable<GetKinshipsResponse>> ExecuteAsync()
     {
         var kinships = await _context.Set<Kinship>()
             .Select(kinship => new GetKinshipsResponse

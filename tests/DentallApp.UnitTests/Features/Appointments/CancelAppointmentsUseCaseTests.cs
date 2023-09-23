@@ -16,7 +16,7 @@ public class CancelAppointmentsUseCaseTests
     }
 
     [Test]
-    public async Task Execute_WhenAllAppointmentsCanBeCancelled_ShouldReturnsAnResponseWithoutAppointmentsId()
+    public async Task ExecuteAsync_WhenAllAppointmentsCanBeCancelled_ShouldReturnsAnResponseWithoutAppointmentsId()
     {
         // Arrange
         var request = new CancelAppointmentsRequest
@@ -38,7 +38,7 @@ public class CancelAppointmentsUseCaseTests
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
-        var response = await _cancelAppointmentsUseCase.Execute(claimsPrincipal, request);
+        var response = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
 
         // Asserts
         response.Success.Should().BeTrue();
@@ -47,7 +47,7 @@ public class CancelAppointmentsUseCaseTests
     }
 
     [Test]
-    public async Task Execute_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
+    public async Task ExecuteAsync_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
     {
         // Arrange
         var request = new CancelAppointmentsRequest
@@ -71,7 +71,7 @@ public class CancelAppointmentsUseCaseTests
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
-        var response = await _cancelAppointmentsUseCase.Execute(claimsPrincipal, request);
+        var response = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
 
         // Asserts
         response.Success.Should().BeFalse();
@@ -85,7 +85,7 @@ public class CancelAppointmentsUseCaseTests
     }
 
     [Test]
-    public async Task Execute_WhenAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
+    public async Task ExecuteAsync_WhenAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
     {
         // Arrange
         var request = new CancelAppointmentsRequest
@@ -109,7 +109,7 @@ public class CancelAppointmentsUseCaseTests
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
-        var response = await _cancelAppointmentsUseCase.Execute(claimsPrincipal, request);
+        var response = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
 
         // Asserts
         response.Success.Should().BeFalse();

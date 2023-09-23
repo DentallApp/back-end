@@ -28,7 +28,7 @@ public class CreateRefreshTokenUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response<CreateRefreshTokenResponse>> Execute(CreateRefreshTokenRequest request)
+    public async Task<Response<CreateRefreshTokenResponse>> ExecuteAsync(CreateRefreshTokenRequest request)
     {
         var claimPrincipal = _tokenService.GetPrincipalFromExpiredAccessToken(request.OldAccessToken);
         if (claimPrincipal is null)

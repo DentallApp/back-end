@@ -15,7 +15,7 @@ public class EmployeeScheduleController : ControllerBase
         [FromBody]CreateEmployeeScheduleRequest request,
         [FromServices]CreateEmployeeScheduleUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
@@ -28,7 +28,7 @@ public class EmployeeScheduleController : ControllerBase
         [FromBody]UpdateEmployeeScheduleRequest request,
         [FromServices]UpdateEmployeeScheduleUseCase useCase)
     {
-        var response = await useCase.Execute(id, request);
+        var response = await useCase.ExecuteAsync(id, request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -40,6 +40,6 @@ public class EmployeeScheduleController : ControllerBase
         int employeeId,
         [FromServices]GetSchedulesByEmployeeIdUseCase useCase)
     { 
-        return await useCase.Execute(employeeId);
+        return await useCase.ExecuteAsync(employeeId);
     }
 }

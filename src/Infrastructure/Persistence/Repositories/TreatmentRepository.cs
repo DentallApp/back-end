@@ -9,7 +9,7 @@ public class TreatmentRepository : ITreatmentRepository
         _context = context;
     }
 
-    public async Task<int?> GetDuration(int generalTreatmentId)
+    public async Task<int?> GetDurationAsync(int generalTreatmentId)
     {
         var treatment = await _context.Set<GeneralTreatment>()
             .Where(treatment => treatment.Id == generalTreatmentId)
@@ -24,7 +24,7 @@ public class TreatmentRepository : ITreatmentRepository
         return treatment?.Duration;
     }
 
-    public async Task<PayRange> GetRangeToPay(int generalTreatmentId)
+    public async Task<PayRange> GetRangeToPayAsync(int generalTreatmentId)
     {
         var treatment = await _context.Set<SpecificTreatment>()
             .Where(specificTreatment => specificTreatment.GeneralTreatmentId == generalTreatmentId)

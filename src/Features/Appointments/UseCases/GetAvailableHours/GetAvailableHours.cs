@@ -41,7 +41,7 @@ public class GetAvailableHoursUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> Execute(AvailableTimeRangeRequest request)
+    public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> ExecuteAsync(AvailableTimeRangeRequest request)
     {
         int officeId             = request.OfficeId;
         int dentistId            = request.DentistId;
@@ -49,10 +49,10 @@ public class GetAvailableHoursUseCase
         var appointmentDate      = request.AppointmentDate;
         int weekDayId            = (int)appointmentDate.DayOfWeek;
         var weekDayName          = WeekDaysType.WeekDays[weekDayId];
-        if (await _officeHolidayRepository.IsPublicHoliday(officeId, appointmentDate.Day, appointmentDate.Month))
+        if (await _officeHolidayRepository.IsPublicHolidayAsync(officeId, appointmentDate.Day, appointmentDate.Month))
             return new Response<IEnumerable<AvailableTimeRangeResponse>>(AppointmentDateIsPublicHolidayMessage);
 
-        var employeeSchedule  = await _employeeScheduleRepository.GetByWeekDayId(dentistId, weekDayId);
+        var employeeSchedule  = await _employeeScheduleRepository.GetByWeekDayIdAsync(dentistId, weekDayId);
         if (employeeSchedule is null || employeeSchedule.IsEmployeeScheculeDeleted)
             return new Response<IEnumerable<AvailableTimeRangeResponse>>(string.Format(DentistNotAvailableMessage, weekDayName));
 
@@ -62,8 +62,8 @@ public class GetAvailableHoursUseCase
         if (employeeSchedule.HasNotSchedule())
             return new Response<IEnumerable<AvailableTimeRangeResponse>>(NoMorningOrAfternoonHoursMessage);
 
-        var unavailables       = await _getUnavailableHoursUseCase.Execute(dentistId, appointmentDate);
-        int? treatmentDuration = await _treatmentRepository.GetDuration(serviceId);
+        var unavailables       = await _getUnavailableHoursUseCase.ExecuteAsync(dentistId, appointmentDate);
+        int? treatmentDuration = await _treatmentRepository.GetDurationAsync(serviceId);
         if (treatmentDuration is null)
             return new Response<IEnumerable<AvailableTimeRangeResponse>>(DentalServiceNotAvailableMessage);
 

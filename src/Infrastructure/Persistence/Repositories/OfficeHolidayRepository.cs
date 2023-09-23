@@ -9,7 +9,7 @@ public class OfficeHolidayRepository : IOfficeHolidayRepository
         _context = context;
     }
 
-    public async Task<bool> IsPublicHoliday(int officeId, int day, int month)
+    public async Task<bool> IsPublicHolidayAsync(int officeId, int day, int month)
     {
         var query = (from officeHoliday in _context.Set<OfficeHoliday>()
             join publicHoliday in _context.Set<PublicHoliday>() on officeHoliday.PublicHolidayId equals publicHoliday.Id

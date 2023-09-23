@@ -19,7 +19,7 @@ public class GetFavoriteDentistsByUserIdUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetFavoriteDentistsByUserIdResponse>> Execute(int userId)
+    public async Task<IEnumerable<GetFavoriteDentistsByUserIdResponse>> ExecuteAsync(int userId)
     {
         var favoriteDentists = await 
             (from favoriteDentist in _context.Set<FavoriteDentist>()

@@ -26,7 +26,7 @@ public class GetTotalAppointmentsUseCase
         _dbConnection = dbConnection;
     }
 
-    public async Task<GetTotalAppointmentsResponse> Execute(GetTotalAppointmentsRequest request)
+    public async Task<GetTotalAppointmentsResponse> ExecuteAsync(GetTotalAppointmentsRequest request)
     {
         var sql = @"
             SELECT 

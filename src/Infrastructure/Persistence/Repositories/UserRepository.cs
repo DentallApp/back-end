@@ -9,7 +9,7 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task<User> GetFullUserProfile(string userName)
+    public async Task<User> GetFullUserProfileAsync(string userName)
     { 
         var user = await _context.Set<User>()
             .Include(user => user.Person)
@@ -22,7 +22,7 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<bool> UserExists(string userName)
+    public async Task<bool> UserExistsAsync(string userName)
     {
         var user = await _context.Set<User>()
             .Where(user => user.UserName == userName)

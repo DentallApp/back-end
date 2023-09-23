@@ -50,7 +50,7 @@ public class UpdateOfficeUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response> Execute(int officeId, int currentEmployeeId, UpdateOfficeRequest request)
+    public async Task<Response> ExecuteAsync(int officeId, int currentEmployeeId, UpdateOfficeRequest request)
     {
         var currentOffice = await _context.Set<Office>()
             .Where(office => office.Id == officeId)

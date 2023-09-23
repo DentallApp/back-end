@@ -15,7 +15,7 @@ public class GetOfficeNamesUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetOfficeNamesResponse>> Execute(bool? status)
+    public async Task<IEnumerable<GetOfficeNamesResponse>> ExecuteAsync(bool? status)
     {
         var offices = await _context.Set<Office>()
             .OptionalWhere(status, office => office.IsActive() == status)

@@ -12,7 +12,7 @@ public class EmployeeController : ControllerBase
         [FromBody]CreateEmployeeRequest request,
         [FromServices]CreateEmployeeUseCase useCase)
     {
-        var response = await useCase.Execute(User, request);
+        var response = await useCase.ExecuteAsync(User, request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
@@ -25,7 +25,7 @@ public class EmployeeController : ControllerBase
         if (id == User.GetEmployeeId())
             return BadRequest(new Response(CannotRemoveYourOwnProfileMessage));
 
-        var response = await useCase.Execute(id, User);
+        var response = await useCase.ExecuteAsync(id, User);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -35,7 +35,7 @@ public class EmployeeController : ControllerBase
         [FromBody]UpdateCurrentEmployeeRequest request,
         [FromServices]UpdateCurrentEmployeeUseCase useCase)
     {
-        var response = await useCase.Execute(User.GetEmployeeId(), request);
+        var response = await useCase.ExecuteAsync(User.GetEmployeeId(), request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -49,7 +49,7 @@ public class EmployeeController : ControllerBase
         if (User.IsAdmin() && id == User.GetEmployeeId())
             return BadRequest(new Response(CannotEditYourOwnProfileMessage));
 
-        var response = await useCase.Execute(id, User, request);
+        var response = await useCase.ExecuteAsync(id, User, request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -58,7 +58,7 @@ public class EmployeeController : ControllerBase
     public async Task<IEnumerable<GetEmployeesToEditResponse>> GetEmployeesToEdit(
         [FromServices]GetEmployeesToEditUseCase useCase)
     { 
-        return await useCase.Execute(User);
+        return await useCase.ExecuteAsync(User);
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public class EmployeeController : ControllerBase
         if (!User.IsSuperAdmin() && User.IsNotInOffice(request.OfficeId))
             return Unauthorized();
 
-        return Ok(await useCase.Execute(request));
+        return Ok(await useCase.ExecuteAsync(request));
     }
 
     /// <summary>
@@ -92,6 +92,6 @@ public class EmployeeController : ControllerBase
     public async Task<IEnumerable<GetEmployeeOverviewResponse>> GetOverview(
         [FromServices]GetEmployeeOverviewUseCase useCase)
     {
-        return await useCase.Execute(User.GetOfficeId());
+        return await useCase.ExecuteAsync(User.GetOfficeId());
     }
 }

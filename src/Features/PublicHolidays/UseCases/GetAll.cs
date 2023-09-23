@@ -24,7 +24,7 @@ public class GetPublicHolidaysUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetPublicHolidaysResponse>> Execute()
+    public async Task<IEnumerable<GetPublicHolidaysResponse>> ExecuteAsync()
     {
         var holidays = await _context.Set<PublicHoliday>()
             .Select(publicHoliday => new GetPublicHolidaysResponse

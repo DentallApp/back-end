@@ -32,7 +32,7 @@ public class UpdatePublicHolidayUseCase
         _officeHolidayService = officeHolidayService;
     }
 
-    public async Task<Response> Execute(int id, UpdatePublicHolidayRequest request)
+    public async Task<Response> ExecuteAsync(int id, UpdatePublicHolidayRequest request)
     {
         var holiday = await _context.Set<PublicHoliday>()
             .Include(publicHoliday => publicHoliday.Offices)

@@ -32,7 +32,7 @@ public class CreateEmployeeScheduleUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(CreateEmployeeScheduleRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreateEmployeeScheduleRequest request)
     {
         var employeeSchedule = request.MapToEmployeeSchedule();
         _context.Add(employeeSchedule);

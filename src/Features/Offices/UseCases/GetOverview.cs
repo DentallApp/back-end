@@ -19,7 +19,7 @@ public class GetOfficeOverviewUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetOfficeOverviewResponse>> Execute()
+    public async Task<IEnumerable<GetOfficeOverviewResponse>> ExecuteAsync()
     {
         var offices = await _context.Set<Office>()
             .Where(office => office.OfficeSchedules.Any())

@@ -14,7 +14,7 @@ public class ReportTotalScheduledAppointmentsController : ControllerBase
         if (User.IsAdmin() && User.IsNotInOffice(request.OfficeId))
             return Unauthorized();
 
-        return Ok(await useCase.Execute(request));
+        return Ok(await useCase.ExecuteAsync(request));
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ public class ReportTotalScheduledAppointmentsController : ControllerBase
         [FromBody]DownloadScheduledAppointmentsReportRequest request,
         [FromServices]DownloadScheduledAppointmentsReportUseCase useCase)
     {
-        var contents = await useCase.DownloadAsPdf(request);
+        var contents = await useCase.DownloadAsPdfAsync(request);
         return File(contents, "application/pdf", "Reporte sobre el total de citas agendadas.pdf");
     }
 }

@@ -2,6 +2,6 @@
 
 public interface IUserRepository
 {
-    Task<User> GetFullUserProfile(string userName);
-    Task<bool> UserExists(string userName);
+    Task<User> GetFullUserProfileAsync(string userName);
+    Task<bool> UserExistsAsync(string userName);
 }

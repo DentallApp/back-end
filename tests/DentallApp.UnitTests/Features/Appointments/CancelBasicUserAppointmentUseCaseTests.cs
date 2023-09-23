@@ -18,7 +18,7 @@ public class CancelBasicUserAppointmentUseCaseTests
     }
 
     [Test]
-    public async Task Execute_WhenAppointmentCannotBeCancelled_ShouldReturnsFailureResponse()
+    public async Task ExecuteAsync_WhenAppointmentCannotBeCancelled_ShouldReturnsFailureResponse()
     {
         // Arrange
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 04, 15, 0, 0));
@@ -30,7 +30,7 @@ public class CancelBasicUserAppointmentUseCaseTests
             });
 
         // Act
-        var response = await _cancelAppointmentUseCase.Execute(default, default);
+        var response = await _cancelAppointmentUseCase.ExecuteAsync(default, default);
 
         // Asserts
         response.Success.Should().BeFalse();

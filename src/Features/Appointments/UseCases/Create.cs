@@ -53,7 +53,7 @@ public class CreateAppointmentUseCase
         _sendInformationUseCase = sendInformationUseCase;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(CreateAppointmentRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreateAppointmentRequest request)
     {
         // Checks if the date and time of the appointment is not available.
         bool isNotAvailable = await _context.Set<Appointment>()
@@ -76,7 +76,7 @@ public class CreateAppointmentUseCase
         var appointment = request.MapToAppointment();
         _context.Add(appointment);
         await _context.SaveChangesAsync();
-        await _sendInformationUseCase.Execute(appointment.Id, request);
+        await _sendInformationUseCase.ExecuteAsync(appointment.Id, request);
 
         return new Response<InsertedIdDto>
         {

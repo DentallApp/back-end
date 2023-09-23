@@ -9,7 +9,7 @@ public class DeletePublicHolidayUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(int id)
+    public async Task<Response> ExecuteAsync(int id)
     {
         var holiday = await _context.Set<PublicHoliday>()
             .Where(publicHoliday => publicHoliday.Id == id)

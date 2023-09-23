@@ -57,7 +57,7 @@ public class UpdateAnyEmployeeUseCase
         _employeeSpecialtyService = employeeSpecialtyService;
     }
 
-    public async Task<Response> Execute(int employeeId, ClaimsPrincipal currentEmployee, UpdateAnyEmployeeRequest request)
+    public async Task<Response> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee, UpdateAnyEmployeeRequest request)
     {
         var employeeToEdit = await _context.Set<Employee>()
             .Include(employee => employee.Person)

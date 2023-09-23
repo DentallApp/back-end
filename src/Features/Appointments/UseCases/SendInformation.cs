@@ -25,12 +25,12 @@ public class SendAppointmentInformationUseCase
         _treatmentRepository = treatmentRepository;
     }
 
-    public async Task Execute(int appointmentId, CreateAppointmentRequest request)
+    public async Task ExecuteAsync(int appointmentId, CreateAppointmentRequest request)
     {
         // The query is executed in case the scheduling of appointments is done manually by the secretary.
-        request.RangeToPay ??= await _treatmentRepository.GetRangeToPay(request.GeneralTreatmentId);
+        request.RangeToPay ??= await _treatmentRepository.GetRangeToPayAsync(request.GeneralTreatmentId);
         var businessName = EnvReader.Instance[AppSettings.BusinessName];
-        var appointmentInfo = await GetAppointmentInformation(appointmentId);
+        var appointmentInfo = await GetAppointmentInformationAsync(appointmentId);
         var msg = string.Format(AppointmentInformationMessageTemplate,
             appointmentInfo.PatientName,
             businessName,
@@ -43,7 +43,7 @@ public class SendAppointmentInformationUseCase
         await _instantMessaging.SendMessageAsync(appointmentInfo.CellPhone, msg);
     }
 
-    private Task<GetAppointmentInformationResponse> GetAppointmentInformation(int appointmentId)
+    private Task<GetAppointmentInformationResponse> GetAppointmentInformationAsync(int appointmentId)
     {
         return _context.Set<Appointment>()
             .Where(appointment => appointment.Id == appointmentId)

@@ -9,7 +9,7 @@ public class DeleteEmployeeUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(int employeeId, ClaimsPrincipal currentEmployee)
+    public async Task<Response> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee)
     {
         var employee = await _context.Set<Employee>()
             .Include(employee => employee.User.UserRoles)

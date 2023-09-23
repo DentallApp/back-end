@@ -41,7 +41,7 @@ public class DownloadProformaInvoiceUseCase
         _htmlConverter = htmlConverter;
     }
 
-    public async Task<byte[]> DownloadAsPdf(DownloadProformaInvoiceRequest request)
+    public async Task<byte[]> DownloadAsPdfAsync(DownloadProformaInvoiceRequest request)
     {
         var html = await _htmlTemplateLoader
             .LoadAsync("./Templates/ProformaInvoice.html", request.MapToObject());

@@ -21,7 +21,7 @@ public class GetDentistsUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetDentistsResponse>> Execute(GetDentistsRequest request)
+    public async Task<IEnumerable<GetDentistsResponse>> ExecuteAsync(GetDentistsRequest request)
     {
         var queryable = 
            (from employee in _context.Set<Employee>()

@@ -9,7 +9,7 @@ public class EmployeeScheduleRepository : IEmployeeScheduleRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<WeekDayResponse>> GetOnlyWeekDays(int employeeId)
+    public async Task<IEnumerable<WeekDayResponse>> GetOnlyWeekDaysAsync(int employeeId)
     { 
         var schedules = await _context.Set<EmployeeSchedule>()
             .Where(employeeSchedule => employeeSchedule.EmployeeId == employeeId)
@@ -25,7 +25,7 @@ public class EmployeeScheduleRepository : IEmployeeScheduleRepository
         return schedules;
     }
 
-    public async Task<EmployeeScheduleResponse> GetByWeekDayId(int employeeId, int weekDayId)
+    public async Task<EmployeeScheduleResponse> GetByWeekDayIdAsync(int employeeId, int weekDayId)
     { 
         var schedules = await 
             (from employeeSchedule in _context.Set<EmployeeSchedule>()

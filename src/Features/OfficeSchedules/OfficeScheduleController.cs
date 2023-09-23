@@ -15,7 +15,7 @@ public class OfficeScheduleController : ControllerBase
         [FromBody]CreateOfficeScheduleRequest request,
         [FromServices]CreateOfficeScheduleUseCase useCase)
     {
-        var response = await useCase.Execute(User, request);
+        var response = await useCase.ExecuteAsync(User, request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
@@ -29,7 +29,7 @@ public class OfficeScheduleController : ControllerBase
         [FromBody]UpdateOfficeScheduleRequest request,
         [FromServices]UpdateOfficeScheduleUseCase useCase)
     {
-        var response = await useCase.Execute(scheduleId, User, request);
+        var response = await useCase.ExecuteAsync(scheduleId, User, request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -41,6 +41,6 @@ public class OfficeScheduleController : ControllerBase
         int officeId,
         [FromServices]GetSchedulesByOfficeIdUseCase useCase)
     {
-        return await useCase.Execute(officeId);
+        return await useCase.ExecuteAsync(officeId);
     }
 }

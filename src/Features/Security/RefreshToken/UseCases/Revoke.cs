@@ -9,7 +9,7 @@ public class RevokeRefreshTokenUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(int userId)
+    public async Task<Response> ExecuteAsync(int userId)
     {
         var user = await _context.Set<User>()
             .Where(user => user.Id == userId)

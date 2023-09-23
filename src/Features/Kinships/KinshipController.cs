@@ -10,6 +10,6 @@ public class KinshipController : ControllerBase
     public async Task<IEnumerable<GetKinshipsResponse>> GetAll(
         [FromServices]GetKinshipsUseCase useCase)
     {
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 }

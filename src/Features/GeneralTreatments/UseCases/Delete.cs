@@ -9,7 +9,7 @@ public class DeleteGeneralTreatmentUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(int id)
+    public async Task<Response> ExecuteAsync(int id)
     {
         int updatedRows = await _context.SoftDeleteAsync<GeneralTreatment>(id);
         if (updatedRows == 0)

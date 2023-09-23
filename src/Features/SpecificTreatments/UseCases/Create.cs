@@ -26,7 +26,7 @@ public class CreateSpecificTreatmentUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(CreateSpecificTreatmentRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreateSpecificTreatmentRequest request)
     {
         var specificTreatment = request.MapToSpecificTreatment();
         _context.Add(specificTreatment);

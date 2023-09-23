@@ -28,7 +28,7 @@ public class UpdateGeneralTreatmentUseCase
         _basePath = settings.DentalServicesImagesPath;
     }
 
-    public async Task<Response> Execute(int id, UpdateGeneralTreatmentRequest request)
+    public async Task<Response> ExecuteAsync(int id, UpdateGeneralTreatmentRequest request)
     {
         var generalTreatment = await _context.Set<GeneralTreatment>()
             .Where(treatment => treatment.Id == id)
