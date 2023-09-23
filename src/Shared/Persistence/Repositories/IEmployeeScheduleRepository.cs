@@ -3,5 +3,5 @@
 public interface IEmployeeScheduleRepository
 {
     Task<EmployeeScheduleResponse> GetByWeekDayIdAsync(int employeeId, int weekDayId);
-    Task<IEnumerable<WeekDayResponse>> GetOnlyWeekDaysAsync(int employeeId);
+    Task<IEnumerable<WeekDay>> GetOnlyWeekDaysAsync(int employeeId);
 }

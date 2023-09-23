@@ -9,7 +9,7 @@ public class WeekDayFormat
     /// Una colección con los días de la semana (la colección debe estar ordenada de forma ascendente).
     /// </param>
     /// <returns><c>true</c> sí la colección tiene días consecutivos; de lo contrario, <c>false</c>.</returns>
-    private static bool HasConsecutiveDays(List<WeekDayResponse> weekDays)
+    private static bool HasConsecutiveDays(List<WeekDay> weekDays)
     {
         for(int i = 1, len = weekDays.Count; i < len; i++)
             if (weekDays[i].Id - weekDays[i - 1].Id != 1)
@@ -24,7 +24,7 @@ public class WeekDayFormat
     /// Una colección con los días de la semana (la colección debe estar ordenada de forma ascendente).
     /// </param>
     /// <remarks>Ejemplo: Lunes a Viernes / Lunes, Miércoles y Viernes.</remarks>
-    public static string GetWeekDaysFormat(List<WeekDayResponse> weekDays)
+    public static string GetWeekDaysFormat(List<WeekDay> weekDays)
     {
         var weekDaysCount = weekDays.Count;
         if (weekDaysCount == 0)

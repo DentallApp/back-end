@@ -62,7 +62,7 @@ public class AppointmentBotService : IAppointmentBotService
     {
         using var scope = _serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IEmployeeScheduleRepository>();
-        var weekDays = (await repository.GetOnlyWeekDaysAsync(dentistId)) as List<WeekDayResponse>;
+        var weekDays = (await repository.GetOnlyWeekDaysAsync(dentistId)) as List<WeekDay>;
         return WeekDayFormat.GetWeekDaysFormat(weekDays);
     }
 }

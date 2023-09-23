@@ -6,7 +6,7 @@ public partial class WeekDayFormatTests
     public void GetWeekDaysFormat_WhenWeekDaysIsZero_ShouldReturnsStringEmpty()
     {
         // Arrange
-        var weekDays = new List<WeekDayResponse>();
+        var weekDays = new List<WeekDay>();
         var expected = string.Empty;
 
         // Act
@@ -20,7 +20,7 @@ public partial class WeekDayFormatTests
     public void GetWeekDaysFormat_WhenWeekDaysIsOne_ShouldReturnsNewFormat()
     {
         // Arrange
-        var weekDays = new List<WeekDayResponse>()
+        var weekDays = new List<WeekDay>()
         {
             new() { Id = (int)DayOfWeek.Monday, Name = WeekDaysName.Monday }
         };
@@ -37,7 +37,7 @@ public partial class WeekDayFormatTests
     public void GetWeekDaysFormat_WhenWeekDaysIsTwo_ShouldReturnsNewFormat()
     {
         // Arrange
-        var weekDays = new List<WeekDayResponse>()
+        var weekDays = new List<WeekDay>()
         {
             new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
             new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday }
@@ -52,7 +52,7 @@ public partial class WeekDayFormatTests
     }
 
     [TestCaseSource(typeof(GetConsecutiveDaysTestCases))]
-    public void GetWeekDaysFormat_WhenDaysAreConsecutive_ShouldReturnsNewFormat(List<WeekDayResponse> weekDays, string expected)
+    public void GetWeekDaysFormat_WhenDaysAreConsecutive_ShouldReturnsNewFormat(List<WeekDay> weekDays, string expected)
     {
         // Act
         var format = WeekDayFormat.GetWeekDaysFormat(weekDays);
@@ -62,7 +62,7 @@ public partial class WeekDayFormatTests
     }
 
     [TestCaseSource(typeof(GetNonConsecutiveDaysTestCases))]
-    public void GetWeekDaysFormat_WhenDaysAreNotConsecutive_ShouldReturnsNewFormat(List<WeekDayResponse> weekDays, string expected)
+    public void GetWeekDaysFormat_WhenDaysAreNotConsecutive_ShouldReturnsNewFormat(List<WeekDay> weekDays, string expected)
     {
         // Act
         var format = WeekDayFormat.GetWeekDaysFormat(weekDays);

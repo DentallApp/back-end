@@ -6,7 +6,7 @@ public class GetNonConsecutiveDaysTestCases : IEnumerable
     {
         yield return new object[]
         {
-            new List<WeekDayResponse>
+            new List<WeekDay>
             {
                 new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
                 new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
@@ -17,7 +17,7 @@ public class GetNonConsecutiveDaysTestCases : IEnumerable
 
         yield return new object[]
         {
-            new List<WeekDayResponse>
+            new List<WeekDay>
             {
                 new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
                 new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
@@ -28,7 +28,7 @@ public class GetNonConsecutiveDaysTestCases : IEnumerable
 
         yield return new object[]
         {
-            new List<WeekDayResponse>
+            new List<WeekDay>
             {
                 new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
                 new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
@@ -39,7 +39,7 @@ public class GetNonConsecutiveDaysTestCases : IEnumerable
 
         yield return new object[]
         {
-            new List<WeekDayResponse>
+            new List<WeekDay>
             {
                 new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
                 new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
@@ -51,7 +51,7 @@ public class GetNonConsecutiveDaysTestCases : IEnumerable
 
         yield return new object[]
         {
-            new List<WeekDayResponse>
+            new List<WeekDay>
             {
                 new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
                 new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday },

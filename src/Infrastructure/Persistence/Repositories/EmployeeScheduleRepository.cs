@@ -9,12 +9,12 @@ public class EmployeeScheduleRepository : IEmployeeScheduleRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<WeekDayResponse>> GetOnlyWeekDaysAsync(int employeeId)
+    public async Task<IEnumerable<WeekDay>> GetOnlyWeekDaysAsync(int employeeId)
     { 
         var schedules = await _context.Set<EmployeeSchedule>()
             .Where(employeeSchedule => employeeSchedule.EmployeeId == employeeId)
             .OrderBy(employeeSchedule => employeeSchedule.WeekDayId)
-            .Select(employeeSchedule => new WeekDayResponse
+            .Select(employeeSchedule => new WeekDay
             {
                 Id   = employeeSchedule.WeekDayId,
                 Name = employeeSchedule.WeekDay.Name
