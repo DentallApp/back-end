@@ -39,7 +39,7 @@ public class SendAppointmentInformationUseCase
             appointmentInfo.DentalServiceName,
             request.AppointmentDate.GetDateInSpanishFormat(),
             request.StartHour.GetHourWithoutSeconds(),
-            request.RangeToPay?.Description);
+            request.RangeToPay?.ToString());
         await _instantMessaging.SendMessageAsync(appointmentInfo.CellPhone, msg);
     }
 

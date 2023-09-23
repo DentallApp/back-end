@@ -192,7 +192,7 @@ public partial class RootDialog : ComponentDialog
         await stepContext
             .Context
             .SendActivityAsync(
-                string.Format(SuccessfullyScheduledAppointmentMessage, appointment.RangeToPay?.Description), 
+                string.Format(SuccessfullyScheduledAppointmentMessage, appointment.RangeToPay?.ToString()), 
                 cancellationToken: cancellationToken);
 
         await stepContext.Context.SendActivityAsync(ThanksForUsingServiceMessage, cancellationToken: cancellationToken);

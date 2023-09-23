@@ -13,13 +13,10 @@ public record class PayRange
         PriceMax = priceMax;
     }
 
-    public string Description
+    public override string ToString()
     {
-        get
-        {
-            return PriceMin != PriceMax ?
-                string.Format(RangeToPayMinMaxMessage, PriceMin, PriceMax) :
-                string.Format(RangeToPayMessage, PriceMax);
-        }
+        return PriceMin != PriceMax ?
+            string.Format(RangeToPayMinMaxMessage, PriceMin, PriceMax) :
+            string.Format(RangeToPayMessage, PriceMax);
     }
 }
