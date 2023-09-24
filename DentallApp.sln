@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Elements", "Soluti
 	ProjectSection(SolutionItems) = preProject
 		.env = .env
 		.env.example = .env.example
+		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
