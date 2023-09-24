@@ -16,19 +16,19 @@ public class CreateRefreshTokenUseCase
 {
     private readonly AppDbContext _context;
     private readonly ITokenService _tokenService;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
     public CreateRefreshTokenUseCase(
         AppDbContext context, 
         ITokenService tokenService, 
-        IDateTimeProvider dateTimeProvider)
+        IDateTimeService dateTimeService)
     {
         _context = context;
         _tokenService = tokenService;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response<CreateRefreshTokenResponse>> Execute(CreateRefreshTokenRequest request)
+    public async Task<Response<CreateRefreshTokenResponse>> ExecuteAsync(CreateRefreshTokenRequest request)
     {
         var claimPrincipal = _tokenService.GetPrincipalFromExpiredAccessToken(request.OldAccessToken);
         if (claimPrincipal is null)
@@ -45,7 +45,7 @@ public class CreateRefreshTokenUseCase
         if (user.RefreshToken != request.OldRefreshToken)
             return new Response<CreateRefreshTokenResponse>(RefreshTokenInvalidMessage);
 
-        if (_dateTimeProvider.Now >= user.RefreshTokenExpiry)
+        if (_dateTimeService.Now >= user.RefreshTokenExpiry)
             return new Response<CreateRefreshTokenResponse>(RefreshTokenExpiredMessage);
 
         var response = new CreateRefreshTokenResponse

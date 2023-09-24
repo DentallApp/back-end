@@ -3,12 +3,12 @@
 public partial class RootDialog : ComponentDialog
 {
     private readonly IAppointmentBotService _botService;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
-    public RootDialog(IAppointmentBotService botService, IDateTimeProvider dateTimeProvider) : base(nameof(RootDialog))
+    public RootDialog(IAppointmentBotService botService, IDateTimeService dateTimeService) : base(nameof(RootDialog))
     {
         _botService = botService;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
 
         var waterfallSteps = new WaterfallStep[]
         {
@@ -133,7 +133,7 @@ public partial class RootDialog : ComponentDialog
         await stepContext.Context.SendActivityAsync(string.Format(ShowScheduleToUserMessage, dentistSchedule));
         return await stepContext.PromptAsync(
             nameof(AdaptiveCardPrompt),
-            AdaptiveCardFactory.CreateDateCard(cardJson, _dateTimeProvider),
+            AdaptiveCardFactory.CreateDateCard(cardJson, _dateTimeService),
             cancellationToken
         );
     }
@@ -188,7 +188,13 @@ public partial class RootDialog : ComponentDialog
         var response = await _botService.CreateScheduledAppointmentAsync(appointment);
         if (!response.Success)
             return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
-        await stepContext.Context.SendActivityAsync(string.Format(SuccessfullyScheduledAppointmentMessage, appointment.RangeToPay), cancellationToken: cancellationToken);
+
+        await stepContext
+            .Context
+            .SendActivityAsync(
+                string.Format(SuccessfullyScheduledAppointmentMessage, appointment.RangeToPay?.ToString()), 
+                cancellationToken: cancellationToken);
+
         await stepContext.Context.SendActivityAsync(ThanksForUsingServiceMessage, cancellationToken: cancellationToken);
         return await stepContext.EndDialogAsync(cancellationToken: cancellationToken);
     }

@@ -12,57 +12,57 @@ public class AppointmentBotService : IAppointmentBotService
     public async Task<List<AdaptiveChoice>> GetDentalServicesAsync()
     {
 		using var scope = _serviceProvider.CreateScope();
-        var botQuery = scope.ServiceProvider.GetRequiredService<IBotQueries>();
-        return await botQuery.GetDentalServicesAsync();
+        var queries = scope.ServiceProvider.GetRequiredService<ISchedulingQueries>();
+        return await queries.GetDentalServicesAsync();
     }
 
     public async Task<List<AdaptiveChoice>> GetDentistsAsync(int officeId, int specialtyId)
     {
 		using var scope = _serviceProvider.CreateScope();
-        var botQuery = scope.ServiceProvider.GetRequiredService<IBotQueries>();
-        return await botQuery.GetDentistsAsync(officeId, specialtyId);
+        var queries = scope.ServiceProvider.GetRequiredService<ISchedulingQueries>();
+        return await queries.GetDentistsAsync(officeId, specialtyId);
     }
 
     public async Task<List<AdaptiveChoice>> GetOfficesAsync()
     {
 		using var scope = _serviceProvider.CreateScope();
-        var botQuery = scope.ServiceProvider.GetRequiredService<IBotQueries>();
-        return await botQuery.GetOfficesAsync();
+        var queries = scope.ServiceProvider.GetRequiredService<ISchedulingQueries>();
+        return await queries.GetOfficesAsync();
     }
 
-    public async Task<List<AdaptiveChoice>> GetPatientsAsync(UserProfile userProfile)
+    public async Task<List<AdaptiveChoice>> GetPatientsAsync(AuthenticatedUser user)
     {
 		using var scope = _serviceProvider.CreateScope();
-        var botQuery = scope.ServiceProvider.GetRequiredService<IBotQueries>();
-        return await botQuery.GetPatientsAsync(userProfile);
+        var queries = scope.ServiceProvider.GetRequiredService<ISchedulingQueries>();
+        return await queries.GetPatientsAsync(user);
     }
 
     public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> GetAvailableHoursAsync(AvailableTimeRangeRequest request)
     {
         using var scope = _serviceProvider.CreateScope();
         var useCase = scope.ServiceProvider.GetRequiredService<GetAvailableHoursUseCase>();
-        return await useCase.Execute(request);
+        return await useCase.ExecuteAsync(request);
     }
 
     public async Task<Response<InsertedIdDto>> CreateScheduledAppointmentAsync(CreateAppointmentRequest request)
     {
         using var scope = _serviceProvider.CreateScope();
         var useCase = scope.ServiceProvider.GetRequiredService<CreateAppointmentUseCase>();
-        return await useCase.Execute(request);
+        return await useCase.ExecuteAsync(request);
     }
 
-    public async Task<SpecificTreatmentRangeToPayDto> GetRangeToPayAsync(int dentalServiceId)
+    public async Task<PayRange> GetRangeToPayAsync(int dentalServiceId)
     {
         using var scope = _serviceProvider.CreateScope();
-        var repository = scope.ServiceProvider.GetRequiredService<ISpecificTreatmentRepository>();
-        return await repository.GetTreatmentWithRangeToPayAsync(dentalServiceId);
+        var repository = scope.ServiceProvider.GetRequiredService<ITreatmentRepository>();
+        return await repository.GetRangeToPayAsync(dentalServiceId);
     }
 
     public async Task<string> GetDentistScheduleAsync(int dentistId)
     {
         using var scope = _serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IEmployeeScheduleRepository>();
-        var weekDays = (await repository.GetEmployeeScheduleWithOnlyWeekDayAsync(dentistId)) as List<WeekDayDto>;
-        return WeekDayFormat.GetWeekDaysFormat(weekDays);
+        var weekDays = (await repository.GetOnlyWeekDaysAsync(dentistId)) as List<WeekDay>;
+        return WeekDay.ConvertToDayRange(weekDays);
     }
 }

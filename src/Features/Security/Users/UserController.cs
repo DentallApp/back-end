@@ -13,7 +13,7 @@ public class UserController : ControllerBase
         [FromBody]CreateBasicUserRequest request,
         [FromServices]CreateBasicUserUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ?
                CreatedAtAction(nameof(Create), response) :
                BadRequest(response);
@@ -26,7 +26,7 @@ public class UserController : ControllerBase
         [FromBody]UserLoginRequest request,
         [FromServices]UserLoginUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -35,7 +35,7 @@ public class UserController : ControllerBase
         [FromBody]UpdateCurrentUserRequest request,
         [FromServices]UpdateCurrentUserUseCase useCase)
     {
-        var response = await useCase.Execute(currentPersonId: User.GetPersonId(), request);
+        var response = await useCase.ExecuteAsync(currentPersonId: User.GetPersonId(), request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -45,7 +45,7 @@ public class UserController : ControllerBase
         [FromBody]ChangePasswordRequest request,
         [FromServices]ChangePasswordUseCase useCase)
     {
-        var response = await useCase.Execute(User.GetUserId(), request);
+        var response = await useCase.ExecuteAsync(User.GetUserId(), request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -56,7 +56,7 @@ public class UserController : ControllerBase
         [FromBody]VerifyEmailRequest request,
         [FromServices]VerifyEmailUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? Ok(response) : Unauthorized(response);
     }
 
@@ -67,7 +67,7 @@ public class UserController : ControllerBase
         [FromBody]ResetForgottenPasswordRequest request,
         [FromServices]ResetForgottenPasswordUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -78,7 +78,7 @@ public class UserController : ControllerBase
         [FromBody]SendPasswordResetEmailRequest request,
         [FromServices]SendPasswordResetEmailUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 }

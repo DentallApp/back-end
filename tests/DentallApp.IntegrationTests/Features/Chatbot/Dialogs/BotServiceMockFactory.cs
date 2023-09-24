@@ -1,6 +1,4 @@
-﻿using DentallApp.Features.Appointments.UseCases;
-
-namespace DentallApp.IntegrationTests.Features.Chatbot.Dialogs;
+﻿namespace DentallApp.IntegrationTests.Features.Chatbot.Dialogs;
 
 public static class BotServiceMockFactory
 {
@@ -18,8 +16,8 @@ public static class BotServiceMockFactory
     public static IAppointmentBotService CreateBotServiceMock()
     {
         var botService = Mock.Create<IAppointmentBotService>();
-        Mock.Arrange(() => botService.GetPatientsAsync(Arg.IsAny<UserProfile>()))
-            .ReturnsAsync((UserProfile user) => CreateChoiceLists(user.FullName, user.PersonId.ToString()));
+        Mock.Arrange(() => botService.GetPatientsAsync(Arg.IsAny<AuthenticatedUser>()))
+            .ReturnsAsync((AuthenticatedUser user) => CreateChoiceLists(user.FullName, user.PersonId.ToString()));
 
         Mock.Arrange(() => botService.GetOfficesAsync())
             .ReturnsAsync(CreateChoiceLists(OfficeName, Id));
@@ -45,11 +43,7 @@ public static class BotServiceMockFactory
             });
 
         Mock.Arrange(() => botService.GetRangeToPayAsync(Arg.AnyInt))
-            .ReturnsAsync(new SpecificTreatmentRangeToPayDto
-            {
-                PriceMin = PriceMin,
-                PriceMax = PriceMax
-            });
+            .ReturnsAsync(new PayRange(PriceMin, PriceMax));
 
         Mock.Arrange(() => botService.CreateScheduledAppointmentAsync(Arg.IsAny<CreateAppointmentRequest>()))
             .ReturnsAsync(new Response<InsertedIdDto>

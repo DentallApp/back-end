@@ -8,15 +8,15 @@ public class UpdateAppointmentRequest
 public class UpdateAppointmentUseCase
 {
     private readonly AppDbContext _context;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
-    public UpdateAppointmentUseCase(AppDbContext context, IDateTimeProvider dateTimeProvider)
+    public UpdateAppointmentUseCase(AppDbContext context, IDateTimeService dateTimeService)
     {
         _context = context;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response> Execute(int id, ClaimsPrincipal currentEmployee, UpdateAppointmentRequest request)
+    public async Task<Response> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateAppointmentRequest request)
     {
         var appointment = await _context.Set<Appointment>()
             .Where(appointment => appointment.Id == id)
@@ -28,7 +28,7 @@ public class UpdateAppointmentUseCase
         if (appointment.AppointmentStatusId == AppointmentStatusId.Canceled)
             return new Response(AppointmentIsAlreadyCanceledMessage);
 
-        if (_dateTimeProvider.Now.Date > appointment.Date)
+        if (_dateTimeService.Now.Date > appointment.Date)
             return new Response(AppointmentCannotBeUpdatedForPreviousDaysMessage);
 
         if (currentEmployee.IsOnlyDentist() && appointment.DentistId != currentEmployee.GetEmployeeId())

@@ -8,7 +8,7 @@ public static class WaterfallStepContextExtensions
     private const string UserInfo        = "value-userInfo";
     private const string AppointmentInfo = "value-appointmentInfo";
 
-    public static UserProfile CreateUserProfileInstance(this WaterfallStepContext stepContext)
+    public static AuthenticatedUser CreateUserProfileInstance(this WaterfallStepContext stepContext)
     {
         var channelData              = stepContext.Context.Activity.GetChannelData<ChannelData>();
         var userProfile              = UserProfileFactory.Create(channelData, stepContext.Context.Activity.From.Id);
@@ -16,8 +16,8 @@ public static class WaterfallStepContextExtensions
         return userProfile;
     }
 
-    public static UserProfile GetUserProfile(this WaterfallStepContext stepContext)
-        => (UserProfile)stepContext.Values[UserInfo];
+    public static AuthenticatedUser GetUserProfile(this WaterfallStepContext stepContext)
+        => (AuthenticatedUser)stepContext.Values[UserInfo];
 
     public static CreateAppointmentRequest CreateAppointmentInstance(this WaterfallStepContext stepContext)
     {

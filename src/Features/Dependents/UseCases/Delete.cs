@@ -9,7 +9,7 @@ public class DeleteDependentUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(int dependentId, int userId)
+    public async Task<Response> ExecuteAsync(int dependentId, int userId)
     {
         var dependent = await _context.Set<Dependent>()
             .Where(dependent => dependent.Id == dependentId)

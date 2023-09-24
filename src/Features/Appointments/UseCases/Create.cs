@@ -19,7 +19,7 @@ public class CreateAppointmentRequest
     public TimeSpan EndHour { get; set; }
 
     [JsonIgnore]
-    public SpecificTreatmentRangeToPayDto RangeToPay { get; set; }
+    public PayRange RangeToPay { get; set; }
 
     public Appointment MapToAppointment()
     {
@@ -40,20 +40,20 @@ public class CreateAppointmentRequest
 public class CreateAppointmentUseCase
 {
     private readonly AppDbContext _context;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
     private readonly SendAppointmentInformationUseCase _sendInformationUseCase;
 
     public CreateAppointmentUseCase(
         AppDbContext context, 
-        IDateTimeProvider dateTimeProvider, 
+        IDateTimeService dateTimeService, 
         SendAppointmentInformationUseCase sendInformationUseCase)
     {
         _context = context;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
         _sendInformationUseCase = sendInformationUseCase;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(CreateAppointmentRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreateAppointmentRequest request)
     {
         // Checks if the date and time of the appointment is not available.
         bool isNotAvailable = await _context.Set<Appointment>()
@@ -66,7 +66,7 @@ public class CreateAppointmentUseCase
                    appointment.IsCancelledByEmployee ||
                    // Checks if the canceled appointment is not available.
                    // This check allows patients to choose a time slot for an appointment canceled by another basic user.
-                   _dateTimeProvider.Now > _context.AddTime(_context.ToDateTime(appointment.Date), appointment.StartHour)))
+                   _dateTimeService.Now > _context.AddTime(_context.ToDateTime(appointment.Date), appointment.StartHour)))
             .Select(appointment => true)
             .AnyAsync();
 
@@ -76,7 +76,7 @@ public class CreateAppointmentUseCase
         var appointment = request.MapToAppointment();
         _context.Add(appointment);
         await _context.SaveChangesAsync();
-        await _sendInformationUseCase.Execute(appointment.Id, request);
+        await _sendInformationUseCase.ExecuteAsync(appointment.Id, request);
 
         return new Response<InsertedIdDto>
         {

@@ -2,21 +2,21 @@
 
 public class CancelAppointmentsUseCaseTests
 {
-    private IDateTimeProvider _dateTimeProvider;
+    private IDateTimeService _dateTimeService;
     private CancelAppointmentsUseCase _cancelAppointmentsUseCase;
 
     [SetUp]
     public void TestInitialize()
     {
-        _dateTimeProvider          = Mock.Create<IDateTimeProvider>();
+        _dateTimeService           = Mock.Create<IDateTimeService>();
         _cancelAppointmentsUseCase = new CancelAppointmentsUseCase(
             Mock.Create<IAppointmentRepository>(),
             Mock.Create<IInstantMessaging>(),
-            _dateTimeProvider);
+            _dateTimeService);
     }
 
     [Test]
-    public async Task Execute_WhenAllAppointmentsCanBeCancelled_ShouldReturnsAnResponseWithoutAppointmentsId()
+    public async Task ExecuteAsync_WhenAllAppointmentsCanBeCancelled_ShouldReturnsAnResponseWithoutAppointmentsId()
     {
         // Arrange
         var request = new CancelAppointmentsRequest
@@ -34,11 +34,11 @@ public class CancelAppointmentsUseCaseTests
             new (ClaimTypes.Role, RolesName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
-        var response = await _cancelAppointmentsUseCase.Execute(claimsPrincipal, request);
+        var response = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
 
         // Asserts
         response.Success.Should().BeTrue();
@@ -47,7 +47,7 @@ public class CancelAppointmentsUseCaseTests
     }
 
     [Test]
-    public async Task Execute_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
+    public async Task ExecuteAsync_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
     {
         // Arrange
         var request = new CancelAppointmentsRequest
@@ -67,11 +67,11 @@ public class CancelAppointmentsUseCaseTests
             new (ClaimTypes.Role, RolesName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
-        var response = await _cancelAppointmentsUseCase.Execute(claimsPrincipal, request);
+        var response = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
 
         // Asserts
         response.Success.Should().BeFalse();
@@ -85,7 +85,7 @@ public class CancelAppointmentsUseCaseTests
     }
 
     [Test]
-    public async Task Execute_WhenAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
+    public async Task ExecuteAsync_WhenAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
     {
         // Arrange
         var request = new CancelAppointmentsRequest
@@ -105,11 +105,11 @@ public class CancelAppointmentsUseCaseTests
             new (ClaimTypes.Role, RolesName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 02, 20, 0, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 02, 20, 0, 0));
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
-        var response = await _cancelAppointmentsUseCase.Execute(claimsPrincipal, request);
+        var response = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
 
         // Asserts
         response.Success.Should().BeFalse();

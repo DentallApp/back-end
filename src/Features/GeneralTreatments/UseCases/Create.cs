@@ -32,7 +32,7 @@ public class CreateGeneralTreatmentUseCase
         _basePath = settings.DentalServicesImagesPath;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(CreateGeneralTreatmentRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreateGeneralTreatmentRequest request)
     {
         var generalTreatment = request.MapToGeneralTreatment();
         _context.Add(generalTreatment);

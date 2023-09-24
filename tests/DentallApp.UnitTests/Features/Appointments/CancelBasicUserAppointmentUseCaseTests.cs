@@ -3,25 +3,25 @@
 public class CancelBasicUserAppointmentUseCaseTests
 {
     private IRepository<Appointment> _repository;
-    private IDateTimeProvider _dateTimeProvider;
+    private IDateTimeService _dateTimeService;
     private CancelBasicUserAppointmentUseCase _cancelAppointmentUseCase;
 
     [SetUp]
     public void TestInitialize()
     {
         _repository                = Mock.Create<IRepository<Appointment>>();
-        _dateTimeProvider          = Mock.Create<IDateTimeProvider>();
+        _dateTimeService           = Mock.Create<IDateTimeService>();
         _cancelAppointmentUseCase  = new CancelBasicUserAppointmentUseCase(
             Mock.Create<IUnitOfWork>(),
             _repository, 
-            _dateTimeProvider);
+            _dateTimeService);
     }
 
     [Test]
-    public async Task Execute_WhenAppointmentCannotBeCancelled_ShouldReturnsFailureResponse()
+    public async Task ExecuteAsync_WhenAppointmentCannotBeCancelled_ShouldReturnsFailureResponse()
     {
         // Arrange
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2022, 08, 04, 15, 0, 0));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 04, 15, 0, 0));
         Mock.Arrange(() => _repository.GetByIdAsync(Arg.AnyInt))
             .ReturnsAsync((int id) => new Appointment
             {
@@ -30,7 +30,7 @@ public class CancelBasicUserAppointmentUseCaseTests
             });
 
         // Act
-        var response = await _cancelAppointmentUseCase.Execute(default, default);
+        var response = await _cancelAppointmentUseCase.ExecuteAsync(default, default);
 
         // Asserts
         response.Success.Should().BeFalse();

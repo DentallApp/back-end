@@ -15,7 +15,7 @@ public class PersonController : ControllerBase
         [FromBody]CreatePersonRequest request,
         [FromServices]CreatePersonUseCase useCase)
 	{
-		var response = await useCase.Execute(request);
+		var response = await useCase.ExecuteAsync(request);
 		return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
 	}
 
@@ -31,6 +31,6 @@ public class PersonController : ControllerBase
         [FromQuery]string value,
         [FromServices]GetPersonsUseCase useCase)
     {
-        return await useCase.Execute(value);
+        return await useCase.ExecuteAsync(value);
     }
 }

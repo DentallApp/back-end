@@ -8,8 +8,6 @@ var builder     = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddServices()
-    .AddRepositories()
-    .AddHelpers()
     .AddUseCases();
 
 var databaseSettings = new EnvBinder(envVars).Bind<DatabaseSettings>();

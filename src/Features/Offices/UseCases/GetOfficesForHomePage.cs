@@ -20,7 +20,7 @@ public class GetOfficesForHomePageUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetOfficesForHomePageResponse>> Execute()
+    public async Task<IEnumerable<GetOfficesForHomePageResponse>> ExecuteAsync()
     {
         var offices = await _context.Set<Office>()
             .Where(office => office.OfficeSchedules.Any())

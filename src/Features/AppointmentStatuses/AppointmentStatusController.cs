@@ -10,6 +10,6 @@ public class AppointmentStatusController : ControllerBase
     public async Task<IEnumerable<GetAppointmentStatusesResponse>> GetAll(
         [FromServices]GetAppointmentStatusesUseCase useCase)
     {
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 }

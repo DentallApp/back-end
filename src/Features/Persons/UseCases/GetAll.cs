@@ -20,7 +20,7 @@ public class GetPersonsUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetPersonsResponse>> Execute(string valueToSearch)
+    public async Task<IEnumerable<GetPersonsResponse>> ExecuteAsync(string valueToSearch)
     {
         var persons = await _context.Set<Person>()
             .Where(person =>

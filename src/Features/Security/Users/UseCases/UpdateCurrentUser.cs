@@ -31,7 +31,7 @@ public class UpdateCurrentUserUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(int currentPersonId, UpdateCurrentUserRequest request)
+    public async Task<Response> ExecuteAsync(int currentPersonId, UpdateCurrentUserRequest request)
     {
         var person = await _context.Set<Person>()
             .Where(person => person.Id == currentPersonId)

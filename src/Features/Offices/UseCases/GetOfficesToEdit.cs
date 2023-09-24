@@ -19,7 +19,7 @@ public class GetOfficesToEditUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetOfficesToEditResponse>> Execute()
+    public async Task<IEnumerable<GetOfficesToEditResponse>> ExecuteAsync()
     {
         var offices = await _context.Set<Office>()
             .Select(office => new GetOfficesToEditResponse

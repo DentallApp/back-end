@@ -10,6 +10,6 @@ public class GenderController : ControllerBase
     public async Task<IEnumerable<GetGendersResponse>> GetAll(
         [FromServices]GetGendersUseCase useCase)
     {
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 }

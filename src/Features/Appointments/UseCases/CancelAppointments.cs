@@ -27,23 +27,23 @@ public class CancelAppointmentsUseCase
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IInstantMessaging _instantMessaging;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
     public CancelAppointmentsUseCase(
         IAppointmentRepository appointmentRepository,
         IInstantMessaging instantMessaging,
-        IDateTimeProvider dateTimeProvider)
+        IDateTimeService dateTimeService)
     {
         _appointmentRepository = appointmentRepository;
         _instantMessaging = instantMessaging;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response<CancelAppointmentsResponse>> Execute(ClaimsPrincipal currentEmployee, CancelAppointmentsRequest request)
+    public async Task<Response<CancelAppointmentsResponse>> ExecuteAsync(ClaimsPrincipal currentEmployee, CancelAppointmentsRequest request)
     {
         // Stores appointments whose stipulated date and time have not passed.
         var appointmentsCanBeCancelled = request.Appointments
-            .Where(appointmentDto => (appointmentDto.AppointmentDate + appointmentDto.StartHour) > _dateTimeProvider.Now);
+            .Where(appointmentDto => (appointmentDto.AppointmentDate + appointmentDto.StartHour) > _dateTimeService.Now);
 
         var appointmentsIdCanBeCancelled = appointmentsCanBeCancelled
             .Select(appointmentDto => appointmentDto.AppointmentId);
@@ -51,16 +51,16 @@ public class CancelAppointmentsUseCase
         if (currentEmployee.IsOnlyDentist())
         {
             await _appointmentRepository
-                .CancelAppointmentsByDentistId(currentEmployee.GetEmployeeId(), appointmentsIdCanBeCancelled);
+                .CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appointmentsIdCanBeCancelled);
         }
         else
         {
             int officeId = currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId();
             await _appointmentRepository
-                .CancelAppointmentsByOfficeId(officeId, appointmentsIdCanBeCancelled);
+                .CancelAppointmentsByOfficeIdAsync(officeId, appointmentsIdCanBeCancelled);
         }
 
-        await SendMessageAboutAppointmentCancellation(appointmentsCanBeCancelled, request.Reason);
+        await SendMessageAboutAppointmentCancellationAsync(appointmentsCanBeCancelled, request.Reason);
 
         // Verify if there are appointments that cannot be cancelled.
         if (request.Appointments.Count() != appointmentsCanBeCancelled.Count())
@@ -87,7 +87,7 @@ public class CancelAppointmentsUseCase
         };
     }
 
-    private async Task SendMessageAboutAppointmentCancellation(
+    private async Task SendMessageAboutAppointmentCancellationAsync(
         IEnumerable<CancelAppointmentsRequest.Appointment> appointmentsCanBeCancelled,
         string reason)
     {

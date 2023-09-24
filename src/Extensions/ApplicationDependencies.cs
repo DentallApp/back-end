@@ -7,37 +7,24 @@ public static class ApplicationDependencies
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services
-                .AddScoped<EmailTemplateService>()
-                .AddScoped<ITokenService, TokenService>()
-                .AddScoped<IEmailService, EmailService>();
+            .AddScoped(typeof(IEntityService<>), typeof(EntityService<>))
+            .AddScoped<ITokenService, TokenService>()
+            .AddScoped<IEmailService, EmailService>()
+            .AddSingleton<IDateTimeService, DateTimeService>()
+            .AddSingleton<IHtmlConverter, HtmlConverterIText>()
+            .AddSingleton<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>()
+            .AddSingleton<IPasswordHasher, PasswordHasherBcrypt>()
+            .AddSingleton<IInstantMessaging, WhatsAppMessaging>();
 
-        return services;
-    }
-
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
-    {
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services
-                .AddScoped(typeof(IRepository<>), typeof(Repository<>))
-                .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<ISpecificTreatmentRepository, SpecificTreatmentRepository>()
-                .AddScoped<IAppointmentRepository, AppointmentRepository>()
-                .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
-                .AddScoped<IEmployeeSpecialtyRepository, EmployeeSpecialtyRepository>()
-                .AddScoped<IHolidayOfficeRepository, HolidayOfficeRepository>()
-                .AddScoped<IUserRoleRepository, UserRoleRepository>()
-                .AddScoped<IGeneralTreatmentRepository, GeneralTreatmentRepository>();
-
-        return services;
-    }
-
-    public static IServiceCollection AddHelpers(this IServiceCollection services)
-    {
-        services.AddSingleton<IHtmlConverter, HtmlConverterIText>()
-                .AddSingleton<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>()
-                .AddSingleton<IPasswordHasher, PasswordHasherBcrypt>()
-                .AddSingleton<IDateTimeProvider, DateTimeProvider>()
-                .AddSingleton<IInstantMessaging, WhatsAppMessaging>();
+            .AddScoped<IUnitOfWork, UnitOfWork>()
+            .AddScoped<ISchedulingQueries, SchedulingQueries>()
+            .AddScoped(typeof(IRepository<>), typeof(Repository<>))
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<ITreatmentRepository, TreatmentRepository>()
+            .AddScoped<IAppointmentRepository, AppointmentRepository>()
+            .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
+            .AddScoped<IOfficeHolidayRepository, OfficeHolidayRepository>();
 
         return services;
     }

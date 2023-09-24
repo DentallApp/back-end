@@ -3,15 +3,15 @@
 public partial class RootDialogTests
 {
     private DialogTestClient _testClient;
-    private IDateTimeProvider _dateTimeProvider;
+    private IDateTimeService _dateTimeService;
     private IAppointmentBotService _botService;
 
     [SetUp]
     public void TestInitialize()
     {
         _botService       = CreateBotServiceMock();
-        _dateTimeProvider = Mock.Create<IDateTimeProvider>();
-        _testClient       = new(Channels.Webchat, new RootDialog(_botService, _dateTimeProvider));
+        _dateTimeService  = Mock.Create<IDateTimeService>();
+        _testClient       = new(Channels.Webchat, new RootDialog(_botService, _dateTimeService));
         Environment.SetEnvironmentVariable(AppSettings.MaxDaysInCalendar, "60");
     }
 
@@ -50,7 +50,7 @@ public partial class RootDialogTests
 
     private async Task SendReplyWithInputDateAsync(Activity incomingActivity)
     {
-        Mock.Arrange(() => _dateTimeProvider.Now).Returns(new DateTime(2023, 01, 01));
+        Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2023, 01, 01));
 
         var reply     = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply.Type.Should().Be(ActivityTypes.Typing);

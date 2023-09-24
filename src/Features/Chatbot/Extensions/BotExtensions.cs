@@ -12,7 +12,6 @@ public static class BotExtensions
 
         services.AddSingleton<RootDialog>();
         services.AddSingleton<IAppointmentBotService, AppointmentBotService>();
-        services.AddScoped<IBotQueries, BotQueries>();
 
         services.AddDirectLineService();
         configuration.SetBotCredentials();

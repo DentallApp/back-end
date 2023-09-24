@@ -26,7 +26,7 @@ public class GetEmployeeOverviewUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetEmployeeOverviewResponse>> Execute(int? officeId)
+    public async Task<IEnumerable<GetEmployeeOverviewResponse>> ExecuteAsync(int? officeId)
     {
         var employeeSchedules = await _context.Set<Employee>()
             .OptionalWhere(officeId, employee => employee.OfficeId == officeId)

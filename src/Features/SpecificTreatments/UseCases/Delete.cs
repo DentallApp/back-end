@@ -9,7 +9,7 @@ public class DeleteSpecificTreatmentUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(int id)
+    public async Task<Response> ExecuteAsync(int id)
     {
         int deletedRows = await _context.Set<SpecificTreatment>()
             .Where(treatment => treatment.Id == id)

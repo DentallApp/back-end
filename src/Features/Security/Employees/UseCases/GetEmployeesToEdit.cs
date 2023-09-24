@@ -42,7 +42,7 @@ public class GetEmployeesToEditUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetEmployeesToEditResponse>> Execute(ClaimsPrincipal currentEmployee)
+    public async Task<IEnumerable<GetEmployeesToEditResponse>> ExecuteAsync(ClaimsPrincipal currentEmployee)
     {
         var queryable = _context.Set<Employee>().AsQueryable();
 

@@ -22,7 +22,7 @@ public class DeleteFavoriteDentistUseCase
     /// Executes the use case. Deletes by favorite dentist id.
     /// </summary>
     /// <param name="request">Contains the user id and favorite dentist id.</param>
-    public async Task<Response> Execute(DeleteFavoriteDentistRequest request)
+    public async Task<Response> ExecuteAsync(DeleteFavoriteDentistRequest request)
     {
         var favoriteDentist = await _context.Set<FavoriteDentist>()
             .Where(favoriteDentist => favoriteDentist.Id == request.FavoriteDentistId)
@@ -50,7 +50,7 @@ public class DeleteFavoriteDentistUseCase
     /// </summary>
     /// <param name="userId">The basic user id.</param>
     /// <param name="dentistId">The dentist id.</param>
-    public async Task<Response> Execute(int userId, int dentistId)
+    public async Task<Response> ExecuteAsync(int userId, int dentistId)
     {
         int deletedRows = await _context.Set<FavoriteDentist>()
             .Where(favoriteDentist =>

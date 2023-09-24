@@ -34,7 +34,7 @@ public class DownloadTotalAppointmentsReportUseCase
         _htmlConverter = htmlConverter;
     }
 
-    public async Task<byte[]> DownloadAsPdf(DownloadTotalAppointmentsReportRequest request)
+    public async Task<byte[]> DownloadAsPdfAsync(DownloadTotalAppointmentsReportRequest request)
     {
         var html = await _htmlTemplateLoader
             .LoadAsync("./Templates/ReportAppointment.html", request.MapToObject());

@@ -22,18 +22,20 @@ public class UpdatePublicHolidayRequest
 public class UpdatePublicHolidayUseCase
 {
     private readonly AppDbContext _context;
-    private readonly IHolidayOfficeRepository _holidayRepository;
+    private readonly IEntityService<OfficeHoliday> _officeHolidayService;
 
-    public UpdatePublicHolidayUseCase(AppDbContext context, IHolidayOfficeRepository holidayRepository)
+    public UpdatePublicHolidayUseCase(
+        AppDbContext context,
+        IEntityService<OfficeHoliday> officeHolidayService)
     {
         _context = context;
-        _holidayRepository = holidayRepository;
+        _officeHolidayService = officeHolidayService;
     }
 
-    public async Task<Response> Execute(int id, UpdatePublicHolidayRequest request)
+    public async Task<Response> ExecuteAsync(int id, UpdatePublicHolidayRequest request)
     {
         var holiday = await _context.Set<PublicHoliday>()
-            .Include(publicHoliday => publicHoliday.HolidayOffices)
+            .Include(publicHoliday => publicHoliday.Offices)
             .Where(publicHoliday => publicHoliday.Id == id)
             .FirstOrDefaultAsync();
 
@@ -41,7 +43,7 @@ public class UpdatePublicHolidayUseCase
             return new Response(ResourceNotFoundMessage);
 
         request.MapToPublicHoliday(holiday);
-        _holidayRepository.UpdateHolidayOffices(holiday.Id, holiday.HolidayOffices, request.OfficesId);
+        AssignOfficesToHoliday(holiday.Id, holiday.Offices, request.OfficesId);
         await _context.SaveChangesAsync();
 
         return new Response
@@ -49,5 +51,19 @@ public class UpdatePublicHolidayUseCase
             Success = true,
             Message = UpdateResourceMessage
         };
+    }
+
+    /// <summary>
+    /// Assigns offices to a public holiday.
+    /// </summary>
+    /// <param name="publicHolidayId">The ID of the public holiday to assign.</param>
+    /// <param name="currentOffices">A collection with the offices assigned to a public holiday.</param>
+    /// <param name="officesId">A collection of office identifiers obtained from a client.</param>
+    private void AssignOfficesToHoliday(
+        int publicHolidayId, 
+        List<OfficeHoliday> currentOffices, 
+        List<int> officesId)
+    {
+        _officeHolidayService.Update(publicHolidayId, ref currentOffices, ref officesId);
     }
 }

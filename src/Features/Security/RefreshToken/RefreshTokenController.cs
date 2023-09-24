@@ -12,7 +12,7 @@ public class RefreshTokenController : ControllerBase
         [FromBody]CreateRefreshTokenRequest request,
         [FromServices]CreateRefreshTokenUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -21,7 +21,7 @@ public class RefreshTokenController : ControllerBase
     public async Task<ActionResult<Response>> Revoke(
         [FromServices]RevokeRefreshTokenUseCase useCase)
     {
-        var response = await useCase.Execute(User.GetUserId());
+        var response = await useCase.ExecuteAsync(User.GetUserId());
         return response.Success ? Ok(response) : BadRequest(response);
     }
 }

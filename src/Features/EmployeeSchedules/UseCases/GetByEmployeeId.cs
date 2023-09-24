@@ -22,7 +22,7 @@ public class GetSchedulesByEmployeeIdUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetSchedulesByEmployeeIdResponse>> Execute(int employeeId)
+    public async Task<IEnumerable<GetSchedulesByEmployeeIdResponse>> ExecuteAsync(int employeeId)
     {
         var schedules = await _context.Set<EmployeeSchedule>()
             .Where(employeeSchedule => employeeSchedule.EmployeeId == employeeId)

@@ -15,7 +15,7 @@ public class GetGendersUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetGendersResponse>> Execute()
+    public async Task<IEnumerable<GetGendersResponse>> ExecuteAsync()
     {
         var genders = await _context.Set<Gender>()
             .Select(gender => new GetGendersResponse

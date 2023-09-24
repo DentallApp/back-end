@@ -34,7 +34,7 @@ public class CreatePersonUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(CreatePersonRequest request)
+    public async Task<Response> ExecuteAsync(CreatePersonRequest request)
     {
         var person = request.MapToPerson();
         _context.Add(person);

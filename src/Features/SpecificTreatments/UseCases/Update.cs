@@ -23,7 +23,7 @@ public class UpdateSpecificTreatmentUseCase
         _context = context;
     }
 
-    public async Task<Response> Execute(int id, UpdateSpecificTreatmentRequest request)
+    public async Task<Response> ExecuteAsync(int id, UpdateSpecificTreatmentRequest request)
     {
         var specificTreatment = await _context.Set<SpecificTreatment>()
             .Where(treatment => treatment.Id == id)

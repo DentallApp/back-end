@@ -26,7 +26,7 @@ public class CreateOfficeUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(CreateOfficeRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreateOfficeRequest request)
     {
         var office = request.MapToOffice();
         _context.Add(office);

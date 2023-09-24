@@ -15,12 +15,12 @@ public class DirectLineController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> Get()
     {
-        var userProfile = new UserProfile 
+        var user = new AuthenticatedUser 
         { 
             UserId   = User.GetUserId(), 
             PersonId = User.GetPersonId() 
         };
-        var response = await _directLineService.GetTokenAsync(userProfile);
+        var response = await _directLineService.GetTokenAsync(user);
         return response.Success ? 
 			   Ok(new { response.Data.Token }) : 
 			   BadRequest(new { response.Message });

@@ -38,7 +38,7 @@ public class GetAppointmentsByDateRangeUseCase
         _context = context;
     }
 
-    public async Task<Response<IEnumerable<GetAppointmentsByDateRangeResponse>>> Execute(
+    public async Task<Response<IEnumerable<GetAppointmentsByDateRangeResponse>>> ExecuteAsync(
         ClaimsPrincipal currentEmployee, 
         GetAppointmentsByDateRangeRequest request)
     {

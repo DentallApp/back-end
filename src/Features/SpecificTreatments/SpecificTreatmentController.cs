@@ -12,7 +12,7 @@ public class SpecificTreatmentController : ControllerBase
         [FromBody]CreateSpecificTreatmentRequest request,
         [FromServices]CreateSpecificTreatmentUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
@@ -23,7 +23,7 @@ public class SpecificTreatmentController : ControllerBase
         [FromBody]UpdateSpecificTreatmentRequest request,
         [FromServices]UpdateSpecificTreatmentUseCase useCase)
     {
-        var response = await useCase.Execute(id, request);
+        var response = await useCase.ExecuteAsync(id, request);
         return response.Success ? Ok(response) : NotFound(response);
     }
 
@@ -33,7 +33,7 @@ public class SpecificTreatmentController : ControllerBase
         int id,
         [FromServices]DeleteSpecificTreatmentUseCase useCase)
     {
-        var response = await useCase.Execute(id);
+        var response = await useCase.ExecuteAsync(id);
         return response.Success ? Ok(response) : NotFound(response);
     }
 
@@ -43,7 +43,7 @@ public class SpecificTreatmentController : ControllerBase
         int generalTreatmentId,
         [FromServices]GetTreatmentsByGeneralTreatmentIdUseCase useCase)
     {
-        return await useCase.Execute(generalTreatmentId);
+        return await useCase.ExecuteAsync(generalTreatmentId);
     }
 
     [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
@@ -51,6 +51,6 @@ public class SpecificTreatmentController : ControllerBase
     public async Task<IEnumerable<GetSpecificTreatmentsResponse>> GetAll(
         [FromServices]GetSpecificTreatmentsUseCase useCase)
     {
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 }

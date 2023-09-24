@@ -21,7 +21,7 @@ public class SendPasswordResetEmailUseCase
         _emailService = emailService;
     }
 
-    public async Task<Response> Execute(SendPasswordResetEmailRequest request)
+    public async Task<Response> ExecuteAsync(SendPasswordResetEmailRequest request)
     {
         var user = await _context.Set<User>()
             .Where(user => user.UserName == request.Email)

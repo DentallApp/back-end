@@ -15,7 +15,7 @@ public class GetRolesUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetRolesResponse>> Execute(bool isSuperadmin)
+    public async Task<IEnumerable<GetRolesResponse>> ExecuteAsync(bool isSuperadmin)
     {
         var roles = await _context.Set<Role>()
             .Select(role => new GetRolesResponse

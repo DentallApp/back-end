@@ -11,6 +11,6 @@ public class RoleController : ControllerBase
         bool isSuperadmin,
         [FromServices]GetRolesUseCase useCase)
     { 
-        return await useCase.Execute(isSuperadmin);
+        return await useCase.ExecuteAsync(isSuperadmin);
     }
 }

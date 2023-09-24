@@ -23,7 +23,7 @@ public class GetTotalScheduledAppointmentsUseCase
         _dbConnection = dbConnection;
     }
 
-    public async Task<IEnumerable<GetTotalScheduledAppointmentsResponse>> Execute(GetTotalScheduledAppointmentsRequest request)
+    public async Task<IEnumerable<GetTotalScheduledAppointmentsResponse>> ExecuteAsync(GetTotalScheduledAppointmentsRequest request)
     {
         var sql = @"
             SELECT 

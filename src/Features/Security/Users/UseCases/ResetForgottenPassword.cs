@@ -22,7 +22,7 @@ public class ResetForgottenPasswordUseCase
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<Response> Execute(ResetForgottenPasswordRequest request)
+    public async Task<Response> ExecuteAsync(ResetForgottenPasswordRequest request)
     {
         var claimIdentity = _tokenService.GetClaimsIdentity(request.Token);
         if (claimIdentity is null)

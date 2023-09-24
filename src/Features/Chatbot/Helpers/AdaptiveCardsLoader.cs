@@ -4,18 +4,28 @@ public class AdaptiveCardsLoader
 {
     private const string BasePath = "./Features/Chatbot/AdaptiveCards/";
 
-    public static async Task<string> LoadDentalServiceCardAsync()
-        => await File.ReadAllTextAsync($"{BasePath}DentalServiceCard.json");
+    public static Task<string> LoadDentalServiceCardAsync()
+    {
+        return File.ReadAllTextAsync($"{BasePath}DentalServiceCard.json");
+    }
 
-    public static async Task<string> LoadDentistCardAsync()
-        => await File.ReadAllTextAsync($"{BasePath}DentistCard.json");
+    public static Task<string> LoadDentistCardAsync()
+    {
+        return File.ReadAllTextAsync($"{BasePath}DentistCard.json");
+    }
 
-    public static async Task<string> LoadOfficeCardAsync()
-        => await File.ReadAllTextAsync($"{BasePath}OfficeCard.json");
+    public static Task<string> LoadOfficeCardAsync()
+    {
+        return File.ReadAllTextAsync($"{BasePath}OfficeCard.json");
+    }
 
-    public static async Task<string> LoadPatientCardAsync()
-        => await File.ReadAllTextAsync($"{BasePath}PatientCard.json");
+    public static Task<string> LoadPatientCardAsync()
+    {
+        return File.ReadAllTextAsync($"{BasePath}PatientCard.json");
+    }
 
-    public static async Task<string> LoadAppointmentDateCardAsync()
-        => await File.ReadAllTextAsync($"{BasePath}AppointmentDateCard.json");
+    public static Task<string> LoadAppointmentDateCardAsync()
+    {
+        return File.ReadAllTextAsync($"{BasePath}AppointmentDateCard.json");
+    }
 }

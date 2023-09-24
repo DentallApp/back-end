@@ -17,7 +17,7 @@ public class ChangePasswordUseCase
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<Response> Execute(int userId, ChangePasswordRequest request)
+    public async Task<Response> ExecuteAsync(int userId, ChangePasswordRequest request)
     {
         var user = await _context.Set<User>()
             .Where(user => user.Id == userId)

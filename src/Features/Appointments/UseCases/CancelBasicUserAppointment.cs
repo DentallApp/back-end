@@ -4,19 +4,19 @@ public class CancelBasicUserAppointmentUseCase
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IRepository<Appointment> _repository;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
     public CancelBasicUserAppointmentUseCase(
         IUnitOfWork unitOfWork,
         IRepository<Appointment> repository, 
-        IDateTimeProvider dateTimeProvider)
+        IDateTimeService dateTimeService)
     {
         _unitOfWork = unitOfWork;
         _repository = repository;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response> Execute(int appointmentId, int currentUserId)
+    public async Task<Response> ExecuteAsync(int appointmentId, int currentUserId)
     {
         var appointment = await _repository.GetByIdAsync(appointmentId);
 
@@ -26,7 +26,7 @@ public class CancelBasicUserAppointmentUseCase
         if (appointment.UserId != currentUserId)
             return new Response(AppointmentNotAssignedMessage);
 
-        if (_dateTimeProvider.Now > (appointment.Date + appointment.StartHour))
+        if (_dateTimeService.Now > (appointment.Date + appointment.StartHour))
             return new Response(AppointmentThatHasAlreadyPassedBasicUserMessage);
 
         appointment.AppointmentStatusId = AppointmentStatusId.Canceled;

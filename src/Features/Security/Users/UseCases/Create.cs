@@ -55,9 +55,9 @@ public class CreateBasicUserUseCase
         _emailService = emailService;
     }
 
-    public async Task<Response> Execute(CreateBasicUserRequest request)
+    public async Task<Response> ExecuteAsync(CreateBasicUserRequest request)
     {
-        if (await _userRepository.UserExists(request.UserName))
+        if (await _userRepository.UserExistsAsync(request.UserName))
             return new Response(UsernameAlreadyExistsMessage);
 
         var passwordHash = _passwordHasher.HashPassword(request.Password);

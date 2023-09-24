@@ -16,7 +16,7 @@ public class GetTreatmentsByGeneralTreatmentIdUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetTreatmentsByGeneralTreatmentIdResponse>> Execute(int generalTreatmentId)
+    public async Task<IEnumerable<GetTreatmentsByGeneralTreatmentIdResponse>> ExecuteAsync(int generalTreatmentId)
     {
         var specificTreatments = await
             (from specificTreatment in _context.Set<SpecificTreatment>()

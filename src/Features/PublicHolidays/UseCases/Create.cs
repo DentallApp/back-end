@@ -31,12 +31,12 @@ public class CreatePublicHolidayUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(CreatePublicHolidayRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreatePublicHolidayRequest request)
     {
         var publicHoliday = request.MapToPublicHoliday();
         foreach (int officeId in request.OfficesId.RemoveDuplicates())
         {
-            _context.Add(new HolidayOffice { PublicHoliday = publicHoliday, OfficeId = officeId });
+            _context.Add(new OfficeHoliday { PublicHoliday = publicHoliday, OfficeId = officeId });
         }
         await _context.SaveChangesAsync();
 

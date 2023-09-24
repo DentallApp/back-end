@@ -66,9 +66,9 @@ public class CreateEmployeeUseCase
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(ClaimsPrincipal currentEmployee, CreateEmployeeRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateEmployeeRequest request)
     {
-        if (await _userRepository.UserExists(request.UserName))
+        if (await _userRepository.UserExistsAsync(request.UserName))
             return new Response<InsertedIdDto>(UsernameAlreadyExistsMessage);
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))

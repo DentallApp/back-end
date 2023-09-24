@@ -21,13 +21,13 @@ public class VerifyEmailUseCase
         _tokenService = tokenService;
     }
 
-    public async Task<Response<UserLoginResponse>> Execute(VerifyEmailRequest request)
+    public async Task<Response<UserLoginResponse>> ExecuteAsync(VerifyEmailRequest request)
     {
         var claimPrincipal = _tokenService.ValidateEmailVerificationToken(request.Token);
         if (claimPrincipal is null)
             return new Response<UserLoginResponse>(EmailVerificationTokenInvalidMessage);
 
-        var user = await _userRepository.GetFullUserProfile(claimPrincipal.GetUserName());
+        var user = await _userRepository.GetFullUserProfileAsync(claimPrincipal.GetUserName());
         if (user is null)
             return new Response<UserLoginResponse>(UsernameNotFoundMessage);
 

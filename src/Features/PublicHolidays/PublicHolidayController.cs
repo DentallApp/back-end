@@ -12,7 +12,7 @@ public class PublicHolidayController : ControllerBase
         [FromBody]CreatePublicHolidayRequest request,
         [FromServices]CreatePublicHolidayUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
@@ -21,7 +21,7 @@ public class PublicHolidayController : ControllerBase
         int id,
         [FromServices]DeletePublicHolidayUseCase useCase)
     {
-        var response = await useCase.Execute(id);
+        var response = await useCase.ExecuteAsync(id);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -31,7 +31,7 @@ public class PublicHolidayController : ControllerBase
         [FromBody]UpdatePublicHolidayRequest request,
         [FromServices]UpdatePublicHolidayUseCase useCase)
     {
-        var response = await useCase.Execute(id, request);
+        var response = await useCase.ExecuteAsync(id, request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
@@ -39,6 +39,6 @@ public class PublicHolidayController : ControllerBase
     public async Task<IEnumerable<GetPublicHolidaysResponse>> GetAll(
         [FromServices]GetPublicHolidaysUseCase useCase)
     {
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 }

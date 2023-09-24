@@ -18,7 +18,7 @@ public class GetSpecificTreatmentsUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetSpecificTreatmentsResponse>> Execute()
+    public async Task<IEnumerable<GetSpecificTreatmentsResponse>> ExecuteAsync()
     {
         var specificTreatments = await _context.Set<SpecificTreatment>()
             .Select(treatment => new GetSpecificTreatmentsResponse

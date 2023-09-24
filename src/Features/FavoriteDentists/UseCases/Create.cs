@@ -14,7 +14,7 @@ public class CreateFavoriteDentistUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> Execute(int userId, CreateFavoriteDentistRequest request)
+    public async Task<Response<InsertedIdDto>> ExecuteAsync(int userId, CreateFavoriteDentistRequest request)
     {
         var favoriteDentist = new FavoriteDentist
         {

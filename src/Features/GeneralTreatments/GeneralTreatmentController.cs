@@ -12,7 +12,7 @@ public class GeneralTreatmentController : ControllerBase
         [FromForm]CreateGeneralTreatmentRequest request,
         [FromServices]CreateGeneralTreatmentUseCase useCase)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
@@ -23,7 +23,7 @@ public class GeneralTreatmentController : ControllerBase
         [FromForm]UpdateGeneralTreatmentRequest request,
         [FromServices]UpdateGeneralTreatmentUseCase useCase)
     {
-        var response = await useCase.Execute(id, request);
+        var response = await useCase.ExecuteAsync(id, request);
         return response.Success ? Ok(response) : NotFound(response);
     }
 
@@ -33,7 +33,7 @@ public class GeneralTreatmentController : ControllerBase
         int id,
         [FromServices]DeleteGeneralTreatmentUseCase useCase)
     {
-        var response = await useCase.Execute(id);
+        var response = await useCase.ExecuteAsync(id);
         return response.Success ? Ok(response) : NotFound(response);
     }
 
@@ -42,7 +42,7 @@ public class GeneralTreatmentController : ControllerBase
         int id,
         [FromServices]GetGeneralTreatmentByIdUseCase useCase)
     {
-        var response = await useCase.Execute(id);
+        var response = await useCase.ExecuteAsync(id);
         return response.Success ? Ok(response) : NotFound(response);
     }
 
@@ -50,20 +50,20 @@ public class GeneralTreatmentController : ControllerBase
     public async Task<IEnumerable<GetGeneralTreatmentNamesResponse>> GetNames(
         [FromServices]GetGeneralTreatmentNamesUseCase useCase)
     {
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 
     [HttpGet("edit")]
     public async Task<IEnumerable<GetGeneralTreatmentsToEditResponse>> GetTreatmentsToEdit(
         [FromServices]GetGeneralTreatmentsToEditUseCase useCase)
     {
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 
     [HttpGet]
     public async Task<IEnumerable<GetGeneralTreatmentsForHomePageResponse>> GetTreatmentsForHomePage(
         [FromServices]GetGeneralTreatmentsForHomePageUseCase useCase)
     {
-        return await useCase.Execute();
+        return await useCase.ExecuteAsync();
     }
 }

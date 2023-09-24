@@ -11,13 +11,13 @@ global using static DentallApp.IntegrationTests.Features.Chatbot.Dialogs.BotServ
 global using static DentallApp.IntegrationTests.Features.Chatbot.Dialogs.ActivityFactory;
 
 global using DentallApp.Features.Chatbot;
-global using DentallApp.Features.Chatbot.Models;
 global using DentallApp.Features.Chatbot.Dialogs;
-global using DentallApp.Features.SpecificTreatments.DTOs;
 global using DentallApp.Features.Appointments.UseCases;
 global using DentallApp.Features.Appointments.UseCases.GetAvailableHours;
 
-global using DentallApp.Responses;
-global using DentallApp.Configuration;
-global using DentallApp.Helpers.DateTimeHelpers;
-global using static DentallApp.Constants.ResponseMessages;
+global using DentallApp.Domain.ValueObjects;
+global using DentallApp.Shared.Models;
+global using DentallApp.Shared.Models.Results;
+global using DentallApp.Shared.Configuration;
+global using DentallApp.Shared.Services;
+global using static DentallApp.Shared.Constants.ResponseMessages;

@@ -16,7 +16,7 @@ public class GetGeneralTreatmentByIdUseCase
         _context = context;
     }
 
-    public async Task<Response<GetGeneralTreatmentByIdResponse>> Execute(int id)
+    public async Task<Response<GetGeneralTreatmentByIdResponse>> ExecuteAsync(int id)
     {
         var generalTreatment = await _context.Set<GeneralTreatment>()
             .Where(treatment => treatment.Id == id)

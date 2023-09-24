@@ -6,26 +6,26 @@ public class SendReminderJob : IJob
     private readonly AppSettings _settings;
     private readonly IServiceProvider _serviceProvider;
     private readonly IInstantMessaging _instantMessaging;
-    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeService _dateTimeService;
 
     public SendReminderJob(
         ILogger<SendReminderJob> logger, 
         AppSettings settings,
         IServiceProvider serviceProvider,
         IInstantMessaging instantMessaging,
-        IDateTimeProvider dateTimeProvider)
+        IDateTimeService dateTimeService)
     {
         _settings = settings;
         _logger = logger;
         _serviceProvider = serviceProvider;
         _instantMessaging = instantMessaging;
-        _dateTimeProvider = dateTimeProvider;
+        _dateTimeService = dateTimeService;
     }
 
-    public Task Execute(IJobExecutionContext context)
+    public async Task Execute(IJobExecutionContext context)
     {
         _logger.LogInformation("Sending appointment reminder.");
-        var currentDateAndTime    = _dateTimeProvider.Now;
+        var currentDateAndTime    = _dateTimeService.Now;
         using var scope           = _serviceProvider.CreateScope();
         var useCase               = scope.ServiceProvider.GetRequiredService<GetScheduledAppointmentsUseCase>();
         var scheduledAppointments = useCase.Execute(_settings.ReminderTimeInAdvance, currentDateAndTime.Date);
@@ -40,8 +40,7 @@ public class SendReminderJob : IJob
                 businessName,
                 appointment.DentistName
             );
-            _instantMessaging.SendMessage(appointment.PatientCellPhone, message);
+            await _instantMessaging.SendMessageAsync(appointment.PatientCellPhone, message);
         }
-        return Task.CompletedTask;
     }
 }

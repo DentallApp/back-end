@@ -20,7 +20,7 @@ public class GetSchedulesByOfficeIdUseCase
         _context = context;
     }
 
-    public async Task<IEnumerable<GetSchedulesByOfficeIdResponse>> Execute(int officeId)
+    public async Task<IEnumerable<GetSchedulesByOfficeIdResponse>> ExecuteAsync(int officeId)
     {
         var schedules = await _context.Set<OfficeSchedule>()
             .Where(officeSchedule => officeSchedule.OfficeId == officeId)
