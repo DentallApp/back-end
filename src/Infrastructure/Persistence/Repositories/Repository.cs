@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Infrastructure.Persistence.Repositories;
 
-public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBase
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
 {
     private readonly AppDbContext _context;
 
