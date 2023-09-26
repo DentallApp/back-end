@@ -43,7 +43,7 @@ public static class BotServiceMockFactory
             });
 
         Mock.Arrange(() => botService.GetRangeToPayAsync(Arg.AnyInt))
-            .ReturnsAsync(new PayRange(PriceMin, PriceMax));
+            .ReturnsAsync(new PayRange { PriceMin = PriceMin, PriceMax = PriceMax });
 
         Mock.Arrange(() => botService.CreateScheduledAppointmentAsync(Arg.IsAny<CreateAppointmentRequest>()))
             .ReturnsAsync(new Response<InsertedIdDto>

@@ -29,7 +29,7 @@ public class TreatmentRepository : ITreatmentRepository
         var treatment = await _context.Set<SpecificTreatment>()
             .Where(specificTreatment => specificTreatment.GeneralTreatmentId == generalTreatmentId)
             .GroupBy(specificTreatment => specificTreatment.GeneralTreatmentId)
-            .Select(group => new
+            .Select(group => new PayRange
             {
                 PriceMin = group.Min(specificTreatment => specificTreatment.Price),
                 PriceMax = group.Max(specificTreatment => specificTreatment.Price)
@@ -37,8 +37,6 @@ public class TreatmentRepository : ITreatmentRepository
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
-        return treatment is null ?
-            default :
-            new PayRange(treatment.PriceMin, treatment.PriceMax);
+        return treatment;
     }
 }
