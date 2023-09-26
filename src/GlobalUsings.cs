@@ -15,6 +15,7 @@ global using DentallApp.Middlewares;
 global using DentallApp.Extensions;
 
 global using DentallApp.Domain;
+global using DentallApp.Domain.EmployeeSchedules;
 global using DentallApp.Domain.Common;
 
 global using DentallApp.Infrastructure.Services;

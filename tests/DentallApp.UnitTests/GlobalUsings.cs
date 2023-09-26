@@ -16,7 +16,6 @@ global using DentallApp.Features.Chatbot.DirectLine.Services;
 global using DentallApp.Domain;
 global using DentallApp.Infrastructure.Services;
 
-global using DentallApp.Shared;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Constants;
 global using DentallApp.Shared.Services;

@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Domain;
+﻿namespace DentallApp.Domain.EmployeeSchedules;
 
 public class EmployeeSchedule : 
     SoftDeleteEntity, 

@@ -1,21 +1,13 @@
-﻿namespace DentallApp.Domain.Common;
+﻿namespace DentallApp.Domain.EmployeeSchedules;
 
-public interface IEmployeeSchedule
-{
-    TimeSpan? MorningStartHour { get; set; }
-    TimeSpan? MorningEndHour { get; set; }
-    TimeSpan? AfternoonStartHour { get; set; }
-    TimeSpan? AfternoonEndHour { get; set; }
-}
-
-public static class IEmployeeScheduleExtensions
+public static class EmployeeScheduleExtensions
 {
     /// <summary>
     /// Comprueba sí el horario del empleado es de mañana.
     /// </summary>
     public static bool IsMorningSchedule(this IEmployeeSchedule employeeSchedule)
     {
-        return employeeSchedule.MorningStartHour is not null && 
+        return employeeSchedule.MorningStartHour is not null &&
                employeeSchedule.MorningEndHour is not null;
     }
 
@@ -24,7 +16,7 @@ public static class IEmployeeScheduleExtensions
     /// </summary>
     public static bool IsAfternoonSchedule(this IEmployeeSchedule employeeSchedule)
     {
-        return employeeSchedule.AfternoonStartHour is not null && 
+        return employeeSchedule.AfternoonStartHour is not null &&
                employeeSchedule.AfternoonEndHour is not null;
     }
 
@@ -32,8 +24,8 @@ public static class IEmployeeScheduleExtensions
     /// Comprueba sí el empleado no tiene horario de mañana ni de tarde.
     /// </summary>
     public static bool HasNotSchedule(this IEmployeeSchedule employeeSchedule)
-    { 
-        return !employeeSchedule.IsMorningSchedule() && 
+    {
+        return !employeeSchedule.IsMorningSchedule() &&
                !employeeSchedule.IsAfternoonSchedule();
     }
 
@@ -41,8 +33,8 @@ public static class IEmployeeScheduleExtensions
     /// Comprueba sí el empleado tiene un horario de mañana y tarde.
     /// </summary>
     public static bool HasFullSchedule(this IEmployeeSchedule employeeSchedule)
-    { 
-        return employeeSchedule.IsMorningSchedule() && 
+    {
+        return employeeSchedule.IsMorningSchedule() &&
                employeeSchedule.IsAfternoonSchedule();
     }
 }
