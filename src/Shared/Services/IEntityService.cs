@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents an entity service for CRUD operations.
 /// </summary>
-public interface IEntityService<TEntity> where TEntity : EntityBase, IIntermediateEntity, new()
+public interface IEntityService<TEntity> where TEntity : BaseEntity, IIntermediateEntity, new()
 {
     /// <summary>
     /// Updates the state of an entity.

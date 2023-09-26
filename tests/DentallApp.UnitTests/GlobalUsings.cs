@@ -13,7 +13,7 @@ global using DentallApp.Features.Chatbot.Models;
 global using DentallApp.Features.Chatbot.DirectLine;
 global using DentallApp.Features.Chatbot.DirectLine.Services;
 
-global using DentallApp.Domain.Entities;
+global using DentallApp.Domain;
 global using DentallApp.Infrastructure.Services;
 
 global using DentallApp.Shared;

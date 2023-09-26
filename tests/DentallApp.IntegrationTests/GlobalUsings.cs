@@ -15,7 +15,7 @@ global using DentallApp.Features.Chatbot.Dialogs;
 global using DentallApp.Features.Appointments.UseCases;
 global using DentallApp.Features.Appointments.UseCases.GetAvailableHours;
 
-global using DentallApp.Domain.ValueObjects;
+global using DentallApp.Domain;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Results;
 global using DentallApp.Shared.Configuration;

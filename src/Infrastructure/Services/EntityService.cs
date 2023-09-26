@@ -2,7 +2,7 @@
 
 /// <inheritdoc cref="IEntityService{TEntity}" />
 public class EntityService<TEntity> 
-    : IEntityService<TEntity> where TEntity : EntityBase, IIntermediateEntity, new()
+    : IEntityService<TEntity> where TEntity : BaseEntity, IIntermediateEntity, new()
 {
     private readonly IRepository<TEntity> _repository;
 
