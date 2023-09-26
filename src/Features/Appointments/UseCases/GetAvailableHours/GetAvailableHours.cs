@@ -1,25 +1,6 @@
 ﻿namespace DentallApp.Features.Appointments.UseCases.GetAvailableHours;
 
-public class AvailableTimeRangeRequest
-{
-    public int OfficeId { get; init; }
-    public int DentistId { get; init; }
-    public int DentalServiceId { get; init; }
-    public DateTime AppointmentDate { get; init; }
-}
-
-public class AvailableTimeRangeResponse
-{
-    public string StartHour { get; init; }
-    public string EndHour { get; init; }
-
-    public override string ToString()
-    {
-        return $"{StartHour} - {EndHour}";
-    }
-}
-
-public class GetAvailableHoursUseCase
+public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
 {
     private readonly IGetUnavailableHoursUseCase _getUnavailableHoursUseCase;
     private readonly IEmployeeScheduleRepository _employeeScheduleRepository;

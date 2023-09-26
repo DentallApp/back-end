@@ -40,14 +40,14 @@ public class AppointmentBotService : IAppointmentBotService
     public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> GetAvailableHoursAsync(AvailableTimeRangeRequest request)
     {
         using var scope = _serviceProvider.CreateScope();
-        var useCase = scope.ServiceProvider.GetRequiredService<GetAvailableHoursUseCase>();
+        var useCase = scope.ServiceProvider.GetRequiredService<IGetAvailableHoursUseCase>();
         return await useCase.ExecuteAsync(request);
     }
 
     public async Task<Response<InsertedIdDto>> CreateScheduledAppointmentAsync(CreateAppointmentRequest request)
     {
         using var scope = _serviceProvider.CreateScope();
-        var useCase = scope.ServiceProvider.GetRequiredService<CreateAppointmentUseCase>();
+        var useCase = scope.ServiceProvider.GetRequiredService<ICreateAppointmentUseCase>();
         return await useCase.ExecuteAsync(request);
     }
 

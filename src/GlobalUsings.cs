@@ -25,6 +25,7 @@ global using DentallApp.Infrastructure.Persistence.Repositories;
 global using DentallApp.Infrastructure.Persistence.Extensions;
 global using DentallApp.Infrastructure.Persistence.SeedsData;
 
+global using DentallApp.Shared.Appointments;
 global using DentallApp.Shared.Constants;
 global using static DentallApp.Shared.Constants.ResponseMessages;
 global using static DentallApp.Shared.Constants.MessageTemplates;
