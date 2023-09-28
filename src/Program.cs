@@ -8,7 +8,7 @@ var builder     = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddServices()
-    .AddUseCases();
+    .RegisterAutoDependencies();
 
 var databaseSettings = new EnvBinder(envVars).Bind<DatabaseSettings>();
 builder.Services

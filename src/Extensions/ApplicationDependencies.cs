@@ -1,6 +1,4 @@
-﻿using DentallApp.Features.Dependents.UseCases;
-
-namespace DentallApp.Extensions;
+﻿namespace DentallApp.Extensions;
 
 public static class ApplicationDependencies
 {
@@ -25,23 +23,6 @@ public static class ApplicationDependencies
             .AddScoped<IAppointmentRepository, AppointmentRepository>()
             .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
             .AddScoped<IOfficeHolidayRepository, OfficeHolidayRepository>();
-
-        return services;
-    }
-
-    public static IServiceCollection AddUseCases(this IServiceCollection services)
-    {
-        // Specifies the assembly for Scrutor to search for types.
-        var assembly = typeof(GetDependentsByUserIdUseCase).Assembly;
-
-        services.Scan(scan => scan
-        // Search the types from the specified assemblies.
-            .FromAssemblies(assembly)
-              // Registers the concrete classes as a service, for example: 'CreateUserUseCase'.
-              // It also registers interfaces as a service, for example: 'ICreateUserUseCase'.
-              .AddClasses(classes => classes.Where(type => type.Name.EndsWith("UseCase")))
-                .AsSelfWithInterfaces()
-                .WithScopedLifetime()); 
 
         return services;
     }
