@@ -27,8 +27,8 @@ public class SendReminderJob : IJob
         _logger.LogInformation("Sending appointment reminder.");
         var currentDateAndTime    = _dateTimeService.Now;
         using var scope           = _serviceProvider.CreateScope();
-        var useCase               = scope.ServiceProvider.GetRequiredService<GetScheduledAppointmentsUseCase>();
-        var scheduledAppointments = useCase.Execute(_settings.ReminderTimeInAdvance, currentDateAndTime.Date);
+        var query                 = scope.ServiceProvider.GetRequiredService<GetScheduledAppointmentsQuery>();
+        var scheduledAppointments = query.Execute(_settings.ReminderTimeInAdvance, currentDateAndTime.Date);
         var businessName          = EnvReader.Instance[AppSettings.BusinessName];
         foreach (var appointment in scheduledAppointments)
         {

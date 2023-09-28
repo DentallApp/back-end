@@ -13,11 +13,11 @@ public class GetScheduledAppointmentsResponse
 /// <summary>
 /// Representa una consulta en la cual obtiene las citas agendadas que están próximas a la fecha estipulada.
 /// </summary>
-public class GetScheduledAppointmentsUseCase
+public class GetScheduledAppointmentsQuery
 {
     private readonly AppDbContext _context;
 
-    public GetScheduledAppointmentsUseCase(AppDbContext context)
+    public GetScheduledAppointmentsQuery(AppDbContext context)
     {
         _context = context;
     }
