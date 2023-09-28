@@ -10,11 +10,11 @@ public class SchedulingQueries : ISchedulingQueries
         _context = context;
     }
 
-    public async Task<List<AdaptiveChoice>> GetDentalServicesAsync()
+    public async Task<List<SchedulingResponse>> GetDentalServicesAsync()
     {
         var treatments = await _context.Set<GeneralTreatment>()
             .Where(treatment => treatment.SpecificTreatments.Any())
-            .Select(treatment => new AdaptiveChoice
+            .Select(treatment => new SchedulingResponse
             {
                 Title = treatment.Name,
                 Value = treatment.Id.ToString()
@@ -25,7 +25,7 @@ public class SchedulingQueries : ISchedulingQueries
         return treatments;
     }
 
-    public async Task<List<AdaptiveChoice>> GetDentistsAsync(int officeId, int specialtyId)
+    public async Task<List<SchedulingResponse>> GetDentistsAsync(int officeId, int specialtyId)
     {
         var dentists = await 
             (from employee in _context.Set<Employee>()
@@ -40,7 +40,7 @@ public class SchedulingQueries : ISchedulingQueries
                    userRole.RoleId == RolesId.Dentist &&
                    employee.EmployeeSchedules.Any() &&
                    (employeeSpecialty.SpecialtyId == specialtyId || HasNoSpecialties(employee))
-             select new AdaptiveChoice
+             select new SchedulingResponse
              {
                  Title = person.FullName,
                  Value = employee.Id.ToString()
@@ -58,11 +58,11 @@ public class SchedulingQueries : ISchedulingQueries
         return !employee.EmployeeSpecialties.Any();
     }
 
-    public async Task<List<AdaptiveChoice>> GetOfficesAsync()
+    public async Task<List<SchedulingResponse>> GetOfficesAsync()
     {
         var offices = await _context.Set<Office>()
             .Where(office => office.OfficeSchedules.Any())
-            .Select(office => new AdaptiveChoice
+            .Select(office => new SchedulingResponse
             {
                 Title = office.Name,
                 Value = office.Id.ToString()
@@ -73,11 +73,11 @@ public class SchedulingQueries : ISchedulingQueries
         return offices;
     }
 
-    public async Task<List<AdaptiveChoice>> GetPatientsAsync(AuthenticatedUser user)
+    public async Task<List<SchedulingResponse>> GetPatientsAsync(AuthenticatedUser user)
     { 
         var choices = await _context.Set<Dependent>()
             .Where(dependent => dependent.UserId == user.UserId)
-            .Select(dependent => new AdaptiveChoice
+            .Select(dependent => new SchedulingResponse
             {
                 Title = dependent.Person.FullName + " / " + dependent.Kinship.Name,
                 Value = dependent.Person.Id.ToString()
@@ -85,7 +85,7 @@ public class SchedulingQueries : ISchedulingQueries
             .AsNoTracking()
             .ToListAsync();
         
-        choices.Insert(0, new AdaptiveChoice
+        choices.Insert(0, new SchedulingResponse
         {
             Title = user.FullName + " / " + KinshipsName.Default,
             Value = user.PersonId.ToString()

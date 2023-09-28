@@ -30,7 +30,7 @@ public class SchedulingController : ControllerBase
 	/// Nota: La propiedad <c>value</c> almacena el ID del consultorio.
     /// </remarks>
     [HttpGet("office")]
-    public async Task<List<AdaptiveChoice>> GetOffices()
+    public async Task<List<SchedulingResponse>> GetOffices()
     { 
 		return await _schedulingQueries.GetOfficesAsync();
     }
@@ -50,7 +50,7 @@ public class SchedulingController : ControllerBase
     /// Nota: La propiedad <c>value</c> almacena el ID del servicio dental.
     /// </remarks>
     [HttpGet("dental-service")]
-    public async Task<List<AdaptiveChoice>> GetDentalServices()
+    public async Task<List<SchedulingResponse>> GetDentalServices()
     { 
 		return await _schedulingQueries.GetDentalServicesAsync();
     }
@@ -60,7 +60,7 @@ public class SchedulingController : ControllerBase
     /// El odontólogo debe tener al menos un horario activo.
     /// </summary>
     [HttpGet("dentist")]
-    public async Task<List<AdaptiveChoice>> GetDentists(
+    public async Task<List<SchedulingResponse>> GetDentists(
         [FromQuery]SchedulingGetDentistsRequest request)
     { 
 		return await _schedulingQueries.GetDentistsAsync(request.OfficeId, request.DentalServiceId);
