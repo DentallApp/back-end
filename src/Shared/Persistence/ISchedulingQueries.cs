@@ -5,8 +5,8 @@
 /// </summary>
 public interface ISchedulingQueries
 {
-    Task<List<AdaptiveChoice>> GetPatientsAsync(AuthenticatedUser user);
-    Task<List<AdaptiveChoice>> GetOfficesAsync();
-    Task<List<AdaptiveChoice>> GetDentalServicesAsync();
-    Task<List<AdaptiveChoice>> GetDentistsAsync(int officeId, int specialtyId);
+    Task<List<SchedulingResponse>> GetPatientsAsync(AuthenticatedUser user);
+    Task<List<SchedulingResponse>> GetOfficesAsync();
+    Task<List<SchedulingResponse>> GetDentalServicesAsync();
+    Task<List<SchedulingResponse>> GetDentistsAsync(int officeId, int specialtyId);
 }
