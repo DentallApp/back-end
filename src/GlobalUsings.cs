@@ -14,10 +14,6 @@ global using DentallApp.Features.AppointmentReminders;
 global using DentallApp.Middlewares;
 global using DentallApp.Extensions;
 
-global using DentallApp.Domain;
-global using DentallApp.Domain.EmployeeSchedules;
-global using DentallApp.Domain.Common;
-
 global using DentallApp.Infrastructure.Services;
 global using DentallApp.Infrastructure.Services.TokenProvider;
 global using DentallApp.Infrastructure.Persistence;
@@ -25,6 +21,9 @@ global using DentallApp.Infrastructure.Persistence.Repositories;
 global using DentallApp.Infrastructure.Persistence.Extensions;
 global using DentallApp.Infrastructure.Persistence.SeedsData;
 
+global using DentallApp.Shared.Domain;
+global using DentallApp.Shared.Domain.EmployeeSchedules;
+global using DentallApp.Shared.Domain.Common;
 global using DentallApp.Shared.Appointments;
 global using DentallApp.Shared.Constants;
 global using static DentallApp.Shared.Constants.ResponseMessages;

@@ -14,7 +14,7 @@ global using DentallApp.Features.Chatbot;
 global using DentallApp.Features.Chatbot.Dialogs;
 global using DentallApp.Shared.Appointments;
 
-global using DentallApp.Domain;
+global using DentallApp.Shared.Domain;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Results;
 global using DentallApp.Shared.Configuration;
