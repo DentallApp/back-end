@@ -1,9 +1,9 @@
-﻿namespace DentallApp.Infrastructure.Persistence.Extensions;
+﻿namespace DentallApp.Shared.Persistence;
 
-public static class AppDbContextExtensions
+public static class SoftDeleteExtensions
 {
     public static void SoftDelete<TEntity>(
-        this AppDbContext context, 
+        this DbContext context, 
         TEntity entityToDelete) where TEntity : SoftDeleteEntity
     {
         entityToDelete.IsDeleted = true;
@@ -11,7 +11,7 @@ public static class AppDbContextExtensions
     }
 
     public static async Task<int> SoftDeleteAsync<TEntity>(
-        this AppDbContext context,
+        this DbContext context,
         int entityId) where TEntity : SoftDeleteEntity
     {
         int updatedRows = await context.Set<TEntity>()
