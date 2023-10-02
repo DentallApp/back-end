@@ -1,4 +1,7 @@
-﻿CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
+﻿CREATE DATABASE IF NOT EXISTS dentallapp_db;
+USE dentallapp_db;
+
+CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
     `migration_id` varchar(150) CHARACTER SET utf8mb4 NOT NULL,
     `product_version` varchar(32) CHARACTER SET utf8mb4 NOT NULL,
     CONSTRAINT `pk___ef_migrations_history` PRIMARY KEY (`migration_id`)
@@ -248,15 +251,15 @@ CREATE PROCEDURE MigrationsScript()
 BEGIN
     IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `migration_id` = '20230206000903_InitialCreate') THEN
 
-    CREATE TABLE `holiday_office` (
+    CREATE TABLE `office_holiday` (
         `id` int NOT NULL AUTO_INCREMENT,
         `public_holiday_id` int NOT NULL,
         `office_id` int NOT NULL,
         `created_at` datetime(6) NULL,
         `updated_at` datetime(6) NULL,
-        CONSTRAINT `pk_holiday_office` PRIMARY KEY (`id`),
-        CONSTRAINT `fk_holiday_office_office_office_id` FOREIGN KEY (`office_id`) REFERENCES `office` (`id`) ON DELETE CASCADE,
-        CONSTRAINT `fk_holiday_office_public_holiday_public_holiday_id` FOREIGN KEY (`public_holiday_id`) REFERENCES `public_holiday` (`id`) ON DELETE CASCADE
+        CONSTRAINT `pk_office_holiday` PRIMARY KEY (`id`),
+        CONSTRAINT `fk_office_holiday_office_office_id` FOREIGN KEY (`office_id`) REFERENCES `office` (`id`) ON DELETE CASCADE,
+        CONSTRAINT `fk_office_holiday_public_holiday_public_holiday_id` FOREIGN KEY (`public_holiday_id`) REFERENCES `public_holiday` (`id`) ON DELETE CASCADE
     ) CHARACTER SET=utf8mb4;
 
     END IF;
@@ -1097,7 +1100,7 @@ CREATE PROCEDURE MigrationsScript()
 BEGIN
     IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `migration_id` = '20230206000903_InitialCreate') THEN
 
-    CREATE INDEX `ix_holiday_office_office_id` ON `holiday_office` (`office_id`);
+    CREATE INDEX `ix_office_holiday_office_id` ON `office_holiday` (`office_id`);
 
     END IF;
 END //
@@ -1111,7 +1114,7 @@ CREATE PROCEDURE MigrationsScript()
 BEGIN
     IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `migration_id` = '20230206000903_InitialCreate') THEN
 
-    CREATE INDEX `ix_holiday_office_public_holiday_id` ON `holiday_office` (`public_holiday_id`);
+    CREATE INDEX `ix_office_holiday_public_holiday_id` ON `office_holiday` (`public_holiday_id`);
 
     END IF;
 END //
