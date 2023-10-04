@@ -123,7 +123,7 @@ public class UserLoginUseCase
     public async Task<Response> ExecuteAsync(UserLoginRequest request)
     {
         var user = await _userRepository.GetFullUserProfileAsync(request.UserName);
-        if (user is null || !_passwordHasher.Verify(request.UserName, user.Password))
+        if (user is null || !_passwordHasher.Verify(request.Password, user.Password))
             return new Response(EmailOrPasswordIncorrectMessage);
 
         if (user.IsUnverified())
