@@ -8,9 +8,9 @@ public class GetKinshipsResponse
 
 public class GetKinshipsUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetKinshipsUseCase(AppDbContext context)
+    public GetKinshipsUseCase(DbContext context)
     {
         _context = context;
     }

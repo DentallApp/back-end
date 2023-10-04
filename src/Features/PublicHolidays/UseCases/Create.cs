@@ -24,9 +24,9 @@ public class CreatePublicHolidayRequest
 
 public class CreatePublicHolidayUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public CreatePublicHolidayUseCase(AppDbContext context)
+    public CreatePublicHolidayUseCase(DbContext context)
     {
         _context = context;
     }

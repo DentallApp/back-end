@@ -41,10 +41,10 @@ public class UpdateOfficeRequest
 
 public class UpdateOfficeUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IDateTimeService _dateTimeService;
 
-    public UpdateOfficeUseCase(AppDbContext context, IDateTimeService dateTimeService)
+    public UpdateOfficeUseCase(DbContext context, IDateTimeService dateTimeService)
     {
         _context = context;
         _dateTimeService = dateTimeService;

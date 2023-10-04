@@ -17,9 +17,9 @@ public class GetPublicHolidaysResponse
 
 public class GetPublicHolidaysUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetPublicHolidaysUseCase(AppDbContext context)
+    public GetPublicHolidaysUseCase(DbContext context)
     {
         _context = context;
     }

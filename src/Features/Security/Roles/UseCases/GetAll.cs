@@ -8,9 +8,9 @@ public class GetRolesResponse
 
 public class GetRolesUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetRolesUseCase(AppDbContext context)
+    public GetRolesUseCase(DbContext context)
     {
         _context = context;
     }

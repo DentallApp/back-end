@@ -7,10 +7,10 @@ public class UpdateAppointmentRequest
 
 public class UpdateAppointmentUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IDateTimeService _dateTimeService;
 
-    public UpdateAppointmentUseCase(AppDbContext context, IDateTimeService dateTimeService)
+    public UpdateAppointmentUseCase(DbContext context, IDateTimeService dateTimeService)
     {
         _context = context;
         _dateTimeService = dateTimeService;

@@ -16,9 +16,9 @@ public class UpdateSpecificTreatmentRequest
 
 public class UpdateSpecificTreatmentUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public UpdateSpecificTreatmentUseCase(AppDbContext context)
+    public UpdateSpecificTreatmentUseCase(DbContext context)
     {
         _context = context;
     }

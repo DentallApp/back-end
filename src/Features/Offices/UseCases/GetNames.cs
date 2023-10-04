@@ -8,9 +8,9 @@ public class GetOfficeNamesResponse
 
 public class GetOfficeNamesUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetOfficeNamesUseCase(AppDbContext context)
+    public GetOfficeNamesUseCase(DbContext context)
     {
         _context = context;
     }

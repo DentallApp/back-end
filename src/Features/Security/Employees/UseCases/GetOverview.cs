@@ -19,9 +19,9 @@ public class GetEmployeeOverviewResponse
 
 public class GetEmployeeOverviewUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetEmployeeOverviewUseCase(AppDbContext context)
+    public GetEmployeeOverviewUseCase(DbContext context)
     {
         _context = context;
     }

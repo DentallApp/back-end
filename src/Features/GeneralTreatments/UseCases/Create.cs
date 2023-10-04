@@ -23,10 +23,10 @@ public class CreateGeneralTreatmentRequest
 
 public class CreateGeneralTreatmentUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly string _basePath;
 
-    public CreateGeneralTreatmentUseCase(AppDbContext context, AppSettings settings)
+    public CreateGeneralTreatmentUseCase(DbContext context, AppSettings settings)
     {
         _context = context;
         _basePath = settings.DentalServicesImagesPath;

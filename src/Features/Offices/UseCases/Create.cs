@@ -19,9 +19,9 @@ public class CreateOfficeRequest
 
 public class CreateOfficeUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public CreateOfficeUseCase(AppDbContext context)
+    public CreateOfficeUseCase(DbContext context)
     {
         _context = context;
     }

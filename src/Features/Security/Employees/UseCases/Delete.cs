@@ -2,9 +2,9 @@
 
 public class DeleteEmployeeUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public DeleteEmployeeUseCase(AppDbContext context)
+    public DeleteEmployeeUseCase(DbContext context)
     {
         _context = context;
     }

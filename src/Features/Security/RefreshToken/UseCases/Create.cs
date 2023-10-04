@@ -14,12 +14,12 @@ public class CreateRefreshTokenResponse
 
 public class CreateRefreshTokenUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly ITokenService _tokenService;
     private readonly IDateTimeService _dateTimeService;
 
     public CreateRefreshTokenUseCase(
-        AppDbContext context, 
+        DbContext context, 
         ITokenService tokenService, 
         IDateTimeService dateTimeService)
     {

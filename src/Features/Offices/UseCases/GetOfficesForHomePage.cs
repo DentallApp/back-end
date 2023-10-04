@@ -13,9 +13,9 @@ public class GetOfficesForHomePageResponse
 /// </summary>
 public class GetOfficesForHomePageUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetOfficesForHomePageUseCase(AppDbContext context)
+    public GetOfficesForHomePageUseCase(DbContext context)
     {
         _context = context;
     }

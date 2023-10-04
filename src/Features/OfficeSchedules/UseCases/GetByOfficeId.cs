@@ -13,9 +13,9 @@ public class GetSchedulesByOfficeIdResponse
 
 public class GetSchedulesByOfficeIdUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetSchedulesByOfficeIdUseCase(AppDbContext context)
+    public GetSchedulesByOfficeIdUseCase(DbContext context)
     {
         _context = context;
     }

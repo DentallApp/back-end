@@ -24,9 +24,9 @@ public class UpdateDependentRequest
 
 public class UpdateDependentUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public UpdateDependentUseCase(AppDbContext context)
+    public UpdateDependentUseCase(DbContext context)
     {
         _context = context;
     }

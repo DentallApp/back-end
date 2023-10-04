@@ -15,9 +15,9 @@ public class GetSchedulesByEmployeeIdResponse
 
 public class GetSchedulesByEmployeeIdUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetSchedulesByEmployeeIdUseCase(AppDbContext context)
+    public GetSchedulesByEmployeeIdUseCase(DbContext context)
     {
         _context = context;
     }

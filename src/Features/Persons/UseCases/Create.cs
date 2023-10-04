@@ -27,9 +27,9 @@ public class CreatePersonRequest
 
 public class CreatePersonUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public CreatePersonUseCase(AppDbContext context)
+    public CreatePersonUseCase(DbContext context)
     {
         _context = context;
     }

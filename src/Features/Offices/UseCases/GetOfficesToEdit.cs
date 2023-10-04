@@ -12,9 +12,9 @@ public class GetOfficesToEditResponse
 
 public class GetOfficesToEditUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetOfficesToEditUseCase(AppDbContext context)
+    public GetOfficesToEditUseCase(DbContext context)
     {
         _context = context;
     }

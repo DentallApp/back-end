@@ -103,13 +103,13 @@ public static class UserLoginMapper
 
 public class UserLoginUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;
     private readonly IPasswordHasher _passwordHasher;
 
     public UserLoginUseCase(
-        AppDbContext context, 
+        DbContext context, 
         IUserRepository userRepository, 
         ITokenService tokenService, 
         IPasswordHasher passwordHasher)

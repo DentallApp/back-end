@@ -18,9 +18,9 @@ public class UpdateOfficeScheduleRequest
 
 public class UpdateOfficeScheduleUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public UpdateOfficeScheduleUseCase(AppDbContext context)
+    public UpdateOfficeScheduleUseCase(DbContext context)
     {
         _context = context;
     }

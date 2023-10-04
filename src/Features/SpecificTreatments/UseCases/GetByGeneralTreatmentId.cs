@@ -9,9 +9,9 @@ public class GetTreatmentsByGeneralTreatmentIdResponse
 
 public class GetTreatmentsByGeneralTreatmentIdUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetTreatmentsByGeneralTreatmentIdUseCase(AppDbContext context)
+    public GetTreatmentsByGeneralTreatmentIdUseCase(DbContext context)
     {
         _context = context;
     }

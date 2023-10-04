@@ -2,9 +2,9 @@
 
 public class DeleteDependentUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public DeleteDependentUseCase(AppDbContext context)
+    public DeleteDependentUseCase(DbContext context)
     {
         _context = context;
     }

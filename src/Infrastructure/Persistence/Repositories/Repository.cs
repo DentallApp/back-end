@@ -2,11 +2,11 @@
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    protected AppDbContext Context => _context;
+    protected DbContext Context => _context;
 
-    public Repository(AppDbContext context)
+    public Repository(DbContext context)
     {
         _context = context;
     }

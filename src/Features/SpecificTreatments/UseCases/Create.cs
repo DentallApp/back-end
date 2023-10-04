@@ -19,9 +19,9 @@ public class CreateSpecificTreatmentRequest
 
 public class CreateSpecificTreatmentUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public CreateSpecificTreatmentUseCase(AppDbContext context)
+    public CreateSpecificTreatmentUseCase(DbContext context)
     {
         _context = context;
     }

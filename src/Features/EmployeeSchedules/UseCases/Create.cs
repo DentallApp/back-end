@@ -25,9 +25,9 @@ public class CreateEmployeeScheduleRequest
 
 public class CreateEmployeeScheduleUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public CreateEmployeeScheduleUseCase(AppDbContext context)
+    public CreateEmployeeScheduleUseCase(DbContext context)
     {
         _context = context;
     }

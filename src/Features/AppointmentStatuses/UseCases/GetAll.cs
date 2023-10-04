@@ -8,9 +8,9 @@ public class GetAppointmentStatusesResponse
 
 public class GetAppointmentStatusesUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetAppointmentStatusesUseCase(AppDbContext context)
+    public GetAppointmentStatusesUseCase(DbContext context)
     {
         _context = context;
     }

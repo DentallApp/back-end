@@ -15,9 +15,9 @@ public class GetMostRequestedServicesResponse
 
 public class GetMostRequestedServicesUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetMostRequestedServicesUseCase(AppDbContext context)
+    public GetMostRequestedServicesUseCase(DbContext context)
     {
         _context = context;
     }

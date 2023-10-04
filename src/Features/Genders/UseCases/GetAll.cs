@@ -8,9 +8,9 @@ public class GetGendersResponse
 
 public class GetGendersUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetGendersUseCase(AppDbContext context)
+    public GetGendersUseCase(DbContext context)
     {
         _context = context;
     }

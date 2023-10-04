@@ -3,9 +3,9 @@
 /// <inheritdoc cref="ISchedulingQueries" />
 public class SchedulingQueries : ISchedulingQueries
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public SchedulingQueries(AppDbContext context)
+    public SchedulingQueries(DbContext context)
     {
         _context = context;
     }

@@ -11,9 +11,9 @@ public class GetSpecificTreatmentsResponse
 
 public class GetSpecificTreatmentsUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetSpecificTreatmentsUseCase(AppDbContext context)
+    public GetSpecificTreatmentsUseCase(DbContext context)
     {
         _context = context;
     }

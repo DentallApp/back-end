@@ -21,11 +21,11 @@ public class UpdatePublicHolidayRequest
 
 public class UpdatePublicHolidayUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IEntityService<OfficeHoliday> _officeHolidayService;
 
     public UpdatePublicHolidayUseCase(
-        AppDbContext context,
+        DbContext context,
         IEntityService<OfficeHoliday> officeHolidayService)
     {
         _context = context;

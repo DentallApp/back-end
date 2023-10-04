@@ -10,9 +10,9 @@ public class GetGeneralTreatmentsForHomePageResponse
 
 public class GetGeneralTreatmentsForHomePageUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetGeneralTreatmentsForHomePageUseCase(AppDbContext context)
+    public GetGeneralTreatmentsForHomePageUseCase(DbContext context)
     {
         _context = context;
     }

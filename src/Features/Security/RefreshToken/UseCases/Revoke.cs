@@ -2,9 +2,9 @@
 
 public class RevokeRefreshTokenUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public RevokeRefreshTokenUseCase(AppDbContext context)
+    public RevokeRefreshTokenUseCase(DbContext context)
     {
         _context = context;
     }

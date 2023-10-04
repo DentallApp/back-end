@@ -35,9 +35,9 @@ public class GetEmployeesToEditResponse
 
 public class GetEmployeesToEditUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetEmployeesToEditUseCase(AppDbContext context)
+    public GetEmployeesToEditUseCase(DbContext context)
     {
         _context = context;
     }

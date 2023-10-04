@@ -7,12 +7,12 @@ public class VerifyEmailRequest
 
 public class VerifyEmailUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;
 
     public VerifyEmailUseCase(
-        AppDbContext context,
+        DbContext context,
         IUserRepository userRepository,
         ITokenService tokenService)
     {

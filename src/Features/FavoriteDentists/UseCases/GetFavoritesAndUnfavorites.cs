@@ -19,9 +19,9 @@ public class GetFavoriteAndUnfavoriteDentistsResponse
 /// </summary>
 public class GetFavoriteAndUnfavoriteDentistsUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetFavoriteAndUnfavoriteDentistsUseCase(AppDbContext context)
+    public GetFavoriteAndUnfavoriteDentistsUseCase(DbContext context)
     {
         _context = context;
     }

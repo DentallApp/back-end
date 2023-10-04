@@ -35,14 +35,14 @@ public class CreateBasicUserRequest
 
 public class CreateBasicUserUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenService _tokenService;
     private readonly IEmailService _emailService;
 
     public CreateBasicUserUseCase(
-        AppDbContext context,
+        DbContext context,
         IUserRepository userRepository,
         IPasswordHasher passwordHasher, 
         ITokenService tokenService,

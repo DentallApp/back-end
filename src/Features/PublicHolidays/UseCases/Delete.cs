@@ -2,9 +2,9 @@
 
 public class DeletePublicHolidayUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public DeletePublicHolidayUseCase(AppDbContext context)
+    public DeletePublicHolidayUseCase(DbContext context)
     {
         _context = context;
     }

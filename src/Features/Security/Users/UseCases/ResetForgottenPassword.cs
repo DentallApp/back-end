@@ -8,12 +8,12 @@ public class ResetForgottenPasswordRequest
 
 public class ResetForgottenPasswordUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly ITokenService _tokenService;
     private readonly IPasswordHasher _passwordHasher;
 
     public ResetForgottenPasswordUseCase(
-        AppDbContext context, 
+        DbContext context, 
         ITokenService tokenService, 
         IPasswordHasher passwordHasher)
     {

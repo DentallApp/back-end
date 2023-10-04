@@ -21,9 +21,9 @@ public class CreateOfficeScheduleRequest
 
 public class CreateOfficeScheduleUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public CreateOfficeScheduleUseCase(AppDbContext context)
+    public CreateOfficeScheduleUseCase(DbContext context)
     {
         _context = context;
     }

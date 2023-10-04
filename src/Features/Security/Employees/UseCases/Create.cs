@@ -52,12 +52,12 @@ public class CreateEmployeeRequest
 
 public class CreateEmployeeUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
 
     public CreateEmployeeUseCase(
-        AppDbContext context, 
+        DbContext context, 
         IUserRepository userRepository, 
         IPasswordHasher passwordHasher)
     {

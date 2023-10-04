@@ -40,13 +40,13 @@ public class UpdateAnyEmployeeRequest
 
 public class UpdateAnyEmployeeUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IEntityService<UserRole> _userRoleService;
     private readonly IEntityService<EmployeeSpecialty> _employeeSpecialtyService;
 
     public UpdateAnyEmployeeUseCase(
-        AppDbContext context, 
+        DbContext context, 
         IPasswordHasher passwordHasher,
         IEntityService<UserRole> userRoleService,
         IEntityService<EmployeeSpecialty> employeeSpecialtyService)

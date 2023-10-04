@@ -8,9 +8,9 @@ public class GetGeneralTreatmentNamesResponse
 
 public class GetGeneralTreatmentNamesUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetGeneralTreatmentNamesUseCase(AppDbContext context)
+    public GetGeneralTreatmentNamesUseCase(DbContext context)
     {
         _context = context;
     }

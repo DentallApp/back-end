@@ -4,10 +4,10 @@ namespace DentallApp.Infrastructure.Persistence.Repositories;
 
 public class AppointmentRepository : IAppointmentRepository
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IDateTimeService _dateTimeService;
 
-    public AppointmentRepository(AppDbContext context, IDateTimeService dateTimeService)
+    public AppointmentRepository(DbContext context, IDateTimeService dateTimeService)
     {
         _context = context;
         _dateTimeService = dateTimeService;

@@ -15,9 +15,9 @@ public class GetScheduledAppointmentsResponse
 /// </summary>
 public class GetScheduledAppointmentsQuery
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetScheduledAppointmentsQuery(AppDbContext context)
+    public GetScheduledAppointmentsQuery(DbContext context)
     {
         _context = context;
     }

@@ -10,9 +10,9 @@ public class GetGeneralTreatmentsToEditResponse
 
 public class GetGeneralTreatmentsToEditUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetGeneralTreatmentsToEditUseCase(AppDbContext context)
+    public GetGeneralTreatmentsToEditUseCase(DbContext context)
     {
         _context = context;
     }

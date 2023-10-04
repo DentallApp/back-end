@@ -14,9 +14,9 @@ public class GetDentistsResponse
 
 public class GetDentistsUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetDentistsUseCase(AppDbContext context)
+    public GetDentistsUseCase(DbContext context)
     {
         _context = context;
     }

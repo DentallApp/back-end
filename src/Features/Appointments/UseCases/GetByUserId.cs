@@ -21,9 +21,9 @@ public class GetAppointmentsByUserIdResponse
 
 public class GetAppointmentsByUserIdUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetAppointmentsByUserIdUseCase(AppDbContext context)
+    public GetAppointmentsByUserIdUseCase(DbContext context)
     {
         _context = context;
     }

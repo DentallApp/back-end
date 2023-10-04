@@ -22,9 +22,9 @@ public class UpdateEmployeeScheduleRequest
 
 public class UpdateEmployeeScheduleUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public UpdateEmployeeScheduleUseCase(AppDbContext context)
+    public UpdateEmployeeScheduleUseCase(DbContext context)
     {
         _context = context;
     }

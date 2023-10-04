@@ -7,12 +7,12 @@ public class SendPasswordResetEmailRequest
 
 public class SendPasswordResetEmailUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly ITokenService _tokenService;
     private readonly IEmailService _emailService;
 
     public SendPasswordResetEmailUseCase(
-        AppDbContext context, 
+        DbContext context, 
         ITokenService tokenService, 
         IEmailService emailService)
     {

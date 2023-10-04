@@ -2,9 +2,9 @@
 
 public class DeleteGeneralTreatmentUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public DeleteGeneralTreatmentUseCase(AppDbContext context)
+    public DeleteGeneralTreatmentUseCase(DbContext context)
     {
         _context = context;
     }

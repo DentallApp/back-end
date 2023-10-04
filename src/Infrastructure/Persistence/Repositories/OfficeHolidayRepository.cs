@@ -2,9 +2,9 @@
 
 public class OfficeHolidayRepository : IOfficeHolidayRepository
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public OfficeHolidayRepository(AppDbContext context)
+    public OfficeHolidayRepository(DbContext context)
     {
         _context = context;
     }

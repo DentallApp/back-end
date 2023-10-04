@@ -24,9 +24,9 @@ public class UpdateCurrentUserRequest
 /// </summary>
 public class UpdateCurrentUserUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public UpdateCurrentUserUseCase(AppDbContext context)
+    public UpdateCurrentUserUseCase(DbContext context)
     {
         _context = context;
     }

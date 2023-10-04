@@ -7,9 +7,9 @@ public class CreateFavoriteDentistRequest
 
 public class CreateFavoriteDentistUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public CreateFavoriteDentistUseCase(AppDbContext context)
+    public CreateFavoriteDentistUseCase(DbContext context)
     {
         _context = context;
     }

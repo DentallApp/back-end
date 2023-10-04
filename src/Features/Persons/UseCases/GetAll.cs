@@ -13,9 +13,9 @@ public class GetPersonsResponse
 
 public class GetPersonsUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetPersonsUseCase(AppDbContext context)
+    public GetPersonsUseCase(DbContext context)
     {
         _context = context;
     }

@@ -2,9 +2,9 @@
 
 public class EmployeeScheduleRepository : IEmployeeScheduleRepository
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public EmployeeScheduleRepository(AppDbContext context)
+    public EmployeeScheduleRepository(DbContext context)
     {
         _context = context;
     }

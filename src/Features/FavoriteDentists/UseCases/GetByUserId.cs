@@ -12,9 +12,9 @@ public class GetFavoriteDentistsByUserIdResponse
 
 public class GetFavoriteDentistsByUserIdUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetFavoriteDentistsByUserIdUseCase(AppDbContext context)
+    public GetFavoriteDentistsByUserIdUseCase(DbContext context)
     {
         _context = context;
     }

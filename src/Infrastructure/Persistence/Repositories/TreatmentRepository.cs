@@ -2,9 +2,9 @@
 
 public class TreatmentRepository : ITreatmentRepository
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public TreatmentRepository(AppDbContext context)
+    public TreatmentRepository(DbContext context)
     {
         _context = context;
     }

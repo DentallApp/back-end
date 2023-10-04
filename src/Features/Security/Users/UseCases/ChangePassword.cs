@@ -8,10 +8,10 @@ public class ChangePasswordRequest
 
 public class ChangePasswordUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IPasswordHasher _passwordHasher;
 
-    public ChangePasswordUseCase(AppDbContext context, IPasswordHasher passwordHasher)
+    public ChangePasswordUseCase(DbContext context, IPasswordHasher passwordHasher)
     {
         _context = context;
         _passwordHasher = passwordHasher;

@@ -18,9 +18,9 @@ public class GetDependentsByUserIdResponse
 
 public class GetDependentsByUserIdUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetDependentsByUserIdUseCase(AppDbContext context)
+    public GetDependentsByUserIdUseCase(DbContext context)
     {
         _context = context;
     }

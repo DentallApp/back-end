@@ -13,10 +13,10 @@ public interface IGetUnavailableHoursUseCase
 
 public class GetUnavailableHoursUseCase : IGetUnavailableHoursUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IDateTimeService _dateTimeService;
 
-    public GetUnavailableHoursUseCase(AppDbContext context, IDateTimeService dateTimeService)
+    public GetUnavailableHoursUseCase(DbContext context, IDateTimeService dateTimeService)
     {
         _context = context;
         _dateTimeService = dateTimeService;

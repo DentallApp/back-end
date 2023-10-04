@@ -11,9 +11,9 @@ public class DeleteFavoriteDentistRequest
 /// </summary>
 public class DeleteFavoriteDentistUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public DeleteFavoriteDentistUseCase(AppDbContext context)
+    public DeleteFavoriteDentistUseCase(DbContext context)
     {
         _context = context;
     }

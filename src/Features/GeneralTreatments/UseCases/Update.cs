@@ -19,10 +19,10 @@ public class UpdateGeneralTreatmentRequest
 
 public class UpdateGeneralTreatmentUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly string _basePath;
 
-    public UpdateGeneralTreatmentUseCase(AppDbContext context, AppSettings settings)
+    public UpdateGeneralTreatmentUseCase(DbContext context, AppSettings settings)
     {
         _context = context;
         _basePath = settings.DentalServicesImagesPath;

@@ -12,9 +12,9 @@ public class GetOfficeOverviewResponse
 /// </summary>
 public class GetOfficeOverviewUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetOfficeOverviewUseCase(AppDbContext context)
+    public GetOfficeOverviewUseCase(DbContext context)
     {
         _context = context;
     }

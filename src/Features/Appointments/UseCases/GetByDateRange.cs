@@ -31,9 +31,9 @@ public class GetAppointmentsByDateRangeResponse
 
 public class GetAppointmentsByDateRangeUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
 
-    public GetAppointmentsByDateRangeUseCase(AppDbContext context)
+    public GetAppointmentsByDateRangeUseCase(DbContext context)
     {
         _context = context;
     }

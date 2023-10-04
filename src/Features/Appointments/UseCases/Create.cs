@@ -2,12 +2,12 @@
 
 public class CreateAppointmentUseCase : ICreateAppointmentUseCase
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IDateTimeService _dateTimeService;
     private readonly SendAppointmentInformationUseCase _sendInformationUseCase;
 
     public CreateAppointmentUseCase(
-        AppDbContext context, 
+        DbContext context, 
         IDateTimeService dateTimeService, 
         SendAppointmentInformationUseCase sendInformationUseCase)
     {
