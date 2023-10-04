@@ -29,7 +29,7 @@ public class CreateAppointmentUseCase : ICreateAppointmentUseCase
                    appointment.IsCancelledByEmployee ||
                    // Checks if the canceled appointment is not available.
                    // This check allows patients to choose a time slot for an appointment canceled by another basic user.
-                   _dateTimeService.Now > _context.AddTime(_context.ToDateTime(appointment.Date), appointment.StartHour)))
+                   _dateTimeService.Now > DBFunctions.AddTime(DBFunctions.ToDateTime(appointment.Date), appointment.StartHour)))
             .Select(appointment => true)
             .AnyAsync();
 

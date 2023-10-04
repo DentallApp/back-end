@@ -41,7 +41,7 @@ public partial class AppDbContext : DbContext
             .AddEntity<PublicHoliday>()
             .AddEntity<OfficeHoliday>();
 
-        AddSqlFunctions(modelBuilder);
+        AddDbFunctions(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         // Create seed data.
