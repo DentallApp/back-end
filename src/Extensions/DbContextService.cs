@@ -8,7 +8,7 @@ public static class DbContextService
     {
         LinqToDBForEFTools.Initialize();
         var cs = settings.DbConnectionString;
-        services.AddDbContext<AppDbContext>(options =>
+        services.AddDbContext<DbContext, AppDbContext>(options =>
         {
             options.UseMySql(cs, ServerVersion.AutoDetect(cs),
                     mySqlOptionsAction: sqlOptions =>
@@ -20,6 +20,7 @@ public static class DbContextService
                     })
                    .UseSnakeCaseNamingConvention();
         });
+
         return services;
     }
 }
