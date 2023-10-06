@@ -10,8 +10,8 @@ global using Newtonsoft.Json.Linq;
 global using static DentallApp.IntegrationTests.ChatBot.Dialogs.BotServiceMockFactory;
 global using static DentallApp.IntegrationTests.ChatBot.Dialogs.ActivityFactory;
 
-global using DentallApp.Features.Chatbot;
-global using DentallApp.Features.Chatbot.Dialogs;
+global using DentallApp.Features.ChatBot;
+global using DentallApp.Features.ChatBot.Dialogs;
 global using DentallApp.Shared.Appointments;
 
 global using DentallApp.Shared.Domain;

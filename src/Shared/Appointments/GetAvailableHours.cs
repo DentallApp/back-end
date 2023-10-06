@@ -21,7 +21,7 @@ public class AvailableTimeRangeResponse
 
 /// <summary>
 /// This interface is used so that the chatbot is not directly coupled 
-/// to the <see cref="Features.Appointments" /> module.
+/// to the <c>Appointments</c> module.
 /// </summary>
 public interface IGetAvailableHoursUseCase
 {
