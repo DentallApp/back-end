@@ -38,8 +38,7 @@ public class CreateAppointmentRequest
 }
 
 /// <summary>
-/// This interface is used so that the chatbot is not directly coupled 
-/// to the <see cref="Features.Appointments" /> module.
+/// This interface is used so that the chatbot is not directly coupled to the <c>Appointments</c> module.
 /// </summary>
 public interface ICreateAppointmentUseCase
 {

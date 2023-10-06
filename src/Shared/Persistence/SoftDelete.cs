@@ -15,8 +15,8 @@ public static class SoftDeleteExtensions
         int entityId) where TEntity : SoftDeleteEntity
     {
         int updatedRows = await context.Set<TEntity>()
-                   .Where(e => e.Id == entityId)
-                   .ExecuteUpdateAsync(s => s.SetProperty(e => e.IsDeleted, true));
+            .Where(e => e.Id == entityId)
+            .ExecuteUpdateAsync(s => s.SetProperty(e => e.IsDeleted, true));
 
         return updatedRows;
     }

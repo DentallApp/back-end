@@ -20,7 +20,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DentallApp.csproj" />
+    <ProjectReference Include="..\..\src\ChatBot\DentallApp.ChatBot.csproj" />
   </ItemGroup>
 
 </Project>

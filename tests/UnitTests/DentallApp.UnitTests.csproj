@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DentallApp.csproj" />
+    <ProjectReference Include="..\..\src\ChatBot\DentallApp.ChatBot.csproj" />
+    <ProjectReference Include="..\..\src\Features\DentallApp.Features.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure\DentallApp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
