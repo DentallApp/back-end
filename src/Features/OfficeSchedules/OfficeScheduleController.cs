@@ -1,50 +1,22 @@
-﻿namespace DentallApp.Features.OfficeSchedules;
+﻿using DentallApp.Features.OfficeSchedules.UseCases;
+
+namespace DentallApp.Features.OfficeSchedules;
 
 [Route("office-schedule")]
 [ApiController]
 public class OfficeScheduleController : ControllerBase
 {
-    private readonly OfficeScheduleService _officeScheduleService;
-    private readonly IOfficeScheduleRepository _officeScheduleRepository;
-
-    public OfficeScheduleController(OfficeScheduleService officeScheduleService, 
-                                    IOfficeScheduleRepository officeScheduleRepository)
-    {
-        _officeScheduleService = officeScheduleService;
-        _officeScheduleRepository = officeScheduleRepository;
-    }
-
-    /// <summary>
-    /// Obtiene los horarios de los consultorios activos para la página de inicio.
-    /// </summary>
-    /// <remarks>El consultorio debe tener al menos un horario activo.</remarks>
-    [HttpGet("home-page")]
-    public async Task<IEnumerable<OfficeScheduleShowDto>> GetHomePageSchedules()
-        => await _officeScheduleService.GetHomePageSchedulesAsync();
-
-    /// <summary>
-    /// Obtiene todos los horarios de los consultorios activos e inactivos.
-    /// </summary>
-    [HttpGet]
-    public async Task<IEnumerable<OfficeScheduleGetAllDto>> Get()
-        => await _officeScheduleService.GetAllOfficeSchedulesAsync();
-
-    /// <summary>
-    /// Obtiene el horario de un consultorio activo o inactivo.
-    /// </summary>
-    [HttpGet("{officeId}")]
-    public async Task<IEnumerable<OfficeScheduleGetDto>> GetByOfficeId(int officeId)
-        => await _officeScheduleRepository.GetOfficeScheduleByOfficeIdAsync(officeId);
-
     /// <summary>
     /// Crea un nuevo horario para el consultorio.
     /// </summary>
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Post([FromBody]OfficeScheduleInsertDto officeScheduleInsertDto)
+    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+        [FromBody]CreateOfficeScheduleRequest request,
+        [FromServices]CreateOfficeScheduleUseCase useCase)
     {
-        var response = await _officeScheduleService.CreateOfficeScheduleAsync(User, officeScheduleInsertDto);
-        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
+        var response = await useCase.ExecuteAsync(User, request);
+        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
     /// <summary>
@@ -52,9 +24,23 @@ public class OfficeScheduleController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
     [HttpPut("{scheduleId}")]
-    public async Task<ActionResult<Response>> Put(int scheduleId, [FromBody]OfficeScheduleUpdateDto officeScheduleUpdateDto)
+    public async Task<ActionResult<Response>> Update(
+        int scheduleId,
+        [FromBody]UpdateOfficeScheduleRequest request,
+        [FromServices]UpdateOfficeScheduleUseCase useCase)
     {
-        var response = await _officeScheduleService.UpdateOfficeScheduleAsync(scheduleId, User, officeScheduleUpdateDto);
+        var response = await useCase.ExecuteAsync(scheduleId, User, request);
         return response.Success ? Ok(response) : BadRequest(response);
+    }
+
+    /// <summary>
+    /// Obtiene el horario de un consultorio activo o inactivo.
+    /// </summary>
+    [HttpGet("{officeId}")]
+    public async Task<IEnumerable<GetSchedulesByOfficeIdResponse>> GetByOfficeId(
+        int officeId,
+        [FromServices]GetSchedulesByOfficeIdUseCase useCase)
+    {
+        return await useCase.ExecuteAsync(officeId);
     }
 }

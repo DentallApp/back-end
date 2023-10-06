@@ -1,0 +1,44 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="AdaptiveCards" Version="3.0.0" />
+    <PackageVersion Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageVersion Include="Dapper" Version="2.0.123" />
+    <PackageVersion Include="DelegateDecompiler" Version="0.30.0" />
+    <PackageVersion Include="EFCore.CustomQueryPreprocessor" Version="2.0.0" />
+    <PackageVersion Include="EFCore.NamingConventions" Version="7.0.0" />
+    <PackageVersion Include="EntityFrameworkCore.Exceptions.MySQL.Pomelo" Version="6.0.3" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.0" />
+    <PackageVersion Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+    <PackageVersion Include="linq2db.EntityFrameworkCore" Version="7.0.0" />
+    <PackageVersion Include="File.TypeChecker" Version="3.0.0" />
+    <PackageVersion Include="itext7.pdfhtml" Version="4.0.5" />
+    <PackageVersion Include="libphonenumber-csharp" Version="8.13.4" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Bot.Builder.Dialogs" Version="4.19.1" />
+    <PackageVersion Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.19.1" />
+    <PackageVersion Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.7.30" />
+    <PackageVersion Include="Quartz" Version="3.5.0" />
+    <PackageVersion Include="Quartz.Extensions.Hosting" Version="3.5.0" />
+    <PackageVersion Include="Scriban" Version="5.5.2" />
+    <PackageVersion Include="Scrutor" Version="4.2.2" />
+    <PackageVersion Include="SendGrid" Version="9.28.1" />
+    <PackageVersion Include="SendGrid.Extensions.DependencyInjection" Version="1.0.1" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    <PackageVersion Include="DotEnv.Core" Version="2.3.2" />
+    <PackageVersion Include="Twilio" Version="6.2.1" />
+
+    <PackageVersion Include="coverlet.msbuild" Version="3.1.2" />
+    <PackageVersion Include="FluentAssertions" Version="6.10.0" />
+    <PackageVersion Include="JustMock" Version="2023.1.117.1" />
+    <PackageVersion Include="Microsoft.Bot.Builder.Testing" Version="4.18.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageVersion Include="NUnit" Version="3.13.3" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="4.3.0" />
+    <PackageVersion Include="NUnit.Analyzers" Version="3.5.0" />
+  </ItemGroup>
+</Project>

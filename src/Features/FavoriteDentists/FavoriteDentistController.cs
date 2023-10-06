@@ -1,62 +1,71 @@
-﻿namespace DentallApp.Features.FavoriteDentists;
+﻿using DentallApp.Features.FavoriteDentists.UseCases;
+
+namespace DentallApp.Features.FavoriteDentists;
 
 [AuthorizeByRole(RolesName.BasicUser)]
 [Route("favorite-dentist")]
 [ApiController]
 public class FavoriteDentistController : ControllerBase
 {
-    private readonly FavoriteDentistService _favoriteDentistService;
-    private readonly IFavoriteDentistRepository _favoriteDentistRepository;
-
-    public FavoriteDentistController(FavoriteDentistService favoriteDentistService, 
-                                     IFavoriteDentistRepository favoriteDentistRepository)
-    {
-        _favoriteDentistService = favoriteDentistService;
-        _favoriteDentistRepository = favoriteDentistRepository;
-    }
-
     /// <summary>
-    /// Crea un nuevo odontólogo favorito para el usuario básico.
+    /// Creates a new favorite dentist for the current basic user.
     /// </summary>
     [HttpPost]
-    public async Task<ActionResult<Response>> Post([FromBody]FavoriteDentistInsertDto favoriteDentistInsertDto)
+    public async Task<ActionResult<Response>> Create(
+        [FromBody]CreateFavoriteDentistRequest request,
+        [FromServices]CreateFavoriteDentistUseCase useCase)
     {
-        var response = await _favoriteDentistService.CreateFavoriteDentistAsync(User.GetUserId(), favoriteDentistInsertDto);
-        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
+        var response = await useCase.ExecuteAsync(User.GetUserId(), request);
+        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
     /// <summary>
-    /// Obtiene los odontólogos favoritos del usuario básico y además, 
-    /// incluye en el resultado a los odontólogos que no son preferidos por el usuario básico.
-    /// </summary>
-    [HttpGet("dentist")]
-    public async Task<IEnumerable<DentistGetDto>> GetListOfDentists()
-        => await _favoriteDentistRepository.GetListOfDentistsAsync(User.GetUserId());
-
-    /// <summary>
-    /// Obtiene únicamente los odontólogos favoritos del usuario básico.
-    /// </summary>
-    [HttpGet]
-    public async Task<IEnumerable<FavoriteDentistGetDto>> GetFavoriteDentists()
-        => await _favoriteDentistRepository.GetFavoriteDentistsAsync(User.GetUserId());
-
-    /// <summary>
-    /// Elimina un odontólogo favorito de un usuario básico.
+    /// Deletes a favorite dentist from the current basic user.
     /// </summary>
     [HttpDelete("{favoriteDentistId}")]
-    public async Task<ActionResult<Response>> DeleteByFavoriteDentistId(int favoriteDentistId)
+    public async Task<ActionResult<Response>> DeleteByFavoriteDentistId(
+        int favoriteDentistId,
+        [FromServices]DeleteFavoriteDentistUseCase useCase)
     {
-        var response = await _favoriteDentistService.RemoveByFavoriteDentistIdAsync(User.GetUserId(), favoriteDentistId);
+        var request = new DeleteFavoriteDentistRequest
+        {
+            UserId = User.GetUserId(),
+            FavoriteDentistId = favoriteDentistId
+        };
+        var response = await useCase.ExecuteAsync(request);
         return response.Success ? Ok(response) : BadRequest(response);
     }
 
     /// <summary>
-    /// Elimina un odontólogo favorito de un usuario básico.
+    /// Deletes a favorite dentist from the current basic user.
     /// </summary>
     [HttpDelete("dentist/{dentistId}")]
-    public async Task<ActionResult<Response>> DeleteByUserIdAndDentistId(int dentistId)
+    public async Task<ActionResult<Response>> DeleteByUserIdAndDentistId(
+        int dentistId,
+        [FromServices]DeleteFavoriteDentistUseCase useCase)
     {
-        var response = await _favoriteDentistService.RemoveByUserIdAndDentistIdAsync(User.GetUserId(), dentistId);
+        var response = await useCase.ExecuteAsync(User.GetUserId(), dentistId);
         return response.Success ? Ok(response) : NotFound(response);
+    }
+
+    /// <summary>
+    /// Gets the dentists preferred by the basic user and 
+    /// also includes in the result the dentists that are not preferred by the basic user.
+    /// </summary>
+    [HttpGet("dentist")]
+    public async Task<IEnumerable<GetFavoriteAndUnfavoriteDentistsResponse>> GetFavoritesAndUnfavorites(
+        [FromServices]GetFavoriteAndUnfavoriteDentistsUseCase useCase)
+    {
+        return await useCase.ExecuteAsync(User.GetUserId());
+    }
+
+    /// <summary>
+    /// Gets only the basic user's favorite dentists.
+    /// </summary>
+    [HttpGet]
+    public async Task<IEnumerable<GetFavoriteDentistsByUserIdResponse>> GetFavoriteDentists(
+        [FromServices]GetFavoriteDentistsByUserIdUseCase useCase)
+    { 
+        return await useCase.ExecuteAsync(User.GetUserId());
     }
 }

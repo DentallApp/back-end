@@ -1,0 +1,35 @@
+﻿namespace DentallApp.Features.GeneralTreatments.UseCases;
+
+public class GetGeneralTreatmentsToEditResponse
+{
+    public int Id { get; init; }
+    public string Name { get; init; }
+    public string Description { get; init; }
+    public int Duration { get; init; }
+}
+
+public class GetGeneralTreatmentsToEditUseCase
+{
+    private readonly DbContext _context;
+
+    public GetGeneralTreatmentsToEditUseCase(DbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<IEnumerable<GetGeneralTreatmentsToEditResponse>> ExecuteAsync()
+    {
+        var generalTreatments = await _context.Set<GeneralTreatment>()
+            .Select(treatment => new GetGeneralTreatmentsToEditResponse
+            {
+                Id          = treatment.Id,
+                Name        = treatment.Name,
+                Description = treatment.Description,
+                Duration    = treatment.Duration
+            })
+            .AsNoTracking()
+            .ToListAsync();
+
+        return generalTreatments;
+    }
+}

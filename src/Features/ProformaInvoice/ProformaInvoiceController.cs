@@ -4,19 +4,14 @@
 [ApiController]
 public class ProformaInvoiceController : ControllerBase
 {
-    private readonly ProformaInvoiceService _proformaInvoiceService;
-
-    public ProformaInvoiceController(ProformaInvoiceService proformaInvoiceService)
-    {
-        _proformaInvoiceService = proformaInvoiceService;
-    }
-
     [AuthorizeByRole(RolesName.BasicUser)]
     [Route("pdf")]
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody]ProformaInvoiceDto proformaInvoiceDto)
+    public async Task<ActionResult> DownloadAsPdf(
+        [FromBody]DownloadProformaInvoiceRequest request,
+        [FromServices]DownloadProformaInvoiceUseCase useCase)
     {
-        var contents = await _proformaInvoiceService.CreateProformaInvoicePdfAsync(proformaInvoiceDto);
+        var contents = await useCase.DownloadAsPdfAsync(request);
         return File(contents, "application/pdf", "ProformaReporte.pdf");
     }
 }

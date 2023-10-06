@@ -1,59 +1,69 @@
-﻿namespace DentallApp.Features.GeneralTreatments;
+﻿using DentallApp.Features.GeneralTreatments.UseCases;
+
+namespace DentallApp.Features.GeneralTreatments;
 
 [Route("general-treatment")]
 [ApiController]
 public class GeneralTreatmentController : ControllerBase
 {
-    private readonly GeneralTreatmentService _treatmentService;
-    private readonly IGeneralTreatmentRepository _treatmentRepository;
-
-    public GeneralTreatmentController(GeneralTreatmentService treatmentService, 
-                                      IGeneralTreatmentRepository treatmentRepository)
-    {
-        _treatmentService = treatmentService;
-        _treatmentRepository = treatmentRepository;
-    }
-
-    [HttpGet("name")]
-    public async Task<IEnumerable<GeneralTreatmentGetNameDto>> GetTreatmentsWithName()
-        => await _treatmentRepository.GetTreatmentsWithNameAsync();
-
-    [HttpGet("edit")]
-    public async Task<IEnumerable<GeneralTreatmentShowDto>> GetTreatmentsForEdit()
-        => await _treatmentRepository.GetTreatmentsWithoutImageUrlAsync();
-
-    [HttpGet]
-    public async Task<IEnumerable<GeneralTreatmentGetDto>> Get()
-        => await _treatmentRepository.GetTreatmentsAsync();
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Response<GeneralTreatmentGetDto>>> Get(int id)
-    {
-        var response = await _treatmentService.GetTreatmentByIdAsync(id);
-        return response.Success ? Ok(response) :  NotFound(response);
-    }
-
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Post([FromForm]GeneralTreatmentInsertDto treatmentInsertDto)
+    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+        [FromForm]CreateGeneralTreatmentRequest request,
+        [FromServices]CreateGeneralTreatmentUseCase useCase)
     {
-        var response = await _treatmentService.CreateTreatmentAsync(treatmentInsertDto);
-        return response.Success ? CreatedAtAction(nameof(Post), response) : BadRequest(response);
+        var response = await useCase.ExecuteAsync(request);
+        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Put(int id, [FromForm]GeneralTreatmentUpdateDto treatmentUpdateDto)
+    public async Task<ActionResult<Response>> Update(
+        int id, 
+        [FromForm]UpdateGeneralTreatmentRequest request,
+        [FromServices]UpdateGeneralTreatmentUseCase useCase)
     {
-        var response = await _treatmentService.UpdateTreatmentAsync(id, treatmentUpdateDto);
+        var response = await useCase.ExecuteAsync(id, request);
         return response.Success ? Ok(response) : NotFound(response);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Response>> Delete(int id)
+    public async Task<ActionResult<Response>> Delete(
+        int id,
+        [FromServices]DeleteGeneralTreatmentUseCase useCase)
     {
-        var response = await _treatmentService.RemoveTreatmentAsync(id);
+        var response = await useCase.ExecuteAsync(id);
         return response.Success ? Ok(response) : NotFound(response);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Response<GetGeneralTreatmentByIdResponse>>> GetById(
+        int id,
+        [FromServices]GetGeneralTreatmentByIdUseCase useCase)
+    {
+        var response = await useCase.ExecuteAsync(id);
+        return response.Success ? Ok(response) : NotFound(response);
+    }
+
+    [HttpGet("name")]
+    public async Task<IEnumerable<GetGeneralTreatmentNamesResponse>> GetNames(
+        [FromServices]GetGeneralTreatmentNamesUseCase useCase)
+    {
+        return await useCase.ExecuteAsync();
+    }
+
+    [HttpGet("edit")]
+    public async Task<IEnumerable<GetGeneralTreatmentsToEditResponse>> GetTreatmentsToEdit(
+        [FromServices]GetGeneralTreatmentsToEditUseCase useCase)
+    {
+        return await useCase.ExecuteAsync();
+    }
+
+    [HttpGet]
+    public async Task<IEnumerable<GetGeneralTreatmentsForHomePageResponse>> GetTreatmentsForHomePage(
+        [FromServices]GetGeneralTreatmentsForHomePageUseCase useCase)
+    {
+        return await useCase.ExecuteAsync();
     }
 }
