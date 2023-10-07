@@ -29,7 +29,8 @@ public static class SwaggerGen
                     new string[] { }
                 }
             });
-            var filePath = Path.Combine(AppContext.BaseDirectory, "DentallApp.Features.xml");
+            var fileName = nameof(DentallApp) + "." + nameof(Features) + ".xml";
+            var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
             options.IncludeXmlComments(filePath);
         });
         return services;
