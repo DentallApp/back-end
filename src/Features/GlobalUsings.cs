@@ -30,4 +30,3 @@ global using Microsoft.EntityFrameworkCore;
 
 global using DotEnv.Core;
 global using Dapper;
-global using Quartz;

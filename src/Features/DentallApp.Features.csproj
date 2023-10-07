@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="linq2db.EntityFrameworkCore" />
-    <PackageReference Include="Quartz" />
     <PackageReference Include="Dapper" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers">
       <PrivateAssets>all</PrivateAssets>
