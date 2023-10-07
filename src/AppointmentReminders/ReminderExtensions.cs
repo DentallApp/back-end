@@ -7,20 +7,20 @@ public static class ReminderExtensions
         services.AddQuartz(q =>
         {
             q.UseMicrosoftDependencyInjectionJobFactory();
-            q.AddJobAndTrigger<SendReminderJob>(configuration["REMINDER_CRON_EXPR"]);
+            q.AddJobAndTrigger(configuration["REMINDER_CRON_EXPR"]);
         });
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
         services.AddScoped<GetScheduledAppointmentsQuery>();
         return services;
     }
 
-    private static IServiceCollectionQuartzConfigurator AddJobAndTrigger<TJob>(
+    private static IServiceCollectionQuartzConfigurator AddJobAndTrigger(
         this IServiceCollectionQuartzConfigurator configurator, 
-        string cronExpression) where TJob : IJob
+        string cronExpression)
     {
-        var jobName = typeof(TJob).Name;
+        var jobName = typeof(SendReminderJob).Name;
         var jobKey  = new JobKey(jobName);
-        configurator.AddJob<TJob>(options => options.WithIdentity(jobKey));
+        configurator.AddJob<SendReminderJob>(options => options.WithIdentity(jobKey));
         configurator.AddTrigger(options => options
             .ForJob(jobKey)
             .WithIdentity(jobName + "-trigger")
