@@ -10,7 +10,6 @@
     <PackageReference Include="Scrutor" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-    <PackageReference Include="Quartz.Extensions.Hosting" />
     <PackageReference Include="SendGrid.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers">
       <PrivateAssets>all</PrivateAssets>
@@ -29,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AppointmentReminders\DentallApp.AppointmentReminders.csproj" />
     <ProjectReference Include="..\ChatBot\DentallApp.ChatBot.csproj" />
     <ProjectReference Include="..\Features\DentallApp.Features.csproj" />
     <ProjectReference Include="..\Infrastructure\DentallApp.Infrastructure.csproj" />
