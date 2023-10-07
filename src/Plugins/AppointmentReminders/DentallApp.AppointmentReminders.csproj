@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\DentallApp.Shared.csproj" />
+    <ProjectReference Include="..\..\Shared\DentallApp.Shared.csproj" />
   </ItemGroup>
 
 </Project>
