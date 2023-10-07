@@ -6,6 +6,7 @@ var builder     = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Configuration.AddEnvironmentVariables();
 builder.Services
     .AddServices()
     .RegisterAutoDependencies();
@@ -23,13 +24,12 @@ builder.Services
     .AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
     .AddCustomInvalidModelStateResponse();
 
-
 builder.Services.AddDbContext(databaseSettings);
 builder.Services.AddSendGrid(options => options.ApiKey = appSettings.SendGridApiKey);
 builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(appSettings);
 builder.Services.AddBotServices(builder.Configuration);
-builder.Services.AddQuartzJobs(appSettings);
+builder.Services.AddReminderServices(builder.Configuration);
 
 var app = builder.Build();
 
