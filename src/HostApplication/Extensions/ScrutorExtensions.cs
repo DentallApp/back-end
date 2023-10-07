@@ -1,6 +1,4 @@
-﻿using DentallApp.Features.Dependents.UseCases;
-
-namespace DentallApp.HostApplication.Extensions;
+﻿namespace DentallApp.HostApplication.Extensions;
 
 public static class ScrutorExtensions
 {
@@ -12,8 +10,7 @@ public static class ScrutorExtensions
     /// </remarks>
     private static readonly string[] s_conventions = new[]
     {
-        "UseCase",
-        "Query"
+        "UseCase"
     };
 
     /// <summary>
