@@ -39,7 +39,7 @@ public class CancelAppointmentsUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response<CancelAppointmentsResponse>> ExecuteAsync(ClaimsPrincipal currentEmployee, CancelAppointmentsRequest request)
+    public async Task<Result<CancelAppointmentsResponse>> ExecuteAsync(ClaimsPrincipal currentEmployee, CancelAppointmentsRequest request)
     {
         // Stores appointments whose stipulated date and time have not passed.
         var appointmentsCanBeCancelled = request.Appointments
@@ -73,18 +73,15 @@ public class CancelAppointmentsUseCase
                     .Select(appointmentDto => appointmentDto.AppointmentId)
                     .Except(appointmentsIdCanBeCancelled)
             };
-            return new Response<CancelAppointmentsResponse>
+            return new Result<CancelAppointmentsResponse>
             {
                 Message = message,
-                Data    = appointmentsThatCannotBeCanceled
+                Data = appointmentsThatCannotBeCanceled,
+                Status = ResultStatus.Invalid
             };
         }
 
-        return new Response<CancelAppointmentsResponse>
-        {
-            Success = true,
-            Message = SuccessfullyCancelledAppointmentsMessage
-        };
+        return Result.Success(SuccessfullyCancelledAppointmentsMessage);
     }
 
     private async Task SendMessageAboutAppointmentCancellationAsync(
