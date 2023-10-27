@@ -16,7 +16,7 @@ public class CancelAppointmentsUseCaseTests
     }
 
     [Test]
-    public async Task ExecuteAsync_WhenAllAppointmentsCanBeCancelled_ShouldReturnsAnResponseWithoutAppointmentsId()
+    public async Task ExecuteAsync_WhenAllAppointmentsCanBeCancelled_ShouldReturnsResultWithoutAppointmentsId()
     {
         // Arrange
         var request = new CancelAppointmentsRequest
@@ -38,16 +38,16 @@ public class CancelAppointmentsUseCaseTests
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
-        var response = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
+        var result = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
 
         // Asserts
-        response.Success.Should().BeTrue();
-        response.Message.Should().Be(SuccessfullyCancelledAppointmentsMessage);
-        response.Data.Should().BeNull();
+        result.IsSuccess.Should().BeTrue();
+        result.Message.Should().Be(SuccessfullyCancelledAppointmentsMessage);
+        result.Data.Should().BeNull();
     }
 
     [Test]
-    public async Task ExecuteAsync_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
+    public async Task ExecuteAsync_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnsResultWithAppointmentsId()
     {
         // Arrange
         var request = new CancelAppointmentsRequest
@@ -71,21 +71,22 @@ public class CancelAppointmentsUseCaseTests
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
-        var response = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
+        var result = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Message
-                .Should()
-                .Be(string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 2));
+        result.IsSuccess.Should().BeFalse();
+        result.Message
+            .Should()
+            .Be(string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 2));
 
-        response.Data.AppointmentsId
-                     .Should()
-                     .BeEquivalentTo(new[] { 4, 5 });
+        result.Data
+            .AppointmentsId
+            .Should()
+            .BeEquivalentTo(new[] { 4, 5 });
     }
 
     [Test]
-    public async Task ExecuteAsync_WhenAppointmentsCannotBeCancelled_ShouldReturnsAnResponseWithAppointmentsId()
+    public async Task ExecuteAsync_WhenAppointmentsCannotBeCancelled_ShouldReturnsResultWithAppointmentsId()
     {
         // Arrange
         var request = new CancelAppointmentsRequest
@@ -109,17 +110,17 @@ public class CancelAppointmentsUseCaseTests
         Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
-        var response = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
+        var result = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Message
-                .Should()
-                .Be(string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 5));
+        result.IsSuccess.Should().BeFalse();
+        result.Message
+            .Should()
+            .Be(string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 5));
 
-        response.Data
-                .AppointmentsId
-                .Should()
-                .BeEquivalentTo(new[] { 1, 2, 3, 4, 5 });
+        result.Data
+            .AppointmentsId
+            .Should()
+            .BeEquivalentTo(new[] { 1, 2, 3, 4, 5 });
     }
 }
