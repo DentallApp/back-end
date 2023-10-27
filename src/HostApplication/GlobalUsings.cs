@@ -35,7 +35,7 @@ global using Microsoft.Extensions.Options;
 global using Microsoft.OpenApi.Models;
 
 global using DotEnv.Core;
-
+global using SimpleResults;
 global using SendGrid.Extensions.DependencyInjection;
 
 global using EntityFramework.Exceptions.Common;

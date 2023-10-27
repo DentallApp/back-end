@@ -28,5 +28,6 @@ global using Microsoft.AspNetCore.Authorization;
 
 global using Microsoft.EntityFrameworkCore;
 
+global using SimpleResults;
 global using DotEnv.Core;
 global using Dapper;
