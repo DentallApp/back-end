@@ -21,7 +21,11 @@ builder.Services
 
 builder.Services
     .AddHttpClient()
-    .AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
+    .AddControllers(options =>
+    {
+        options.SuppressAsyncSuffixInActionNames = false;
+        options.Filters.Add<TranslateResultToActionResultAttribute>();
+    })
     .AddCustomInvalidModelStateResponse();
 
 builder.Services.AddDbContext(databaseSettings);
