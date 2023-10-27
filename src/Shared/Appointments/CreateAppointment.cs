@@ -42,5 +42,5 @@ public class CreateAppointmentRequest
 /// </summary>
 public interface ICreateAppointmentUseCase
 {
-    Task<Response<InsertedIdDto>> ExecuteAsync(CreateAppointmentRequest request);
+    Task<Result<CreatedId>> ExecuteAsync(CreateAppointmentRequest request);
 }

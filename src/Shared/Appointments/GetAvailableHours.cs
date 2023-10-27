@@ -25,5 +25,5 @@ public class AvailableTimeRangeResponse
 /// </summary>
 public interface IGetAvailableHoursUseCase
 {
-    Task<Response<IEnumerable<AvailableTimeRangeResponse>>> ExecuteAsync(AvailableTimeRangeRequest request);
+    Task<ListedResult<AvailableTimeRangeResponse>> ExecuteAsync(AvailableTimeRangeRequest request);
 }
