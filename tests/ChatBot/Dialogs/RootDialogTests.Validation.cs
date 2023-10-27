@@ -92,9 +92,9 @@ public partial class RootDialogTests
     public async Task Bot_WhenThereAreNoHoursAvailable_ShouldSendAnErrorMessage()
     {
         Mock.Arrange(() => _botService.GetAvailableHoursAsync(Arg.IsAny<AvailableTimeRangeRequest>()))
-            .ReturnsAsync(new Response<IEnumerable<AvailableTimeRangeResponse>>
+            .ReturnsAsync(new ListedResult<AvailableTimeRangeResponse>
             {
-                Success = false,
+                IsSuccess = false,
                 Message = NoSchedulesAvailableMessage
             });
 
@@ -127,9 +127,9 @@ public partial class RootDialogTests
     public async Task Bot_WhenDateAndTimeAppointmentIsNotAvailable_ShouldSendAnErrorMessage()
     {
         Mock.Arrange(() => _botService.CreateScheduledAppointmentAsync(Arg.IsAny<CreateAppointmentRequest>()))
-            .ReturnsAsync(new Response<InsertedIdDto>
+            .ReturnsAsync(new Result<CreatedId>
             {
-                Success = false,
+                IsSuccess = false,
                 Message = DateAndTimeAppointmentIsNotAvailableMessage
             });
 

@@ -32,11 +32,12 @@ public static class BotServiceMockFactory
             .ReturnsAsync(Schedule);
 
         Mock.Arrange(() => botService.GetAvailableHoursAsync(Arg.IsAny<AvailableTimeRangeRequest>()))
-            .ReturnsAsync(new Response<IEnumerable<AvailableTimeRangeResponse>>
+            .ReturnsAsync(new ListedResult<AvailableTimeRangeResponse>
             {
-                Success = true,
+                IsSuccess = true,
+                Status = ResultStatus.Ok,
                 Message = GetResourceMessage,
-                Data    = new List<AvailableTimeRangeResponse>
+                Data = new List<AvailableTimeRangeResponse>
                 {
                     new() { StartHour = StartHour, EndHour = EndHour }
                 }
@@ -46,12 +47,7 @@ public static class BotServiceMockFactory
             .ReturnsAsync(new PayRange { PriceMin = PriceMin, PriceMax = PriceMax });
 
         Mock.Arrange(() => botService.CreateScheduledAppointmentAsync(Arg.IsAny<CreateAppointmentRequest>()))
-            .ReturnsAsync(new Response<InsertedIdDto>
-            {
-                Success = true,
-                Data    = new InsertedIdDto { Id = int.Parse(Id) },
-                Message = CreateResourceMessage
-            });
+            .ReturnsAsync(Result.CreatedResource(int.Parse(Id)));
         return botService;
     }
 

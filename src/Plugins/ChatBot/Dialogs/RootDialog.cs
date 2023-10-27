@@ -157,7 +157,7 @@ public partial class RootDialog : ComponentDialog
             AppointmentDate = appointment.AppointmentDate
         });
 
-        if (!response.Success)
+        if (response.IsFailed)
             return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
 
         var availableHours = response.Data as List<AvailableTimeRangeResponse>;
@@ -186,7 +186,7 @@ public partial class RootDialog : ComponentDialog
         await stepContext.SendTypingActivityAsync();
         appointment.RangeToPay = await _botService.GetRangeToPayAsync(appointment.GeneralTreatmentId);
         var response = await _botService.CreateScheduledAppointmentAsync(appointment);
-        if (!response.Success)
+        if (response.IsFailed)
             return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
 
         await stepContext

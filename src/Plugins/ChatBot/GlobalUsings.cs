@@ -38,3 +38,4 @@ global using Microsoft.Bot.Builder.Integration.AspNet.Core;
 global using Newtonsoft.Json.Linq;
 global using Newtonsoft.Json;
 global using DotEnv.Core;
+global using SimpleResults;
