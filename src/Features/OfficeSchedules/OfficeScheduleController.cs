@@ -11,12 +11,11 @@ public class OfficeScheduleController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+    public async Task<Result<CreatedId>> Create(
         [FromBody]CreateOfficeScheduleRequest request,
         [FromServices]CreateOfficeScheduleUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(User, request);
-        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
+        return await useCase.ExecuteAsync(User, request);
     }
 
     /// <summary>
@@ -24,13 +23,12 @@ public class OfficeScheduleController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
     [HttpPut("{scheduleId}")]
-    public async Task<ActionResult<Response>> Update(
+    public async Task<Result> Update(
         int scheduleId,
         [FromBody]UpdateOfficeScheduleRequest request,
         [FromServices]UpdateOfficeScheduleUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(scheduleId, User, request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(scheduleId, User, request);
     }
 
     /// <summary>

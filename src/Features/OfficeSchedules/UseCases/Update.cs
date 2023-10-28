@@ -25,7 +25,7 @@ public class UpdateOfficeScheduleUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateOfficeScheduleRequest request)
+    public async Task<Result> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateOfficeScheduleRequest request)
     {
         var officeSchedule = await _context.Set<OfficeSchedule>()
             .Where(officeSchedule => officeSchedule.Id == id)
@@ -33,18 +33,13 @@ public class UpdateOfficeScheduleUseCase
             .FirstOrDefaultAsync();
 
         if (officeSchedule is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(officeSchedule.OfficeId))
-            return new Response(OfficeNotAssignedMessage);
+            return Result.Forbidden(OfficeNotAssignedMessage);
 
         request.MapToOfficeSchedule(officeSchedule);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 }
