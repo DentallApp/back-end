@@ -22,7 +22,7 @@ public class DeleteFavoriteDentistUseCase
     /// Executes the use case. Deletes by favorite dentist id.
     /// </summary>
     /// <param name="request">Contains the user id and favorite dentist id.</param>
-    public async Task<Response> ExecuteAsync(DeleteFavoriteDentistRequest request)
+    public async Task<Result> ExecuteAsync(DeleteFavoriteDentistRequest request)
     {
         var favoriteDentist = await _context.Set<FavoriteDentist>()
             .Where(favoriteDentist => favoriteDentist.Id == request.FavoriteDentistId)
@@ -30,19 +30,14 @@ public class DeleteFavoriteDentistUseCase
             .FirstOrDefaultAsync();
 
         if (favoriteDentist is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         if (favoriteDentist.UserId != request.UserId)
-            return new Response(ResourceFromAnotherUserMessage);
+            return Result.Forbidden(ResourceFromAnotherUserMessage);
 
         _context.Remove(favoriteDentist);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = DeleteResourceMessage
-        };
+        return Result.DeletedResource();
     }
 
     /// <summary>
@@ -50,7 +45,7 @@ public class DeleteFavoriteDentistUseCase
     /// </summary>
     /// <param name="userId">The basic user id.</param>
     /// <param name="dentistId">The dentist id.</param>
-    public async Task<Response> ExecuteAsync(int userId, int dentistId)
+    public async Task<Result> ExecuteAsync(int userId, int dentistId)
     {
         int deletedRows = await _context.Set<FavoriteDentist>()
             .Where(favoriteDentist =>
@@ -59,12 +54,8 @@ public class DeleteFavoriteDentistUseCase
             .ExecuteDeleteAsync();
 
         if (deletedRows == 0)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
-        return new Response
-        {
-            Success = true,
-            Message = DeleteResourceMessage
-        };
+        return Result.DeletedResource();
     }
 }

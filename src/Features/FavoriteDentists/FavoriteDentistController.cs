@@ -11,19 +11,18 @@ public class FavoriteDentistController : ControllerBase
     /// Creates a new favorite dentist for the current basic user.
     /// </summary>
     [HttpPost]
-    public async Task<ActionResult<Response>> Create(
+    public async Task<Result<CreatedId>> Create(
         [FromBody]CreateFavoriteDentistRequest request,
         [FromServices]CreateFavoriteDentistUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(User.GetUserId(), request);
-        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
+        return await useCase.ExecuteAsync(User.GetUserId(), request);
     }
 
     /// <summary>
     /// Deletes a favorite dentist from the current basic user.
     /// </summary>
     [HttpDelete("{favoriteDentistId}")]
-    public async Task<ActionResult<Response>> DeleteByFavoriteDentistId(
+    public async Task<Result> DeleteByFavoriteDentistId(
         int favoriteDentistId,
         [FromServices]DeleteFavoriteDentistUseCase useCase)
     {
@@ -32,20 +31,18 @@ public class FavoriteDentistController : ControllerBase
             UserId = User.GetUserId(),
             FavoriteDentistId = favoriteDentistId
         };
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 
     /// <summary>
     /// Deletes a favorite dentist from the current basic user.
     /// </summary>
     [HttpDelete("dentist/{dentistId}")]
-    public async Task<ActionResult<Response>> DeleteByUserIdAndDentistId(
+    public async Task<Result> DeleteByUserIdAndDentistId(
         int dentistId,
         [FromServices]DeleteFavoriteDentistUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(User.GetUserId(), dentistId);
-        return response.Success ? Ok(response) : NotFound(response);
+        return await useCase.ExecuteAsync(User.GetUserId(), dentistId);
     }
 
     /// <summary>

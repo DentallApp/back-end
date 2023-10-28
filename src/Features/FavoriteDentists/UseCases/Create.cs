@@ -14,7 +14,7 @@ public class CreateFavoriteDentistUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> ExecuteAsync(int userId, CreateFavoriteDentistRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(int userId, CreateFavoriteDentistRequest request)
     {
         var favoriteDentist = new FavoriteDentist
         {
@@ -23,12 +23,6 @@ public class CreateFavoriteDentistUseCase
         };
         _context.Add(favoriteDentist);
         await _context.SaveChangesAsync();
-
-        return new Response<InsertedIdDto>
-        {
-            Success = true,
-            Data    = new InsertedIdDto { Id = favoriteDentist.Id },
-            Message = CreateResourceMessage
-        };
+        return Result.CreatedResource(favoriteDentist.Id);
     }
 }
