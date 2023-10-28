@@ -130,7 +130,12 @@ public partial class RootDialog : ComponentDialog
         var cardJsonTask        = AdaptiveCardsLoader.LoadAppointmentDateCardAsync();
         var dentistSchedule     = await dentistScheduleTask;
         var cardJson            = await cardJsonTask;
-        await stepContext.Context.SendActivityAsync(string.Format(ShowScheduleToUserMessage, dentistSchedule));
+        await stepContext
+            .Context
+            .SendActivityAsync(
+                string.Format(ShowScheduleToUserMessage, dentistSchedule),
+                cancellationToken: cancellationToken);
+
         return await stepContext.PromptAsync(
             nameof(AdaptiveCardPrompt),
             AdaptiveCardFactory.CreateDateCard(cardJson, _dateTimeService),
@@ -161,7 +166,12 @@ public partial class RootDialog : ComponentDialog
             return await stepContext.PreviousAsync(message: result.Message, cancellationToken: cancellationToken);
 
         var availableHours = result.Data as List<AvailableTimeRangeResponse>;
-        await stepContext.Context.SendActivityAsync(string.Format(TotalHoursAvailableMessage, availableHours.Count));
+        await stepContext
+            .Context
+            .SendActivityAsync(
+                string.Format(TotalHoursAvailableMessage, availableHours.Count),
+                cancellationToken: cancellationToken);
+
         return await stepContext.PromptAsync(
             nameof(TextPrompt),
             HeroCardFactory.CreateSchedulesCarousel(availableHours),
