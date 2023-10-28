@@ -32,6 +32,6 @@ public class GetGeneralTreatmentByIdUseCase
         if (generalTreatment is null)
             return Result.NotFound();
 
-        return Result.Success(generalTreatment);
+        return Result.ObtainedResource(generalTreatment);
     }
 }

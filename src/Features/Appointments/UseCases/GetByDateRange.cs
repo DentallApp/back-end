@@ -77,6 +77,6 @@ public class GetAppointmentsByDateRangeUseCase
             .AsNoTracking()
             .ToListAsync();
 
-        return Result.Success(appointments);
+        return Result.ObtainedResources(appointments);
     }
 }

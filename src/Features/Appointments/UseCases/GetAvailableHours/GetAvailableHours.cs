@@ -95,7 +95,7 @@ public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
         if(availableHours is null)
             return Result.Failure(NoSchedulesAvailableMessage);
 
-        return Result.Success(availableHours);
+        return Result.ObtainedResources(availableHours);
     }
 
     /// <summary>
