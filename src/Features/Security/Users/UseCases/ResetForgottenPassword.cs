@@ -22,14 +22,14 @@ public class ResetForgottenPasswordUseCase
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<Response> ExecuteAsync(ResetForgottenPasswordRequest request)
+    public async Task<Result> ExecuteAsync(ResetForgottenPasswordRequest request)
     {
         var claimIdentity = _tokenService.GetClaimsIdentity(request.Token);
         if (claimIdentity is null)
-            return new Response(PasswordResetTokenInvalidMessage);
+            return Result.Invalid(PasswordResetTokenInvalidMessage);
 
         if (!claimIdentity.HasClaim(CustomClaimsType.UserId))
-            return new Response(string.Format(MissingClaimMessage, CustomClaimsType.UserId));
+            return Result.Invalid(string.Format(MissingClaimMessage, CustomClaimsType.UserId));
 
         var userId = claimIdentity.GetUserId();
         var user = await _context.Set<User>()
@@ -37,19 +37,14 @@ public class ResetForgottenPasswordUseCase
             .FirstOrDefaultAsync();
 
         if (user is null)
-            return new Response(UsernameNotFoundMessage);
+            return Result.NotFound(UsernameNotFoundMessage);
 
         var claimPrincipal = _tokenService.ValidatePasswordResetToken(request.Token, user.Password);
         if (claimPrincipal is null)
-            return new Response(PasswordResetTokenInvalidMessage);
+            return Result.Invalid(PasswordResetTokenInvalidMessage);
 
         user.Password = _passwordHasher.HashPassword(request.NewPassword);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = PasswordSuccessfullyResetMessage
-        };
+        return Result.Success(PasswordSuccessfullyResetMessage);
     }
 }

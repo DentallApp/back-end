@@ -6,6 +6,9 @@ public class UserLoginRequest
     public string Password { get; init; }
 }
 
+// This is to identify the base type in the payload.
+[JsonDerivedType(typeof(UserLoginResponse), typeDiscriminator: "user")]
+[JsonDerivedType(typeof(EmployeeLoginResponse), typeDiscriminator: "employee")]
 public class UserLoginResponse
 {
     public int UserId { get; set; }
@@ -120,14 +123,14 @@ public class UserLoginUseCase
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<Response> ExecuteAsync(UserLoginRequest request)
+    public async Task<Result<UserLoginResponse>> ExecuteAsync(UserLoginRequest request)
     {
         var user = await _userRepository.GetFullUserProfileAsync(request.UserName);
         if (user is null || !_passwordHasher.Verify(request.Password, user.Password))
-            return new Response(EmailOrPasswordIncorrectMessage);
+            return Result.Invalid(EmailOrPasswordIncorrectMessage);
 
         if (user.IsUnverified())
-            return new Response(EmailNotConfirmedMessage);
+            return Result.Forbidden(EmailNotConfirmedMessage);
 
         user.RefreshToken = _tokenService.CreateRefreshToken();
         user.RefreshTokenExpiry = _tokenService.CreateExpiryForRefreshToken();
@@ -139,12 +142,7 @@ public class UserLoginUseCase
             var userClaims = userLoginResponse.MapToUserClaims();
             userLoginResponse.AccessToken = _tokenService.CreateAccessToken(userClaims);
             userLoginResponse.RefreshToken = user.RefreshToken;
-            return new Response
-            {
-                Success = true,
-                Data    = userLoginResponse,
-                Message = SuccessfulLoginMessage
-            };
+            return Result.Success(userLoginResponse, SuccessfulLoginMessage);
         }
 
         var employee = await _context.Set<Employee>()
@@ -155,18 +153,14 @@ public class UserLoginUseCase
             .FirstOrDefaultAsync();
 
         if (employee.IsInactive())
-            return new Response(InactiveUserAccountMessage);
+            return Result.Forbidden(InactiveUserAccountMessage);
 
         employee.User = user;
         var employeeLoginResponse = employee.MapToEmployeeLoginResponse();
         var employeeClaims = employeeLoginResponse.MapToEmployeeClaims();
         employeeLoginResponse.AccessToken = _tokenService.CreateAccessToken(employeeClaims);
         employeeLoginResponse.RefreshToken = user.RefreshToken;
-        return new Response
-        {
-            Success = true,
-            Data    = employeeLoginResponse,
-            Message = SuccessfulLoginMessage
-        };
+        UserLoginResponse data = employeeLoginResponse;
+        return Result.Success(data, SuccessfulLoginMessage);
     }
 }

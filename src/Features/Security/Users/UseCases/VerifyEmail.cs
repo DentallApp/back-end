@@ -21,18 +21,18 @@ public class VerifyEmailUseCase
         _tokenService = tokenService;
     }
 
-    public async Task<Response<UserLoginResponse>> ExecuteAsync(VerifyEmailRequest request)
+    public async Task<Result<UserLoginResponse>> ExecuteAsync(VerifyEmailRequest request)
     {
         var claimPrincipal = _tokenService.ValidateEmailVerificationToken(request.Token);
         if (claimPrincipal is null)
-            return new Response<UserLoginResponse>(EmailVerificationTokenInvalidMessage);
+            return Result.Invalid(EmailVerificationTokenInvalidMessage);
 
         var user = await _userRepository.GetFullUserProfileAsync(claimPrincipal.GetUserName());
         if (user is null)
-            return new Response<UserLoginResponse>(UsernameNotFoundMessage);
+            return Result.NotFound(UsernameNotFoundMessage);
 
         if (user.IsVerified())
-            return new Response<UserLoginResponse>(AccountAlreadyVerifiedMessage);
+            return Result.Conflict(AccountAlreadyVerifiedMessage);
 
         var userLoginResponse   =  user.MapToUserLoginResponse();
         user.RefreshToken       = _tokenService.CreateRefreshToken();
@@ -44,11 +44,6 @@ public class VerifyEmailUseCase
         userLoginResponse.Roles        = new[] { RolesName.BasicUser };
         userLoginResponse.AccessToken  = _tokenService.CreateAccessToken(userLoginResponse.MapToUserClaims());
         userLoginResponse.RefreshToken = user.RefreshToken;
-        return new Response<UserLoginResponse>()
-        {
-            Success = true,
-            Data    = userLoginResponse,
-            Message = EmailSuccessfullyVerifiedMessage
-        };
+        return Result.Success(userLoginResponse, EmailSuccessfullyVerifiedMessage);
     }
 }
