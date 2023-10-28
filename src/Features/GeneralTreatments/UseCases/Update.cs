@@ -28,14 +28,14 @@ public class UpdateGeneralTreatmentUseCase
         _basePath = settings.DentalServicesImagesPath;
     }
 
-    public async Task<Response> ExecuteAsync(int id, UpdateGeneralTreatmentRequest request)
+    public async Task<Result> ExecuteAsync(int id, UpdateGeneralTreatmentRequest request)
     {
         var generalTreatment = await _context.Set<GeneralTreatment>()
             .Where(treatment => treatment.Id == id)
             .FirstOrDefaultAsync();
 
         if (generalTreatment is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         var oldImageUrl = generalTreatment.ImageUrl;
         request.MapToGeneralTreatment(generalTreatment);
@@ -45,11 +45,6 @@ public class UpdateGeneralTreatmentUseCase
             await request.Image.WriteAsync(Path.Combine(_basePath, generalTreatment.ImageUrl));
         }
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 }
