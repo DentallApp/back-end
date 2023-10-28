@@ -26,10 +26,10 @@ public class UpdateAppointmentUseCase
             return Result.NotFound(ResourceNotFoundMessage);
 
         if (appointment.AppointmentStatusId == AppointmentStatusId.Canceled)
-            return Result.Failure(AppointmentIsAlreadyCanceledMessage);
+            return Result.Conflict(AppointmentIsAlreadyCanceledMessage);
 
         if (_dateTimeService.Now.Date > appointment.Date)
-            return Result.Failure(AppointmentCannotBeUpdatedForPreviousDaysMessage);
+            return Result.Forbidden(AppointmentCannotBeUpdatedForPreviousDaysMessage);
 
         if (currentEmployee.IsOnlyDentist() && appointment.DentistId != currentEmployee.GetEmployeeId())
             return Result.Forbidden(AppointmentNotAssignedMessage);
