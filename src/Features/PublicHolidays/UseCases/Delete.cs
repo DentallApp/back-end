@@ -9,22 +9,17 @@ public class DeletePublicHolidayUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int id)
+    public async Task<Result> ExecuteAsync(int id)
     {
         var holiday = await _context.Set<PublicHoliday>()
             .Where(publicHoliday => publicHoliday.Id == id)
             .FirstOrDefaultAsync();
 
         if (holiday is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         _context.SoftDelete(holiday);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = DeleteResourceMessage
-        };
+        return Result.DeletedResource();
     }
 }

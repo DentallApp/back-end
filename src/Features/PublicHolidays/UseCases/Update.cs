@@ -32,7 +32,7 @@ public class UpdatePublicHolidayUseCase
         _officeHolidayService = officeHolidayService;
     }
 
-    public async Task<Response> ExecuteAsync(int id, UpdatePublicHolidayRequest request)
+    public async Task<Result> ExecuteAsync(int id, UpdatePublicHolidayRequest request)
     {
         var holiday = await _context.Set<PublicHoliday>()
             .Include(publicHoliday => publicHoliday.Offices)
@@ -40,17 +40,12 @@ public class UpdatePublicHolidayUseCase
             .FirstOrDefaultAsync();
 
         if (holiday is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         request.MapToPublicHoliday(holiday);
         AssignOfficesToHoliday(holiday.Id, holiday.Offices, request.OfficesId);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 
     /// <summary>
