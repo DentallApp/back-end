@@ -149,7 +149,7 @@ public partial class RootDialog : ComponentDialog
         stepContext.GetAppointment().AppointmentDate = DateTime.Parse(selectedAppointmentDate);
         await stepContext.SendTypingActivityAsync();
         var appointment = stepContext.GetAppointment();
-        var response   = await _botService.GetAvailableHoursAsync(new AvailableTimeRangeRequest
+        var result = await _botService.GetAvailableHoursAsync(new AvailableTimeRangeRequest
         {
             OfficeId        = appointment.OfficeId,
             DentistId       = appointment.DentistId,
@@ -157,10 +157,10 @@ public partial class RootDialog : ComponentDialog
             AppointmentDate = appointment.AppointmentDate
         });
 
-        if (response.IsFailed)
-            return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
+        if (result.IsFailed)
+            return await stepContext.PreviousAsync(message: result.Message, cancellationToken: cancellationToken);
 
-        var availableHours = response.Data as List<AvailableTimeRangeResponse>;
+        var availableHours = result.Data as List<AvailableTimeRangeResponse>;
         await stepContext.Context.SendActivityAsync(string.Format(TotalHoursAvailableMessage, availableHours.Count));
         return await stepContext.PromptAsync(
             nameof(TextPrompt),
@@ -185,9 +185,9 @@ public partial class RootDialog : ComponentDialog
         }
         await stepContext.SendTypingActivityAsync();
         appointment.RangeToPay = await _botService.GetRangeToPayAsync(appointment.GeneralTreatmentId);
-        var response = await _botService.CreateScheduledAppointmentAsync(appointment);
-        if (response.IsFailed)
-            return await stepContext.PreviousAsync(message: response.Message, cancellationToken: cancellationToken);
+        var result = await _botService.CreateScheduledAppointmentAsync(appointment);
+        if (result.IsFailed)
+            return await stepContext.PreviousAsync(message: result.Message, cancellationToken: cancellationToken);
 
         await stepContext
             .Context
