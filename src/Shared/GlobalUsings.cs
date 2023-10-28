@@ -6,7 +6,6 @@ global using static DentallApp.Shared.Constants.ResponseMessages;
 global using DentallApp.Shared.Extensions;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
-global using DentallApp.Shared.Models.Results;
 global using DentallApp.Shared.Services;
 
 global using System.Text.Json.Serialization;
