@@ -8,31 +8,28 @@ namespace DentallApp.Features.Dependents;
 public class DependentController : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+    public async Task<Result<CreatedId>> Create(
         [FromBody]CreateDependentRequest request,
         [FromServices]CreateDependentUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(User.GetUserId(), request);
-        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
+        return await useCase.ExecuteAsync(User.GetUserId(), request);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Response>> Delete(
+    public async Task<Result> Delete(
         int id,
         [FromServices]DeleteDependentUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(id, User.GetUserId());
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(id, User.GetUserId());
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Update(
+    public async Task<Result> Update(
         int id,
         [FromBody]UpdateDependentRequest request,
         [FromServices]UpdateDependentUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(id, User.GetUserId(), request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(id, User.GetUserId(), request);
     }
 
     [Route("user")]

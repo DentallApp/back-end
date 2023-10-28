@@ -42,17 +42,11 @@ public class CreateDependentUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> ExecuteAsync(int userId, CreateDependentRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(int userId, CreateDependentRequest request)
     {
         var dependent = request.MapToDependent(userId);
         _context.Add(dependent);
         await _context.SaveChangesAsync();
-
-        return new Response<InsertedIdDto>
-        {
-            Data    = new InsertedIdDto { Id = dependent.Id },
-            Success = true,
-            Message = CreateResourceMessage
-        };
+        return Result.CreatedResource(dependent.Id);
     }
 }
