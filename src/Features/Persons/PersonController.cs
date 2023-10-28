@@ -11,13 +11,12 @@ public class PersonController : ControllerBase
     /// Create a person's information.
     /// </summary>
     [HttpPost]
-	public async Task<ActionResult<Response>> Create(
+	public async Task<Result> Create(
         [FromBody]CreatePersonRequest request,
         [FromServices]CreatePersonUseCase useCase)
 	{
-		var response = await useCase.ExecuteAsync(request);
-		return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
-	}
+        return await useCase.ExecuteAsync(request);
+    }
 
     /// <summary>
     /// Gets a set of person information based on a search criteria.
