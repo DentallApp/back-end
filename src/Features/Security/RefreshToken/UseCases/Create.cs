@@ -32,7 +32,7 @@ public class CreateRefreshTokenUseCase
     {
         var claimPrincipal = _tokenService.GetPrincipalFromExpiredAccessToken(request.OldAccessToken);
         if (claimPrincipal is null)
-            return Result.Invalid(AccessTokenInvalidMessage);
+            return Result.Unauthorized(AccessTokenInvalidMessage);
 
         int userId = claimPrincipal.GetUserId();
         var user = await _context.Set<User>()

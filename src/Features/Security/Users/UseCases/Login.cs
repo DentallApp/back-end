@@ -127,7 +127,7 @@ public class UserLoginUseCase
     {
         var user = await _userRepository.GetFullUserProfileAsync(request.UserName);
         if (user is null || !_passwordHasher.Verify(request.Password, user.Password))
-            return Result.Invalid(EmailOrPasswordIncorrectMessage);
+            return Result.Unauthorized(EmailOrPasswordIncorrectMessage);
 
         if (user.IsUnverified())
             return Result.Forbidden(EmailNotConfirmedMessage);
@@ -160,7 +160,7 @@ public class UserLoginUseCase
         var employeeClaims = employeeLoginResponse.MapToEmployeeClaims();
         employeeLoginResponse.AccessToken = _tokenService.CreateAccessToken(employeeClaims);
         employeeLoginResponse.RefreshToken = user.RefreshToken;
-        UserLoginResponse data = employeeLoginResponse;
-        return Result.Success(data, SuccessfulLoginMessage);
+        UserLoginResponse response = employeeLoginResponse;
+        return Result.Success(response, SuccessfulLoginMessage);
     }
 }
