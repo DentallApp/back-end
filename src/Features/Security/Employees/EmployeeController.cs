@@ -8,49 +8,45 @@ public class EmployeeController : ControllerBase
 {
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+    public async Task<Result<CreatedId>> Create(
         [FromBody]CreateEmployeeRequest request,
         [FromServices]CreateEmployeeUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(User, request);
-        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
+        return await useCase.ExecuteAsync(User, request);
     }
 
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Response>> Delete(
+    public async Task<Result> Delete(
         int id,
         [FromServices]DeleteEmployeeUseCase useCase)
     {
         if (id == User.GetEmployeeId())
-            return BadRequest(new Response(CannotRemoveYourOwnProfileMessage));
+            return Result.Forbidden(CannotRemoveYourOwnProfileMessage);
 
-        var response = await useCase.ExecuteAsync(id, User);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(id, User);
     }
 
     [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
     [HttpPut]
-    public async Task<ActionResult<Response>> UpdateCurrentEmployee(
+    public async Task<Result> UpdateCurrentEmployee(
         [FromBody]UpdateCurrentEmployeeRequest request,
         [FromServices]UpdateCurrentEmployeeUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(User.GetEmployeeId(), request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(User.GetEmployeeId(), request);
     }
 
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> UpdateAnyEmployee(
+    public async Task<Result> UpdateAnyEmployee(
         int id, 
         [FromBody]UpdateAnyEmployeeRequest request,
         [FromServices]UpdateAnyEmployeeUseCase useCase)
     {
         if (User.IsAdmin() && id == User.GetEmployeeId())
-            return BadRequest(new Response(CannotEditYourOwnProfileMessage));
+            return Result.Forbidden(CannotEditYourOwnProfileMessage);
 
-        var response = await useCase.ExecuteAsync(id, User, request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(id, User, request);
     }
 
     [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
@@ -78,7 +74,7 @@ public class EmployeeController : ControllerBase
         [FromServices]GetDentistsUseCase useCase)
     {
         if (!User.IsSuperAdmin() && User.IsNotInOffice(request.OfficeId))
-            return Unauthorized();
+            return Forbid();
 
         return Ok(await useCase.ExecuteAsync(request));
     }

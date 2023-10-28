@@ -35,7 +35,7 @@ public class UpdateCurrentEmployeeUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int currentEmployeeId, UpdateCurrentEmployeeRequest request)
+    public async Task<Result> ExecuteAsync(int currentEmployeeId, UpdateCurrentEmployeeRequest request)
     {
         var employee = await _context.Set<Employee>()
             .Include(employee => employee.Person)
@@ -43,18 +43,13 @@ public class UpdateCurrentEmployeeUseCase
             .FirstOrDefaultAsync();
 
         if (employee is null)
-            return new Response(EmployeeNotFoundMessage);
+            return Result.NotFound(EmployeeNotFoundMessage);
 
         if (employee.Id != currentEmployeeId)
-            return new Response(CannotUpdateAnotherUserResource);
+            return Result.Forbidden(CannotUpdateAnotherUserResource);
 
         request.MapToEmployee(employee);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 }

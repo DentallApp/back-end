@@ -66,16 +66,16 @@ public class CreateEmployeeUseCase
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<Response<InsertedIdDto>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateEmployeeRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateEmployeeRequest request)
     {
         if (await _userRepository.UserExistsAsync(request.UserName))
-            return new Response<InsertedIdDto>(UsernameAlreadyExistsMessage);
+            return Result.Conflict(UsernameAlreadyExistsMessage);
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
-            return new Response<InsertedIdDto>(OfficeNotAssignedMessage);
+            return Result.Forbidden(OfficeNotAssignedMessage);
 
         if (currentEmployee.HasNotPermissions(request.Roles))
-            return new Response<InsertedIdDto>(PermitsNotGrantedMessage);
+            return Result.Forbidden(PermitsNotGrantedMessage);
 
         var passwordHash = _passwordHasher.HashPassword(request.Password);
         var employee = request.MapToEmployee(passwordHash);
@@ -93,12 +93,6 @@ public class CreateEmployeeUseCase
 
         _context.Add(employee);
         await _context.SaveChangesAsync();
-
-        return new Response<InsertedIdDto>
-        {
-            Data    = new InsertedIdDto { Id = employee.Id },
-            Success = true,
-            Message = CreateEmployeeAccountMessage
-        };
+        return Result.CreatedResource(employee.Id, CreateEmployeeAccountMessage);
     }
 }
