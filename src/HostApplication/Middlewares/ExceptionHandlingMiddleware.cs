@@ -28,19 +28,15 @@ public class ExceptionHandlingMiddleware
             _logger.LogError("[Error]: There was an internal error on the server.");
             _logger.LogError("[Exception]: {exception}", exception);
 
-            var response = new Response
-            {
-                Success = false,
-                Message = UnexpectedErrorMessage
-            };
-
+            Result result = Result.CriticalError(UnexpectedErrorMessage);
             if (exception is UniqueConstraintException)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                response.Errors = new[] { UniqueConstraintViolatedMessage };
+                var errors = new[] { UniqueConstraintViolatedMessage };
+                result = Result.CriticalError(UnexpectedErrorMessage, errors);
             }
 
-            await context.Response.WriteAsJsonAsync(response);
+            await context.Response.WriteAsJsonAsync(result);
         }
     }
 

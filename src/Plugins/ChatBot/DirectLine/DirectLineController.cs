@@ -20,9 +20,9 @@ public class DirectLineController : ControllerBase
             UserId   = User.GetUserId(), 
             PersonId = User.GetPersonId() 
         };
-        var response = await _directLineService.GetTokenAsync(user);
-        return response.Success ? 
-			   Ok(new { response.Data.Token }) : 
-			   BadRequest(new { response.Message });
+        var result = await _directLineService.GetTokenAsync(user);
+        return result.IsSuccess ? 
+			   Ok(new { result.Data.Token }) : 
+			   UnprocessableEntity(new { result.Message });
     }
 }
