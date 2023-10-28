@@ -11,25 +11,23 @@ public class EmployeeScheduleController : ControllerBase
     /// Crea un nuevo horario para el empleado.
     /// </summary>
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+    public async Task<Result<CreatedId>> Create(
         [FromBody]CreateEmployeeScheduleRequest request,
         [FromServices]CreateEmployeeScheduleUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 
     /// <summary>
     /// Actualiza el horario de un empleado.
     /// </summary>
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Update(
+    public async Task<Result> Update(
         int id, 
         [FromBody]UpdateEmployeeScheduleRequest request,
         [FromServices]UpdateEmployeeScheduleUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(id, request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(id, request);
     }
 
     /// <summary>
