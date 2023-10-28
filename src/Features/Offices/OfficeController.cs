@@ -11,12 +11,11 @@ public class OfficeController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+    public async Task<Result<CreatedId>> Create(
         [FromBody]CreateOfficeRequest request,
         [FromServices]CreateOfficeUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 
     /// <summary>
@@ -24,13 +23,12 @@ public class OfficeController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Update(
+    public async Task<Result> Update(
         int id,
         [FromBody]UpdateOfficeRequest request,
         [FromServices]UpdateOfficeUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(id, User.GetEmployeeId(), request);
-        return response.Success ? Ok(response) : NotFound(response);
+        return await useCase.ExecuteAsync(id, User.GetEmployeeId(), request);
     }
 
     /// <summary>

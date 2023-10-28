@@ -26,17 +26,11 @@ public class CreateOfficeUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreateOfficeRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(CreateOfficeRequest request)
     {
         var office = request.MapToOffice();
         _context.Add(office);
         await _context.SaveChangesAsync();
-
-        return new Response<InsertedIdDto>
-        {
-            Data    = new InsertedIdDto { Id = office.Id },
-            Success = true,
-            Message = CreateResourceMessage
-        };
+        return Result.CreatedResource(office.Id);
     }
 }
