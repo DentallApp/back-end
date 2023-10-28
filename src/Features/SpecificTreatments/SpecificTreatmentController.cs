@@ -8,33 +8,30 @@ public class SpecificTreatmentController : ControllerBase
 {
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+    public async Task<Result<CreatedId>> Create(
         [FromBody]CreateSpecificTreatmentRequest request,
         [FromServices]CreateSpecificTreatmentUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Update(
+    public async Task<Result> Update(
         int id, 
         [FromBody]UpdateSpecificTreatmentRequest request,
         [FromServices]UpdateSpecificTreatmentUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(id, request);
-        return response.Success ? Ok(response) : NotFound(response);
+        return await useCase.ExecuteAsync(id, request);
     }
 
     [AuthorizeByRole(RolesName.Superadmin)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Response>> Delete(
+    public async Task<Result> Delete(
         int id,
         [FromServices]DeleteSpecificTreatmentUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(id);
-        return response.Success ? Ok(response) : NotFound(response);
+        return await useCase.ExecuteAsync(id);
     }
 
     [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
