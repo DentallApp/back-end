@@ -12,7 +12,7 @@ public class ReportMostRequestedServicesController : ControllerBase
         [FromServices]GetMostRequestedServicesUseCase useCase)
     {
         if (User.IsAdmin() && User.IsNotInOffice(request.OfficeId))
-            return Unauthorized();
+            return Forbid();
 
         return Ok(await useCase.ExecuteAsync(request));
     }
