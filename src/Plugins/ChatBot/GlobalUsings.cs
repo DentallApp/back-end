@@ -16,7 +16,6 @@ global using DentallApp.Shared.Attributes;
 global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Extensions;
 global using DentallApp.Shared.Models;
-global using DentallApp.Shared.Models.Results;
 global using DentallApp.Shared.Persistence;
 global using DentallApp.Shared.Persistence.Repositories;
 global using DentallApp.Shared.Services;
