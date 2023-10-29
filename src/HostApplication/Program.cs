@@ -47,6 +47,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseExceptionHandling();
+app.UseRequestLocalization(EnvReader.Instance["LANGUAGE"]);
 
 app.UseDefaultFiles()
    .UseStaticFiles()
