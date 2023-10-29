@@ -20,9 +20,14 @@ public class DirectLineController : ControllerBase
             UserId   = User.GetUserId(), 
             PersonId = User.GetPersonId() 
         };
-        var response = await _directLineService.GetTokenAsync(user);
-        return response.Success ? 
-			   Ok(new { response.Data.Token }) : 
-			   BadRequest(new { response.Message });
+        var result = await _directLineService.GetTokenAsync(user);
+        if (result.IsSuccess)
+            return Ok(new { result.Data.Token });
+
+        var objectResult = new ObjectResult(new { result.Message })
+        {
+            StatusCode = StatusCodes.Status500InternalServerError
+        };
+        return objectResult;
     }
 }

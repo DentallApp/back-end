@@ -26,17 +26,11 @@ public class CreateSpecificTreatmentUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreateSpecificTreatmentRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(CreateSpecificTreatmentRequest request)
     {
         var specificTreatment = request.MapToSpecificTreatment();
         _context.Add(specificTreatment);
         await _context.SaveChangesAsync();
-
-        return new Response<InsertedIdDto>
-        {
-            Data    = new InsertedIdDto { Id = specificTreatment.Id },
-            Success = true,
-            Message = CreateResourceMessage
-        };
+        return Result.CreatedResource(specificTreatment.Id);
     }
 }

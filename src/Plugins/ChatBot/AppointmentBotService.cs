@@ -46,14 +46,14 @@ public class AppointmentBotService : IAppointmentBotService
         return patients.Select(MapToAdaptiveChoice).ToList();
     }
 
-    public async Task<Response<IEnumerable<AvailableTimeRangeResponse>>> GetAvailableHoursAsync(AvailableTimeRangeRequest request)
+    public async Task<ListedResult<AvailableTimeRangeResponse>> GetAvailableHoursAsync(AvailableTimeRangeRequest request)
     {
         using var scope = _serviceProvider.CreateScope();
         var useCase = scope.ServiceProvider.GetRequiredService<IGetAvailableHoursUseCase>();
         return await useCase.ExecuteAsync(request);
     }
 
-    public async Task<Response<InsertedIdDto>> CreateScheduledAppointmentAsync(CreateAppointmentRequest request)
+    public async Task<Result<CreatedId>> CreateScheduledAppointmentAsync(CreateAppointmentRequest request)
     {
         using var scope = _serviceProvider.CreateScope();
         var useCase = scope.ServiceProvider.GetRequiredService<ICreateAppointmentUseCase>();

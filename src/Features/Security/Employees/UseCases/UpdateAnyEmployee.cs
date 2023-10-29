@@ -57,7 +57,7 @@ public class UpdateAnyEmployeeUseCase
         _employeeSpecialtyService = employeeSpecialtyService;
     }
 
-    public async Task<Response> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee, UpdateAnyEmployeeRequest request)
+    public async Task<Result> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee, UpdateAnyEmployeeRequest request)
     {
         var employeeToEdit = await _context.Set<Employee>()
             .Include(employee => employee.Person)
@@ -68,18 +68,18 @@ public class UpdateAnyEmployeeUseCase
             .FirstOrDefaultAsync();
 
         if (employeeToEdit is null)
-            return new Response(EmployeeNotFoundMessage);
+            return Result.NotFound(EmployeeNotFoundMessage);
 
         // An admin cannot edit a Superadmin's profile.
         // However, the Superadmin can edit his own profile.
         if (!currentEmployee.IsSuperAdmin() && employeeToEdit.IsSuperAdmin())
-            return new Response(CannotEditSuperadminMessage);
+            return  Result.Forbidden(CannotEditSuperadminMessage);
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employeeToEdit.OfficeId))
-            return new Response(OfficeNotAssignedMessage);
+            return Result.Forbidden(OfficeNotAssignedMessage);
 
         if (currentEmployee.HasNotPermissions(request.Roles, employeeToEdit.Id))
-            return new Response(PermitsNotGrantedMessage);
+            return Result.Forbidden(PermitsNotGrantedMessage);
 
         if (request.Password is not null)
             employeeToEdit.User.Password = _passwordHasher.HashPassword(request.Password);
@@ -95,12 +95,7 @@ public class UpdateAnyEmployeeUseCase
             employeeToEdit.User.RefreshTokenExpiry = null;
         }
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 
     /// <summary>

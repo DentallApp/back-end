@@ -23,22 +23,17 @@ public class UpdateSpecificTreatmentUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int id, UpdateSpecificTreatmentRequest request)
+    public async Task<Result> ExecuteAsync(int id, UpdateSpecificTreatmentRequest request)
     {
         var specificTreatment = await _context.Set<SpecificTreatment>()
             .Where(treatment => treatment.Id == id)
             .FirstOrDefaultAsync();
 
         if (specificTreatment is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         request.MapToSpecificTreatment(specificTreatment);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 }

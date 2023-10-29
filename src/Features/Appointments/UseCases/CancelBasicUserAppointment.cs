@@ -16,26 +16,22 @@ public class CancelBasicUserAppointmentUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response> ExecuteAsync(int appointmentId, int currentUserId)
+    public async Task<Result> ExecuteAsync(int appointmentId, int currentUserId)
     {
         var appointment = await _repository.GetByIdAsync(appointmentId);
 
         if (appointment is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         if (appointment.UserId != currentUserId)
-            return new Response(AppointmentNotAssignedMessage);
+            return Result.Forbidden(AppointmentNotAssignedMessage);
 
         if (_dateTimeService.Now > (appointment.Date + appointment.StartHour))
-            return new Response(AppointmentThatHasAlreadyPassedBasicUserMessage);
+            return Result.Forbidden(AppointmentThatHasAlreadyPassedBasicUserMessage);
 
         appointment.AppointmentStatusId = AppointmentStatusId.Canceled;
         await _unitOfWork.SaveChangesAsync();
 
-        return new Response
-        {
-            Success = true,
-            Message = DeleteResourceMessage
-        };
+        return Result.DeletedResource();
     }
 }

@@ -9,12 +9,11 @@ public class AppointmentController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Secretary)]
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
-        [FromBody]CreateAppointmentRequest request,
+    public async Task<Result<CreatedId>> Create(
+        [FromBody]CreateAppointmentRequest request, 
         [FromServices]CreateAppointmentUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 
     /// <summary>
@@ -22,13 +21,12 @@ public class AppointmentController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Update(
+    public async Task<Result> Update(
         int id, 
         [FromBody]UpdateAppointmentRequest request,
         [FromServices]UpdateAppointmentUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(id, User, request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(id, User, request);
     }
 
     /// <summary>
@@ -36,12 +34,11 @@ public class AppointmentController : ControllerBase
     /// </summary>
     [AuthorizeByRole(RolesName.BasicUser)]
     [HttpDelete("{id}/basic-user")]
-    public async Task<ActionResult<Response>> CancelBasicUserAppointment(
+    public async Task<Result> CancelBasicUserAppointment(
         int id,
         [FromServices]CancelBasicUserAppointmentUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(id, User.GetUserId());
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(id, User.GetUserId());
     }
 
     /// <summary>
@@ -55,12 +52,11 @@ public class AppointmentController : ControllerBase
     /// </remarks>
     [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
     [HttpPost("cancel/dentist")]
-    public async Task<ActionResult<Response<CancelAppointmentsResponse>>> CancelAppointments(
+    public async Task<Result<CancelAppointmentsResponse>> CancelAppointments(
         [FromBody]CancelAppointmentsRequest request,
         [FromServices]CancelAppointmentsUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(User, request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(User, request);
     }
 
     /// <summary>
@@ -85,12 +81,11 @@ public class AppointmentController : ControllerBase
     /// </remarks>
     [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
     [HttpPost("dentist")]
-    public async Task<ActionResult<Response<IEnumerable<GetAppointmentsByDateRangeResponse>>>> GetByDateRange(
+    public async Task<ListedResult<GetAppointmentsByDateRangeResponse>> GetByDateRange(
         [FromBody]GetAppointmentsByDateRangeRequest request,
         [FromServices]GetAppointmentsByDateRangeUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(User, request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(User, request);
     }
 
     /// <summary>
@@ -99,11 +94,10 @@ public class AppointmentController : ControllerBase
     [AuthorizeByRole(RolesName.Secretary)]
     [Route("available-hours")]
     [HttpPost]
-    public async Task<ActionResult<Response<IEnumerable<AvailableTimeRangeResponse>>>> GetAvailableHours(
+    public async Task<ListedResult<AvailableTimeRangeResponse>> GetAvailableHours(
         [FromBody]AvailableTimeRangeRequest request,
         [FromServices]GetAvailableHoursUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 }

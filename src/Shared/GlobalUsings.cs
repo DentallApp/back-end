@@ -6,7 +6,6 @@ global using static DentallApp.Shared.Constants.ResponseMessages;
 global using DentallApp.Shared.Extensions;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
-global using DentallApp.Shared.Models.Results;
 global using DentallApp.Shared.Services;
 
 global using System.Text.Json.Serialization;
@@ -20,6 +19,7 @@ global using System.ComponentModel.DataAnnotations;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.EntityFrameworkCore;
 
+global using SimpleResults;
 global using DotEnv.Core;
 global using DelegateDecompiler;
 global using FileTypeChecker;

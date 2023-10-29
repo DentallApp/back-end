@@ -34,16 +34,11 @@ public class CreatePersonUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(CreatePersonRequest request)
+    public async Task<Result> ExecuteAsync(CreatePersonRequest request)
     {
         var person = request.MapToPerson();
         _context.Add(person);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = CreateResourceMessage
-        };
+        return Result.CreatedResource();
     }
 }

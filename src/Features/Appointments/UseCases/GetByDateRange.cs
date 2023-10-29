@@ -38,15 +38,15 @@ public class GetAppointmentsByDateRangeUseCase
         _context = context;
     }
 
-    public async Task<Response<IEnumerable<GetAppointmentsByDateRangeResponse>>> ExecuteAsync(
+    public async Task<ListedResult<GetAppointmentsByDateRangeResponse>> ExecuteAsync(
         ClaimsPrincipal currentEmployee, 
         GetAppointmentsByDateRangeRequest request)
     {
         if (currentEmployee.IsOnlyDentist() && currentEmployee.GetEmployeeId() != request.DentistId)
-            return new Response<IEnumerable<GetAppointmentsByDateRangeResponse>>(CanOnlyAccessYourOwnAppointmentsMessage);
+            return Result.Forbidden(CanOnlyAccessYourOwnAppointmentsMessage);
 
         if (!currentEmployee.IsSuperAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
-            return new Response<IEnumerable<GetAppointmentsByDateRangeResponse>>(OfficeNotAssignedMessage);
+            return Result.Forbidden(OfficeNotAssignedMessage);
 
         var appointments = await _context.Set<Appointment>()
             .OptionalWhere(request.StatusId, appointment => appointment.AppointmentStatusId == request.StatusId)
@@ -77,11 +77,6 @@ public class GetAppointmentsByDateRangeUseCase
             .AsNoTracking()
             .ToListAsync();
 
-        return new Response<IEnumerable<GetAppointmentsByDateRangeResponse>>
-        {
-            Success = true,
-            Message = GetResourceMessage,
-            Data    = appointments
-        };
+        return Result.ObtainedResources(appointments);
     }
 }

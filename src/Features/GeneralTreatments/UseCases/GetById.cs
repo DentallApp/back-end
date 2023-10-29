@@ -16,7 +16,7 @@ public class GetGeneralTreatmentByIdUseCase
         _context = context;
     }
 
-    public async Task<Response<GetGeneralTreatmentByIdResponse>> ExecuteAsync(int id)
+    public async Task<Result<GetGeneralTreatmentByIdResponse>> ExecuteAsync(int id)
     {
         var generalTreatment = await _context.Set<GeneralTreatment>()
             .Where(treatment => treatment.Id == id)
@@ -30,13 +30,8 @@ public class GetGeneralTreatmentByIdUseCase
             .FirstOrDefaultAsync();
 
         if (generalTreatment is null)
-            return new Response<GetGeneralTreatmentByIdResponse>(ResourceNotFoundMessage);
+            return Result.NotFound();
 
-        return new Response<GetGeneralTreatmentByIdResponse>()
-        {
-            Success = true,
-            Data    = generalTreatment,
-            Message = GetResourceMessage
-        };
+        return Result.ObtainedResource(generalTreatment);
     }
 }

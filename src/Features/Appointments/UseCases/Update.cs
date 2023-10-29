@@ -16,34 +16,29 @@ public class UpdateAppointmentUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateAppointmentRequest request)
+    public async Task<Result> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateAppointmentRequest request)
     {
         var appointment = await _context.Set<Appointment>()
             .Where(appointment => appointment.Id == id)
             .FirstOrDefaultAsync();
 
         if (appointment is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound(ResourceNotFoundMessage);
 
         if (appointment.AppointmentStatusId == AppointmentStatusId.Canceled)
-            return new Response(AppointmentIsAlreadyCanceledMessage);
+            return Result.Conflict(AppointmentIsAlreadyCanceledMessage);
 
         if (_dateTimeService.Now.Date > appointment.Date)
-            return new Response(AppointmentCannotBeUpdatedForPreviousDaysMessage);
+            return Result.Forbidden(AppointmentCannotBeUpdatedForPreviousDaysMessage);
 
         if (currentEmployee.IsOnlyDentist() && appointment.DentistId != currentEmployee.GetEmployeeId())
-            return new Response(AppointmentNotAssignedMessage);
+            return Result.Forbidden(AppointmentNotAssignedMessage);
 
         if (currentEmployee.IsNotInOffice(appointment.OfficeId))
-            return new Response(OfficeNotAssignedMessage);
+            return Result.Forbidden(OfficeNotAssignedMessage);
 
         appointment.AppointmentStatusId = request.StatusId;
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 }

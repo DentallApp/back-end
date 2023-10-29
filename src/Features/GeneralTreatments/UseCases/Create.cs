@@ -32,18 +32,12 @@ public class CreateGeneralTreatmentUseCase
         _basePath = settings.DentalServicesImagesPath;
     }
 
-    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreateGeneralTreatmentRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(CreateGeneralTreatmentRequest request)
     {
         var generalTreatment = request.MapToGeneralTreatment();
         _context.Add(generalTreatment);
         await request.Image.WriteAsync(Path.Combine(_basePath, generalTreatment.ImageUrl));
         await _context.SaveChangesAsync();
-
-        return new Response<InsertedIdDto>
-        {
-            Data    = new InsertedIdDto { Id = generalTreatment.Id },
-            Success = true,
-            Message = CreateResourceMessage
-        };
+        return Result.CreatedResource(generalTreatment.Id);
     }
 }

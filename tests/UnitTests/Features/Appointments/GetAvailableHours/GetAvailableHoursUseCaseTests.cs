@@ -34,12 +34,12 @@ public class GetAvailableHoursUseCaseTests
             .ReturnsAsync(true);
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Data.Should().BeNull();
-        response.Message.Should().Be(AppointmentDateIsPublicHolidayMessage);
+        result.IsSuccess.Should().BeFalse();
+        result.Data.Should().BeEmpty();
+        result.Message.Should().Be(AppointmentDateIsPublicHolidayMessage);
     }
 
     [Test]
@@ -52,12 +52,12 @@ public class GetAvailableHoursUseCaseTests
             .DoNothing();
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Data.Should().BeNull();
-        response.Message.Should().Be(expectedMessage);
+        result.IsSuccess.Should().BeFalse();
+        result.Data.Should().BeEmpty();
+        result.Message.Should().Be(expectedMessage);
     }
 
     [Test]
@@ -70,12 +70,12 @@ public class GetAvailableHoursUseCaseTests
             .ReturnsAsync(new EmployeeScheduleResponse { IsEmployeeScheculeDeleted = true });
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Data.Should().BeNull();
-        response.Message.Should().Be(expectedMessage);
+        result.IsSuccess.Should().BeFalse();
+        result.Data.Should().BeEmpty();
+        result.Message.Should().Be(expectedMessage);
     }
 
     [Test]
@@ -88,12 +88,12 @@ public class GetAvailableHoursUseCaseTests
             .ReturnsAsync(new EmployeeScheduleResponse { IsOfficeScheduleDeleted = true });
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Data.Should().BeNull();
-        response.Message.Should().Be(expectedMessage);
+        result.IsSuccess.Should().BeFalse();
+        result.Data.Should().BeEmpty();
+        result.Message.Should().Be(expectedMessage);
     }
 
     [Test]
@@ -106,12 +106,12 @@ public class GetAvailableHoursUseCaseTests
             .ReturnsAsync(new EmployeeScheduleResponse { IsOfficeDeleted = true });
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Data.Should().BeNull();
-        response.Message.Should().Be(expectedMessage);;
+        result.IsSuccess.Should().BeFalse();
+        result.Data.Should().BeEmpty();
+        result.Message.Should().Be(expectedMessage);;
     }
 
     [Test]
@@ -123,12 +123,12 @@ public class GetAvailableHoursUseCaseTests
             .ReturnsAsync(new EmployeeScheduleResponse());
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Data.Should().BeNull();
-        response.Message.Should().Be(NoMorningOrAfternoonHoursMessage);
+        result.IsSuccess.Should().BeFalse();
+        result.Data.Should().BeEmpty();
+        result.Message.Should().Be(NoMorningOrAfternoonHoursMessage);
     }
 
     [Test]
@@ -146,12 +146,12 @@ public class GetAvailableHoursUseCaseTests
             .DoNothing();
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Data.Should().BeNull();
-        response.Message.Should().Be(DentalServiceNotAvailableMessage);
+        result.IsSuccess.Should().BeFalse();
+        result.Data.Should().BeEmpty();
+        result.Message.Should().Be(DentalServiceNotAvailableMessage);
     }
 
     [Test]
@@ -191,11 +191,11 @@ public class GetAvailableHoursUseCaseTests
             .ReturnsAsync(40);
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
-        var availableHours = response.Data.ToList();
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var availableHours = result.Data.ToList();
 
         // Asserts
-        response.Success.Should().BeTrue();
+        result.IsSuccess.Should().BeTrue();
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
@@ -229,11 +229,11 @@ public class GetAvailableHoursUseCaseTests
             .ReturnsAsync(40);
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
-        var availableHours = response.Data.ToList();
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var availableHours = result.Data.ToList();
 
         // Asserts
-        response.Success.Should().BeTrue();
+        result.IsSuccess.Should().BeTrue();
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
@@ -265,16 +265,16 @@ public class GetAvailableHoursUseCaseTests
             .ReturnsAsync(40);
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
-        var availableHours = response.Data.ToList();
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var availableHours = result.Data.ToList();
 
         // Asserts
-        response.Success.Should().BeTrue();
+        result.IsSuccess.Should().BeTrue();
         availableHours.Should().BeEquivalentTo(expectedList);
     }
 
     [Test]
-    public async Task ExecuteAsync_WhenSchedulesAreNotAvailable_ShouldReturnsResponseWithoutAvailableHours()
+    public async Task ExecuteAsync_WhenSchedulesAreNotAvailable_ShouldReturnsResultWithoutAvailableHours()
     {
         // Arrange
         var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
@@ -298,12 +298,12 @@ public class GetAvailableHoursUseCaseTests
             .ReturnsAsync(40);
 
         // Act
-        var response = await _getAvailableHoursUseCase.ExecuteAsync(request);
+        var result = await _getAvailableHoursUseCase.ExecuteAsync(request);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Data.Should().BeNull();
-        response.Message.Should().Be(NoSchedulesAvailableMessage);
+        result.IsSuccess.Should().BeFalse();
+        result.Data.Should().BeEmpty();
+        result.Message.Should().Be(NoSchedulesAvailableMessage);
     }
 }
 

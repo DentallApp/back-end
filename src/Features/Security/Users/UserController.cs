@@ -9,76 +9,67 @@ public class UserController : ControllerBase
 {
     [AllowAnonymous]
     [HttpPost]
-    public async Task<ActionResult<Response>> Create(
+    public async Task<Result> Create(
         [FromBody]CreateBasicUserRequest request,
         [FromServices]CreateBasicUserUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ?
-               CreatedAtAction(nameof(Create), response) :
-               BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 
     [AllowAnonymous]
     [Route("login")]
     [HttpPost]
-    public async Task<ActionResult<Response>> Login(
+    public async Task<Result<UserLoginResponse>> Login(
         [FromBody]UserLoginRequest request,
         [FromServices]UserLoginUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 
     [HttpPut]
-    public async Task<ActionResult<Response>> UpdateCurrentUser(
+    public async Task<Result> UpdateCurrentUser(
         [FromBody]UpdateCurrentUserRequest request,
         [FromServices]UpdateCurrentUserUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(currentPersonId: User.GetPersonId(), request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(currentPersonId: User.GetPersonId(), request);
     }
 
     [Route("password")]
     [HttpPut]
-    public async Task<ActionResult<Response>> ChangePassword(
+    public async Task<Result> ChangePassword(
         [FromBody]ChangePasswordRequest request,
         [FromServices]ChangePasswordUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(User.GetUserId(), request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(User.GetUserId(), request);
     }
 
     [AllowAnonymous]
     [Route("email-verification")]
     [HttpPost]
-    public async Task<ActionResult<Response<UserLoginResponse>>> VerifyEmail(
+    public async Task<Result<UserLoginResponse>> VerifyEmail(
         [FromBody]VerifyEmailRequest request,
         [FromServices]VerifyEmailUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? Ok(response) : Unauthorized(response);
+        return await useCase.ExecuteAsync(request);
     }
 
     [AllowAnonymous]
     [Route("password-reset")]
     [HttpPost]
-    public async Task<ActionResult<Response>> ResetForgottenPassword(
+    public async Task<Result> ResetForgottenPassword(
         [FromBody]ResetForgottenPasswordRequest request,
         [FromServices]ResetForgottenPasswordUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 
     [AllowAnonymous]
     [Route("password-reset/send")]
     [HttpPost]
-    public async Task<ActionResult<Response>> SendPasswordResetEmail(
+    public async Task<Result> SendPasswordResetEmail(
         [FromBody]SendPasswordResetEmailRequest request,
         [FromServices]SendPasswordResetEmailUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 }

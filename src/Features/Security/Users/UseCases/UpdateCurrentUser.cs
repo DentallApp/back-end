@@ -31,25 +31,20 @@ public class UpdateCurrentUserUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int currentPersonId, UpdateCurrentUserRequest request)
+    public async Task<Result> ExecuteAsync(int currentPersonId, UpdateCurrentUserRequest request)
     {
         var person = await _context.Set<Person>()
             .Where(person => person.Id == currentPersonId)
             .FirstOrDefaultAsync();
 
         if (person is null)
-            return new Response(UsernameNotFoundMessage);
+            return Result.NotFound(UsernameNotFoundMessage);
 
         if (person.Id != currentPersonId)
-            return new Response(CannotUpdateAnotherUserResource);
+            return Result.Forbidden(CannotUpdateAnotherUserResource);
 
         request.MapToPerson(person);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 }

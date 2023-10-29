@@ -9,16 +9,12 @@ public class DeleteGeneralTreatmentUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int id)
+    public async Task<Result> ExecuteAsync(int id)
     {
         int updatedRows = await _context.SoftDeleteAsync<GeneralTreatment>(id);
         if (updatedRows == 0)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
-        return new Response
-        {
-            Success = true,
-            Message = DeleteResourceMessage
-        };
+        return Result.DeletedResource();
     }
 }

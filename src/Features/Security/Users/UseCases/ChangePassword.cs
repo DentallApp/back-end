@@ -17,25 +17,20 @@ public class ChangePasswordUseCase
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<Response> ExecuteAsync(int userId, ChangePasswordRequest request)
+    public async Task<Result> ExecuteAsync(int userId, ChangePasswordRequest request)
     {
         var user = await _context.Set<User>()
             .Where(user => user.Id == userId)
             .FirstOrDefaultAsync();
 
         if (user is null)
-            return new Response(UsernameNotFoundMessage);
+            return Result.NotFound(UsernameNotFoundMessage);
 
         if (!_passwordHasher.Verify(request.OldPassword, user.Password))
-            return new Response(OldPasswordIncorrectMessage);
+            return Result.Invalid(OldPasswordIncorrectMessage);
 
         user.Password = _passwordHasher.HashPassword(request.NewPassword);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = PasswordSuccessfullyResetMessage
-        };
+        return Result.Success(PasswordSuccessfullyResetMessage);
     }
 }

@@ -9,7 +9,7 @@ public class DeleteEmployeeUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee)
+    public async Task<Result> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee)
     {
         var employee = await _context.Set<Employee>()
             .Include(employee => employee.User.UserRoles)
@@ -17,21 +17,16 @@ public class DeleteEmployeeUseCase
             .FirstOrDefaultAsync();
 
         if (employee is null)
-            return new Response(EmployeeNotFoundMessage);
+            return Result.NotFound(EmployeeNotFoundMessage);
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employee.OfficeId))
-            return new Response(OfficeNotAssignedMessage);
+            return Result.Forbidden(OfficeNotAssignedMessage);
 
         if (employee.IsSuperAdmin())
-            return new Response(CannotRemoveSuperadminMessage);
+            return Result.Forbidden(CannotRemoveSuperadminMessage);
 
         _context.SoftDelete(employee);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = DeleteResourceMessage
-        };
+        return Result.DeletedResource();
     }
 }

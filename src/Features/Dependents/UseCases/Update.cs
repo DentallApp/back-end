@@ -31,7 +31,7 @@ public class UpdateDependentUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int dependentId, int userId, UpdateDependentRequest request)
+    public async Task<Result> ExecuteAsync(int dependentId, int userId, UpdateDependentRequest request)
     {
         var dependent = await _context.Set<Dependent>()
             .Include(dependent => dependent.Person)
@@ -39,18 +39,13 @@ public class UpdateDependentUseCase
             .FirstOrDefaultAsync();
 
         if (dependent is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         if (dependent.UserId != userId)
-            return new Response(ResourceFromAnotherUserMessage);
+            return Result.Forbidden(ResourceFromAnotherUserMessage);
 
         request.MapToDependent(dependent);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 }

@@ -9,26 +9,21 @@ public class RevokeRefreshTokenUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int userId)
+    public async Task<Result> ExecuteAsync(int userId)
     {
         var user = await _context.Set<User>()
             .Where(user => user.Id == userId)
             .FirstOrDefaultAsync();
 
         if (user is null)
-            return new Response(UsernameNotFoundMessage);
+            return Result.NotFound(UsernameNotFoundMessage);
 
         if (user.RefreshToken is null)
-            return new Response(HasNoRefreshTokenMessage);
+            return Result.Failure(HasNoRefreshTokenMessage);
 
         user.RefreshToken = null;
         user.RefreshTokenExpiry = null;
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = RevokeTokenMessage
-        };
+        return Result.Success(RevokeTokenMessage);
     }
 }

@@ -29,7 +29,7 @@ public class UpdateEmployeeScheduleUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int id, UpdateEmployeeScheduleRequest request)
+    public async Task<Result> ExecuteAsync(int id, UpdateEmployeeScheduleRequest request)
     {
         var employeeSchedule = await _context.Set<EmployeeSchedule>()
             .Where(employeeSchedule => employeeSchedule.Id == id)
@@ -37,15 +37,10 @@ public class UpdateEmployeeScheduleUseCase
             .FirstOrDefaultAsync();
 
         if (employeeSchedule is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         request.MapToEmployeeSchedule(employeeSchedule);
         await _context.SaveChangesAsync();
-
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 }

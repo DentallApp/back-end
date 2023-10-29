@@ -10,7 +10,7 @@ public class InDirectLineService : DirectLineService
         : base(httpFactory, namedClient: nameof(InDirectLineService)) { }
 
     /// <inheritdoc />
-    public async override Task<Response<GetDirectLineTokenResponse>> GetTokenAsync(AuthenticatedUser user)
+    public async override Task<Result<GetDirectLineTokenResponse>> GetTokenAsync(AuthenticatedUser user)
     {
         var requestBody = new
         {
@@ -19,24 +19,19 @@ public class InDirectLineService : DirectLineService
         };
         var tokenRequest = new HttpRequestMessage(HttpMethod.Post, RequestUri)
         {
-            Content = new StringContent(content: JsonConvert.SerializeObject(requestBody),
-                                        Encoding.UTF8,
-                                        MediaTypeNames.Application.Json),
+            Content = new StringContent(
+                content: JsonConvert.SerializeObject(requestBody),
+                Encoding.UTF8,
+                MediaTypeNames.Application.Json)
         };
 
         var tokenResponseMessage = await Client.SendAsync(tokenRequest, default);
 
         if (!tokenResponseMessage.IsSuccessStatusCode)
-            return new Response<GetDirectLineTokenResponse> { Message = DirectLineTokenFailedMessage };
+            return Result.CriticalError(DirectLineTokenFailedMessage);
 
         var responseContentString = await tokenResponseMessage.Content.ReadAsStringAsync();
         var tokenResponse = JsonConvert.DeserializeObject<GetDirectLineTokenResponse>(responseContentString);
-
-        return new Response<GetDirectLineTokenResponse>
-        {
-            Success = true,
-            Data    = tokenResponse,
-            Message = GetResourceMessage
-        };
+        return Result.ObtainedResource(tokenResponse);
     }
 }

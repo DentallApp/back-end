@@ -9,7 +9,7 @@ public class DeleteDependentUseCase
         _context = context;
     }
 
-    public async Task<Response> ExecuteAsync(int dependentId, int userId)
+    public async Task<Result> ExecuteAsync(int dependentId, int userId)
     {
         var dependent = await _context.Set<Dependent>()
             .Where(dependent => dependent.Id == dependentId)
@@ -18,16 +18,12 @@ public class DeleteDependentUseCase
             .FirstOrDefaultAsync();
 
         if (dependent is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         if (dependent.UserId != userId)
-            return new Response(ResourceFromAnotherUserMessage);
+            return Result.Forbidden(ResourceFromAnotherUserMessage);
 
         await _context.SoftDeleteAsync<Dependent>(dependentId);
-        return new Response
-        {
-            Success = true,
-            Message = DeleteResourceMessage
-        };
+        return Result.DeletedResource();
     }
 }

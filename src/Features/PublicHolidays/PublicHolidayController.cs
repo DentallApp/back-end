@@ -8,31 +8,28 @@ namespace DentallApp.Features.PublicHolidays;
 public class PublicHolidayController : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<Response<InsertedIdDto>>> Create(
+    public async Task<Result<CreatedId>> Create(
         [FromBody]CreatePublicHolidayRequest request,
         [FromServices]CreatePublicHolidayUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(request);
-        return response.Success ? CreatedAtAction(nameof(Create), response) : BadRequest(response);
+        return await useCase.ExecuteAsync(request);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Response>> Delete(
+    public async Task<Result> Delete(
         int id,
         [FromServices]DeletePublicHolidayUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(id);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(id);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Response>> Update(
+    public async Task<Result> Update(
         int id, 
         [FromBody]UpdatePublicHolidayRequest request,
         [FromServices]UpdatePublicHolidayUseCase useCase)
     {
-        var response = await useCase.ExecuteAsync(id, request);
-        return response.Success ? Ok(response) : BadRequest(response);
+        return await useCase.ExecuteAsync(id, request);
     }
 
     [HttpGet]

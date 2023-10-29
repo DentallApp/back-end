@@ -30,10 +30,10 @@ public class CancelBasicUserAppointmentUseCaseTests
             });
 
         // Act
-        var response = await _cancelAppointmentUseCase.ExecuteAsync(default, default);
+        var result = await _cancelAppointmentUseCase.ExecuteAsync(default, default);
 
         // Asserts
-        response.Success.Should().BeFalse();
-        response.Message.Should().Be(AppointmentThatHasAlreadyPassedBasicUserMessage);
+        result.IsSuccess.Should().BeFalse();
+        result.Message.Should().Be(AppointmentThatHasAlreadyPassedBasicUserMessage);
     }
 }

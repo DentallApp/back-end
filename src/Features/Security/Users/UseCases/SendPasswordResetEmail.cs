@@ -21,7 +21,7 @@ public class SendPasswordResetEmailUseCase
         _emailService = emailService;
     }
 
-    public async Task<Response> ExecuteAsync(SendPasswordResetEmailRequest request)
+    public async Task<Result> ExecuteAsync(SendPasswordResetEmailRequest request)
     {
         var user = await _context.Set<User>()
             .Where(user => user.UserName == request.Email)
@@ -36,15 +36,10 @@ public class SendPasswordResetEmailUseCase
             .FirstOrDefaultAsync();
 
         if (user is null)
-            return new Response(UsernameNotFoundMessage);
+            return Result.NotFound(UsernameNotFoundMessage);
 
         var passwordResetToken = _tokenService.CreatePasswordResetToken(user.UserId, user.UserName, user.Password);
         await _emailService.SendEmailForResetPasswordAsync(user.UserName, user.Name, passwordResetToken);
-
-        return new Response
-        {
-            Success = true,
-            Message = SendPasswordResetLinkMessage
-        };
+        return Result.Success(SendPasswordResetLinkMessage);
     }
 }

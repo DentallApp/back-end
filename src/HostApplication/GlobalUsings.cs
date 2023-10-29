@@ -13,7 +13,6 @@ global using DentallApp.Infrastructure.Persistence.Repositories;
 global using DentallApp.Shared.Appointments;
 global using static DentallApp.Shared.Constants.ResponseMessages;
 global using DentallApp.Shared.Configuration;
-global using Response = DentallApp.Shared.Models.Results.Response;
 global using DentallApp.Shared.Persistence;
 global using DentallApp.Shared.Persistence.Repositories;
 global using DentallApp.Shared.Services;
@@ -35,7 +34,7 @@ global using Microsoft.Extensions.Options;
 global using Microsoft.OpenApi.Models;
 
 global using DotEnv.Core;
-
+global using SimpleResults;
 global using SendGrid.Extensions.DependencyInjection;
 
 global using EntityFramework.Exceptions.Common;

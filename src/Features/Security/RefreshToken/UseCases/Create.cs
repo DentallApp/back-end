@@ -28,11 +28,11 @@ public class CreateRefreshTokenUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response<CreateRefreshTokenResponse>> ExecuteAsync(CreateRefreshTokenRequest request)
+    public async Task<Result<CreateRefreshTokenResponse>> ExecuteAsync(CreateRefreshTokenRequest request)
     {
         var claimPrincipal = _tokenService.GetPrincipalFromExpiredAccessToken(request.OldAccessToken);
         if (claimPrincipal is null)
-            return new Response<CreateRefreshTokenResponse>(AccessTokenInvalidMessage);
+            return Result.Unauthorized(AccessTokenInvalidMessage);
 
         int userId = claimPrincipal.GetUserId();
         var user = await _context.Set<User>()
@@ -40,13 +40,13 @@ public class CreateRefreshTokenUseCase
             .FirstOrDefaultAsync();
 
         if (user is null)
-            return new Response<CreateRefreshTokenResponse>(UsernameNotFoundMessage);
+            return Result.NotFound(UsernameNotFoundMessage);
 
         if (user.RefreshToken != request.OldRefreshToken)
-            return new Response<CreateRefreshTokenResponse>(RefreshTokenInvalidMessage);
+            return Result.Invalid(RefreshTokenInvalidMessage);
 
         if (_dateTimeService.Now >= user.RefreshTokenExpiry)
-            return new Response<CreateRefreshTokenResponse>(RefreshTokenExpiredMessage);
+            return Result.Invalid(RefreshTokenExpiredMessage);
 
         var response = new CreateRefreshTokenResponse
         {
@@ -55,12 +55,6 @@ public class CreateRefreshTokenUseCase
         };
         user.RefreshToken = response.NewRefreshToken;
         await _context.SaveChangesAsync();
-
-        return new Response<CreateRefreshTokenResponse>
-        {
-            Success = true,
-            Data    = response,
-            Message = UpdatedAccessTokenMessage
-        };
+        return Result.Success(response, UpdatedAccessTokenMessage);
     }
 }

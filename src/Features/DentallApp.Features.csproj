@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SimpleResults.AspNetCore" />
     <PackageReference Include="linq2db.EntityFrameworkCore" />
     <PackageReference Include="Dapper" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers">

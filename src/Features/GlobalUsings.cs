@@ -12,8 +12,6 @@ global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Extensions;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
-global using DentallApp.Shared.Models.Results;
-global using Response = DentallApp.Shared.Models.Results.Response;
 global using DentallApp.Shared.Persistence;
 global using DentallApp.Shared.Persistence.Repositories;
 global using DentallApp.Shared.Services;
@@ -28,5 +26,6 @@ global using Microsoft.AspNetCore.Authorization;
 
 global using Microsoft.EntityFrameworkCore;
 
+global using SimpleResults;
 global using DotEnv.Core;
 global using Dapper;

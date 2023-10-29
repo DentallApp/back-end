@@ -50,7 +50,7 @@ public class UpdateOfficeUseCase
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<Response> ExecuteAsync(int officeId, int currentEmployeeId, UpdateOfficeRequest request)
+    public async Task<Result> ExecuteAsync(int officeId, int currentEmployeeId, UpdateOfficeRequest request)
     {
         var currentOffice = await _context.Set<Office>()
             .Where(office => office.Id == officeId)
@@ -58,7 +58,7 @@ public class UpdateOfficeUseCase
             .FirstOrDefaultAsyncEF();
 
         if (currentOffice is null)
-            return new Response(ResourceNotFoundMessage);
+            return Result.NotFound();
 
         var strategy = _context.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(
@@ -78,11 +78,7 @@ public class UpdateOfficeUseCase
                 await transaction.CommitAsync();
             });
 
-        return new Response
-        {
-            Success = true,
-            Message = UpdateResourceMessage
-        };
+        return Result.UpdatedResource();
     }
 
     private async Task<int> DisableEmployeeAccountsAsync(int currentEmployeeId, Office office)

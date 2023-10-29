@@ -28,20 +28,14 @@ public class CreateOfficeScheduleUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateOfficeScheduleRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateOfficeScheduleRequest request)
     {
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
-            return new Response<InsertedIdDto>(OfficeNotAssignedMessage);
+            return Result.Forbidden(OfficeNotAssignedMessage);
 
         var officeSchedule = request.MapToOfficeSchedule();
         _context.Add(officeSchedule);
         await _context.SaveChangesAsync();
-
-        return new Response<InsertedIdDto>
-        {
-            Data    = new InsertedIdDto { Id = officeSchedule.Id },
-            Success = true,
-            Message = CreateResourceMessage
-        };
+        return Result.CreatedResource(officeSchedule.Id);
     }
 }

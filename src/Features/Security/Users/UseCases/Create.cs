@@ -55,10 +55,10 @@ public class CreateBasicUserUseCase
         _emailService = emailService;
     }
 
-    public async Task<Response> ExecuteAsync(CreateBasicUserRequest request)
+    public async Task<Result> ExecuteAsync(CreateBasicUserRequest request)
     {
         if (await _userRepository.UserExistsAsync(request.UserName))
-            return new Response(UsernameAlreadyExistsMessage);
+            return Result.Conflict(UsernameAlreadyExistsMessage);
 
         var passwordHash = _passwordHasher.HashPassword(request.Password);
         var user = request.MapToUser(passwordHash);
@@ -75,11 +75,6 @@ public class CreateBasicUserUseCase
         };
         var emailVerificationToken = _tokenService.CreateEmailVerificationToken(userClaims);
         await _emailService.SendEmailForVerificationAsync(request.UserName, request.Names, emailVerificationToken);
-
-        return new Response
-        {
-            Success = true,
-            Message = CreateBasicUserAccountMessage
-        };
+        return Result.CreatedResource(CreateBasicUserAccountMessage);
     }
 }

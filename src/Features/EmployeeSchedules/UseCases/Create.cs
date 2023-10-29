@@ -32,17 +32,11 @@ public class CreateEmployeeScheduleUseCase
         _context = context;
     }
 
-    public async Task<Response<InsertedIdDto>> ExecuteAsync(CreateEmployeeScheduleRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(CreateEmployeeScheduleRequest request)
     {
         var employeeSchedule = request.MapToEmployeeSchedule();
         _context.Add(employeeSchedule);
         await _context.SaveChangesAsync();
-
-        return new Response<InsertedIdDto>
-        {
-            Data    = new InsertedIdDto { Id = employeeSchedule.Id },
-            Success = true,
-            Message = CreateResourceMessage
-        };
+        return Result.CreatedResource(employeeSchedule.Id);
     }
 }
