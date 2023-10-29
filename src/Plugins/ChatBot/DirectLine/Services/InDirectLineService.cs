@@ -22,7 +22,7 @@ public class InDirectLineService : DirectLineService
             Content = new StringContent(
                 content: JsonConvert.SerializeObject(requestBody),
                 Encoding.UTF8,
-                MediaTypeNames.Application.Json),
+                MediaTypeNames.Application.Json)
         };
 
         var tokenResponseMessage = await Client.SendAsync(tokenRequest, default);
