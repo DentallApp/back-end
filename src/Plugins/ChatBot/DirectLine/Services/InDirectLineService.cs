@@ -19,15 +19,16 @@ public class InDirectLineService : DirectLineService
         };
         var tokenRequest = new HttpRequestMessage(HttpMethod.Post, RequestUri)
         {
-            Content = new StringContent(content: JsonConvert.SerializeObject(requestBody),
-                                        Encoding.UTF8,
-                                        MediaTypeNames.Application.Json),
+            Content = new StringContent(
+                content: JsonConvert.SerializeObject(requestBody),
+                Encoding.UTF8,
+                MediaTypeNames.Application.Json),
         };
 
         var tokenResponseMessage = await Client.SendAsync(tokenRequest, default);
 
         if (!tokenResponseMessage.IsSuccessStatusCode)
-            return Result.Failure(DirectLineTokenFailedMessage);
+            return Result.CriticalError(DirectLineTokenFailedMessage);
 
         var responseContentString = await tokenResponseMessage.Content.ReadAsStringAsync();
         var tokenResponse = JsonConvert.DeserializeObject<GetDirectLineTokenResponse>(responseContentString);

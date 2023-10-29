@@ -21,8 +21,13 @@ public class DirectLineController : ControllerBase
             PersonId = User.GetPersonId() 
         };
         var result = await _directLineService.GetTokenAsync(user);
-        return result.IsSuccess ? 
-			   Ok(new { result.Data.Token }) : 
-			   UnprocessableEntity(new { result.Message });
+        if (result.IsSuccess)
+            return Ok(new { result.Data.Token });
+
+        var objectResult = new ObjectResult(new { result.Message })
+        {
+            StatusCode = StatusCodes.Status500InternalServerError
+        };
+        return objectResult;
     }
 }
