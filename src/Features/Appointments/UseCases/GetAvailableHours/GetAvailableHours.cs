@@ -2,23 +2,12 @@
 
 public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
 {
-    private readonly IGetUnavailableHoursUseCase _getUnavailableHoursUseCase;
-    private readonly IEmployeeScheduleRepository _employeeScheduleRepository;
-    private readonly ITreatmentRepository _treatmentRepository;
-    private readonly IOfficeHolidayRepository _officeHolidayRepository;
+    private readonly IAvailabilityQueries _queries;
     private readonly IDateTimeService _dateTimeService;
 
-    public GetAvailableHoursUseCase(
-        IGetUnavailableHoursUseCase getUnavailableHoursUseCase,
-        IEmployeeScheduleRepository employeeScheduleRepository,
-        ITreatmentRepository treatmentRepository,
-        IOfficeHolidayRepository officeHolidayRepository,
-        IDateTimeService dateTimeService)
+    public GetAvailableHoursUseCase(IAvailabilityQueries queries, IDateTimeService dateTimeService)
     {
-        _getUnavailableHoursUseCase = getUnavailableHoursUseCase;
-        _employeeScheduleRepository = employeeScheduleRepository;
-        _treatmentRepository = treatmentRepository;
-        _officeHolidayRepository = officeHolidayRepository;
+        _queries = queries;
         _dateTimeService = dateTimeService;
     }
 
@@ -30,10 +19,10 @@ public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
         var appointmentDate      = request.AppointmentDate;
         int weekDayId            = (int)appointmentDate.DayOfWeek;
         var weekDayName          = WeekDaysType.WeekDays[weekDayId];
-        if (await _officeHolidayRepository.IsPublicHolidayAsync(officeId, appointmentDate.Day, appointmentDate.Month))
+        if (await _queries.IsPublicHolidayAsync(officeId, appointmentDate.Day, appointmentDate.Month))
             return Result.Failure(AppointmentDateIsPublicHolidayMessage);
 
-        var employeeSchedule  = await _employeeScheduleRepository.GetByWeekDayIdAsync(dentistId, weekDayId);
+        var employeeSchedule  = await _queries.GetEmployeeScheduleAsync(dentistId, weekDayId);
         if (employeeSchedule is null || employeeSchedule.IsEmployeeScheculeDeleted)
             return Result.Failure(string.Format(DentistNotAvailableMessage, weekDayName));
 
@@ -43,8 +32,8 @@ public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
         if (employeeSchedule.HasNotSchedule())
             return Result.Failure(NoMorningOrAfternoonHoursMessage);
 
-        var unavailables       = await _getUnavailableHoursUseCase.ExecuteAsync(dentistId, appointmentDate);
-        int? treatmentDuration = await _treatmentRepository.GetDurationAsync(serviceId);
+        var unavailables       = await _queries.GetUnavailableHoursAsync(dentistId, appointmentDate);
+        int? treatmentDuration = await _queries.GetTreatmentDurationAsync(serviceId);
         if (treatmentDuration is null)
             return Result.Failure(DentalServiceNotAvailableMessage);
 
