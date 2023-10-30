@@ -70,8 +70,24 @@ public class AppointmentBotService : IAppointmentBotService
     public async Task<string> GetDentistScheduleAsync(int dentistId)
     {
         using var scope = _serviceProvider.CreateScope();
-        var repository = scope.ServiceProvider.GetRequiredService<IEmployeeScheduleRepository>();
-        var weekDays = (await repository.GetOnlyWeekDaysAsync(dentistId)) as List<WeekDay>;
+        var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
+        var weekDays = await GetOnlyWeekDaysAsync(dbContext, dentistId);
         return WeekDay.ConvertToDayRange(weekDays);
+    }
+
+    private static async Task<List<WeekDay>> GetOnlyWeekDaysAsync(DbContext context, int employeeId)
+    {
+        var schedules = await context.Set<EmployeeSchedule>()
+            .Where(employeeSchedule => employeeSchedule.EmployeeId == employeeId)
+            .OrderBy(employeeSchedule => employeeSchedule.WeekDayId)
+            .Select(employeeSchedule => new WeekDay
+            {
+                Id   = employeeSchedule.WeekDayId,
+                Name = employeeSchedule.WeekDay.Name
+            })
+            .AsNoTracking()
+            .ToListAsync();
+
+        return schedules;
     }
 }

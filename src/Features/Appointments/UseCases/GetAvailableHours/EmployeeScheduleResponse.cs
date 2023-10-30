@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Shared.Models;
+﻿namespace DentallApp.Features.Appointments.UseCases.GetAvailableHours;
 
 public class EmployeeScheduleResponse : IEmployeeSchedule
 {

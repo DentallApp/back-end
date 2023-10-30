@@ -1,4 +1,5 @@
 global using DentallApp.Features.Dependents.UseCases;
+global using DentallApp.Features.Appointments.UseCases.GetAvailableHours;
 global using DentallApp.Features.ChatBot.Extensions;
 global using DentallApp.Features.AppointmentReminders;
 

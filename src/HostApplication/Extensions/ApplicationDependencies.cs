@@ -17,12 +17,11 @@ public static class ApplicationDependencies
         services
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<ISchedulingQueries, SchedulingQueries>()
+            .AddScoped<IAvailabilityQueries, AvailabilityQueries>()
             .AddScoped(typeof(IRepository<>), typeof(Repository<>))
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<ITreatmentRepository, TreatmentRepository>()
-            .AddScoped<IAppointmentRepository, AppointmentRepository>()
-            .AddScoped<IEmployeeScheduleRepository, EmployeeScheduleRepository>()
-            .AddScoped<IOfficeHolidayRepository, OfficeHolidayRepository>();
+            .AddScoped<IAppointmentRepository, AppointmentRepository>();
 
         return services;
     }
