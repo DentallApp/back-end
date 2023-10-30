@@ -9,6 +9,7 @@ global using DentallApp.Features.ChatBot.Extensions;
 global using DentallApp.Features.ChatBot.Configuration;
 
 global using DentallApp.Shared.Domain;
+global using DentallApp.Shared.Domain.EmployeeSchedules;
 global using DentallApp.Shared.Appointments;
 global using DentallApp.Shared.Constants;
 global using static DentallApp.Shared.Constants.ResponseMessages;
@@ -33,6 +34,7 @@ global using AdaptiveCards;
 
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Bot.Builder.Integration.AspNet.Core;
+global using Microsoft.EntityFrameworkCore;
 
 global using Newtonsoft.Json.Linq;
 global using Newtonsoft.Json;
