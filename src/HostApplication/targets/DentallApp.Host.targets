@@ -1,0 +1,24 @@
+<Project>
+
+  <Target Name="CopyPluginsToBuildDirectory" BeforeTargets="Build">
+
+    <ItemGroup>
+      <!-- 
+        Enumerate all the project files (.csproj) located in the "Plugins" folder.
+        Only project files (.csproj) inside the "source" folder are included.
+      -->
+      <PluginProject Include="..\Plugins\**\*.csproj" />
+    </ItemGroup>
+    
+    <!-- 
+      This task compiles each plugin and copies the result to the 
+      "plugins" folder of the output directory (e.g. /bin/Debug/net7.0). 
+    -->
+    <MSBuild
+      Projects="@(PluginProject)"
+      Targets="Build"
+      Properties="OutDir=$(TargetDir)plugins\%(FileName)\"
+    />
+  </Target>
+  
+</Project>

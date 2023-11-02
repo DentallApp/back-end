@@ -28,10 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Plugins\AppointmentReminders\DentallApp.AppointmentReminders.csproj" />
-    <ProjectReference Include="..\Plugins\ChatBot\DentallApp.ChatBot.csproj" />
     <ProjectReference Include="..\Features\DentallApp.Features.csproj" />
     <ProjectReference Include="..\Infrastructure\DentallApp.Infrastructure.csproj" />
   </ItemGroup>
+
+  <Import Project="targets\DentallApp.Host.targets" />
 
 </Project>
