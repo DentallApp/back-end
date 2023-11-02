@@ -1,7 +1,5 @@
 global using DentallApp.Features.Dependents.UseCases;
 global using DentallApp.Features.Appointments.UseCases.GetAvailableHours;
-global using DentallApp.Features.ChatBot.Extensions;
-global using DentallApp.Features.AppointmentReminders;
 
 global using DentallApp.HostApplication.Middlewares;
 global using DentallApp.HostApplication.Extensions;
@@ -17,6 +15,7 @@ global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Persistence;
 global using DentallApp.Shared.Persistence.Repositories;
 global using DentallApp.Shared.Services;
+global using DentallApp.Shared.Plugin.Contracts;
 
 global using System.Net;
 global using System.Data;
@@ -39,5 +38,5 @@ global using SimpleResults;
 global using SendGrid.Extensions.DependencyInjection;
 
 global using EntityFramework.Exceptions.Common;
-global using Quartz;
 global using MySqlConnector;
+
