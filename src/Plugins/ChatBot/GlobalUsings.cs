@@ -20,6 +20,7 @@ global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Persistence;
 global using DentallApp.Shared.Persistence.Repositories;
 global using DentallApp.Shared.Services;
+global using DentallApp.Shared.Plugin.Contracts;
 
 global using System.Data;
 global using System.Text;
