@@ -53,13 +53,7 @@ public static class PluginLoader
         foreach (string assemblyFile in s_assemblyFiles)
         {
             Assembly currentAssembly = FindAssembly(assemblyFile);
-            if (currentAssembly is null)
-            {
-                var loadContext = new PluginLoadContext(assemblyFile);
-                var assemblyName = AssemblyName.GetAssemblyName(assemblyFile);
-                currentAssembly = loadContext.LoadFromAssemblyName(assemblyName);
-                s_assemblies.Add(assemblyFile, currentAssembly);
-            }
+            currentAssembly ??= LoadAssembly(assemblyFile);
             var pluginAttributes = currentAssembly.GetCustomAttributes<PluginAttribute>();
             if (!pluginAttributes.Any())
             {
@@ -77,6 +71,15 @@ public static class PluginLoader
             }
         }
         return contracts;
+    }
+
+    private static Assembly LoadAssembly(string assemblyFile)
+    {
+        var loadContext = new PluginLoadContext(assemblyFile);
+        var assemblyName = AssemblyName.GetAssemblyName(assemblyFile);
+        var currentAssembly = loadContext.LoadFromAssemblyName(assemblyName);
+        s_assemblies.Add(assemblyFile, currentAssembly);
+        return currentAssembly;
     }
 
     private static Assembly FindAssembly(string assemblyFile)
