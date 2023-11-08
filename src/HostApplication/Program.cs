@@ -6,6 +6,7 @@ var builder     = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.InitializePlugins();
 builder.Configuration.AddEnvironmentVariables();
 builder.Services
     .AddServices()
