@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>1591</NoWarn>
     <RootNamespace>DentallApp.Features</RootNamespace>
     <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
   </PropertyGroup>
