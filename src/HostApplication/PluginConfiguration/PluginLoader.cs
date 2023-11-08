@@ -79,6 +79,7 @@ public static class PluginLoader
         var assemblyName = AssemblyName.GetAssemblyName(assemblyFile);
         var currentAssembly = loadContext.LoadFromAssemblyName(assemblyName);
         s_assemblies.Add(assemblyFile, currentAssembly);
+        PluginLogger.DefaultLogInformation(currentAssembly.GetName().Name, currentAssembly.FullName);
         return currentAssembly;
     }
 
