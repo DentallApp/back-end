@@ -1,4 +1,6 @@
-﻿namespace DentallApp.Features.AppointmentReminders;
+﻿[assembly: Plugin(typeof(PluginStartup))]
+
+namespace DentallApp.Features.AppointmentReminders;
 
 public class PluginStartup : IPluginStartup
 {

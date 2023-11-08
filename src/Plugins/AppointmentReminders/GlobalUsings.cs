@@ -1,4 +1,5 @@
-﻿global using DentallApp.Shared.Constants;
+﻿global using DentallApp.Features.AppointmentReminders;
+global using DentallApp.Shared.Constants;
 global using DentallApp.Shared.Domain;
 global using DentallApp.Shared.Persistence;
 global using DentallApp.Shared.Configuration;

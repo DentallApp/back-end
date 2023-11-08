@@ -1,3 +1,4 @@
+global using DentallApp.Features.ChatBot;
 global using DentallApp.Features.ChatBot.DirectLine;
 global using DentallApp.Features.ChatBot.DirectLine.Services;
 global using DentallApp.Features.ChatBot.Dialogs;
