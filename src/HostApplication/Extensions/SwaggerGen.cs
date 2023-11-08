@@ -29,9 +29,17 @@ public static class SwaggerGen
                     new string[] { }
                 }
             });
-            var fileName = nameof(DentallApp) + "." + nameof(Features) + ".xml";
-            var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
+            var featureAssemblyName = typeof(GetDependentsByUserIdUseCase).Assembly.GetName().Name;
+            var filePath = Path.Combine(AppContext.BaseDirectory, featureAssemblyName + ".xml");
             options.IncludeXmlComments(filePath);
+
+            foreach(Assembly assembly in PluginLoader.Assemblies) 
+            {
+                var pluginName = assembly.GetName().Name;
+                var basePath = Path.Combine(AppContext.BaseDirectory, "plugins", pluginName);
+                var pluginPath = Path.Combine(basePath, pluginName + ".xml");
+                options.IncludeXmlComments(pluginPath);
+            }
         });
         return services;
     }
