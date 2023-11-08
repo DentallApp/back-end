@@ -11,5 +11,8 @@ public static class Startup
         {
             pluginStartup.ConfigureWebApplicationBuilder(builder);
         }
+
+        IEnumerable<IModelCreating> models = PluginLoader.Load<IModelCreating>();
+        builder.Services.AddSingleton(models);
     }
 }

@@ -2,10 +2,15 @@ namespace DentallApp.Infrastructure.Persistence;
 
 public partial class AppDbContext : DbContext
 {
+    private readonly IEnumerable<IModelCreating> _modelCreatings;
     private readonly IWebHostEnvironment _env;
 
-    public AppDbContext(IWebHostEnvironment env, DbContextOptions<AppDbContext> options) : base(options)
+    public AppDbContext(
+        IEnumerable<IModelCreating> modelCreatings,
+        IWebHostEnvironment env, 
+        DbContextOptions<AppDbContext> options) : base(options)
     {
+        _modelCreatings = modelCreatings;
         _env = env;
     }
 
@@ -20,6 +25,12 @@ public partial class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Execute the entity configurations that expose the plug-ins.
+        foreach (var modelCreating in _modelCreatings)
+        {
+            modelCreating.OnModelCreating(modelBuilder);
+        }
+
         modelBuilder
             .AddEntity<GeneralTreatment>()
             .AddEntity<SpecificTreatment>()
