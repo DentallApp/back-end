@@ -6,7 +6,6 @@ var builder     = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.AddPlugins();
 builder.Configuration.AddEnvironmentVariables();
 builder.Services
     .AddServices()
@@ -27,7 +26,8 @@ builder.Services
         options.SuppressAsyncSuffixInActionNames = false;
         options.Filters.Add<TranslateResultToActionResultAttribute>();
     })
-    .AddCustomInvalidModelStateResponse();
+    .AddCustomInvalidModelStateResponse()
+    .AddApplicationParts();
 
 builder.Services.AddDbContext(databaseSettings);
 builder.Services.AddSendGrid(options => options.ApiKey = appSettings.SendGridApiKey);
