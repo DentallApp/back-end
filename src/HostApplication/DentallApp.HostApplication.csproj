@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>DentallApp.HostApplication</RootNamespace>
+    <NoDefaultLaunchSettingsFile>false</NoDefaultLaunchSettingsFile>
   </PropertyGroup>
 
   <ItemGroup>
