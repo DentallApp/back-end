@@ -1,4 +1,4 @@
-﻿namespace DentallApp.HostApplication.PluginConfiguration;
+﻿namespace CPlugin.Net;
 
 /// <summary>
 /// Represents a type used to perform logging.

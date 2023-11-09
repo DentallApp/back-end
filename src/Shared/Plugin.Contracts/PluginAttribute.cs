@@ -1,7 +1,7 @@
-﻿namespace DentallApp.Shared.Plugin.Contracts;
+﻿namespace CPlugin.Net.Contracts;
 
 /// <summary>
-/// This attribute is required for the plugin loader to create the instance that implements the contract.
+/// This attribute is required so that the plugin loader can create the instance of the type that implements the contract.
 /// </summary>
 [AttributeUsage(AttributeTargets.Assembly, Inherited = false, AllowMultiple = true)]
 public class PluginAttribute : Attribute
@@ -17,7 +17,7 @@ public class PluginAttribute : Attribute
     /// <param name="pluginType">
     /// An instance of type <see cref="Type"/> that implements the contract.
     /// </param>
-|    /// <exception cref="ArgumentException">
+    /// <exception cref="ArgumentException">
     /// <c>pluginType</c> is not instantiable.
     /// </exception>
     public PluginAttribute(Type pluginType)

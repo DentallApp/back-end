@@ -1,4 +1,4 @@
-﻿namespace DentallApp.HostApplication.PluginConfiguration;
+﻿namespace CPlugin.Net;
 
 public class PluginLoadContext : AssemblyLoadContext
 {

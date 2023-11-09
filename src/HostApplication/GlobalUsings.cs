@@ -1,7 +1,7 @@
 global using DentallApp.Features.Dependents.UseCases;
 global using DentallApp.Features.Appointments.UseCases.GetAvailableHours;
 
-global using DentallApp.HostApplication.PluginConfiguration;
+global using DentallApp.HostApplication;
 global using DentallApp.HostApplication.Middlewares;
 global using DentallApp.HostApplication.Extensions;
 
@@ -43,3 +43,4 @@ global using SendGrid.Extensions.DependencyInjection;
 
 global using EntityFramework.Exceptions.Common;
 global using MySqlConnector;
+global using CPlugin.Net;

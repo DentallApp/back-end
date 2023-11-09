@@ -1,4 +1,6 @@
-﻿namespace DentallApp.HostApplication.PluginConfiguration;
+﻿using CPlugin.Net.Contracts;
+
+namespace CPlugin.Net;
 
 public static class PluginLoader
 {
