@@ -17,8 +17,17 @@ public class PluginAttribute : Attribute
     /// <param name="pluginType">
     /// An instance of type <see cref="Type"/> that implements the contract.
     /// </param>
+|    /// <exception cref="ArgumentException">
+    /// <c>pluginType</c> is not instantiable.
+    /// </exception>
     public PluginAttribute(Type pluginType)
     {
+        if(!pluginType.IsClass || pluginType.IsAbstract)
+        {
+            var message = $"{pluginType.Name} must be a class that can be instantiated. It cannot be abstract or an interface.";
+            throw new ArgumentException(message, nameof(pluginType));
+        }
+
         PluginType = pluginType;
     }
 }
