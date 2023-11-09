@@ -1,4 +1,4 @@
-﻿namespace DentallApp.HostApplication.PluginConfiguration;
+﻿namespace DentallApp.HostApplication;
 
 public static class Startup
 {
