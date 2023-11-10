@@ -21,6 +21,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\src\Plugins\ChatBot\DentallApp.ChatBot.csproj" />
+    <ProjectReference Include="..\..\src\Shared\DentallApp.Shared.csproj" />
   </ItemGroup>
 
 </Project>

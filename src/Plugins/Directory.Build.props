@@ -1,0 +1,25 @@
+<Project>
+  <!-- Import global properties from root directory. -->
+  <Import Project="$(SolutionDir)Directory.build.props" />
+  <PropertyGroup>
+    <!-- Indicates the output directory where the plug-in assemblies should be copied. -->
+    <OutDir>$(SolutionDir)src/HostApplication/bin/$(Configuration)/$(TargetFramework)/plugins/$(MSBuildProjectName)</OutDir>
+    <!-- 
+      Indicates that an assembly is a dynamically loaded component. 
+      This will copy the NuGet packages to the output directory.
+    -->
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- This project is available for all plug-ins. -->
+    <ProjectReference Include="..\..\Shared\DentallApp.Shared.csproj">
+      <!-- This tells MSBuild not to copy DentallApp.Shared.dll to the plug-in output directory. -->
+      <Private>false</Private>
+      <!-- 
+        This setting has the same effect as <Private>false</Private> but works on package references 
+        that the DentallApp.Shared project or one of its dependencies may include.
+      -->
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

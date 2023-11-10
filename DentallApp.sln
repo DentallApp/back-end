@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Elements", "Soluti
 		.env = .env
 		.env.example = .env.example
 		Directory.Build.props = Directory.Build.props
+		src\Plugins\Directory.Build.props = src\Plugins\Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
@@ -37,6 +38,10 @@ Global
 		{E354A181-1E6C-4F76-8D99-96E5A6824FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E354A181-1E6C-4F76-8D99-96E5A6824FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E354A181-1E6C-4F76-8D99-96E5A6824FC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EACB8B54-AAFE-4A46-A1D9-1FB23ADDA41C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EACB8B54-AAFE-4A46-A1D9-1FB23ADDA41C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EACB8B54-AAFE-4A46-A1D9-1FB23ADDA41C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EACB8B54-AAFE-4A46-A1D9-1FB23ADDA41C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BFD8D9F8-AEF4-4661-B0DC-6D79F84F718E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BFD8D9F8-AEF4-4661-B0DC-6D79F84F718E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFD8D9F8-AEF4-4661-B0DC-6D79F84F718E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,10 +66,6 @@ Global
 		{3897DDB9-5C4F-4664-94D7-756A5E673951}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3897DDB9-5C4F-4664-94D7-756A5E673951}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3897DDB9-5C4F-4664-94D7-756A5E673951}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EACB8B54-AAFE-4A46-A1D9-1FB23ADDA41C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EACB8B54-AAFE-4A46-A1D9-1FB23ADDA41C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EACB8B54-AAFE-4A46-A1D9-1FB23ADDA41C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EACB8B54-AAFE-4A46-A1D9-1FB23ADDA41C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

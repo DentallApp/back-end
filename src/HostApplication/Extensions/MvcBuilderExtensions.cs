@@ -27,4 +27,17 @@ public static class MvcBuilderExtensions
         });
         return builder;
     }
+
+    /// <summary>
+    /// Adds the plugins to make it part of the application.
+    /// This allows to register the controllers of each plugin in the application.
+    /// </summary>
+    public static IMvcBuilder AddApplicationParts(this IMvcBuilder builder) 
+    {
+        foreach (Assembly assembly in PluginLoader.Assemblies)
+        {
+            builder.PartManager.ApplicationParts.Add(new AssemblyPart(assembly));
+        }
+        return builder;
+    }
 }

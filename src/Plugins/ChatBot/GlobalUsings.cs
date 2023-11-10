@@ -1,3 +1,4 @@
+global using DentallApp.Features.ChatBot;
 global using DentallApp.Features.ChatBot.DirectLine;
 global using DentallApp.Features.ChatBot.DirectLine.Services;
 global using DentallApp.Features.ChatBot.Dialogs;
@@ -20,6 +21,7 @@ global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Persistence;
 global using DentallApp.Shared.Persistence.Repositories;
 global using DentallApp.Shared.Services;
+global using DentallApp.Shared.Plugin.Contracts;
 
 global using System.Data;
 global using System.Text;
@@ -40,3 +42,4 @@ global using Newtonsoft.Json.Linq;
 global using Newtonsoft.Json;
 global using DotEnv.Core;
 global using SimpleResults;
+global using CPlugin.Net.Contracts;

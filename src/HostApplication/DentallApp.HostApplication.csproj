@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>DentallApp.HostApplication</RootNamespace>
+    <NoDefaultLaunchSettingsFile>false</NoDefaultLaunchSettingsFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,10 +29,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Plugins\AppointmentReminders\DentallApp.AppointmentReminders.csproj" />
-    <ProjectReference Include="..\Plugins\ChatBot\DentallApp.ChatBot.csproj" />
     <ProjectReference Include="..\Features\DentallApp.Features.csproj" />
     <ProjectReference Include="..\Infrastructure\DentallApp.Infrastructure.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!-- 
+      Copy the plugins directory to the publish directory.
+      This copies the directories and subdirectories (including files with extension) 
+      from the plugins folder to the publish directory.
+      For this to work, the plug-ins must be compiled.
+    -->
+    <Content 
+      Include="bin\$(Configuration)\$(TargetFramework)\plugins\**" 
+      CopyToPublishDirectory="PreserveNewest"
+      TargetPath="plugins\%(RecursiveDir)\%(Filename)%(Extension)"
+    />
   </ItemGroup>
 
 </Project>

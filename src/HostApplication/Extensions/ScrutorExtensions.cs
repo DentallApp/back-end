@@ -33,12 +33,13 @@ public static class ScrutorExtensions
     public static IServiceCollection RegisterAutoDependencies(this IServiceCollection services)
     {
         // Specifies the assembly for Scrutor to search for types.
-        var assemblies = new[]
+        var assemblies = new List<Assembly>
         {
             typeof(GetDependentsByUserIdUseCase).Assembly,
             typeof(IGetAvailableHoursUseCase).Assembly
         };
 
+        assemblies.AddRange(PluginLoader.Assemblies);
         services.Scan(scan => scan
         // Search the types from the specified assemblies.
             .FromAssemblies(assemblies)
