@@ -7,6 +7,8 @@ public static class Startup
     /// </summary>
     public static void InitializePlugins(this WebApplicationBuilder builder)
     {
+        var configuration = new CPluginEnvConfiguration();
+        PluginLoader.SetConfiguration(configuration);
         foreach (var pluginStartup in PluginLoader.Load<IPluginStartup>())
         {
             pluginStartup.ConfigureWebApplicationBuilder(builder);

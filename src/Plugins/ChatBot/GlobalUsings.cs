@@ -42,4 +42,4 @@ global using Newtonsoft.Json.Linq;
 global using Newtonsoft.Json;
 global using DotEnv.Core;
 global using SimpleResults;
-global using CPlugin.Net.Contracts;
+global using CPlugin.Net;

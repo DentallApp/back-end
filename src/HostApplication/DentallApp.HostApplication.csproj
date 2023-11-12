@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CPlugin.Net" />
     <PackageReference Include="DotEnv.Core" />
     <PackageReference Include="Swashbuckle.AspNetCore" />
     <PackageReference Include="Scrutor" />

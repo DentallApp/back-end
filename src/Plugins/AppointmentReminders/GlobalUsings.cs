@@ -10,4 +10,4 @@ global using DentallApp.Shared.Plugin.Contracts;
 global using DotEnv.Core;
 global using Quartz;
 global using Microsoft.EntityFrameworkCore;
-global using CPlugin.Net.Contracts;
+global using CPlugin.Net;
