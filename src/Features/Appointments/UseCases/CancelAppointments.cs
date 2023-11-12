@@ -75,7 +75,7 @@ public class CancelAppointmentsUseCase
             };
 
             return Result.Invalid(message)
-                         .ToResult(appointmentsThatCannotBeCanceled);
+                         .WithData(appointmentsThatCannotBeCanceled);
         }
 
         return Result.Success(SuccessfullyCancelledAppointmentsMessage);
