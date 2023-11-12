@@ -43,10 +43,10 @@ public class CancelAppointmentsUseCase
     {
         // Stores appointments whose stipulated date and time have not passed.
         var appointmentsCanBeCancelled = request.Appointments
-            .Where(appointmentDto => (appointmentDto.AppointmentDate + appointmentDto.StartHour) > _dateTimeService.Now);
+            .Where(appointment => (appointment.AppointmentDate + appointment.StartHour) > _dateTimeService.Now);
 
         var appointmentsIdCanBeCancelled = appointmentsCanBeCancelled
-            .Select(appointmentDto => appointmentDto.AppointmentId);
+            .Select(appointment => appointment.AppointmentId);
 
         if (currentEmployee.IsOnlyDentist())
         {
@@ -70,7 +70,7 @@ public class CancelAppointmentsUseCase
             var appointmentsThatCannotBeCanceled = new CancelAppointmentsResponse
             {
                 AppointmentsId = request.Appointments
-                    .Select(appointmentDto => appointmentDto.AppointmentId)
+                    .Select(appointment => appointment.AppointmentId)
                     .Except(appointmentsIdCanBeCancelled)
             };
 
