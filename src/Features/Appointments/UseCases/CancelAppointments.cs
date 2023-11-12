@@ -73,12 +73,9 @@ public class CancelAppointmentsUseCase
                     .Select(appointmentDto => appointmentDto.AppointmentId)
                     .Except(appointmentsIdCanBeCancelled)
             };
-            return new Result<CancelAppointmentsResponse>
-            {
-                Message = message,
-                Data = appointmentsThatCannotBeCanceled,
-                Status = ResultStatus.Invalid
-            };
+
+            return Result.Invalid(message)
+                         .ToResult(appointmentsThatCannotBeCanceled);
         }
 
         return Result.Success(SuccessfullyCancelledAppointmentsMessage);
