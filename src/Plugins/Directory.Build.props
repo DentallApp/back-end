@@ -22,4 +22,9 @@
       <ExcludeAssets>runtime</ExcludeAssets>
     </ProjectReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CPlugin.Net.Attributes" Private="false" ExcludeAssets="runtime" />
+  </ItemGroup>
+  
 </Project>
