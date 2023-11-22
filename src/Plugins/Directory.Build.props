@@ -1,17 +1,21 @@
+<!-- Global settings for all plugins. -->
 <Project>
   <!-- Import global properties from root directory. -->
-  <Import Project="$(SolutionDir)Directory.build.props" />
+  <Import Project="..\..\Directory.Build.props" />
   <PropertyGroup>
+    <Configuration Condition="$(Configuration) == ''">Debug</Configuration>
+    <!-- Find the 'DentallApp.sln' file in the parent directories from the current path where the .props file is located. -->
+    <ProjectRootDir>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'DentallApp.sln'))</ProjectRootDir>
     <!-- Indicates the output directory where the plug-in assemblies should be copied. -->
-    <OutDir>$(SolutionDir)src/HostApplication/bin/$(Configuration)/$(TargetFramework)/plugins/$(MSBuildProjectName)</OutDir>
+    <OutDir>$(ProjectRootDir)/src/HostApplication/bin/$(Configuration)/$(TargetFramework)/plugins/$(MSBuildProjectName)</OutDir>
     <!-- 
       Indicates that an assembly is a dynamically loaded component. 
       This will copy the NuGet packages to the output directory.
     -->
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
+  
   <ItemGroup>
-    <!-- This project is available for all plug-ins. -->
     <ProjectReference Include="..\..\Shared\DentallApp.Shared.csproj">
       <!-- This tells MSBuild not to copy DentallApp.Shared.dll to the plug-in output directory. -->
       <Private>false</Private>
@@ -24,7 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CPlugin.Net.Attributes" Private="false" ExcludeAssets="runtime" />
+    <PackageReference Include="CPlugin.Net.Attributes">
+      <!-- This avoids having to copy CPlugin.Net.Attributes.dll and its dependencies to the plug-in output directory. -->
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
   </ItemGroup>
   
 </Project>
