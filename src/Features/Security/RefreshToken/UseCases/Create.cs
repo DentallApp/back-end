@@ -43,10 +43,10 @@ public class CreateRefreshTokenUseCase
             return Result.NotFound(UsernameNotFoundMessage);
 
         if (user.RefreshToken != request.OldRefreshToken)
-            return Result.Invalid(RefreshTokenInvalidMessage);
+            return Result.Unauthorized(RefreshTokenInvalidMessage);
 
         if (_dateTimeService.Now >= user.RefreshTokenExpiry)
-            return Result.Invalid(RefreshTokenExpiredMessage);
+            return Result.Unauthorized(RefreshTokenExpiredMessage);
 
         var response = new CreateRefreshTokenResponse
         {
