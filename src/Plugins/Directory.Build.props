@@ -16,7 +16,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\DentallApp.Shared.csproj">
+    <ProjectReference Include="$(ProjectRootDir)/src/Shared/DentallApp.Shared.csproj">
       <!-- This tells MSBuild not to copy DentallApp.Shared.dll to the plug-in output directory. -->
       <Private>false</Private>
       <!-- 
