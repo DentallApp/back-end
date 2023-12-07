@@ -7,14 +7,14 @@ public static class Startup
     /// </summary>
     public static void InitializePlugins(this WebApplicationBuilder builder)
     {
-        var configuration = new CPluginEnvConfiguration();
-        PluginLoader.SetConfiguration(configuration);
-        foreach (var pluginStartup in PluginLoader.Load<IPluginStartup>())
+        var envConfiguration = new CPluginEnvConfiguration();
+        PluginLoader.Load(envConfiguration);
+        foreach (var pluginStartup in TypeFinder.FindSubtypesOf<IPluginStartup>())
         {
             pluginStartup.ConfigureWebApplicationBuilder(builder);
         }
 
-        IEnumerable<IModelCreating> models = PluginLoader.Load<IModelCreating>();
+        IEnumerable<IModelCreating> models = TypeFinder.FindSubtypesOf<IModelCreating>();
         builder.Services.AddSingleton(models);
     }
 }
