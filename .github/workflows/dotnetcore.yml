@@ -1,0 +1,27 @@
+name: DentallApp.Backend
+
+on: 
+  push:
+    branches: 
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        dotnet-version: ['8.x']
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+    - name: Test 
+      run: |
+       dotnet test ./tests/UnitTests/DentallApp.UnitTests.csproj
+       dotnet test ./tests/ChatBot/DentallApp.IntegrationTests.ChatBot.csproj
