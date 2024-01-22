@@ -23,5 +23,5 @@ jobs:
         dotnet-version: ${{ matrix.dotnet-version }}
     - name: Test 
       run: |
-       dotnet test ./tests/UnitTests/DentallApp.UnitTests.csproj
-       dotnet test ./tests/ChatBot/DentallApp.IntegrationTests.ChatBot.csproj
+       dotnet test ./tests/UnitTests/DentallApp.UnitTests.csproj -c Release
+       dotnet test ./tests/ChatBot/DentallApp.IntegrationTests.ChatBot.csproj -c Release
