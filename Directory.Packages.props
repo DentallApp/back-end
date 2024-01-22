@@ -31,6 +31,7 @@
     <PackageVersion Include="SimpleResults" Version="2.3.1" />
     <PackageVersion Include="SimpleResults.AspNetCore" Version="2.3.1" />
     <PackageVersion Include="DotEnv.Core" Version="3.0.0" />
+    <PackageVersion Include="CopyPluginsToPublishDirectory" Version="1.0.0" />
     <PackageVersion Include="CPlugin.Net" Version="1.0.0" />
     <PackageVersion Include="CPlugin.Net.Attributes" Version="1.0.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.3.1" />
