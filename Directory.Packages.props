@@ -34,6 +34,8 @@
     <PackageVersion Include="CopyPluginsToPublishDirectory" Version="1.0.0" />
     <PackageVersion Include="CPlugin.Net" Version="1.0.0" />
     <PackageVersion Include="CPlugin.Net.Attributes" Version="1.0.0" />
+    <PackageVersion Include="CopySqlFilesToOutputDirectory" Version="1.0.0" />
+    <PackageVersion Include="YeSql.Net" Version="1.0.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.3.1" />
     <PackageVersion Include="Twilio" Version="6.2.1" />
     <PackageVersion Include="coverlet.msbuild" Version="3.1.2" />

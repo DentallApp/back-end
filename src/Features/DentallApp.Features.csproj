@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CopySqlFilesToOutputDirectory" />
+    <PackageReference Include="YeSql.Net" />
     <PackageReference Include="SimpleResults.AspNetCore" />
     <PackageReference Include="linq2db.EntityFrameworkCore" />
     <PackageReference Include="Dapper" />
