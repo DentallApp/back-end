@@ -6,5 +6,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1591</NoWarn>
     <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 </Project>
