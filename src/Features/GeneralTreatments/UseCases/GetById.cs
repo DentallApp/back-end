@@ -7,18 +7,11 @@ public class GetGeneralTreatmentByIdResponse
     public string ImageUrl { get; init; }
 }
 
-public class GetGeneralTreatmentByIdUseCase
+public class GetGeneralTreatmentByIdUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetGeneralTreatmentByIdUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result<GetGeneralTreatmentByIdResponse>> ExecuteAsync(int id)
     {
-        var generalTreatment = await _context.Set<GeneralTreatment>()
+        var generalTreatment = await context.Set<GeneralTreatment>()
             .Where(treatment => treatment.Id == id)
             .Select(treatment => new GetGeneralTreatmentByIdResponse
             {

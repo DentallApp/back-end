@@ -6,18 +6,11 @@ public class GetGendersResponse
     public string Name { get; init; }
 }
 
-public class GetGendersUseCase
+public class GetGendersUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetGendersUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetGendersResponse>> ExecuteAsync()
     {
-        var genders = await _context.Set<Gender>()
+        var genders = await context.Set<Gender>()
             .Select(gender => new GetGendersResponse
             {
                 Id   = gender.Id,

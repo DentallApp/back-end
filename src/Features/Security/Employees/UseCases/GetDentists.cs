@@ -12,21 +12,14 @@ public class GetDentistsResponse
     public string FullName { get; init; }
 }
 
-public class GetDentistsUseCase
+public class GetDentistsUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetDentistsUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetDentistsResponse>> ExecuteAsync(GetDentistsRequest request)
     {
         var queryable = 
-           (from employee in _context.Set<Employee>()
-            join person in _context.Set<Person>() on employee.PersonId equals person.Id
-            join userRole in _context.Set<UserRole>() on employee.UserId equals userRole.UserId
+           (from employee in context.Set<Employee>()
+            join person in context.Set<Person>() on employee.PersonId equals person.Id
+            join userRole in context.Set<UserRole>() on employee.UserId equals userRole.UserId
             where userRole.RoleId == RolesId.Dentist
             select new { employee, person });
 

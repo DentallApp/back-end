@@ -9,22 +9,15 @@ public class DeleteFavoriteDentistRequest
 /// <summary>
 /// Represents the use case to delete a favorite dentist of a basic user.
 /// </summary>
-public class DeleteFavoriteDentistUseCase
+public class DeleteFavoriteDentistUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public DeleteFavoriteDentistUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     /// <summary>
     /// Executes the use case. Deletes by favorite dentist id.
     /// </summary>
     /// <param name="request">Contains the user id and favorite dentist id.</param>
     public async Task<Result> ExecuteAsync(DeleteFavoriteDentistRequest request)
     {
-        var favoriteDentist = await _context.Set<FavoriteDentist>()
+        var favoriteDentist = await context.Set<FavoriteDentist>()
             .Where(favoriteDentist => favoriteDentist.Id == request.FavoriteDentistId)
             .AsNoTracking()
             .FirstOrDefaultAsync();
@@ -35,8 +28,8 @@ public class DeleteFavoriteDentistUseCase
         if (favoriteDentist.UserId != request.UserId)
             return Result.Forbidden(ResourceFromAnotherUserMessage);
 
-        _context.Remove(favoriteDentist);
-        await _context.SaveChangesAsync();
+        context.Remove(favoriteDentist);
+        await context.SaveChangesAsync();
         return Result.DeletedResource();
     }
 
@@ -47,7 +40,7 @@ public class DeleteFavoriteDentistUseCase
     /// <param name="dentistId">The dentist id.</param>
     public async Task<Result> ExecuteAsync(int userId, int dentistId)
     {
-        int deletedRows = await _context.Set<FavoriteDentist>()
+        int deletedRows = await context.Set<FavoriteDentist>()
             .Where(favoriteDentist =>
                 favoriteDentist.UserId == userId &&
                 favoriteDentist.DentistId == dentistId)

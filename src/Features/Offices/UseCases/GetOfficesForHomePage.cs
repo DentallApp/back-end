@@ -11,18 +11,11 @@ public class GetOfficesForHomePageResponse
 /// <summary>
 /// Represents a use case to obtain the information of each active office for the home page.
 /// </summary>
-public class GetOfficesForHomePageUseCase
+public class GetOfficesForHomePageUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetOfficesForHomePageUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetOfficesForHomePageResponse>> ExecuteAsync()
     {
-        var offices = await _context.Set<Office>()
+        var offices = await context.Set<Office>()
             .Where(office => office.OfficeSchedules.Any())
             .Select(office => new GetOfficesForHomePageResponse
             {

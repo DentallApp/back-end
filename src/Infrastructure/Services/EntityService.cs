@@ -1,16 +1,9 @@
 ﻿namespace DentallApp.Infrastructure.Services;
 
 /// <inheritdoc cref="IEntityService{TEntity}" />
-public class EntityService<TEntity> 
+public class EntityService<TEntity>(IRepository<TEntity> repository)
     : IEntityService<TEntity> where TEntity : BaseEntity, IIntermediateEntity, new()
 {
-    private readonly IRepository<TEntity> _repository;
-
-    public EntityService(IRepository<TEntity> repository)
-    {
-        _repository = repository;
-    }
-
     public void Update(int key, ref List<TEntity> source, ref List<int> identifiers)
     {
         identifiers = identifiers.Distinct().Order().ToList();
@@ -24,11 +17,11 @@ public class EntityService<TEntity>
         {
             foreach (TEntity currentEntity in source)
                 if (identifiers.NotContains(currentEntity.SecondaryForeignKey))
-                    _repository.Remove(currentEntity);
+                    repository.Remove(currentEntity);
 
             foreach (int id in identifiers)
                 if (source.NotContains(id))
-                    _repository.Add(new TEntity { PrimaryForeignKey = key, SecondaryForeignKey = id });
+                    repository.Add(new TEntity { PrimaryForeignKey = key, SecondaryForeignKey = id });
         }
     }
 }

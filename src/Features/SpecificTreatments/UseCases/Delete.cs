@@ -1,17 +1,10 @@
 ﻿namespace DentallApp.Features.SpecificTreatments.UseCases;
 
-public class DeleteSpecificTreatmentUseCase
+public class DeleteSpecificTreatmentUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public DeleteSpecificTreatmentUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(int id)
     {
-        int deletedRows = await _context.Set<SpecificTreatment>()
+        int deletedRows = await context.Set<SpecificTreatment>()
             .Where(treatment => treatment.Id == id)
             .ExecuteDeleteAsync();
 

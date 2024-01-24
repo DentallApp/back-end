@@ -33,20 +33,13 @@ public class CreateDependentRequest
     }
 }
 
-public class CreateDependentUseCase
+public class CreateDependentUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public CreateDependentUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result<CreatedId>> ExecuteAsync(int userId, CreateDependentRequest request)
     {
         var dependent = request.MapToDependent(userId);
-        _context.Add(dependent);
-        await _context.SaveChangesAsync();
+        context.Add(dependent);
+        await context.SaveChangesAsync();
         return Result.CreatedResource(dependent.Id);
     }
 }

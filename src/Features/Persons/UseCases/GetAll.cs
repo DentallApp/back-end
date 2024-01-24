@@ -11,18 +11,11 @@ public class GetPersonsResponse
     public string Email { get; init; }
 }
 
-public class GetPersonsUseCase
+public class GetPersonsUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetPersonsUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetPersonsResponse>> ExecuteAsync(string valueToSearch)
     {
-        var persons = await _context.Set<Person>()
+        var persons = await context.Set<Person>()
             .Where(person =>
                     person.Names.Contains(valueToSearch) ||
                     person.LastNames.Contains(valueToSearch) ||

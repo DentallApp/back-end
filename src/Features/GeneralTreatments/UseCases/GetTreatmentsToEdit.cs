@@ -8,18 +8,11 @@ public class GetGeneralTreatmentsToEditResponse
     public int Duration { get; init; }
 }
 
-public class GetGeneralTreatmentsToEditUseCase
+public class GetGeneralTreatmentsToEditUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetGeneralTreatmentsToEditUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetGeneralTreatmentsToEditResponse>> ExecuteAsync()
     {
-        var generalTreatments = await _context.Set<GeneralTreatment>()
+        var generalTreatments = await context.Set<GeneralTreatment>()
             .Select(treatment => new GetGeneralTreatmentsToEditResponse
             {
                 Id          = treatment.Id,

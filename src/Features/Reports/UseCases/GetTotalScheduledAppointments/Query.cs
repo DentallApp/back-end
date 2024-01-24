@@ -14,15 +14,8 @@ public class GetTotalScheduledAppointmentsResponse
     public int Total { get; init; }
 }
 
-public class GetTotalScheduledAppointmentsUseCase
+public class GetTotalScheduledAppointmentsUseCase(IDbConnection dbConnection)
 {
-    private readonly IDbConnection _dbConnection;
-
-    public GetTotalScheduledAppointmentsUseCase(IDbConnection dbConnection)
-    {
-        _dbConnection = dbConnection;
-    }
-
     public async Task<IEnumerable<GetTotalScheduledAppointmentsResponse>> ExecuteAsync(GetTotalScheduledAppointmentsRequest request)
     {
         var sql = @"
@@ -40,7 +33,7 @@ public class GetTotalScheduledAppointmentsUseCase
             GROUP BY a.dentist_id
             ORDER BY Total DESC
         ";
-        return await _dbConnection.QueryAsync<GetTotalScheduledAppointmentsResponse>(sql, new
+        return await dbConnection.QueryAsync<GetTotalScheduledAppointmentsResponse>(sql, new
         {
             AppointmentStatusId.Scheduled,
             request.From,

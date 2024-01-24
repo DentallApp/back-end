@@ -15,36 +15,24 @@ public class DownloadProformaInvoiceRequest
     public double TotalPrice { get; init; }
     public IEnumerable<DentalTreatment> DentalTreatments { get; init; }
 
-    public object MapToObject()
+    public object MapToObject() => new
     {
-        return new
-        {
-            FullName,
-            Document,
-            DateIssue,
-            TotalPrice,
-            DentalTreatments
-        };
-    }
+        FullName,
+        Document,
+        DateIssue,
+        TotalPrice,
+        DentalTreatments
+    };
 }
 
-public class DownloadProformaInvoiceUseCase
+public class DownloadProformaInvoiceUseCase(
+    IHtmlTemplateLoader htmlTemplateLoader,
+    IHtmlConverter htmlConverter)
 {
-    private readonly IHtmlTemplateLoader _htmlTemplateLoader;
-    private readonly IHtmlConverter _htmlConverter;
-
-    public DownloadProformaInvoiceUseCase(
-        IHtmlTemplateLoader htmlTemplateLoader, 
-        IHtmlConverter htmlConverter)
-    {
-        _htmlTemplateLoader = htmlTemplateLoader;
-        _htmlConverter = htmlConverter;
-    }
-
     public async Task<byte[]> DownloadAsPdfAsync(DownloadProformaInvoiceRequest request)
     {
-        var html = await _htmlTemplateLoader
+        var html = await htmlTemplateLoader
             .LoadAsync("./Templates/ProformaInvoice.html", request.MapToObject());
-        return _htmlConverter.ConvertToPdf(html, new MemoryStream());
+        return htmlConverter.ConvertToPdf(html, new MemoryStream());
     }
 }

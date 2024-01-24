@@ -1,19 +1,10 @@
 namespace DentallApp.Infrastructure.Persistence;
 
-public partial class AppDbContext : DbContext
+public partial class AppDbContext(
+    IEnumerable<IModelCreating> modelCreatings,
+    IWebHostEnvironment env,
+    DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    private readonly IEnumerable<IModelCreating> _modelCreatings;
-    private readonly IWebHostEnvironment _env;
-
-    public AppDbContext(
-        IEnumerable<IModelCreating> modelCreatings,
-        IWebHostEnvironment env, 
-        DbContextOptions<AppDbContext> options) : base(options)
-    {
-        _modelCreatings = modelCreatings;
-        _env = env;
-    }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.ConfigureWarnings(warnings =>
@@ -26,7 +17,7 @@ public partial class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Execute the entity configurations that expose the plug-ins.
-        foreach (var modelCreating in _modelCreatings)
+        foreach (var modelCreating in modelCreatings)
         {
             modelCreating.OnModelCreating(modelBuilder);
         }
@@ -63,7 +54,7 @@ public partial class AppDbContext : DbContext
             .CreateDefaultWeekDays()
             .CreateDefaultGenders();
 
-        if (_env.IsDevelopment())
+        if (env.IsDevelopment())
         {
             modelBuilder
                 .CreateDefaultGeneralTreatments()

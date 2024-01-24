@@ -20,18 +20,11 @@ public class UpdateEmployeeScheduleRequest
     }
 }
 
-public class UpdateEmployeeScheduleUseCase
+public class UpdateEmployeeScheduleUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public UpdateEmployeeScheduleUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(int id, UpdateEmployeeScheduleRequest request)
     {
-        var employeeSchedule = await _context.Set<EmployeeSchedule>()
+        var employeeSchedule = await context.Set<EmployeeSchedule>()
             .Where(employeeSchedule => employeeSchedule.Id == id)
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync();
@@ -40,7 +33,7 @@ public class UpdateEmployeeScheduleUseCase
             return Result.NotFound();
 
         request.MapToEmployeeSchedule(employeeSchedule);
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.UpdatedResource();
     }
 }

@@ -9,35 +9,25 @@ public class CreateGeneralTreatmentRequest
     public IFormFile Image { get; init; }
     public int Duration { get; init; }
 
-    public GeneralTreatment MapToGeneralTreatment()
+    public GeneralTreatment MapToGeneralTreatment() => new()
     {
-        return new()
-        {
-            Name        = Name,
-            Description = Description,
-            Duration    = Duration,
-            ImageUrl    = Image.GetRandomImageName()
-        };
-    }
+        Name        = Name,
+        Description = Description,
+        Duration    = Duration,
+        ImageUrl    = Image.GetRandomImageName()
+    };
 }
 
-public class CreateGeneralTreatmentUseCase
+public class CreateGeneralTreatmentUseCase(DbContext context, AppSettings settings)
 {
-    private readonly DbContext _context;
-    private readonly string _basePath;
-
-    public CreateGeneralTreatmentUseCase(DbContext context, AppSettings settings)
-    {
-        _context = context;
-        _basePath = settings.DentalServicesImagesPath;
-    }
+    private readonly string _basePath = settings.DentalServicesImagesPath;
 
     public async Task<Result<CreatedId>> ExecuteAsync(CreateGeneralTreatmentRequest request)
     {
         var generalTreatment = request.MapToGeneralTreatment();
-        _context.Add(generalTreatment);
+        context.Add(generalTreatment);
         await request.Image.WriteAsync(Path.Combine(_basePath, generalTreatment.ImageUrl));
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.CreatedResource(generalTreatment.Id);
     }
 }

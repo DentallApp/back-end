@@ -33,18 +33,11 @@ public class GetEmployeesToEditResponse
     public bool IsDeleted { get; init; }
 }
 
-public class GetEmployeesToEditUseCase
+public class GetEmployeesToEditUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetEmployeesToEditUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetEmployeesToEditResponse>> ExecuteAsync(ClaimsPrincipal currentEmployee)
     {
-        var queryable = _context.Set<Employee>().AsQueryable();
+        var queryable = context.Set<Employee>().AsQueryable();
 
         if (currentEmployee.IsAdmin())
         {

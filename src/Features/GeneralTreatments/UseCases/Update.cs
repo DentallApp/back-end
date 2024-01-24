@@ -17,20 +17,13 @@ public class UpdateGeneralTreatmentRequest
     }
 }
 
-public class UpdateGeneralTreatmentUseCase
+public class UpdateGeneralTreatmentUseCase(DbContext context, AppSettings settings)
 {
-    private readonly DbContext _context;
-    private readonly string _basePath;
-
-    public UpdateGeneralTreatmentUseCase(DbContext context, AppSettings settings)
-    {
-        _context = context;
-        _basePath = settings.DentalServicesImagesPath;
-    }
+    private readonly string _basePath = settings.DentalServicesImagesPath;
 
     public async Task<Result> ExecuteAsync(int id, UpdateGeneralTreatmentRequest request)
     {
-        var generalTreatment = await _context.Set<GeneralTreatment>()
+        var generalTreatment = await context.Set<GeneralTreatment>()
             .Where(treatment => treatment.Id == id)
             .FirstOrDefaultAsync();
 
@@ -44,7 +37,7 @@ public class UpdateGeneralTreatmentUseCase
             File.Delete(Path.Combine(_basePath, oldImageUrl));
             await request.Image.WriteAsync(Path.Combine(_basePath, generalTreatment.ImageUrl));
         }
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.UpdatedResource();
     }
 }

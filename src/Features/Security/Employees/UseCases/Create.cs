@@ -50,25 +50,14 @@ public class CreateEmployeeRequest
     }
 }
 
-public class CreateEmployeeUseCase
+public class CreateEmployeeUseCase(
+    DbContext context,
+    IUserRepository userRepository,
+    IPasswordHasher passwordHasher)
 {
-    private readonly DbContext _context;
-    private readonly IUserRepository _userRepository;
-    private readonly IPasswordHasher _passwordHasher;
-
-    public CreateEmployeeUseCase(
-        DbContext context, 
-        IUserRepository userRepository, 
-        IPasswordHasher passwordHasher)
-    {
-        _context = context;
-        _userRepository = userRepository;
-        _passwordHasher = passwordHasher;
-    }
-
     public async Task<Result<CreatedId>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateEmployeeRequest request)
     {
-        if (await _userRepository.UserExistsAsync(request.UserName))
+        if (await userRepository.UserExistsAsync(request.UserName))
             return Result.Conflict(UsernameAlreadyExistsMessage);
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
@@ -77,22 +66,22 @@ public class CreateEmployeeUseCase
         if (currentEmployee.HasNotPermissions(request.Roles))
             return Result.Forbidden(PermitsNotGrantedMessage);
 
-        var passwordHash = _passwordHasher.HashPassword(request.Password);
+        var passwordHash = passwordHasher.HashPassword(request.Password);
         var employee = request.MapToEmployee(passwordHash);
         var rolesId = request.Roles.RemoveDuplicates();
         foreach (var roleId in rolesId)
         {
-            _context.Add(new UserRole { User = employee.User, RoleId = roleId });
+            context.Add(new UserRole { User = employee.User, RoleId = roleId });
         }
 
         var specialtiesId = (request.SpecialtiesId ?? Enumerable.Empty<int>()).RemoveDuplicates();
         foreach (var specialtyId in specialtiesId)
         {
-            _context.Add(new EmployeeSpecialty { Employee = employee, SpecialtyId = specialtyId });
+            context.Add(new EmployeeSpecialty { Employee = employee, SpecialtyId = specialtyId });
         }
 
-        _context.Add(employee);
-        await _context.SaveChangesAsync();
+        context.Add(employee);
+        await context.SaveChangesAsync();
         return Result.CreatedResource(employee.Id, CreateEmployeeAccountMessage);
     }
 }

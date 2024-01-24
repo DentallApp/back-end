@@ -17,15 +17,8 @@ public class GetTotalAppointmentsResponse
     public int TotalAppointmentsCancelledByEmployee { get; init; }
 }
 
-public class GetTotalAppointmentsUseCase
+public class GetTotalAppointmentsUseCase(IDbConnection dbConnection)
 {
-    private readonly IDbConnection _dbConnection;
-
-    public GetTotalAppointmentsUseCase(IDbConnection dbConnection)
-    {
-        _dbConnection = dbConnection;
-    }
-
     public async Task<GetTotalAppointmentsResponse> ExecuteAsync(GetTotalAppointmentsRequest request)
     {
         var sql = @"
@@ -45,7 +38,7 @@ public class GetTotalAppointmentsUseCase
                   (a.office_id = @OfficeId OR @OfficeId = 0) AND
                   (a.dentist_id = @DentistId OR @DentistId = 0)
         ";
-        var result = await _dbConnection.QueryAsync<GetTotalAppointmentsResponse>(sql, new
+        var result = await dbConnection.QueryAsync<GetTotalAppointmentsResponse>(sql, new
         {
             AppointmentStatusId.Assisted,
             AppointmentStatusId.NotAssisted,

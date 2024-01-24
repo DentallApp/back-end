@@ -6,18 +6,11 @@ public class GetKinshipsResponse
     public string Name { get; init; }
 }
 
-public class GetKinshipsUseCase
+public class GetKinshipsUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetKinshipsUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetKinshipsResponse>> ExecuteAsync()
     {
-        var kinships = await _context.Set<Kinship>()
+        var kinships = await context.Set<Kinship>()
             .Select(kinship => new GetKinshipsResponse
             {
                 Id   = kinship.Id,

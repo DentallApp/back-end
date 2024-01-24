@@ -6,18 +6,11 @@ public class GetRolesResponse
     public string Name { get; init; }
 }
 
-public class GetRolesUseCase
+public class GetRolesUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetRolesUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetRolesResponse>> ExecuteAsync(bool isSuperadmin)
     {
-        var roles = await _context.Set<Role>()
+        var roles = await context.Set<Role>()
             .Select(role => new GetRolesResponse
             {
                 Id   = role.Id,

@@ -14,18 +14,11 @@ public class UpdateSpecificTreatmentRequest
     }
 }
 
-public class UpdateSpecificTreatmentUseCase
+public class UpdateSpecificTreatmentUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public UpdateSpecificTreatmentUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(int id, UpdateSpecificTreatmentRequest request)
     {
-        var specificTreatment = await _context.Set<SpecificTreatment>()
+        var specificTreatment = await context.Set<SpecificTreatment>()
             .Where(treatment => treatment.Id == id)
             .FirstOrDefaultAsync();
 
@@ -33,7 +26,7 @@ public class UpdateSpecificTreatmentUseCase
             return Result.NotFound();
 
         request.MapToSpecificTreatment(specificTreatment);
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.UpdatedResource();
     }
 }

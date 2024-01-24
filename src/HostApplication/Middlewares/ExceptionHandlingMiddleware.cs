@@ -1,21 +1,12 @@
 ﻿namespace DentallApp.HostApplication.Middlewares;
 
-public class ExceptionHandlingMiddleware
+public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
-
-    public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
-    {
-        _next = next;
-        _logger = logger;
-    }
-
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await next(context);
         }
         catch (Exception ex)
         {
@@ -25,8 +16,8 @@ public class ExceptionHandlingMiddleware
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
             var exception = exceptionHandlerPathFeature?.Error ?? ex;
 
-            _logger.LogError("[Error]: There was an internal error on the server.");
-            _logger.LogError("[Exception]: {exception}", exception);
+            logger.LogError("[Error]: There was an internal error on the server.");
+            logger.LogError("[Exception]: {exception}", exception);
 
             Result result = Result.CriticalError(UnexpectedErrorMessage);
             if (exception is UniqueConstraintException)

@@ -22,18 +22,11 @@ public class UpdateDependentRequest
     }
 }
 
-public class UpdateDependentUseCase
+public class UpdateDependentUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public UpdateDependentUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(int dependentId, int userId, UpdateDependentRequest request)
     {
-        var dependent = await _context.Set<Dependent>()
+        var dependent = await context.Set<Dependent>()
             .Include(dependent => dependent.Person)
             .Where(dependent => dependent.Id == dependentId)
             .FirstOrDefaultAsync();
@@ -45,7 +38,7 @@ public class UpdateDependentUseCase
             return Result.Forbidden(ResourceFromAnotherUserMessage);
 
         request.MapToDependent(dependent);
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.UpdatedResource();
     }
 }

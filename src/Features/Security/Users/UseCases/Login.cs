@@ -104,48 +104,35 @@ public static class UserLoginMapper
     }
 }
 
-public class UserLoginUseCase
+public class UserLoginUseCase(
+    DbContext context,
+    IUserRepository userRepository,
+    ITokenService tokenService,
+    IPasswordHasher passwordHasher)
 {
-    private readonly DbContext _context;
-    private readonly IUserRepository _userRepository;
-    private readonly ITokenService _tokenService;
-    private readonly IPasswordHasher _passwordHasher;
-
-    public UserLoginUseCase(
-        DbContext context, 
-        IUserRepository userRepository, 
-        ITokenService tokenService, 
-        IPasswordHasher passwordHasher)
-    {
-        _context = context;
-        _userRepository = userRepository;
-        _tokenService = tokenService;
-        _passwordHasher = passwordHasher;
-    }
-
     public async Task<Result<UserLoginResponse>> ExecuteAsync(UserLoginRequest request)
     {
-        var user = await _userRepository.GetFullUserProfileAsync(request.UserName);
-        if (user is null || !_passwordHasher.Verify(request.Password, user.Password))
+        var user = await userRepository.GetFullUserProfileAsync(request.UserName);
+        if (user is null || !passwordHasher.Verify(request.Password, user.Password))
             return Result.Unauthorized(EmailOrPasswordIncorrectMessage);
 
         if (user.IsUnverified())
             return Result.Forbidden(EmailNotConfirmedMessage);
 
-        user.RefreshToken = _tokenService.CreateRefreshToken();
-        user.RefreshTokenExpiry = _tokenService.CreateExpiryForRefreshToken();
-        await _context.SaveChangesAsync();
+        user.RefreshToken = tokenService.CreateRefreshToken();
+        user.RefreshTokenExpiry = tokenService.CreateExpiryForRefreshToken();
+        await context.SaveChangesAsync();
 
         if (user.IsBasicUser())
         {
             var userLoginResponse = user.MapToUserLoginResponse();
             var userClaims = userLoginResponse.MapToUserClaims();
-            userLoginResponse.AccessToken = _tokenService.CreateAccessToken(userClaims);
+            userLoginResponse.AccessToken = tokenService.CreateAccessToken(userClaims);
             userLoginResponse.RefreshToken = user.RefreshToken;
             return Result.Success(userLoginResponse, SuccessfulLoginMessage);
         }
 
-        var employee = await _context.Set<Employee>()
+        var employee = await context.Set<Employee>()
             .Include(employee => employee.Office)
             .Where(employee => employee.UserId == user.Id)
             .IgnoreQueryFilters()
@@ -158,7 +145,7 @@ public class UserLoginUseCase
         employee.User = user;
         var employeeLoginResponse = employee.MapToEmployeeLoginResponse();
         var employeeClaims = employeeLoginResponse.MapToEmployeeClaims();
-        employeeLoginResponse.AccessToken = _tokenService.CreateAccessToken(employeeClaims);
+        employeeLoginResponse.AccessToken = tokenService.CreateAccessToken(employeeClaims);
         employeeLoginResponse.RefreshToken = user.RefreshToken;
         UserLoginResponse response = employeeLoginResponse;
         return Result.Success(response, SuccessfulLoginMessage);

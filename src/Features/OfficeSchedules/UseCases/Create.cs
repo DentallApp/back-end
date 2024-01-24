@@ -7,35 +7,25 @@ public class CreateOfficeScheduleRequest
     public TimeSpan StartHour { get; init; }
     public TimeSpan EndHour { get; init; }
 
-    public OfficeSchedule MapToOfficeSchedule()
+    public OfficeSchedule MapToOfficeSchedule() => new()
     {
-        return new()
-        {
-            WeekDayId = WeekDayId,
-            OfficeId  = OfficeId,
-            StartHour = StartHour,
-            EndHour   = EndHour
-        };
-    }
+        WeekDayId = WeekDayId,
+        OfficeId  = OfficeId,
+        StartHour = StartHour,
+        EndHour   = EndHour
+    };
 }
 
-public class CreateOfficeScheduleUseCase
+public class CreateOfficeScheduleUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public CreateOfficeScheduleUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result<CreatedId>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateOfficeScheduleRequest request)
     {
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
             return Result.Forbidden(OfficeNotAssignedMessage);
 
         var officeSchedule = request.MapToOfficeSchedule();
-        _context.Add(officeSchedule);
-        await _context.SaveChangesAsync();
+        context.Add(officeSchedule);
+        await context.SaveChangesAsync();
         return Result.CreatedResource(officeSchedule.Id);
     }
 }

@@ -6,31 +6,21 @@ public class CreateSpecificTreatmentRequest
     public double Price { get; init; }
     public int GeneralTreatmentId { get; init; }
 
-    public SpecificTreatment MapToSpecificTreatment()
+    public SpecificTreatment MapToSpecificTreatment() => new()
     {
-        return new()
-        {
-            Name  = Name,
-            Price = Price,
-            GeneralTreatmentId = GeneralTreatmentId
-        };
-    }
+        Name  = Name,
+        Price = Price,
+        GeneralTreatmentId = GeneralTreatmentId
+    };
 }
 
-public class CreateSpecificTreatmentUseCase
+public class CreateSpecificTreatmentUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public CreateSpecificTreatmentUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result<CreatedId>> ExecuteAsync(CreateSpecificTreatmentRequest request)
     {
         var specificTreatment = request.MapToSpecificTreatment();
-        _context.Add(specificTreatment);
-        await _context.SaveChangesAsync();
+        context.Add(specificTreatment);
+        await context.SaveChangesAsync();
         return Result.CreatedResource(specificTreatment.Id);
     }
 }

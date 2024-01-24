@@ -9,7 +9,7 @@ public class ProformaInvoiceController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> DownloadAsPdf(
         [FromBody]DownloadProformaInvoiceRequest request,
-        [FromServices]DownloadProformaInvoiceUseCase useCase)
+        DownloadProformaInvoiceUseCase useCase)
     {
         var contents = await useCase.DownloadAsPdfAsync(request);
         return File(contents, "application/pdf", "ProformaReporte.pdf");

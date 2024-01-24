@@ -17,18 +17,11 @@ public class GetEmployeeOverviewResponse
     public IEnumerable<Schedule> Schedules { get; init; }
 }
 
-public class GetEmployeeOverviewUseCase
+public class GetEmployeeOverviewUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetEmployeeOverviewUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetEmployeeOverviewResponse>> ExecuteAsync(int? officeId)
     {
-        var employeeSchedules = await _context.Set<Employee>()
+        var employeeSchedules = await context.Set<Employee>()
             .OptionalWhere(officeId, employee => employee.OfficeId == officeId)
             .Where(employee => employee.EmployeeSchedules.Any())
             .Select(employee => new GetEmployeeOverviewResponse

@@ -23,40 +23,29 @@ public class CancelAppointmentsResponse
     public IEnumerable<int> AppointmentsId { get; init; }
 }
 
-public class CancelAppointmentsUseCase
+public class CancelAppointmentsUseCase(
+    IAppointmentRepository appointmentRepository,
+    IInstantMessaging instantMessaging,
+    IDateTimeService dateTimeService)
 {
-    private readonly IAppointmentRepository _appointmentRepository;
-    private readonly IInstantMessaging _instantMessaging;
-    private readonly IDateTimeService _dateTimeService;
-
-    public CancelAppointmentsUseCase(
-        IAppointmentRepository appointmentRepository,
-        IInstantMessaging instantMessaging,
-        IDateTimeService dateTimeService)
-    {
-        _appointmentRepository = appointmentRepository;
-        _instantMessaging = instantMessaging;
-        _dateTimeService = dateTimeService;
-    }
-
     public async Task<Result<CancelAppointmentsResponse>> ExecuteAsync(ClaimsPrincipal currentEmployee, CancelAppointmentsRequest request)
     {
         // Stores appointments whose stipulated date and time have not passed.
         var appointmentsCanBeCancelled = request.Appointments
-            .Where(appointment => (appointment.AppointmentDate + appointment.StartHour) > _dateTimeService.Now);
+            .Where(appointment => (appointment.AppointmentDate + appointment.StartHour) > dateTimeService.Now);
 
         var appointmentsIdCanBeCancelled = appointmentsCanBeCancelled
             .Select(appointment => appointment.AppointmentId);
 
         if (currentEmployee.IsOnlyDentist())
         {
-            await _appointmentRepository
+            await appointmentRepository
                 .CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appointmentsIdCanBeCancelled);
         }
         else
         {
             int officeId = currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId();
-            await _appointmentRepository
+            await appointmentRepository
                 .CancelAppointmentsByOfficeIdAsync(officeId, appointmentsIdCanBeCancelled);
         }
 
@@ -94,7 +83,7 @@ public class CancelAppointmentsUseCase
                 appointment.AppointmentDate.GetDateInSpanishFormat(),
                 appointment.StartHour.GetHourWithoutSeconds(),
                 reason);
-            await _instantMessaging.SendMessageAsync(appointment.PatientCellPhone, msg);
+            await instantMessaging.SendMessageAsync(appointment.PatientCellPhone, msg);
         }
     }
 }

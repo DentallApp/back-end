@@ -4,12 +4,10 @@ namespace DentallApp.Features.Genders;
 
 [Route("gender")]
 [ApiController]
-public class GenderController : ControllerBase
+public class GenderController
 {
     [HttpGet]
     public async Task<IEnumerable<GetGendersResponse>> GetAll(
-        [FromServices]GetGendersUseCase useCase)
-    {
-        return await useCase.ExecuteAsync();
-    }
+        GetGendersUseCase useCase)
+        => await useCase.ExecuteAsync();
 }

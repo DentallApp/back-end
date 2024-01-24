@@ -10,18 +10,11 @@ public class GetOfficesToEditResponse
     public bool IsCheckboxTicked { get; init; }
 }
 
-public class GetOfficesToEditUseCase
+public class GetOfficesToEditUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetOfficesToEditUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetOfficesToEditResponse>> ExecuteAsync()
     {
-        var offices = await _context.Set<Office>()
+        var offices = await context.Set<Office>()
             .Select(office => new GetOfficesToEditResponse
             {
                 Id               = office.Id,

@@ -13,10 +13,8 @@ public class OfficeController : ControllerBase
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateOfficeRequest request,
-        [FromServices]CreateOfficeUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(request);
-    }
+        CreateOfficeUseCase useCase)
+        => await useCase.ExecuteAsync(request);
 
     /// <summary>
     /// Actualiza la información del consultorio.
@@ -26,10 +24,8 @@ public class OfficeController : ControllerBase
     public async Task<Result> Update(
         int id,
         [FromBody]UpdateOfficeRequest request,
-        [FromServices]UpdateOfficeUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(id, User.GetEmployeeId(), request);
-    }
+        UpdateOfficeUseCase useCase)
+        => await useCase.ExecuteAsync(id, User.GetEmployeeId(), request);
 
     /// <summary>
     /// Obtiene los nombres de cada consultorio.
@@ -44,10 +40,8 @@ public class OfficeController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<GetOfficeNamesResponse>> GetNames(
         bool? status,
-        [FromServices]GetOfficeNamesUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(status);
-    }
+        GetOfficeNamesUseCase useCase)
+        => await useCase.ExecuteAsync(status);
 
     /// <summary>
     /// Obtiene la información de cada consultorio para el formulario de editar.
@@ -55,10 +49,8 @@ public class OfficeController : ControllerBase
     [Route("edit")]
     [HttpGet]
     public async Task<IEnumerable<GetOfficesToEditResponse>> GetOfficesToEdit(
-        [FromServices]GetOfficesToEditUseCase useCase)
-    {
-        return await useCase.ExecuteAsync();
-    }
+        GetOfficesToEditUseCase useCase)
+        => await useCase.ExecuteAsync();
 
     /// <summary>
     /// Obtiene los consultorios activos (incluyendo los horarios) para la página de inicio.
@@ -67,10 +59,8 @@ public class OfficeController : ControllerBase
     [Route("home-page")]
     [HttpGet]
     public async Task<IEnumerable<GetOfficesForHomePageResponse>> GetOfficesForHomePage(
-        [FromServices]GetOfficesForHomePageUseCase useCase)
-    { 
-        return await useCase.ExecuteAsync();
-    }
+        GetOfficesForHomePageUseCase useCase)
+        => await useCase.ExecuteAsync();
 
     /// <summary>
     /// Obtiene una vista general de la información de cada consultorio activo e inactivo.
@@ -78,8 +68,6 @@ public class OfficeController : ControllerBase
     [Route("overview")]
     [HttpGet]
     public async Task<IEnumerable<GetOfficeOverviewResponse>> GetOverview(
-        [FromServices]GetOfficeOverviewUseCase useCase)
-    {
-        return await useCase.ExecuteAsync();
-    }
+        GetOfficeOverviewUseCase useCase)
+        => await useCase.ExecuteAsync();
 }

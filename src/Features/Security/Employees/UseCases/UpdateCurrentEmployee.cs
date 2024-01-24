@@ -26,18 +26,11 @@ public class UpdateCurrentEmployeeRequest
 /// Current Employee is the Employee who is current logged in. 
 /// The current employee can edit his own information.
 /// </summary>
-public class UpdateCurrentEmployeeUseCase
+public class UpdateCurrentEmployeeUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public UpdateCurrentEmployeeUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(int currentEmployeeId, UpdateCurrentEmployeeRequest request)
     {
-        var employee = await _context.Set<Employee>()
+        var employee = await context.Set<Employee>()
             .Include(employee => employee.Person)
             .Where(employee => employee.Id == currentEmployeeId)
             .FirstOrDefaultAsync();
@@ -49,7 +42,7 @@ public class UpdateCurrentEmployeeUseCase
             return Result.Forbidden(CannotUpdateAnotherUserResource);
 
         request.MapToEmployee(employee);
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.UpdatedResource();
     }
 }

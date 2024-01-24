@@ -16,18 +16,11 @@ public class UpdateOfficeScheduleRequest
     }
 }
 
-public class UpdateOfficeScheduleUseCase
+public class UpdateOfficeScheduleUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public UpdateOfficeScheduleUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateOfficeScheduleRequest request)
     {
-        var officeSchedule = await _context.Set<OfficeSchedule>()
+        var officeSchedule = await context.Set<OfficeSchedule>()
             .Where(officeSchedule => officeSchedule.Id == id)
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync();
@@ -39,7 +32,7 @@ public class UpdateOfficeScheduleUseCase
             return Result.Forbidden(OfficeNotAssignedMessage);
 
         request.MapToOfficeSchedule(officeSchedule);
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.UpdatedResource();
     }
 }

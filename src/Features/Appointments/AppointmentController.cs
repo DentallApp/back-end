@@ -11,10 +11,8 @@ public class AppointmentController : ControllerBase
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateAppointmentRequest request, 
-        [FromServices]CreateAppointmentUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(request);
-    }
+        CreateAppointmentUseCase useCase)
+        => await useCase.ExecuteAsync(request);
 
     /// <summary>
     /// Actualiza el estado de una cita por su ID.
@@ -23,11 +21,9 @@ public class AppointmentController : ControllerBase
     [HttpPut("{id}")]
     public async Task<Result> Update(
         int id, 
-        [FromBody]UpdateAppointmentRequest request,
-        [FromServices]UpdateAppointmentUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(id, User, request);
-    }
+        [FromBody]UpdateAppointmentRequest request, 
+        UpdateAppointmentUseCase useCase)
+        => await useCase.ExecuteAsync(id, User, request);
 
     /// <summary>
     /// Permite al usuario básico cancelar su cita agendada.
@@ -35,11 +31,9 @@ public class AppointmentController : ControllerBase
     [AuthorizeByRole(RolesName.BasicUser)]
     [HttpDelete("{id}/basic-user")]
     public async Task<Result> CancelBasicUserAppointment(
-        int id,
-        [FromServices]CancelBasicUserAppointmentUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(id, User.GetUserId());
-    }
+        int id, 
+        CancelBasicUserAppointmentUseCase useCase)
+        => await useCase.ExecuteAsync(id, User.GetUserId());
 
     /// <summary>
     /// Permite cancelar las citas agendadas de los odontólogos.
@@ -53,11 +47,9 @@ public class AppointmentController : ControllerBase
     [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
     [HttpPost("cancel/dentist")]
     public async Task<Result<CancelAppointmentsResponse>> CancelAppointments(
-        [FromBody]CancelAppointmentsRequest request,
-        [FromServices]CancelAppointmentsUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(User, request);
-    }
+        [FromBody]CancelAppointmentsRequest request, 
+        CancelAppointmentsUseCase useCase)
+        => await useCase.ExecuteAsync(User, request);
 
     /// <summary>
     /// Obtiene el historial de citas del usuario básico.
@@ -65,10 +57,8 @@ public class AppointmentController : ControllerBase
     [AuthorizeByRole(RolesName.BasicUser)]
     [HttpGet("basic-user")]
     public async Task<IEnumerable<GetAppointmentsByUserIdResponse>> GetByUserId(
-        [FromServices]GetAppointmentsByUserIdUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(User.GetUserId());
-    }
+        GetAppointmentsByUserIdUseCase useCase)
+        => await useCase.ExecuteAsync(User.GetUserId());
 
     /// <summary>
     /// Obtiene las citas de los odontólogos para un empleado.
@@ -83,10 +73,8 @@ public class AppointmentController : ControllerBase
     [HttpPost("dentist")]
     public async Task<ListedResult<GetAppointmentsByDateRangeResponse>> GetByDateRange(
         [FromBody]GetAppointmentsByDateRangeRequest request,
-        [FromServices]GetAppointmentsByDateRangeUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(User, request);
-    }
+        GetAppointmentsByDateRangeUseCase useCase)
+        => await useCase.ExecuteAsync(User, request);
 
     /// <summary>
     /// Obtiene las horas disponibles para la reserva de una cita.
@@ -96,8 +84,6 @@ public class AppointmentController : ControllerBase
     [HttpPost]
     public async Task<ListedResult<AvailableTimeRangeResponse>> GetAvailableHours(
         [FromBody]AvailableTimeRangeRequest request,
-        [FromServices]GetAvailableHoursUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(request);
-    }
+        GetAvailableHoursUseCase useCase)
+        => await useCase.ExecuteAsync(request);
 }

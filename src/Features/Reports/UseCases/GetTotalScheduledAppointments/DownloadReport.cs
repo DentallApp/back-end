@@ -6,34 +6,22 @@ public class DownloadScheduledAppointmentsReportRequest
     public string To { get; init; }
     public IEnumerable<GetTotalScheduledAppointmentsResponse> Appointments { get; init; }
 
-    public object MapToObject()
+    public object MapToObject() => new
     {
-        return new
-        {
-            From,
-            To,
-            Appointments
-        };
-    }
+        From,
+        To,
+        Appointments
+    };
 }
 
-public class DownloadScheduledAppointmentsReportUseCase
+public class DownloadScheduledAppointmentsReportUseCase(
+    IHtmlTemplateLoader htmlTemplateLoader,
+    IHtmlConverter htmlConverter)
 {
-    private readonly IHtmlTemplateLoader _htmlTemplateLoader;
-    private readonly IHtmlConverter _htmlConverter;
-
-    public DownloadScheduledAppointmentsReportUseCase(
-        IHtmlTemplateLoader htmlTemplateLoader,
-        IHtmlConverter htmlConverter)
-    {
-        _htmlTemplateLoader = htmlTemplateLoader;
-        _htmlConverter = htmlConverter;
-    }
-
     public async Task<byte[]> DownloadAsPdfAsync(DownloadScheduledAppointmentsReportRequest request)
     {
-        var html = await _htmlTemplateLoader
+        var html = await htmlTemplateLoader
             .LoadAsync("./Templates/ReportScheduledAppointment.html", request.MapToObject());
-        return _htmlConverter.ConvertToPdf(html, new MemoryStream());
+        return htmlConverter.ConvertToPdf(html, new MemoryStream());
     }
 }

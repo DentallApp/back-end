@@ -5,25 +5,14 @@ public class SendPasswordResetEmailRequest
     public string Email { get; init; }
 }
 
-public class SendPasswordResetEmailUseCase
+public class SendPasswordResetEmailUseCase(
+    DbContext context,
+    ITokenService tokenService,
+    IEmailService emailService)
 {
-    private readonly DbContext _context;
-    private readonly ITokenService _tokenService;
-    private readonly IEmailService _emailService;
-
-    public SendPasswordResetEmailUseCase(
-        DbContext context, 
-        ITokenService tokenService, 
-        IEmailService emailService)
-    {
-        _context = context;
-        _tokenService = tokenService;
-        _emailService = emailService;
-    }
-
     public async Task<Result> ExecuteAsync(SendPasswordResetEmailRequest request)
     {
-        var user = await _context.Set<User>()
+        var user = await context.Set<User>()
             .Where(user => user.UserName == request.Email)
             .Select(user => new
             {
@@ -38,8 +27,8 @@ public class SendPasswordResetEmailUseCase
         if (user is null)
             return Result.NotFound(UsernameNotFoundMessage);
 
-        var passwordResetToken = _tokenService.CreatePasswordResetToken(user.UserId, user.UserName, user.Password);
-        await _emailService.SendEmailForResetPasswordAsync(user.UserName, user.Name, passwordResetToken);
+        var passwordResetToken = tokenService.CreatePasswordResetToken(user.UserId, user.UserName, user.Password);
+        await emailService.SendEmailForResetPasswordAsync(user.UserName, user.Name, passwordResetToken);
         return Result.Success(SendPasswordResetLinkMessage);
     }
 }

@@ -9,7 +9,7 @@ public class ReportTotalAppointmentsController : ControllerBase
     [HttpPost("report/appointment")]
     public async Task<ActionResult<GetTotalAppointmentsResponse>> Get(
         [FromBody]GetTotalAppointmentsRequest request,
-        [FromServices]GetTotalAppointmentsUseCase useCase)
+        GetTotalAppointmentsUseCase useCase)
     {
         if (User.IsAdmin() && User.IsNotInOffice(request.OfficeId))
             return Forbid();
@@ -23,7 +23,7 @@ public class ReportTotalAppointmentsController : ControllerBase
     [HttpPost("pdf/report/appointment")]
     public async Task<ActionResult> DownloadAsPdf(
         [FromBody]DownloadTotalAppointmentsReportRequest request,
-        [FromServices]DownloadTotalAppointmentsReportUseCase useCase)
+        DownloadTotalAppointmentsReportUseCase useCase)
     {
         var contents = await useCase.DownloadAsPdfAsync(request);
         return File(contents, "application/pdf", "Reporte sobre el total de citas.pdf");

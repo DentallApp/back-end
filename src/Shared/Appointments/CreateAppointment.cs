@@ -21,20 +21,17 @@ public class CreateAppointmentRequest
     [JsonIgnore]
     public PayRange RangeToPay { get; set; }
 
-    public Appointment MapToAppointment()
+    public Appointment MapToAppointment() => new()
     {
-        return new()
-        {
-            UserId             = UserId,
-            PersonId           = PersonId,
-            DentistId          = DentistId,
-            OfficeId           = OfficeId,
-            Date               = AppointmentDate,
-            StartHour          = StartHour,
-            EndHour            = EndHour,
-            GeneralTreatmentId = GeneralTreatmentId
-        };
-    }
+        UserId             = UserId,
+        PersonId           = PersonId,
+        DentistId          = DentistId,
+        OfficeId           = OfficeId,
+        Date               = AppointmentDate,
+        StartHour          = StartHour,
+        EndHour            = EndHour,
+        GeneralTreatmentId = GeneralTreatmentId
+    };
 }
 
 /// <summary>

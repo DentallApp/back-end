@@ -1,25 +1,18 @@
 ﻿namespace DentallApp.Features.PublicHolidays.UseCases;
 
-public class DeletePublicHolidayUseCase
+public class DeletePublicHolidayUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public DeletePublicHolidayUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(int id)
     {
-        var holiday = await _context.Set<PublicHoliday>()
+        var holiday = await context.Set<PublicHoliday>()
             .Where(publicHoliday => publicHoliday.Id == id)
             .FirstOrDefaultAsync();
 
         if (holiday is null)
             return Result.NotFound();
 
-        _context.SoftDelete(holiday);
-        await _context.SaveChangesAsync();
+        context.SoftDelete(holiday);
+        await context.SaveChangesAsync();
         return Result.DeletedResource();
     }
 }

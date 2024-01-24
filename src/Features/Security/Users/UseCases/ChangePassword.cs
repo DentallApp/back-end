@@ -6,31 +6,22 @@ public class ChangePasswordRequest
     public string NewPassword { get; init; }
 }
 
-public class ChangePasswordUseCase
+public class ChangePasswordUseCase(DbContext context, IPasswordHasher passwordHasher)
 {
-    private readonly DbContext _context;
-    private readonly IPasswordHasher _passwordHasher;
-
-    public ChangePasswordUseCase(DbContext context, IPasswordHasher passwordHasher)
-    {
-        _context = context;
-        _passwordHasher = passwordHasher;
-    }
-
     public async Task<Result> ExecuteAsync(int userId, ChangePasswordRequest request)
     {
-        var user = await _context.Set<User>()
+        var user = await context.Set<User>()
             .Where(user => user.Id == userId)
             .FirstOrDefaultAsync();
 
         if (user is null)
             return Result.NotFound(UsernameNotFoundMessage);
 
-        if (!_passwordHasher.Verify(request.OldPassword, user.Password))
+        if (!passwordHasher.Verify(request.OldPassword, user.Password))
             return Result.Invalid(OldPasswordIncorrectMessage);
 
-        user.Password = _passwordHasher.HashPassword(request.NewPassword);
-        await _context.SaveChangesAsync();
+        user.Password = passwordHasher.HashPassword(request.NewPassword);
+        await context.SaveChangesAsync();
         return Result.Success(PasswordSuccessfullyResetMessage);
     }
 }

@@ -13,18 +13,11 @@ public class GetScheduledAppointmentsResponse
 /// <summary>
 /// Representa una consulta en la cual obtiene las citas agendadas que están próximas a la fecha estipulada.
 /// </summary>
-public class GetScheduledAppointmentsQuery
+public class GetScheduledAppointmentsQuery(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetScheduledAppointmentsQuery(DbContext context)
-    {
-        _context = context;
-    }
-
     public IEnumerable<GetScheduledAppointmentsResponse> Execute(int timeInAdvance, DateTime currentDate)
     {
-        var appointments = _context.Set<Appointment>()
+        var appointments = context.Set<Appointment>()
             .Where(appointment =>
                     appointment.AppointmentStatusId == AppointmentStatusId.Scheduled &&
                     DBFunctions.DateDiff(appointment.Date, currentDate) == timeInAdvance &&

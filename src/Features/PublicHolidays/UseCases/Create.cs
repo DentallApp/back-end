@@ -11,34 +11,24 @@ public class CreatePublicHolidayRequest
     [Required]
     public List<int> OfficesId { get; init; }
 
-    public PublicHoliday MapToPublicHoliday()
+    public PublicHoliday MapToPublicHoliday() => new()
     {
-        return new()
-        {
-            Description = Description,
-            Day         = Day,
-            Month       = Month
-        };
-    }
+        Description = Description,
+        Day         = Day,
+        Month       = Month
+    };
 }
 
-public class CreatePublicHolidayUseCase
+public class CreatePublicHolidayUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public CreatePublicHolidayUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result<CreatedId>> ExecuteAsync(CreatePublicHolidayRequest request)
     {
         var publicHoliday = request.MapToPublicHoliday();
         foreach (int officeId in request.OfficesId.RemoveDuplicates())
         {
-            _context.Add(new OfficeHoliday { PublicHoliday = publicHoliday, OfficeId = officeId });
+            context.Add(new OfficeHoliday { PublicHoliday = publicHoliday, OfficeId = officeId });
         }
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.CreatedResource(publicHoliday.Id);
     }
 }

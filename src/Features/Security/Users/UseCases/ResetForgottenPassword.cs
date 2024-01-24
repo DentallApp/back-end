@@ -6,25 +6,14 @@ public class ResetForgottenPasswordRequest
     public string NewPassword { get; init; }
 }
 
-public class ResetForgottenPasswordUseCase
+public class ResetForgottenPasswordUseCase(
+    DbContext context,
+    ITokenService tokenService,
+    IPasswordHasher passwordHasher)
 {
-    private readonly DbContext _context;
-    private readonly ITokenService _tokenService;
-    private readonly IPasswordHasher _passwordHasher;
-
-    public ResetForgottenPasswordUseCase(
-        DbContext context, 
-        ITokenService tokenService, 
-        IPasswordHasher passwordHasher)
-    {
-        _context = context;
-        _tokenService = tokenService;
-        _passwordHasher = passwordHasher;
-    }
-
     public async Task<Result> ExecuteAsync(ResetForgottenPasswordRequest request)
     {
-        var claimIdentity = _tokenService.GetClaimsIdentity(request.Token);
+        var claimIdentity = tokenService.GetClaimsIdentity(request.Token);
         if (claimIdentity is null)
             return Result.Invalid(PasswordResetTokenInvalidMessage);
 
@@ -32,19 +21,19 @@ public class ResetForgottenPasswordUseCase
             return Result.Invalid(string.Format(MissingClaimMessage, CustomClaimsType.UserId));
 
         var userId = claimIdentity.GetUserId();
-        var user = await _context.Set<User>()
+        var user = await context.Set<User>()
             .Where(user => user.Id == userId)
             .FirstOrDefaultAsync();
 
         if (user is null)
             return Result.NotFound(UsernameNotFoundMessage);
 
-        var claimPrincipal = _tokenService.ValidatePasswordResetToken(request.Token, user.Password);
+        var claimPrincipal = tokenService.ValidatePasswordResetToken(request.Token, user.Password);
         if (claimPrincipal is null)
             return Result.Invalid(PasswordResetTokenInvalidMessage);
 
-        user.Password = _passwordHasher.HashPassword(request.NewPassword);
-        await _context.SaveChangesAsync();
+        user.Password = passwordHasher.HashPassword(request.NewPassword);
+        await context.SaveChangesAsync();
         return Result.Success(PasswordSuccessfullyResetMessage);
     }
 }
