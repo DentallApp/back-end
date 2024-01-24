@@ -9,26 +9,15 @@ public class GetAppointmentInformationResponse
     public string DentalServiceName { get; init; }
 }
 
-public class SendAppointmentInformationUseCase
+public class SendAppointmentInformationUseCase(
+    DbContext context,
+    IInstantMessaging instantMessaging,
+    ITreatmentRepository treatmentRepository)
 {
-    private readonly DbContext _context;
-    private readonly IInstantMessaging _instantMessaging;
-    private readonly ITreatmentRepository _treatmentRepository;
-
-    public SendAppointmentInformationUseCase(
-        DbContext context, 
-        IInstantMessaging instantMessaging, 
-        ITreatmentRepository treatmentRepository)
-    {
-        _context = context;
-        _instantMessaging = instantMessaging;
-        _treatmentRepository = treatmentRepository;
-    }
-
     public async Task ExecuteAsync(int appointmentId, CreateAppointmentRequest request)
     {
         // The query is executed in case the scheduling of appointments is done manually by the secretary.
-        request.RangeToPay ??= await _treatmentRepository.GetRangeToPayAsync(request.GeneralTreatmentId);
+        request.RangeToPay ??= await treatmentRepository.GetRangeToPayAsync(request.GeneralTreatmentId);
         var businessName = EnvReader.Instance[AppSettings.BusinessName];
         var appointmentInfo = await GetAppointmentInformationAsync(appointmentId);
         var msg = string.Format(AppointmentInformationMessageTemplate,
@@ -40,12 +29,12 @@ public class SendAppointmentInformationUseCase
             request.AppointmentDate.GetDateInSpanishFormat(),
             request.StartHour.GetHourWithoutSeconds(),
             request.RangeToPay?.ToString());
-        await _instantMessaging.SendMessageAsync(appointmentInfo.CellPhone, msg);
+        await instantMessaging.SendMessageAsync(appointmentInfo.CellPhone, msg);
     }
 
     private Task<GetAppointmentInformationResponse> GetAppointmentInformationAsync(int appointmentId)
     {
-        return _context.Set<Appointment>()
+        return context.Set<Appointment>()
             .Where(appointment => appointment.Id == appointmentId)
             .Select(appointment => new GetAppointmentInformationResponse
             {

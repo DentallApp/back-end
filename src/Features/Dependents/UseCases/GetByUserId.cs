@@ -16,18 +16,11 @@ public class GetDependentsByUserIdResponse
     public int KinshipId { get; init; }
 }
 
-public class GetDependentsByUserIdUseCase
+public class GetDependentsByUserIdUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetDependentsByUserIdUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetDependentsByUserIdResponse>> ExecuteAsync(int userId)
     {
-        var dependents = await _context.Set<Dependent>()
+        var dependents = await context.Set<Dependent>()
             .Where(dependent => dependent.UserId == userId)
             .Select(dependent => new GetDependentsByUserIdResponse
             {

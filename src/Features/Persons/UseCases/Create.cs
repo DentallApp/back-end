@@ -10,35 +10,25 @@ public class CreatePersonRequest
     public int? GenderId { get; init; }
     public string Email { get; init; }
 
-    public Person MapToPerson()
+    public Person MapToPerson() => new()
     {
-        return new()
-        {
-            Document  = Document,
-            Names     = Names,
-            LastNames = LastNames,
-            DateBirth = DateBirth,
-            GenderId  = GenderId,
-            CellPhone = CellPhone,
-            Email     = Email
-        };
-    }
+        Document  = Document,
+        Names     = Names,
+        LastNames = LastNames,
+        DateBirth = DateBirth,
+        GenderId  = GenderId,
+        CellPhone = CellPhone,
+        Email     = Email
+    };
 }
 
-public class CreatePersonUseCase
+public class CreatePersonUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public CreatePersonUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(CreatePersonRequest request)
     {
         var person = request.MapToPerson();
-        _context.Add(person);
-        await _context.SaveChangesAsync();
+        context.Add(person);
+        await context.SaveChangesAsync();
         return Result.CreatedResource();
     }
 }

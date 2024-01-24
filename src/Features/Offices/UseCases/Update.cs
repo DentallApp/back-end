@@ -39,20 +39,11 @@ public class UpdateOfficeRequest
     }
 }
 
-public class UpdateOfficeUseCase
+public class UpdateOfficeUseCase(DbContext context, IDateTimeService dateTimeService)
 {
-    private readonly DbContext _context;
-    private readonly IDateTimeService _dateTimeService;
-
-    public UpdateOfficeUseCase(DbContext context, IDateTimeService dateTimeService)
-    {
-        _context = context;
-        _dateTimeService = dateTimeService;
-    }
-
     public async Task<Result> ExecuteAsync(int officeId, int currentEmployeeId, UpdateOfficeRequest request)
     {
-        var currentOffice = await _context.Set<Office>()
+        var currentOffice = await context.Set<Office>()
             .Where(office => office.Id == officeId)
             .IgnoreQueryFilters()
             .FirstOrDefaultAsyncEF();
@@ -60,11 +51,11 @@ public class UpdateOfficeUseCase
         if (currentOffice is null)
             return Result.NotFound();
 
-        var strategy = _context.Database.CreateExecutionStrategy();
+        var strategy = context.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(
             async () =>
             {
-                using var transaction = await _context.Database.BeginTransactionAsync();
+                using var transaction = await context.Database.BeginTransactionAsync();
                 if (request.IsInactive() && request.IsCheckboxTicked && currentOffice.IsEnabledEmployeeAccounts)
                     await DisableEmployeeAccountsAsync(currentEmployeeId, currentOffice);
                 else if (request.IsInactive() && request.IsCheckboxUnticked && currentOffice.IsDisabledEmployeeAccounts)
@@ -74,7 +65,7 @@ public class UpdateOfficeUseCase
                     await EnableEmployeeAccountsAsync(currentOffice);
 
                 request.MapToOffice(currentOffice);
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 await transaction.CommitAsync();
             });
 
@@ -83,11 +74,11 @@ public class UpdateOfficeUseCase
 
     private async Task<int> DisableEmployeeAccountsAsync(int currentEmployeeId, Office office)
     {
-        var affectedRows = await _context.Set<Employee>()
+        var affectedRows = await context.Set<Employee>()
             .Where(employee => employee.Id != currentEmployeeId && employee.OfficeId == office.Id)
             .Set(employee => employee.IsDeleted, true)
-            .Set(employee => employee.UpdatedAt, _dateTimeService.Now)
-            .Set(employee => employee.User.UpdatedAt, _dateTimeService.Now)
+            .Set(employee => employee.UpdatedAt, dateTimeService.Now)
+            .Set(employee => employee.User.UpdatedAt, dateTimeService.Now)
             .Set(employee => employee.User.RefreshToken, e => null)
             .Set(employee => employee.User.RefreshTokenExpiry, e => null)
             .UpdateAsync();
@@ -98,11 +89,11 @@ public class UpdateOfficeUseCase
 
     private async Task<int> EnableEmployeeAccountsAsync(Office office)
     {
-        var affectedRows = await _context.Set<Employee>()
+        var affectedRows = await context.Set<Employee>()
             .Where(employee => employee.OfficeId == office.Id)
             .IgnoreQueryFilters()
             .Set(employee => employee.IsDeleted, false)
-            .Set(employee => employee.UpdatedAt, _dateTimeService.Now)
+            .Set(employee => employee.UpdatedAt, dateTimeService.Now)
             .UpdateAsync();
 
         office.IsEnabledEmployeeAccounts = true;

@@ -5,20 +5,11 @@ public class UpdateAppointmentRequest
     public int StatusId { get; init; }
 }
 
-public class UpdateAppointmentUseCase
+public class UpdateAppointmentUseCase(DbContext context, IDateTimeService dateTimeService)
 {
-    private readonly DbContext _context;
-    private readonly IDateTimeService _dateTimeService;
-
-    public UpdateAppointmentUseCase(DbContext context, IDateTimeService dateTimeService)
-    {
-        _context = context;
-        _dateTimeService = dateTimeService;
-    }
-
     public async Task<Result> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateAppointmentRequest request)
     {
-        var appointment = await _context.Set<Appointment>()
+        var appointment = await context.Set<Appointment>()
             .Where(appointment => appointment.Id == id)
             .FirstOrDefaultAsync();
 
@@ -28,7 +19,7 @@ public class UpdateAppointmentUseCase
         if (appointment.AppointmentStatusId == AppointmentStatusId.Canceled)
             return Result.Conflict(AppointmentIsAlreadyCanceledMessage);
 
-        if (_dateTimeService.Now.Date > appointment.Date)
+        if (dateTimeService.Now.Date > appointment.Date)
             return Result.Forbidden(AppointmentCannotBeUpdatedForPreviousDaysMessage);
 
         if (currentEmployee.IsOnlyDentist() && appointment.DentistId != currentEmployee.GetEmployeeId())
@@ -38,7 +29,7 @@ public class UpdateAppointmentUseCase
             return Result.Forbidden(OfficeNotAssignedMessage);
 
         appointment.AppointmentStatusId = request.StatusId;
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.UpdatedResource();
     }
 }

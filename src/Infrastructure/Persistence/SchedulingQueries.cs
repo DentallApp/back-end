@@ -1,18 +1,11 @@
 ﻿namespace DentallApp.Infrastructure.Persistence;
 
 /// <inheritdoc cref="ISchedulingQueries" />
-public class SchedulingQueries : ISchedulingQueries
+public class SchedulingQueries(DbContext context) : ISchedulingQueries
 {
-    private readonly DbContext _context;
-
-    public SchedulingQueries(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<List<SchedulingResponse>> GetDentalServicesAsync()
     {
-        var treatments = await _context.Set<GeneralTreatment>()
+        var treatments = await context.Set<GeneralTreatment>()
             .Where(treatment => treatment.SpecificTreatments.Any())
             .Select(treatment => new SchedulingResponse
             {
@@ -28,13 +21,13 @@ public class SchedulingQueries : ISchedulingQueries
     public async Task<List<SchedulingResponse>> GetDentistsAsync(int officeId, int specialtyId)
     {
         var dentists = await 
-            (from employee in _context.Set<Employee>()
-             join person in _context.Set<Person>() on employee.PersonId equals person.Id
-             join office in _context.Set<Office>() on employee.OfficeId equals office.Id
-             join employeeSpecialty in _context.Set<EmployeeSpecialty>()
+            (from employee in context.Set<Employee>()
+             join person in context.Set<Person>() on employee.PersonId equals person.Id
+             join office in context.Set<Office>() on employee.OfficeId equals office.Id
+             join employeeSpecialty in context.Set<EmployeeSpecialty>()
               on employee.Id equals employeeSpecialty.EmployeeId into employeeSpecialties
              from employeeSpecialty in employeeSpecialties.DefaultIfEmpty()
-             join userRole in _context.Set<UserRole>() on employee.UserId equals userRole.UserId
+             join userRole in context.Set<UserRole>() on employee.UserId equals userRole.UserId
              where employee.IsActive() &&
                    employee.OfficeId == officeId &&
                    userRole.RoleId == RolesId.Dentist &&
@@ -60,7 +53,7 @@ public class SchedulingQueries : ISchedulingQueries
 
     public async Task<List<SchedulingResponse>> GetOfficesAsync()
     {
-        var offices = await _context.Set<Office>()
+        var offices = await context.Set<Office>()
             .Where(office => office.OfficeSchedules.Any())
             .Select(office => new SchedulingResponse
             {
@@ -75,7 +68,7 @@ public class SchedulingQueries : ISchedulingQueries
 
     public async Task<List<SchedulingResponse>> GetPatientsAsync(AuthenticatedUser user)
     { 
-        var choices = await _context.Set<Dependent>()
+        var choices = await context.Set<Dependent>()
             .Where(dependent => dependent.UserId == user.UserId)
             .Select(dependent => new SchedulingResponse
             {

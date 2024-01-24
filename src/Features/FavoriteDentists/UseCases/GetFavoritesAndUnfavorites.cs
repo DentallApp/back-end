@@ -17,22 +17,15 @@ public class GetFavoriteAndUnfavoriteDentistsResponse
 /// <summary>
 /// Represents a use case to get the favorite and unfavorite dentists of a basic user.
 /// </summary>
-public class GetFavoriteAndUnfavoriteDentistsUseCase
+public class GetFavoriteAndUnfavoriteDentistsUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetFavoriteAndUnfavoriteDentistsUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetFavoriteAndUnfavoriteDentistsResponse>> ExecuteAsync(int userId)
     {
         var dentists = await 
-            (from dentist in _context.Set<Employee>()
-             join dentistDetails in _context.Set<Person>() on dentist.PersonId equals dentistDetails.Id
-             join office in _context.Set<Office>() on dentist.OfficeId equals office.Id
-             join userRole in _context.Set<UserRole>() on
+            (from dentist in context.Set<Employee>()
+             join dentistDetails in context.Set<Person>() on dentist.PersonId equals dentistDetails.Id
+             join office in context.Set<Office>() on dentist.OfficeId equals office.Id
+             join userRole in context.Set<UserRole>() on
              new
              {
                  RoleId = RolesId.Dentist,
@@ -44,7 +37,7 @@ public class GetFavoriteAndUnfavoriteDentistsUseCase
                  userRole.RoleId,
                  userRole.UserId
              }
-             join favoriteDentist in _context.Set<FavoriteDentist>() on
+             join favoriteDentist in context.Set<FavoriteDentist>() on
              new
              {
                  UserId = userId,

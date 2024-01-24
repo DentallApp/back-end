@@ -29,15 +29,8 @@ public class GetAppointmentsByDateRangeResponse
     public string OfficeName { get; init; }
 }
 
-public class GetAppointmentsByDateRangeUseCase
+public class GetAppointmentsByDateRangeUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetAppointmentsByDateRangeUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<ListedResult<GetAppointmentsByDateRangeResponse>> ExecuteAsync(
         ClaimsPrincipal currentEmployee, 
         GetAppointmentsByDateRangeRequest request)
@@ -48,7 +41,7 @@ public class GetAppointmentsByDateRangeUseCase
         if (!currentEmployee.IsSuperAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
             return Result.Forbidden(OfficeNotAssignedMessage);
 
-        var appointments = await _context.Set<Appointment>()
+        var appointments = await context.Set<Appointment>()
             .OptionalWhere(request.StatusId, appointment => appointment.AppointmentStatusId == request.StatusId)
             .OptionalWhere(request.OfficeId, appointment => appointment.OfficeId == request.OfficeId)
             .OptionalWhere(request.DentistId, appointment => appointment.DentistId == request.DentistId)

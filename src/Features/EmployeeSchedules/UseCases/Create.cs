@@ -9,34 +9,24 @@ public class CreateEmployeeScheduleRequest
     public TimeSpan? AfternoonStartHour { get; init; }
     public TimeSpan? AfternoonEndHour { get; init; }
 
-    public EmployeeSchedule MapToEmployeeSchedule()
+    public EmployeeSchedule MapToEmployeeSchedule() => new()
     {
-        return new()
-        {
-            EmployeeId         = EmployeeId,
-            WeekDayId          = WeekDayId,
-            MorningStartHour   = MorningStartHour,
-            MorningEndHour     = MorningEndHour,
-            AfternoonStartHour = AfternoonStartHour,
-            AfternoonEndHour   = AfternoonEndHour
-        };
-    }
+        EmployeeId         = EmployeeId,
+        WeekDayId          = WeekDayId,
+        MorningStartHour   = MorningStartHour,
+        MorningEndHour     = MorningEndHour,
+        AfternoonStartHour = AfternoonStartHour,
+        AfternoonEndHour   = AfternoonEndHour
+    };
 }
 
-public class CreateEmployeeScheduleUseCase
+public class CreateEmployeeScheduleUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public CreateEmployeeScheduleUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result<CreatedId>> ExecuteAsync(CreateEmployeeScheduleRequest request)
     {
         var employeeSchedule = request.MapToEmployeeSchedule();
-        _context.Add(employeeSchedule);
-        await _context.SaveChangesAsync();
+        context.Add(employeeSchedule);
+        await context.SaveChangesAsync();
         return Result.CreatedResource(employeeSchedule.Id);
     }
 }

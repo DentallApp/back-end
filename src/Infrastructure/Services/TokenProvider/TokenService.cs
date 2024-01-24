@@ -1,16 +1,7 @@
 ﻿namespace DentallApp.Infrastructure.Services.TokenProvider;
 
-public class TokenService : ITokenService
+public class TokenService(AppSettings settings, IDateTimeService dateTimeService) : ITokenService
 {
-    private readonly AppSettings _settings;
-    private readonly IDateTimeService _dateTimeService;
-
-    public TokenService(AppSettings settings, IDateTimeService dateTimeService)
-    {
-        _settings = settings;
-        _dateTimeService = dateTimeService;
-    }
-
     private string CreateJwt(IEnumerable<Claim> claims, DateTime expires, string key)
         => JwtEncoder.Create()
                      .WithSubject(claims)
@@ -28,13 +19,13 @@ public class TokenService : ITokenService
                      .Decode(token);
 
     public ClaimsPrincipal ValidateEmailVerificationToken(string token)
-        => ValidateJwt(token, _settings.EmailVerificationTokenKey);
+        => ValidateJwt(token, settings.EmailVerificationTokenKey);
 
     public ClaimsPrincipal ValidatePasswordResetToken(string token, string passwordHash)
         => ValidateJwt(token, key: passwordHash);
 
     public string CreateAccessToken(IEnumerable<Claim> claims)
-        => CreateJwt(claims, _dateTimeService.UtcNow.AddMinutes(_settings.AccessTokenExpires), _settings.AccessTokenKey);
+        => CreateJwt(claims, dateTimeService.UtcNow.AddMinutes(settings.AccessTokenExpires), settings.AccessTokenKey);
 
     public string CreateAccessToken(UserClaims userClaims)
         => CreateAccessToken(CreateClaims(userClaims));
@@ -43,7 +34,7 @@ public class TokenService : ITokenService
         => CreateAccessToken(CreateClaims(employeeClaims));
 
     public string CreateEmailVerificationToken(IEnumerable<Claim> claims)
-        => CreateJwt(claims, _dateTimeService.UtcNow.AddHours(_settings.EmailVerificationTokenExpires), _settings.EmailVerificationTokenKey);
+        => CreateJwt(claims, dateTimeService.UtcNow.AddHours(settings.EmailVerificationTokenExpires), settings.EmailVerificationTokenKey);
 
     public string CreateEmailVerificationToken(UserClaims userClaims)
         => CreateEmailVerificationToken(CreateClaims(userClaims));
@@ -55,7 +46,7 @@ public class TokenService : ITokenService
             new (CustomClaimsType.UserId, userid.ToString()),
             new (CustomClaimsType.UserName, username),
          };
-        var expires = _dateTimeService.UtcNow.AddHours(_settings.PasswordResetTokenExpires);
+        var expires = dateTimeService.UtcNow.AddHours(settings.PasswordResetTokenExpires);
         return CreateJwt(claims, expires, key: passwordHash);
     }
 
@@ -87,14 +78,14 @@ public class TokenService : ITokenService
         => RandomHelper.GetRandomNumber();
 
     public DateTime CreateExpiryForRefreshToken()
-        => _dateTimeService.Now.AddDays(_settings.RefreshTokenExpires);
+        => dateTimeService.Now.AddDays(settings.RefreshTokenExpires);
 
     public ClaimsPrincipal GetPrincipalFromExpiredAccessToken(string token)
         => JwtDecoder.Create()
                      .IgnoreValidateAudience()
                      .IgnoreValidateIssuer()
                      .AllowValidateIssuerSigningKey()
-                     .WithIssuerSigningKey(_settings.AccessTokenKey)
+                     .WithIssuerSigningKey(settings.AccessTokenKey)
                      .IgnoreValidateLifetime()
                      .Decode(token);
 

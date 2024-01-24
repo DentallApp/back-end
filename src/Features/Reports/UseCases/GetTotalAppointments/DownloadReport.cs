@@ -8,36 +8,24 @@ public class DownloadTotalAppointmentsReportRequest
     public string DentistName { get; init; }
     public GetTotalAppointmentsResponse Totals { get; init; }
 
-    public object MapToObject()
+    public object MapToObject() => new
     {
-        return new
-        {
-            From,
-            To,
-            OfficeName,
-            DentistName,
-            Totals
-        };
-    }
+        From,
+        To,
+        OfficeName,
+        DentistName,
+        Totals
+    };
 }
 
-public class DownloadTotalAppointmentsReportUseCase
+public class DownloadTotalAppointmentsReportUseCase(
+    IHtmlTemplateLoader htmlTemplateLoader,
+    IHtmlConverter htmlConverter)
 {
-    private readonly IHtmlTemplateLoader _htmlTemplateLoader;
-    private readonly IHtmlConverter _htmlConverter;
-
-    public DownloadTotalAppointmentsReportUseCase(
-        IHtmlTemplateLoader htmlTemplateLoader, 
-        IHtmlConverter htmlConverter)
-    {
-        _htmlTemplateLoader = htmlTemplateLoader;
-        _htmlConverter = htmlConverter;
-    }
-
     public async Task<byte[]> DownloadAsPdfAsync(DownloadTotalAppointmentsReportRequest request)
     {
-        var html = await _htmlTemplateLoader
+        var html = await htmlTemplateLoader
             .LoadAsync("./Templates/ReportAppointment.html", request.MapToObject());
-        return _htmlConverter.ConvertToPdf(html, new MemoryStream());
+        return htmlConverter.ConvertToPdf(html, new MemoryStream());
     }
 }

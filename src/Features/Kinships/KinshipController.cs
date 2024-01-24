@@ -4,12 +4,10 @@ namespace DentallApp.Features.Kinships;
 
 [Route("kinship")]
 [ApiController]
-public class KinshipController : ControllerBase
+public class KinshipController
 {
     [HttpGet]
     public async Task<IEnumerable<GetKinshipsResponse>> GetAll(
-        [FromServices]GetKinshipsUseCase useCase)
-    {
-        return await useCase.ExecuteAsync();
-    }
+        GetKinshipsUseCase useCase)
+        => await useCase.ExecuteAsync();
 }

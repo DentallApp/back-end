@@ -10,16 +10,12 @@ public class RefreshTokenController : ControllerBase
     [HttpPost]
     public async Task<Result<CreateRefreshTokenResponse>> Create(
         [FromBody]CreateRefreshTokenRequest request,
-        [FromServices]CreateRefreshTokenUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(request);
-    }
+        CreateRefreshTokenUseCase useCase)
+        => await useCase.ExecuteAsync(request);
 
     [Route("revoke")]
     [HttpPost, Authorize]
     public async Task<Result> Revoke(
-        [FromServices]RevokeRefreshTokenUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(User.GetUserId());
-    }
+        RevokeRefreshTokenUseCase useCase)
+        => await useCase.ExecuteAsync(User.GetUserId());
 }

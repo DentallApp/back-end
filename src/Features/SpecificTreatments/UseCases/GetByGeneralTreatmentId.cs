@@ -7,20 +7,13 @@ public class GetTreatmentsByGeneralTreatmentIdResponse
     public double Price { get; init; }
 }
 
-public class GetTreatmentsByGeneralTreatmentIdUseCase
+public class GetTreatmentsByGeneralTreatmentIdUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetTreatmentsByGeneralTreatmentIdUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetTreatmentsByGeneralTreatmentIdResponse>> ExecuteAsync(int generalTreatmentId)
     {
         var specificTreatments = await
-            (from specificTreatment in _context.Set<SpecificTreatment>()
-             join generalTreatment in _context.Set<GeneralTreatment>()
+            (from specificTreatment in context.Set<SpecificTreatment>()
+             join generalTreatment in context.Set<GeneralTreatment>()
              on specificTreatment.GeneralTreatmentId equals generalTreatment.Id
              where specificTreatment.GeneralTreatmentId == generalTreatmentId
              select new GetTreatmentsByGeneralTreatmentIdResponse

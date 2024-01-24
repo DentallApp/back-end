@@ -7,35 +7,23 @@ public class DownloadDentalServicesReportRequest
     public string OfficeName { get; init; }
     public IEnumerable<GetMostRequestedServicesResponse> Services { get; init; }
 
-    public object MapToObject()
+    public object MapToObject() => new
     {
-        return new
-        {
-            From,
-            To,
-            OfficeName,
-            Services
-        };
-    }
+        From,
+        To,
+        OfficeName,
+        Services
+    };
 }
 
-public class DownloadDentalServicesReportUseCase
+public class DownloadDentalServicesReportUseCase(
+    IHtmlTemplateLoader htmlTemplateLoader,
+    IHtmlConverter htmlConverter)
 {
-    private readonly IHtmlTemplateLoader _htmlTemplateLoader;
-    private readonly IHtmlConverter _htmlConverter;
-
-    public DownloadDentalServicesReportUseCase(
-        IHtmlTemplateLoader htmlTemplateLoader,
-        IHtmlConverter htmlConverter)
-    {
-        _htmlTemplateLoader = htmlTemplateLoader;
-        _htmlConverter = htmlConverter;
-    }
-
     public async Task<byte[]> DownloadAsPdfAsync(DownloadDentalServicesReportRequest request)
     {
-        var html = await _htmlTemplateLoader
+        var html = await htmlTemplateLoader
             .LoadAsync("./Templates/ReportDentalServices.html", request.MapToObject());
-        return _htmlConverter.ConvertToPdf(html, new MemoryStream());
+        return htmlConverter.ConvertToPdf(html, new MemoryStream());
     }
 }

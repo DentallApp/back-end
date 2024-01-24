@@ -6,18 +6,11 @@ public class GetAppointmentStatusesResponse
     public string Name { get; init; }
 }
 
-public class GetAppointmentStatusesUseCase
+public class GetAppointmentStatusesUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetAppointmentStatusesUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetAppointmentStatusesResponse>> ExecuteAsync()
     {
-        var statuses = await _context.Set<AppointmentStatus>()
+        var statuses = await context.Set<AppointmentStatus>()
             .Select(appointmentStatus => new GetAppointmentStatusesResponse
             {
                 Id   = appointmentStatus.Id,

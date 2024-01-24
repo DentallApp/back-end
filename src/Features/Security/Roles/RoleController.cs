@@ -4,13 +4,11 @@ namespace DentallApp.Features.Security.Roles;
 
 [Route("role")]
 [ApiController]
-public class RoleController : ControllerBase
+public class RoleController
 {
     [HttpGet("{isSuperadmin}")]
     public async Task<IEnumerable<GetRolesResponse>> GetAll(
         bool isSuperadmin,
-        [FromServices]GetRolesUseCase useCase)
-    { 
-        return await useCase.ExecuteAsync(isSuperadmin);
-    }
+        GetRolesUseCase useCase)
+        => await useCase.ExecuteAsync(isSuperadmin);
 }

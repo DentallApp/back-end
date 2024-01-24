@@ -11,18 +11,11 @@ public class GetSchedulesByOfficeIdResponse
     public string EndHour { get; init; }
 }
 
-public class GetSchedulesByOfficeIdUseCase
+public class GetSchedulesByOfficeIdUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetSchedulesByOfficeIdUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetSchedulesByOfficeIdResponse>> ExecuteAsync(int officeId)
     {
-        var schedules = await _context.Set<OfficeSchedule>()
+        var schedules = await context.Set<OfficeSchedule>()
             .Where(officeSchedule => officeSchedule.OfficeId == officeId)
             .OrderBy(officeSchedule => officeSchedule.WeekDayId)
             .Select(officeSchedule => new GetSchedulesByOfficeIdResponse

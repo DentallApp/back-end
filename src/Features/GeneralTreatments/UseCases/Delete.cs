@@ -1,17 +1,10 @@
 ﻿namespace DentallApp.Features.GeneralTreatments.UseCases;
 
-public class DeleteGeneralTreatmentUseCase
+public class DeleteGeneralTreatmentUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public DeleteGeneralTreatmentUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(int id)
     {
-        int updatedRows = await _context.SoftDeleteAsync<GeneralTreatment>(id);
+        int updatedRows = await context.SoftDeleteAsync<GeneralTreatment>(id);
         if (updatedRows == 0)
             return Result.NotFound();
 

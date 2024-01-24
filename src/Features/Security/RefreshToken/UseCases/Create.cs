@@ -12,30 +12,19 @@ public class CreateRefreshTokenResponse
     public string NewRefreshToken { get; init; }
 }
 
-public class CreateRefreshTokenUseCase
+public class CreateRefreshTokenUseCase(
+    DbContext context,
+    ITokenService tokenService,
+    IDateTimeService dateTimeService)
 {
-    private readonly DbContext _context;
-    private readonly ITokenService _tokenService;
-    private readonly IDateTimeService _dateTimeService;
-
-    public CreateRefreshTokenUseCase(
-        DbContext context, 
-        ITokenService tokenService, 
-        IDateTimeService dateTimeService)
-    {
-        _context = context;
-        _tokenService = tokenService;
-        _dateTimeService = dateTimeService;
-    }
-
     public async Task<Result<CreateRefreshTokenResponse>> ExecuteAsync(CreateRefreshTokenRequest request)
     {
-        var claimPrincipal = _tokenService.GetPrincipalFromExpiredAccessToken(request.OldAccessToken);
+        var claimPrincipal = tokenService.GetPrincipalFromExpiredAccessToken(request.OldAccessToken);
         if (claimPrincipal is null)
             return Result.Unauthorized(AccessTokenInvalidMessage);
 
         int userId = claimPrincipal.GetUserId();
-        var user = await _context.Set<User>()
+        var user = await context.Set<User>()
             .Where(user => user.Id == userId)
             .FirstOrDefaultAsync();
 
@@ -45,16 +34,16 @@ public class CreateRefreshTokenUseCase
         if (user.RefreshToken != request.OldRefreshToken)
             return Result.Unauthorized(RefreshTokenInvalidMessage);
 
-        if (_dateTimeService.Now >= user.RefreshTokenExpiry)
+        if (dateTimeService.Now >= user.RefreshTokenExpiry)
             return Result.Unauthorized(RefreshTokenExpiredMessage);
 
         var response = new CreateRefreshTokenResponse
         {
-            NewAccessToken  = _tokenService.CreateAccessToken(claimPrincipal.Claims),
-            NewRefreshToken = _tokenService.CreateRefreshToken()
+            NewAccessToken  = tokenService.CreateAccessToken(claimPrincipal.Claims),
+            NewRefreshToken = tokenService.CreateRefreshToken()
         };
         user.RefreshToken = response.NewRefreshToken;
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.Success(response, UpdatedAccessTokenMessage);
     }
 }

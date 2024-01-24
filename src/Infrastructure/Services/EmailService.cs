@@ -1,32 +1,23 @@
 ﻿namespace DentallApp.Infrastructure.Services;
 
-public class EmailService : IEmailService
+public class EmailService(ISendGridClient client, AppSettings settings) : IEmailService
 {
-    private readonly ISendGridClient _client;
-    private readonly AppSettings _settings;
-
-    public EmailService(ISendGridClient client, AppSettings settings)
-    {
-        _client = client;
-        _settings = settings;
-    }
-
     private async Task<bool> SendEmailAsync(string recipientEmail, string recipientName, string subject, string body)
     {
         var msg = new SendGridMessage()
         {
-            From = new EmailAddress(_settings.SendGridFromEmail, _settings.SendGridFromName),
+            From = new EmailAddress(settings.SendGridFromEmail, settings.SendGridFromName),
             Subject = subject,
             HtmlContent = body
         };
         msg.AddTo(new EmailAddress(recipientEmail, recipientName));
-        var response = await _client.SendEmailAsync(msg);
+        var response = await client.SendEmailAsync(msg);
         return response.IsSuccessStatusCode;
     }
 
     public async Task<bool> SendEmailForVerificationAsync(string recipientEmail, string recipientName, string token)
     {
-        var confirmationLink = $"{_settings.EmailVerificationUrl}?token={token}";
+        var confirmationLink = $"{settings.EmailVerificationUrl}?token={token}";
         var subject = $"Bienvenido {recipientName}!";
         var body = await EmailTemplateLoader.LoadTemplateForEmailVerificationAsync(confirmationLink, recipientName);
         return await SendEmailAsync(recipientEmail, recipientName, subject, body);
@@ -34,7 +25,7 @@ public class EmailService : IEmailService
 
     public async Task<bool> SendEmailForResetPasswordAsync(string recipientEmail, string recipientName, string token)
     {
-        var confirmationLink = $"{_settings.PasswordResetUrl}?token={token}";
+        var confirmationLink = $"{settings.PasswordResetUrl}?token={token}";
         var subject = $"Restablecimiento de contraseña";
         var body = await EmailTemplateLoader.LoadTemplateForResetPasswordAsync(confirmationLink, recipientName);
         return await SendEmailAsync(recipientEmail, recipientName, subject, body);

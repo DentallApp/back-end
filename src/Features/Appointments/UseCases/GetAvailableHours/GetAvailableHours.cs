@@ -1,16 +1,7 @@
 ﻿namespace DentallApp.Features.Appointments.UseCases.GetAvailableHours;
 
-public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
+public class GetAvailableHoursUseCase(IAvailabilityQueries queries, IDateTimeService dateTimeService) : IGetAvailableHoursUseCase
 {
-    private readonly IAvailabilityQueries _queries;
-    private readonly IDateTimeService _dateTimeService;
-
-    public GetAvailableHoursUseCase(IAvailabilityQueries queries, IDateTimeService dateTimeService)
-    {
-        _queries = queries;
-        _dateTimeService = dateTimeService;
-    }
-
     public async Task<ListedResult<AvailableTimeRangeResponse>> ExecuteAsync(AvailableTimeRangeRequest request)
     {
         int officeId             = request.OfficeId;
@@ -19,10 +10,10 @@ public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
         var appointmentDate      = request.AppointmentDate;
         int weekDayId            = (int)appointmentDate.DayOfWeek;
         var weekDayName          = WeekDaysType.WeekDays[weekDayId];
-        if (await _queries.IsPublicHolidayAsync(officeId, appointmentDate.Day, appointmentDate.Month))
+        if (await queries.IsPublicHolidayAsync(officeId, appointmentDate.Day, appointmentDate.Month))
             return Result.Failure(AppointmentDateIsPublicHolidayMessage);
 
-        var employeeSchedule  = await _queries.GetEmployeeScheduleAsync(dentistId, weekDayId);
+        var employeeSchedule  = await queries.GetEmployeeScheduleAsync(dentistId, weekDayId);
         if (employeeSchedule is null || employeeSchedule.IsEmployeeScheculeDeleted)
             return Result.Failure(string.Format(DentistNotAvailableMessage, weekDayName));
 
@@ -32,8 +23,8 @@ public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
         if (employeeSchedule.HasNotSchedule())
             return Result.Failure(NoMorningOrAfternoonHoursMessage);
 
-        var unavailables       = await _queries.GetUnavailableHoursAsync(dentistId, appointmentDate);
-        int? treatmentDuration = await _queries.GetTreatmentDurationAsync(serviceId);
+        var unavailables       = await queries.GetUnavailableHoursAsync(dentistId, appointmentDate);
+        int? treatmentDuration = await queries.GetTreatmentDurationAsync(serviceId);
         if (treatmentDuration is null)
             return Result.Failure(DentalServiceNotAvailableMessage);
 
@@ -49,7 +40,7 @@ public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
                 DentistEndHour     = (TimeSpan)employeeSchedule.AfternoonEndHour,
                 ServiceDuration    = serviceDuration,
                 AppointmentDate    = appointmentDate,
-                CurrentTimeAndDate = _dateTimeService.Now,
+                CurrentTimeAndDate = dateTimeService.Now,
                 Unavailables       = unavailables
                     .OrderBy(timeRange => timeRange.StartHour)
                     .ThenBy(timeRange => timeRange.EndHour)
@@ -65,7 +56,7 @@ public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
                 ServiceDuration    = serviceDuration,
                 AppointmentDate    = appointmentDate,
                 Unavailables       = unavailables,
-                CurrentTimeAndDate = _dateTimeService.Now
+                CurrentTimeAndDate = dateTimeService.Now
             });
         }
         else if(employeeSchedule.IsAfternoonSchedule())
@@ -77,7 +68,7 @@ public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
                 ServiceDuration    = serviceDuration,
                 AppointmentDate    = appointmentDate,
                 Unavailables       = unavailables,
-                CurrentTimeAndDate = _dateTimeService.Now
+                CurrentTimeAndDate = dateTimeService.Now
             });
         }
 
@@ -91,12 +82,9 @@ public class GetAvailableHoursUseCase : IGetAvailableHoursUseCase
     /// Obtiene el tiempo libre (o punto de descanso) del empleado. 
     /// Este tiempo se descarta para el cálculo de los horarios disponibles.
     /// </summary>
-    private static UnavailableTimeRangeResponse GetTimeOff(EmployeeScheduleResponse employeeSchedule)
-    { 
-        return new()
-        {
-            StartHour = (TimeSpan)employeeSchedule.MorningEndHour,
-            EndHour   = (TimeSpan)employeeSchedule.AfternoonStartHour
-        };
-    }
+    private static UnavailableTimeRangeResponse GetTimeOff(EmployeeScheduleResponse employeeSchedule) => new()
+    {
+        StartHour = (TimeSpan)employeeSchedule.MorningEndHour,
+        EndHour   = (TimeSpan)employeeSchedule.AfternoonStartHour
+    };
 }

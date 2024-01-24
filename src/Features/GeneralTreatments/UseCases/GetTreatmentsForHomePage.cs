@@ -8,18 +8,11 @@ public class GetGeneralTreatmentsForHomePageResponse
     public string ImageUrl { get; init; }
 }
 
-public class GetGeneralTreatmentsForHomePageUseCase
+public class GetGeneralTreatmentsForHomePageUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetGeneralTreatmentsForHomePageUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetGeneralTreatmentsForHomePageResponse>> ExecuteAsync()
     {
-        var generalTreatments = await _context.Set<GeneralTreatment>()
+        var generalTreatments = await context.Set<GeneralTreatment>()
             .Select(treatment => new GetGeneralTreatmentsForHomePageResponse
             {
                 Id          = treatment.Id,

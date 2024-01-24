@@ -1,17 +1,10 @@
 ﻿namespace DentallApp.Features.Security.RefreshToken.UseCases;
 
-public class RevokeRefreshTokenUseCase
+public class RevokeRefreshTokenUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public RevokeRefreshTokenUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(int userId)
     {
-        var user = await _context.Set<User>()
+        var user = await context.Set<User>()
             .Where(user => user.Id == userId)
             .FirstOrDefaultAsync();
 
@@ -23,7 +16,7 @@ public class RevokeRefreshTokenUseCase
 
         user.RefreshToken = null;
         user.RefreshTokenExpiry = null;
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.Success(RevokeTokenMessage);
     }
 }

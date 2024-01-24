@@ -13,18 +13,11 @@ public class GetMostRequestedServicesResponse
     public int TotalAppointmentsAssisted { get; init; }
 }
 
-public class GetMostRequestedServicesUseCase
+public class GetMostRequestedServicesUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetMostRequestedServicesUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetMostRequestedServicesResponse>> ExecuteAsync(GetMostRequestedServicesRequest request)
     {
-        var appointments = await _context.Set<Appointment>()
+        var appointments = await context.Set<Appointment>()
             .Where(appointment =>
                   appointment.AppointmentStatusId == AppointmentStatusId.Assisted &&
                   appointment.Date >= request.From && appointment.Date <= request.To)

@@ -10,18 +10,11 @@ public class GetOfficeOverviewResponse
 /// <summary>
 /// Represents a use case to obtain an overview of the information of each active and inactive office.
 /// </summary>
-public class GetOfficeOverviewUseCase
+public class GetOfficeOverviewUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetOfficeOverviewUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetOfficeOverviewResponse>> ExecuteAsync()
     {
-        var offices = await _context.Set<Office>()
+        var offices = await context.Set<Office>()
             .Where(office => office.OfficeSchedules.Any())
             .Select(office => new GetOfficeOverviewResponse
             {

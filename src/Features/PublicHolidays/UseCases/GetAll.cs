@@ -15,18 +15,11 @@ public class GetPublicHolidaysResponse
     public IEnumerable<Office> Offices { get; init; }
 }
 
-public class GetPublicHolidaysUseCase
+public class GetPublicHolidaysUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetPublicHolidaysUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetPublicHolidaysResponse>> ExecuteAsync()
     {
-        var holidays = await _context.Set<PublicHoliday>()
+        var holidays = await context.Set<PublicHoliday>()
             .Select(publicHoliday => new GetPublicHolidaysResponse
             {
                 Id          = publicHoliday.Id,

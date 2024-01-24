@@ -13,10 +13,8 @@ public class OfficeScheduleController : ControllerBase
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateOfficeScheduleRequest request,
-        [FromServices]CreateOfficeScheduleUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(User, request);
-    }
+        CreateOfficeScheduleUseCase useCase)
+        => await useCase.ExecuteAsync(User, request);
 
     /// <summary>
     /// Actualiza el horario de un consultorio.
@@ -26,10 +24,8 @@ public class OfficeScheduleController : ControllerBase
     public async Task<Result> Update(
         int scheduleId,
         [FromBody]UpdateOfficeScheduleRequest request,
-        [FromServices]UpdateOfficeScheduleUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(scheduleId, User, request);
-    }
+        UpdateOfficeScheduleUseCase useCase)
+        => await useCase.ExecuteAsync(scheduleId, User, request);
 
     /// <summary>
     /// Obtiene el horario de un consultorio activo o inactivo.
@@ -37,8 +33,6 @@ public class OfficeScheduleController : ControllerBase
     [HttpGet("{officeId}")]
     public async Task<IEnumerable<GetSchedulesByOfficeIdResponse>> GetByOfficeId(
         int officeId,
-        [FromServices]GetSchedulesByOfficeIdUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(officeId);
-    }
+        GetSchedulesByOfficeIdUseCase useCase)
+        => await useCase.ExecuteAsync(officeId);
 }

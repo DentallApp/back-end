@@ -6,31 +6,21 @@ public class CreateOfficeRequest
     public string Address { get; init; }
     public string ContactNumber { get; init; }
 
-    public Office MapToOffice()
+    public Office MapToOffice() => new()
     {
-        return new()
-        {
-            Name          = Name,
-            Address       = Address,
-            ContactNumber = ContactNumber
-        };
-    }
+        Name          = Name,
+        Address       = Address,
+        ContactNumber = ContactNumber
+    };
 }
 
-public class CreateOfficeUseCase
+public class CreateOfficeUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public CreateOfficeUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result<CreatedId>> ExecuteAsync(CreateOfficeRequest request)
     {
         var office = request.MapToOffice();
-        _context.Add(office);
-        await _context.SaveChangesAsync();
+        context.Add(office);
+        await context.SaveChangesAsync();
         return Result.CreatedResource(office.Id);
     }
 }

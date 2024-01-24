@@ -5,7 +5,7 @@ namespace DentallApp.Features.Persons;
 [AuthorizeByRole(RolesName.Secretary)]
 [Route("person")]
 [ApiController]
-public class PersonController : ControllerBase
+public class PersonController
 {
     /// <summary>
     /// Create a person's information.
@@ -13,10 +13,8 @@ public class PersonController : ControllerBase
     [HttpPost]
 	public async Task<Result> Create(
         [FromBody]CreatePersonRequest request,
-        [FromServices]CreatePersonUseCase useCase)
-	{
-        return await useCase.ExecuteAsync(request);
-    }
+        CreatePersonUseCase useCase)
+        => await useCase.ExecuteAsync(request);
 
     /// <summary>
     /// Gets a set of person information based on a search criteria.
@@ -28,8 +26,6 @@ public class PersonController : ControllerBase
     [HttpGet("search")]
 	public async Task<IEnumerable<GetPersonsResponse>> GetAll(
         [FromQuery]string value,
-        [FromServices]GetPersonsUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(value);
-    }
+        GetPersonsUseCase useCase)
+        => await useCase.ExecuteAsync(value);
 }

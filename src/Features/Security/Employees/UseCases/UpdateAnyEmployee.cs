@@ -38,28 +38,15 @@ public class UpdateAnyEmployeeRequest
     }
 }
 
-public class UpdateAnyEmployeeUseCase
+public class UpdateAnyEmployeeUseCase(
+    DbContext context,
+    IPasswordHasher passwordHasher,
+    IEntityService<UserRole> userRoleService,
+    IEntityService<EmployeeSpecialty> employeeSpecialtyService)
 {
-    private readonly DbContext _context;
-    private readonly IPasswordHasher _passwordHasher;
-    private readonly IEntityService<UserRole> _userRoleService;
-    private readonly IEntityService<EmployeeSpecialty> _employeeSpecialtyService;
-
-    public UpdateAnyEmployeeUseCase(
-        DbContext context, 
-        IPasswordHasher passwordHasher,
-        IEntityService<UserRole> userRoleService,
-        IEntityService<EmployeeSpecialty> employeeSpecialtyService)
-    {
-        _context = context;
-        _passwordHasher = passwordHasher;
-        _userRoleService = userRoleService;
-        _employeeSpecialtyService = employeeSpecialtyService;
-    }
-
     public async Task<Result> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee, UpdateAnyEmployeeRequest request)
     {
-        var employeeToEdit = await _context.Set<Employee>()
+        var employeeToEdit = await context.Set<Employee>()
             .Include(employee => employee.Person)
             .Include(employee => employee.User.UserRoles)
             .Include(employee => employee.EmployeeSpecialties)
@@ -82,7 +69,7 @@ public class UpdateAnyEmployeeUseCase
             return Result.Forbidden(PermitsNotGrantedMessage);
 
         if (request.Password is not null)
-            employeeToEdit.User.Password = _passwordHasher.HashPassword(request.Password);
+            employeeToEdit.User.Password = passwordHasher.HashPassword(request.Password);
 
         var specialtiesId = request.SpecialtiesId ?? Enumerable.Empty<int>().ToList();
         UpdateEmployeeSpecialties(employeeToEdit.Id, employeeToEdit.EmployeeSpecialties, specialtiesId);
@@ -94,7 +81,7 @@ public class UpdateAnyEmployeeUseCase
             employeeToEdit.User.RefreshToken = null;
             employeeToEdit.User.RefreshTokenExpiry = null;
         }
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.UpdatedResource();
     }
 
@@ -109,7 +96,7 @@ public class UpdateAnyEmployeeUseCase
         List<UserRole> currentUserRoles, 
         List<int> rolesId)
     {
-        _userRoleService.Update(userId, ref currentUserRoles, ref rolesId);
+        userRoleService.Update(userId, ref currentUserRoles, ref rolesId);
     }
 
     /// <summary>
@@ -123,6 +110,6 @@ public class UpdateAnyEmployeeUseCase
         List<EmployeeSpecialty> currentEmployeeSpecialties, 
         List<int> specialtiesId)
     {
-        _employeeSpecialtyService.Update(employeeId, ref currentEmployeeSpecialties, ref specialtiesId);
+        employeeSpecialtyService.Update(employeeId, ref currentEmployeeSpecialties, ref specialtiesId);
     }
 }

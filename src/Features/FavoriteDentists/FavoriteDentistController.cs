@@ -13,10 +13,8 @@ public class FavoriteDentistController : ControllerBase
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateFavoriteDentistRequest request,
-        [FromServices]CreateFavoriteDentistUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(User.GetUserId(), request);
-    }
+        CreateFavoriteDentistUseCase useCase)
+        => await useCase.ExecuteAsync(User.GetUserId(), request);
 
     /// <summary>
     /// Deletes a favorite dentist from the current basic user.
@@ -24,15 +22,12 @@ public class FavoriteDentistController : ControllerBase
     [HttpDelete("{favoriteDentistId}")]
     public async Task<Result> DeleteByFavoriteDentistId(
         int favoriteDentistId,
-        [FromServices]DeleteFavoriteDentistUseCase useCase)
-    {
-        var request = new DeleteFavoriteDentistRequest
+        DeleteFavoriteDentistUseCase useCase)
+        => await useCase.ExecuteAsync(new DeleteFavoriteDentistRequest
         {
             UserId = User.GetUserId(),
             FavoriteDentistId = favoriteDentistId
-        };
-        return await useCase.ExecuteAsync(request);
-    }
+        });
 
     /// <summary>
     /// Deletes a favorite dentist from the current basic user.
@@ -40,10 +35,8 @@ public class FavoriteDentistController : ControllerBase
     [HttpDelete("dentist/{dentistId}")]
     public async Task<Result> DeleteByUserIdAndDentistId(
         int dentistId,
-        [FromServices]DeleteFavoriteDentistUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(User.GetUserId(), dentistId);
-    }
+        DeleteFavoriteDentistUseCase useCase)
+        => await useCase.ExecuteAsync(User.GetUserId(), dentistId);
 
     /// <summary>
     /// Gets the dentists preferred by the basic user and 
@@ -51,18 +44,14 @@ public class FavoriteDentistController : ControllerBase
     /// </summary>
     [HttpGet("dentist")]
     public async Task<IEnumerable<GetFavoriteAndUnfavoriteDentistsResponse>> GetFavoritesAndUnfavorites(
-        [FromServices]GetFavoriteAndUnfavoriteDentistsUseCase useCase)
-    {
-        return await useCase.ExecuteAsync(User.GetUserId());
-    }
+        GetFavoriteAndUnfavoriteDentistsUseCase useCase)
+        => await useCase.ExecuteAsync(User.GetUserId());
 
     /// <summary>
     /// Gets only the basic user's favorite dentists.
     /// </summary>
     [HttpGet]
     public async Task<IEnumerable<GetFavoriteDentistsByUserIdResponse>> GetFavoriteDentists(
-        [FromServices]GetFavoriteDentistsByUserIdUseCase useCase)
-    { 
-        return await useCase.ExecuteAsync(User.GetUserId());
-    }
+        GetFavoriteDentistsByUserIdUseCase useCase)
+        => await useCase.ExecuteAsync(User.GetUserId());
 }

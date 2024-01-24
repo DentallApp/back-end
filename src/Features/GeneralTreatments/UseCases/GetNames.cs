@@ -6,18 +6,11 @@ public class GetGeneralTreatmentNamesResponse
     public string Name { get; init; }
 }
 
-public class GetGeneralTreatmentNamesUseCase
+public class GetGeneralTreatmentNamesUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetGeneralTreatmentNamesUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetGeneralTreatmentNamesResponse>> ExecuteAsync()
     {
-        var generalTreatments = await _context.Set<GeneralTreatment>()
+        var generalTreatments = await context.Set<GeneralTreatment>()
             .Select(treatment => new GetGeneralTreatmentNamesResponse
             {
                 Id   = treatment.Id,

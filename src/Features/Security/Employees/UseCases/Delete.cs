@@ -1,17 +1,10 @@
 ﻿namespace DentallApp.Features.Security.Employees.UseCases;
 
-public class DeleteEmployeeUseCase
+public class DeleteEmployeeUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public DeleteEmployeeUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Result> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee)
     {
-        var employee = await _context.Set<Employee>()
+        var employee = await context.Set<Employee>()
             .Include(employee => employee.User.UserRoles)
             .Where(employee => employee.Id == employeeId)
             .FirstOrDefaultAsync();
@@ -25,8 +18,8 @@ public class DeleteEmployeeUseCase
         if (employee.IsSuperAdmin())
             return Result.Forbidden(CannotRemoveSuperadminMessage);
 
-        _context.SoftDelete(employee);
-        await _context.SaveChangesAsync();
+        context.SoftDelete(employee);
+        await context.SaveChangesAsync();
         return Result.DeletedResource();
     }
 }

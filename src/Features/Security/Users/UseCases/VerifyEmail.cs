@@ -5,29 +5,18 @@ public class VerifyEmailRequest
     public string Token { get; init; }
 }
 
-public class VerifyEmailUseCase
+public class VerifyEmailUseCase(
+    DbContext context,
+    IUserRepository userRepository,
+    ITokenService tokenService)
 {
-    private readonly DbContext _context;
-    private readonly IUserRepository _userRepository;
-    private readonly ITokenService _tokenService;
-
-    public VerifyEmailUseCase(
-        DbContext context,
-        IUserRepository userRepository,
-        ITokenService tokenService)
-    {
-        _context = context;
-        _userRepository = userRepository;
-        _tokenService = tokenService;
-    }
-
     public async Task<Result<UserLoginResponse>> ExecuteAsync(VerifyEmailRequest request)
     {
-        var claimPrincipal = _tokenService.ValidateEmailVerificationToken(request.Token);
+        var claimPrincipal = tokenService.ValidateEmailVerificationToken(request.Token);
         if (claimPrincipal is null)
             return Result.Invalid(EmailVerificationTokenInvalidMessage);
 
-        var user = await _userRepository.GetFullUserProfileAsync(claimPrincipal.GetUserName());
+        var user = await userRepository.GetFullUserProfileAsync(claimPrincipal.GetUserName());
         if (user is null)
             return Result.NotFound(UsernameNotFoundMessage);
 
@@ -35,14 +24,14 @@ public class VerifyEmailUseCase
             return Result.Conflict(AccountAlreadyVerifiedMessage);
 
         var userLoginResponse   =  user.MapToUserLoginResponse();
-        user.RefreshToken       = _tokenService.CreateRefreshToken();
-        user.RefreshTokenExpiry = _tokenService.CreateExpiryForRefreshToken();
+        user.RefreshToken       = tokenService.CreateRefreshToken();
+        user.RefreshTokenExpiry = tokenService.CreateExpiryForRefreshToken();
         var userRole = user.UserRoles.First();
         userRole.RoleId = RolesId.BasicUser;
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
 
         userLoginResponse.Roles        = new[] { RolesName.BasicUser };
-        userLoginResponse.AccessToken  = _tokenService.CreateAccessToken(userLoginResponse.MapToUserClaims());
+        userLoginResponse.AccessToken  = tokenService.CreateAccessToken(userLoginResponse.MapToUserClaims());
         userLoginResponse.RefreshToken = user.RefreshToken;
         return Result.Success(userLoginResponse, EmailSuccessfullyVerifiedMessage);
     }

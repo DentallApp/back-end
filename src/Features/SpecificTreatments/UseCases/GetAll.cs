@@ -9,18 +9,11 @@ public class GetSpecificTreatmentsResponse
     public double Price { get; init; }
 }
 
-public class GetSpecificTreatmentsUseCase
+public class GetSpecificTreatmentsUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetSpecificTreatmentsUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetSpecificTreatmentsResponse>> ExecuteAsync()
     {
-        var specificTreatments = await _context.Set<SpecificTreatment>()
+        var specificTreatments = await context.Set<SpecificTreatment>()
             .Select(treatment => new GetSpecificTreatmentsResponse
             {
                 SpecificTreatmentId   = treatment.Id,

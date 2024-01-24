@@ -10,22 +10,15 @@ public class GetFavoriteDentistsByUserIdResponse
     public string OfficeName { get; init; }
 }
 
-public class GetFavoriteDentistsByUserIdUseCase
+public class GetFavoriteDentistsByUserIdUseCase(DbContext context)
 {
-    private readonly DbContext _context;
-
-    public GetFavoriteDentistsByUserIdUseCase(DbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<IEnumerable<GetFavoriteDentistsByUserIdResponse>> ExecuteAsync(int userId)
     {
         var favoriteDentists = await 
-            (from favoriteDentist in _context.Set<FavoriteDentist>()
-             join dentist in _context.Set<Employee>() on favoriteDentist.DentistId equals dentist.Id
-             join dentistDetails in _context.Set<Person>() on dentist.PersonId equals dentistDetails.Id
-             join office in _context.Set<Office>() on dentist.OfficeId equals office.Id
+            (from favoriteDentist in context.Set<FavoriteDentist>()
+             join dentist in context.Set<Employee>() on favoriteDentist.DentistId equals dentist.Id
+             join dentistDetails in context.Set<Person>() on dentist.PersonId equals dentistDetails.Id
+             join office in context.Set<Office>() on dentist.OfficeId equals office.Id
              where favoriteDentist.UserId == userId
              select new GetFavoriteDentistsByUserIdResponse
              {

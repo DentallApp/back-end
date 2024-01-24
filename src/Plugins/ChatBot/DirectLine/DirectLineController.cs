@@ -2,15 +2,8 @@
 
 [Route("directline/token")]
 [ApiController]
-public class DirectLineController : ControllerBase
+public class DirectLineController(DirectLineService directLineService) : ControllerBase
 {
-	private readonly DirectLineService _directLineService;
-
-	public DirectLineController(DirectLineService directLineService)
-    {
-        _directLineService = directLineService;
-    }
-
     [AuthorizeByRole(RolesName.BasicUser)]
     [HttpGet]
     public async Task<ActionResult> Get()
@@ -20,7 +13,7 @@ public class DirectLineController : ControllerBase
             UserId   = User.GetUserId(), 
             PersonId = User.GetPersonId() 
         };
-        var result = await _directLineService.GetTokenAsync(user);
+        var result = await directLineService.GetTokenAsync(user);
         if (result.IsSuccess)
             return Ok(new { result.Data.Token });
 

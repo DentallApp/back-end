@@ -19,22 +19,13 @@ public class UpdatePublicHolidayRequest
     }
 }
 
-public class UpdatePublicHolidayUseCase
+public class UpdatePublicHolidayUseCase(
+    DbContext context,
+    IEntityService<OfficeHoliday> officeHolidayService)
 {
-    private readonly DbContext _context;
-    private readonly IEntityService<OfficeHoliday> _officeHolidayService;
-
-    public UpdatePublicHolidayUseCase(
-        DbContext context,
-        IEntityService<OfficeHoliday> officeHolidayService)
-    {
-        _context = context;
-        _officeHolidayService = officeHolidayService;
-    }
-
     public async Task<Result> ExecuteAsync(int id, UpdatePublicHolidayRequest request)
     {
-        var holiday = await _context.Set<PublicHoliday>()
+        var holiday = await context.Set<PublicHoliday>()
             .Include(publicHoliday => publicHoliday.Offices)
             .Where(publicHoliday => publicHoliday.Id == id)
             .FirstOrDefaultAsync();
@@ -44,7 +35,7 @@ public class UpdatePublicHolidayUseCase
 
         request.MapToPublicHoliday(holiday);
         AssignOfficesToHoliday(holiday.Id, holiday.Offices, request.OfficesId);
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return Result.UpdatedResource();
     }
 
@@ -59,6 +50,6 @@ public class UpdatePublicHolidayUseCase
         List<OfficeHoliday> currentOffices, 
         List<int> officesId)
     {
-        _officeHolidayService.Update(publicHolidayId, ref currentOffices, ref officesId);
+        officeHolidayService.Update(publicHolidayId, ref currentOffices, ref officesId);
     }
 }
