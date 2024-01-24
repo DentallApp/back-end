@@ -12,9 +12,7 @@ public class Employee : SoftDeleteEntity, IAuditableEntity
     public string PostgradeUniversity { get; set; }
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-    public ICollection<Appointment> Appointments { get; set; }
     public ICollection<EmployeeSchedule> EmployeeSchedules { get; set; }
-    public ICollection<FavoriteDentist> FavoriteDentists { get; set; }
     public List<EmployeeSpecialty> EmployeeSpecialties { get; set; }
 
     public bool IsSuperAdmin()

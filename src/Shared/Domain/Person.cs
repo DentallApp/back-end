@@ -14,7 +14,6 @@ public class Person : BaseEntity, IAuditableEntity
     public User User { get; set; }
     public Employee Employee { get; set; }
     public Dependent Dependent { get; set; }
-    public ICollection<Appointment> Appointments { get; set; }
 
     [Decompile]
     [NotMapped]

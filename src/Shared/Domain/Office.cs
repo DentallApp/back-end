@@ -11,8 +11,5 @@ public class Office : SoftDeleteEntity, IAuditableEntity
     public DateTime? UpdatedAt { get; set; }
     [NotMapped]
     public bool IsDisabledEmployeeAccounts => !IsEnabledEmployeeAccounts;
-    public ICollection<Employee> Employees { get; set; }
-    public ICollection<Appointment> Appointments { get; set; }
     public ICollection<OfficeSchedule> OfficeSchedules { get; set; }
-    public ICollection<OfficeHoliday> OfficeHolidays { get; set; }
 }

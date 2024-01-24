@@ -9,6 +9,4 @@ public class GeneralTreatment : SoftDeleteEntity, IAuditableEntity
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public ICollection<SpecificTreatment> SpecificTreatments { get; set; }
-    public ICollection<Appointment> Appointments { get; set; }
-    public ICollection<EmployeeSpecialty> EmployeeSpecialties { get; set; }
 }

@@ -13,9 +13,6 @@ public class User : BaseEntity, IAuditableEntity
     public Person Person { get; set; }
     public Employee Employee { get; set; }
     public List<UserRole> UserRoles { get; set; }
-    public ICollection<Dependent> Dependents { get; set; }
-    public ICollection<Appointment> Appointments { get; set; }
-    public ICollection<FavoriteDentist> FavoriteDentists { get; set; }
 
     public bool IsUnverified()
     {
