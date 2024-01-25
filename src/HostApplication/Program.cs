@@ -6,6 +6,8 @@ var builder     = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+ISqlCollection sqlCollection = new YeSqlLoader().LoadFromDefaultDirectory();
+builder.Services.AddSingleton(sqlCollection);
 builder.InitializePlugins();
 builder.Configuration.AddEnvironmentVariables();
 builder.Services

@@ -28,4 +28,5 @@ global using Microsoft.EntityFrameworkCore;
 
 global using SimpleResults;
 global using DotEnv.Core;
+global using YeSql.Net;
 global using Dapper;

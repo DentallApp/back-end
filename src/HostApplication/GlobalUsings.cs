@@ -18,7 +18,6 @@ global using DentallApp.Shared.Persistence.Repositories;
 global using DentallApp.Shared.Services;
 global using DentallApp.Shared.Plugin.Contracts;
 
-global using System.Runtime.Loader;
 global using System.Reflection;
 global using System.Net;
 global using System.Data;
@@ -39,6 +38,7 @@ global using Microsoft.OpenApi.Models;
 
 global using DotEnv.Core;
 global using SimpleResults;
+global using YeSql.Net;
 global using SendGrid.Extensions.DependencyInjection;
 
 global using EntityFramework.Exceptions.Common;
