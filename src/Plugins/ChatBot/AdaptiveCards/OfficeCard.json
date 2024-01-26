@@ -17,7 +17,7 @@
       "isRequired": true,
       "separator": true,
       "id": "officeId",
-      "errorMessage": "Error. Escoja un consultorio",
+      "errorMessage": "Error. Escoja un consultorio.",
       "label": "Seleccione un consultorio"
     }
   ],

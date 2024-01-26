@@ -16,7 +16,7 @@
       "isRequired": true,
       "separator": true,
       "id": "patientId",
-      "errorMessage": "Error. Escoja un paciente",
+      "errorMessage": "Error. Escoja un paciente.",
       "label": "Seleccione un paciente"
     }
   ],
