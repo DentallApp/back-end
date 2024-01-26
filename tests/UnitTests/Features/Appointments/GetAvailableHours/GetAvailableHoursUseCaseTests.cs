@@ -35,7 +35,9 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenDentistIsNotAvailableOnGivenDay_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var expectedMessage = string.Format(Messages.DentistNotAvailable, WeekdayCollection.GetName(0));
+        var expectedMessage = string.Format(
+            Messages.DentistNotAvailable, 
+            WeekdayCollection.GetName(DayOfWeek.Sunday));
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .DoNothing();
@@ -53,7 +55,9 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenEmployeeScheduleIsInactive_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var expectedMessage = string.Format(Messages.DentistNotAvailable, WeekdayCollection.GetName(0));
+        var expectedMessage = string.Format(
+            Messages.DentistNotAvailable, 
+            WeekdayCollection.GetName(DayOfWeek.Sunday));
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse { IsEmployeeScheculeDeleted = true });
@@ -71,7 +75,9 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenOfficeScheduleIsInactive_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var expectedMessage = string.Format(Messages.OfficeClosedForSpecificDay, WeekdayCollection.GetName(0));
+        var expectedMessage = string.Format(
+            Messages.OfficeClosedForSpecificDay, 
+            WeekdayCollection.GetName(DayOfWeek.Sunday));
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse { IsOfficeScheduleDeleted = true });
@@ -89,7 +95,9 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenOfficeIsInactive_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var expectedMessage = string.Format(Messages.OfficeClosedForSpecificDay, WeekdayCollection.GetName(0));
+        var expectedMessage = string.Format(
+            Messages.OfficeClosedForSpecificDay, 
+            WeekdayCollection.GetName(DayOfWeek.Sunday));
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse { IsOfficeDeleted = true });
