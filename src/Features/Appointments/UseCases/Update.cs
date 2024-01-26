@@ -16,7 +16,7 @@ public class UpdateAppointmentUseCase(DbContext context, IDateTimeService dateTi
         if (appointment is null)
             return Result.NotFound(Messages.ResourceNotFound);
 
-        if (appointment.AppointmentStatusId == AppointmentStatusId.Canceled)
+        if (appointment.AppointmentStatusId == (int)StatusOfAppointment.Canceled)
             return Result.Conflict(Messages.AppointmentIsAlreadyCanceled);
 
         if (dateTimeService.Now.Date > appointment.Date)
