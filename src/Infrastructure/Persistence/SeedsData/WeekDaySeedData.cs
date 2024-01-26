@@ -8,32 +8,32 @@ public static class WeekDaySeedData
             new WeekDay
             {
                 Id = 1,
-                Name = WeekDaysName.Monday
+                Name = WeekDayName.Monday
             },
             new WeekDay
             {
                 Id = 2,
-                Name = WeekDaysName.Tuesday
+                Name = WeekDayName.Tuesday
             },
             new WeekDay
             {
                 Id = 3,
-                Name = WeekDaysName.Wednesday
+                Name = WeekDayName.Wednesday
             },
             new WeekDay
             {
                 Id = 4,
-                Name = WeekDaysName.Thursday
+                Name = WeekDayName.Thursday
             },
             new WeekDay
             {
                 Id = 5,
-                Name = WeekDaysName.Friday
+                Name = WeekDayName.Friday
             },
             new WeekDay
             {
                 Id = 6,
-                Name = WeekDaysName.Saturday
+                Name = WeekDayName.Saturday
             }
         );
         return builder;
