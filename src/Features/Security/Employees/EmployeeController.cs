@@ -6,14 +6,14 @@ namespace DentallApp.Features.Security.Employees;
 [ApiController]
 public class EmployeeController : ControllerBase
 {
-    [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateEmployeeRequest request,
         CreateEmployeeUseCase useCase)
         => await useCase.ExecuteAsync(User, request);
 
-    [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpDelete("{id}")]
     public async Task<Result> Delete(
         int id,
@@ -25,14 +25,14 @@ public class EmployeeController : ControllerBase
         return await useCase.ExecuteAsync(id, User);
     }
 
-    [AuthorizeByRole(RolesName.Secretary, RolesName.Dentist, RolesName.Admin, RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Secretary, RoleName.Dentist, RoleName.Admin, RoleName.Superadmin)]
     [HttpPut]
     public async Task<Result> UpdateCurrentEmployee(
         [FromBody]UpdateCurrentEmployeeRequest request,
         UpdateCurrentEmployeeUseCase useCase)
         => await useCase.ExecuteAsync(User.GetEmployeeId(), request);
 
-    [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpPut("{id}")]
     public async Task<Result> UpdateAnyEmployee(
         int id, 
@@ -45,7 +45,7 @@ public class EmployeeController : ControllerBase
         return await useCase.ExecuteAsync(id, User, request);
     }
 
-    [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpGet("edit")]
     public async Task<IEnumerable<GetEmployeesToEditResponse>> GetEmployeesToEdit(
         GetEmployeesToEditUseCase useCase)
@@ -61,7 +61,7 @@ public class EmployeeController : ControllerBase
     /// <para>- Sí <see cref="GetDentistsRequest.IsDentistDeleted"/> es <c>false</c>, traerá los odontólogos que no han sido eliminados temporalmente.</para>
     /// <para>- Sí <see cref="GetDentistsRequest.IsDentistDeleted"/> es <c>null</c>, traerá TODOS los odontólogos, sin importar si está eliminado temporalmente o no.</para>
     /// </remarks>
-    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin, RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Secretary, RoleName.Admin, RoleName.Superadmin)]
     [HttpPost("dentist")]
     public async Task<ActionResult<IEnumerable<GetDentistsResponse>>> GetDentists(
         [FromBody]GetDentistsRequest request,
@@ -77,7 +77,7 @@ public class EmployeeController : ControllerBase
     /// Obtiene todos los horarios de los empleados.
     /// </summary>
     /// <returns></returns>
-    [AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
+    [AuthorizeByRole(RoleName.Secretary, RoleName.Admin)]
     [HttpGet("overview")]
     public async Task<IEnumerable<GetEmployeeOverviewResponse>> GetOverview(
         GetEmployeeOverviewUseCase useCase)

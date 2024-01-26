@@ -2,7 +2,7 @@
 
 namespace DentallApp.Features.PublicHolidays;
 
-[AuthorizeByRole(RolesName.Superadmin)]
+[AuthorizeByRole(RoleName.Superadmin)]
 [Route("public-holiday")]
 [ApiController]
 public class PublicHolidayController

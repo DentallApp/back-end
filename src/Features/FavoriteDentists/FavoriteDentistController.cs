@@ -2,7 +2,7 @@
 
 namespace DentallApp.Features.FavoriteDentists;
 
-[AuthorizeByRole(RolesName.BasicUser)]
+[AuthorizeByRole(RoleName.BasicUser)]
 [Route("favorite-dentist")]
 [ApiController]
 public class FavoriteDentistController : ControllerBase

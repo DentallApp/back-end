@@ -9,7 +9,7 @@ public class OfficeScheduleController : ControllerBase
     /// <summary>
     /// Crea un nuevo horario para el consultorio.
     /// </summary>
-    [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateOfficeScheduleRequest request,
@@ -19,7 +19,7 @@ public class OfficeScheduleController : ControllerBase
     /// <summary>
     /// Actualiza el horario de un consultorio.
     /// </summary>
-    [AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpPut("{scheduleId}")]
     public async Task<Result> Update(
         int scheduleId,

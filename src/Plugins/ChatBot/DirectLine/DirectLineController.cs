@@ -4,7 +4,7 @@
 [ApiController]
 public class DirectLineController(DirectLineService directLineService) : ControllerBase
 {
-    [AuthorizeByRole(RolesName.BasicUser)]
+    [AuthorizeByRole(RoleName.BasicUser)]
     [HttpGet]
     public async Task<ActionResult> Get()
     {

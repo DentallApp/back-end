@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Reports.UseCases.GetTotalScheduledAppointments;
 
-[AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
+[AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
 public class ReportTotalScheduledAppointmentsController : ControllerBase
 {
     /// <summary>

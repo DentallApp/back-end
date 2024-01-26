@@ -31,7 +31,7 @@ public class CancelAppointmentsUseCaseTests
         var claims = new Claim[]
         {
             new (CustomClaimsType.EmployeeId, "1"),
-            new (ClaimTypes.Role, RolesName.Dentist)
+            new (ClaimTypes.Role, RoleName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
@@ -64,7 +64,7 @@ public class CancelAppointmentsUseCaseTests
         var claims = new Claim[]
         {
             new (CustomClaimsType.EmployeeId, "1"),
-            new (ClaimTypes.Role, RolesName.Dentist)
+            new (ClaimTypes.Role, RoleName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
@@ -103,7 +103,7 @@ public class CancelAppointmentsUseCaseTests
         var claims = new Claim[]
         {
             new (CustomClaimsType.EmployeeId, "1"),
-            new (ClaimTypes.Role, RolesName.Dentist)
+            new (ClaimTypes.Role, RoleName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 02, 20, 0, 0));

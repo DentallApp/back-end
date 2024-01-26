@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.Reports.UseCases.GetMostRequestedServices;
 
-[AuthorizeByRole(RolesName.Admin, RolesName.Superadmin)]
+[AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
 public class ReportMostRequestedServicesController : ControllerBase
 {
     /// <summary>

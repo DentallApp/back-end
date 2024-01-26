@@ -2,7 +2,7 @@
 
 namespace DentallApp.Features.EmployeeSchedules;
 
-[AuthorizeByRole(RolesName.Secretary, RolesName.Admin)]
+[AuthorizeByRole(RoleName.Secretary, RoleName.Admin)]
 [Route("employee-schedule")]
 [ApiController]
 public class EmployeeScheduleController
