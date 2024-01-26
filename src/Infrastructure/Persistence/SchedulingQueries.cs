@@ -80,7 +80,7 @@ public class SchedulingQueries(DbContext context) : ISchedulingQueries
         
         choices.Insert(0, new SchedulingResponse
         {
-            Title = user.FullName + " / " + KinshipsName.Default,
+            Title = user.FullName + " / " + KinshipName.Default,
             Value = user.PersonId.ToString()
         });
 
