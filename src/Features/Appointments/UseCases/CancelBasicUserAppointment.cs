@@ -18,7 +18,7 @@ public class CancelBasicUserAppointmentUseCase(
         if (dateTimeService.Now > (appointment.Date + appointment.StartHour))
             return Result.Forbidden(Messages.AppointmentThatHasAlreadyPassedBasicUser);
 
-        appointment.AppointmentStatusId = (int)StatusOfAppointment.Canceled;
+        appointment.AppointmentStatusId = (int)AppointmentStatus.Predefined.Canceled;
         await unitOfWork.SaveChangesAsync();
 
         return Result.DeletedResource();

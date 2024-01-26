@@ -19,7 +19,7 @@ public class GetMostRequestedServicesUseCase(DbContext context)
     {
         var appointments = await context.Set<Appointment>()
             .Where(appointment =>
-                  appointment.AppointmentStatusId == (int)StatusOfAppointment.Assisted &&
+                  appointment.AppointmentStatusId == (int)AppointmentStatus.Predefined.Assisted &&
                   appointment.Date >= request.From && appointment.Date <= request.To)
             .OptionalWhere(request.OfficeId, appointment => appointment.OfficeId == request.OfficeId)
             .GroupBy(appointment => new

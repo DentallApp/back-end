@@ -3,12 +3,15 @@
 public class AppointmentStatus : BaseEntity
 {
     public string Name { get; set; }
-}
 
-public enum StatusOfAppointment
-{
-    Scheduled = 1,
-    Assisted,
-    NotAssisted,
-    Canceled
+    /// <summary>
+    /// Specifies the predefined status.
+    /// </summary>
+    public enum Predefined
+    {
+        Scheduled = 1,
+        Assisted,
+        NotAssisted,
+        Canceled
+    }
 }
