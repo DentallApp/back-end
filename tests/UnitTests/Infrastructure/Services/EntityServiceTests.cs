@@ -21,16 +21,16 @@ public class EntityServiceTests
         // These are the current roles of an employee.
         var currentUserRoles = new List<UserRole>()
         {
-            new() { Id = 2, UserId = userId, RoleId = RolesId.Admin },
-            new() { Id = 1, UserId = userId, RoleId = RolesId.Secretary }
+            new() { Id = 2, UserId = userId, RoleId = (int)Role.Predefined.Admin },
+            new() { Id = 1, UserId = userId, RoleId = (int)Role.Predefined.Secretary }
         };
         // These are the role IDs obtained from the web client.
         // Duplicate roles must be removed.
         var rolesId = new List<int>() 
         { 
-            RolesId.Admin, 
-            RolesId.Dentist, 
-            RolesId.Dentist 
+            (int)Role.Predefined.Admin, 
+            (int)Role.Predefined.Dentist, 
+            (int)Role.Predefined.Dentist 
         };
 
         // Act
@@ -40,10 +40,10 @@ public class EntityServiceTests
         // Asserts
         currentUserRoles.Should().HaveCount(count);
         rolesId.Should().HaveCount(count);
-        currentUserRoles[0].RoleId.Should().Be(RolesId.Dentist);
-        currentUserRoles[1].RoleId.Should().Be(RolesId.Admin);
-        rolesId[0].Should().Be(RolesId.Dentist);
-        rolesId[1].Should().Be(RolesId.Admin);
+        currentUserRoles[0].RoleId.Should().Be((int)Role.Predefined.Dentist);
+        currentUserRoles[1].RoleId.Should().Be((int)Role.Predefined.Admin);
+        rolesId[0].Should().Be((int)Role.Predefined.Dentist);
+        rolesId[1].Should().Be((int)Role.Predefined.Admin);
     }
 
     [Test]
@@ -54,17 +54,17 @@ public class EntityServiceTests
         // These are the current roles of an employee.
         var currentUserRoles = new List<UserRole>()
         {
-            new() { Id = 1, UserId = userId, RoleId = RolesId.Secretary },
-            new() { Id = 3, UserId = userId, RoleId = RolesId.Dentist },
-            new() { Id = 2, UserId = userId, RoleId = RolesId.Admin }
+            new() { Id = 1, UserId = userId, RoleId = (int)Role.Predefined.Secretary },
+            new() { Id = 3, UserId = userId, RoleId = (int)Role.Predefined.Dentist },
+            new() { Id = 2, UserId = userId, RoleId = (int)Role.Predefined.Admin }
         };
         // Create a temporary collection because the original collection cannot be modified while iterating.
         var data = new List<UserRole>(currentUserRoles);
         // These are the role IDs obtained from the web client.
         var rolesId = new List<int>()
         {
-            RolesId.Dentist,
-            RolesId.Secretary
+            (int)Role.Predefined.Dentist,
+            (int)Role.Predefined.Secretary
         };
         Mock.Arrange(() => _repository.Remove(Arg.IsAny<UserRole>()))
             .DoInstead((UserRole entity) =>
@@ -79,8 +79,8 @@ public class EntityServiceTests
 
         // Asserts
         currentUserRoles.Should().HaveCount(2);
-        currentUserRoles[0].RoleId.Should().Be(RolesId.Secretary);
-        currentUserRoles[1].RoleId.Should().Be(RolesId.Dentist);
+        currentUserRoles[0].RoleId.Should().Be((int)Role.Predefined.Secretary);
+        currentUserRoles[1].RoleId.Should().Be((int)Role.Predefined.Dentist);
     }
 
 
@@ -92,16 +92,16 @@ public class EntityServiceTests
         // These are the current roles of an employee.
         var currentUserRoles = new List<UserRole>()
         {
-            new() { Id = 1, UserId = userId, RoleId = RolesId.Secretary }
+            new() { Id = 1, UserId = userId, RoleId = (int)Role.Predefined.Secretary }
         };
         // Create a temporary collection because the original collection cannot be modified while iterating.
         var data = new List<UserRole>(currentUserRoles);
         // These are the role IDs obtained from the web client.
         var rolesId = new List<int>()
         {
-            RolesId.Admin,
-            RolesId.Dentist,
-            RolesId.Secretary
+            (int)Role.Predefined.Admin,
+            (int)Role.Predefined.Dentist,
+            (int)Role.Predefined.Secretary
         };
         Mock.Arrange(() => _repository.Add(Arg.IsAny<UserRole>()))
             .DoInstead((UserRole entity) => currentUserRoles.Add(entity));
@@ -112,8 +112,8 @@ public class EntityServiceTests
 
         // Asserts
         currentUserRoles.Should().HaveCount(3);
-        currentUserRoles[0].RoleId.Should().Be(RolesId.Secretary);
-        currentUserRoles[1].RoleId.Should().Be(RolesId.Dentist);
-        currentUserRoles[2].RoleId.Should().Be(RolesId.Admin);
+        currentUserRoles[0].RoleId.Should().Be((int)Role.Predefined.Secretary);
+        currentUserRoles[1].RoleId.Should().Be((int)Role.Predefined.Dentist);
+        currentUserRoles[2].RoleId.Should().Be((int)Role.Predefined.Admin);
     }
 }

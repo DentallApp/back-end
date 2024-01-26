@@ -15,8 +15,8 @@ public class CreateEmployeeRequest
     public string PostgradeUniversity { get; init; }
 
     [Required]
-    [MaxLength(NumberRoles.MaxRole)]
-    [MinLength(NumberRoles.MinRole)]
+    [MaxLength(Role.Max)]
+    [MinLength(Role.Min)]
     public IEnumerable<int> Roles { get; init; }
     public IEnumerable<int> SpecialtiesId { get; init; }
 

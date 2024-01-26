@@ -15,8 +15,8 @@ public class UpdateAnyEmployeeRequest
     public string PostgradeUniversity { get; init; }
 
     [Required]
-    [MaxLength(NumberRoles.MaxRole)]
-    [MinLength(NumberRoles.MinRole)]
+    [MaxLength(Role.Max)]
+    [MinLength(Role.Min)]
     public List<int> Roles { get; init; }
     public List<int> SpecialtiesId { get; init; }
     public bool IsDeleted { get; init; }

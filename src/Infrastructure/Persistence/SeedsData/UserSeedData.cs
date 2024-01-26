@@ -48,7 +48,7 @@ public static class UserSeedData
                     {
                         Id = 1,
                         UserId = 1,
-                        RoleId = RolesId.BasicUser
+                        RoleId = (int)Role.Predefined.BasicUser
                     }
                );
     }
@@ -93,7 +93,7 @@ public static class UserSeedData
                     {
                         Id = 2,
                         UserId = 2,
-                        RoleId = RolesId.Secretary
+                        RoleId = (int)Role.Predefined.Secretary
                     }
                );
     }
@@ -138,7 +138,7 @@ public static class UserSeedData
                     {
                         Id = 3,
                         UserId = 3,
-                        RoleId = RolesId.Dentist
+                        RoleId = (int)Role.Predefined.Dentist
                     }
                );
     }
@@ -183,7 +183,7 @@ public static class UserSeedData
                     {
                         Id = 4,
                         UserId = 4,
-                        RoleId = RolesId.Admin
+                        RoleId = (int)Role.Predefined.Admin
                     }
                );
     }
@@ -228,7 +228,7 @@ public static class UserSeedData
                     {
                         Id = 5,
                         UserId = 5,
-                        RoleId = RolesId.Superadmin
+                        RoleId = (int)Role.Predefined.Superadmin
                     }
                );
     }
@@ -300,13 +300,13 @@ public static class UserSeedData
                     {
                         Id = 6,
                         UserId = 6,
-                        RoleId = RolesId.Dentist
+                        RoleId = (int)Role.Predefined.Dentist
                     },
                     new UserRole
                     {
                         Id = 7,
                         UserId = 7,
-                        RoleId = RolesId.Dentist
+                        RoleId = (int)Role.Predefined.Dentist
                     }
                );
     }

@@ -27,10 +27,10 @@ public class VerifyEmailUseCase(
         user.RefreshToken       = tokenService.CreateRefreshToken();
         user.RefreshTokenExpiry = tokenService.CreateExpiryForRefreshToken();
         var userRole = user.UserRoles.First();
-        userRole.RoleId = RolesId.BasicUser;
+        userRole.RoleId = (int)Role.Predefined.BasicUser;
         await context.SaveChangesAsync();
 
-        userLoginResponse.Roles        = new[] { RolesName.BasicUser };
+        userLoginResponse.Roles        = new[] { RoleName.BasicUser };
         userLoginResponse.AccessToken  = tokenService.CreateAccessToken(userLoginResponse.MapToUserClaims());
         userLoginResponse.RefreshToken = user.RefreshToken;
         return Result.Success(userLoginResponse, Messages.EmailSuccessfullyVerified);

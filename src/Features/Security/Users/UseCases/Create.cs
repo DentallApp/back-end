@@ -47,7 +47,7 @@ public class CreateBasicUserUseCase(
 
         var passwordHash = passwordHasher.HashPassword(request.Password);
         var user = request.MapToUser(passwordHash);
-        context.Add(new UserRole { User = user, RoleId = RolesId.Unverified });
+        context.Add(new UserRole { User = user, RoleId = (int)Role.Predefined.Unverified });
         await context.SaveChangesAsync();
 
         var userClaims = new UserClaims
@@ -56,7 +56,7 @@ public class CreateBasicUserUseCase(
             PersonId = user.PersonId,
             UserName = request.UserName,
             FullName = request.Names + " " + request.LastNames,
-            Roles    = new List<string> { RolesName.Unverified }
+            Roles    = new List<string> { RoleName.Unverified }
         };
         var emailVerificationToken = tokenService.CreateEmailVerificationToken(userClaims);
         await emailService.SendEmailForVerificationAsync(request.UserName, request.Names, emailVerificationToken);
