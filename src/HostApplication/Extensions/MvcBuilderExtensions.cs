@@ -19,7 +19,7 @@ public static class MvcBuilderExtensions
                 var result = new
                 {
                     Success = false,
-                    Message = InvalidModelStateMessage,
+                    Message = Messages.InvalidModelState,
                     Errors  = errors
                 };
                 return new BadRequestObjectResult(result);

@@ -9,24 +9,24 @@ public class GetAvailableHoursUseCase(IAvailabilityQueries queries, IDateTimeSer
         int serviceId            = request.DentalServiceId;
         var appointmentDate      = request.AppointmentDate;
         int weekDayId            = (int)appointmentDate.DayOfWeek;
-        var weekDayName          = WeekDaysType.WeekDays[weekDayId];
+        var weekDayName          = WeekdayCollection.GetName(appointmentDate.DayOfWeek);
         if (await queries.IsPublicHolidayAsync(officeId, appointmentDate.Day, appointmentDate.Month))
-            return Result.Failure(AppointmentDateIsPublicHolidayMessage);
+            return Result.Failure(Messages.AppointmentDateIsPublicHoliday);
 
         var employeeSchedule  = await queries.GetEmployeeScheduleAsync(dentistId, weekDayId);
         if (employeeSchedule is null || employeeSchedule.IsEmployeeScheculeDeleted)
-            return Result.Failure(string.Format(DentistNotAvailableMessage, weekDayName));
+            return Result.Failure(string.Format(Messages.DentistNotAvailable, weekDayName));
 
         if (employeeSchedule.IsOfficeScheduleDeleted || employeeSchedule.IsOfficeDeleted)
-            return Result.Failure(string.Format(OfficeClosedForSpecificDayMessage, weekDayName));
+            return Result.Failure(string.Format(Messages.OfficeClosedForSpecificDay, weekDayName));
 
         if (employeeSchedule.HasNotSchedule())
-            return Result.Failure(NoMorningOrAfternoonHoursMessage);
+            return Result.Failure(Messages.NoMorningOrAfternoonHours);
 
         var unavailables       = await queries.GetUnavailableHoursAsync(dentistId, appointmentDate);
         int? treatmentDuration = await queries.GetTreatmentDurationAsync(serviceId);
         if (treatmentDuration is null)
-            return Result.Failure(DentalServiceNotAvailableMessage);
+            return Result.Failure(Messages.DentalServiceNotAvailable);
 
         TimeSpan serviceDuration = TimeSpan.FromMinutes(treatmentDuration.Value);
         List<AvailableTimeRangeResponse> availableHours = default;
@@ -73,7 +73,7 @@ public class GetAvailableHoursUseCase(IAvailabilityQueries queries, IDateTimeSer
         }
 
         if(availableHours is null)
-            return Result.Failure(NoSchedulesAvailableMessage);
+            return Result.Failure(Messages.NoSchedulesAvailable);
 
         return Result.ObtainedResources(availableHours);
     }

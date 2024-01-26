@@ -28,7 +28,7 @@ public class InDirectLineService : DirectLineService
         var tokenResponseMessage = await Client.SendAsync(tokenRequest, default);
 
         if (!tokenResponseMessage.IsSuccessStatusCode)
-            return Result.CriticalError(DirectLineTokenFailedMessage);
+            return Result.CriticalError(Messages.DirectLineTokenFailed);
 
         var responseContentString = await tokenResponseMessage.Content.ReadAsStringAsync();
         var tokenResponse = JsonConvert.DeserializeObject<GetDirectLineTokenResponse>(responseContentString);

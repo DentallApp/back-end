@@ -55,7 +55,7 @@ public class CancelAppointmentsUseCase(
         if (request.Appointments.Count() != appointmentsCanBeCancelled.Count())
         {
             int count = request.Appointments.Count() - appointmentsCanBeCancelled.Count();
-            var message = string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, count);
+            var message = string.Format(Messages.AppointmentThatHasAlreadyPassedEmployee, count);
             var appointmentsThatCannotBeCanceled = new CancelAppointmentsResponse
             {
                 AppointmentsId = request.Appointments
@@ -67,7 +67,7 @@ public class CancelAppointmentsUseCase(
                          .WithData(appointmentsThatCannotBeCanceled);
         }
 
-        return Result.Success(SuccessfullyCancelledAppointmentsMessage);
+        return Result.Success(Messages.SuccessfullyCancelledAppointments);
     }
 
     private async Task SendMessageAboutAppointmentCancellationAsync(
@@ -77,7 +77,7 @@ public class CancelAppointmentsUseCase(
         var businessName = EnvReader.Instance[AppSettings.BusinessName];
         foreach (var appointment in appointmentsCanBeCancelled)
         {
-            var msg = string.Format(AppointmentCancellationMessageTemplate,
+            var msg = string.Format(Messages.AppointmentCancellation,
                 appointment.PatientName,
                 businessName,
                 appointment.AppointmentDate.GetDateInSpanishFormat(),

@@ -58,13 +58,13 @@ public class CreateEmployeeUseCase(
     public async Task<Result<CreatedId>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateEmployeeRequest request)
     {
         if (await userRepository.UserExistsAsync(request.UserName))
-            return Result.Conflict(UsernameAlreadyExistsMessage);
+            return Result.Conflict(Messages.UsernameAlreadyExists);
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
-            return Result.Forbidden(OfficeNotAssignedMessage);
+            return Result.Forbidden(Messages.OfficeNotAssigned);
 
         if (currentEmployee.HasNotPermissions(request.Roles))
-            return Result.Forbidden(PermitsNotGrantedMessage);
+            return Result.Forbidden(Messages.PermitsNotGranted);
 
         var passwordHash = passwordHasher.HashPassword(request.Password);
         var employee = request.MapToEmployee(passwordHash);
@@ -82,6 +82,6 @@ public class CreateEmployeeUseCase(
 
         context.Add(employee);
         await context.SaveChangesAsync();
-        return Result.CreatedResource(employee.Id, CreateEmployeeAccountMessage);
+        return Result.CreatedResource(employee.Id, Messages.CreateEmployeeAccount);
     }
 }

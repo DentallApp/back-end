@@ -14,19 +14,19 @@ public class UpdateAppointmentUseCase(DbContext context, IDateTimeService dateTi
             .FirstOrDefaultAsync();
 
         if (appointment is null)
-            return Result.NotFound(ResourceNotFoundMessage);
+            return Result.NotFound(Messages.ResourceNotFound);
 
         if (appointment.AppointmentStatusId == AppointmentStatusId.Canceled)
-            return Result.Conflict(AppointmentIsAlreadyCanceledMessage);
+            return Result.Conflict(Messages.AppointmentIsAlreadyCanceled);
 
         if (dateTimeService.Now.Date > appointment.Date)
-            return Result.Forbidden(AppointmentCannotBeUpdatedForPreviousDaysMessage);
+            return Result.Forbidden(Messages.AppointmentCannotBeUpdatedForPreviousDays);
 
         if (currentEmployee.IsOnlyDentist() && appointment.DentistId != currentEmployee.GetEmployeeId())
-            return Result.Forbidden(AppointmentNotAssignedMessage);
+            return Result.Forbidden(Messages.AppointmentNotAssigned);
 
         if (currentEmployee.IsNotInOffice(appointment.OfficeId))
-            return Result.Forbidden(OfficeNotAssignedMessage);
+            return Result.Forbidden(Messages.OfficeNotAssigned);
 
         appointment.AppointmentStatusId = request.StatusId;
         await context.SaveChangesAsync();

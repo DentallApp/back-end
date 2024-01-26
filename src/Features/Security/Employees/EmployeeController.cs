@@ -20,7 +20,7 @@ public class EmployeeController : ControllerBase
         DeleteEmployeeUseCase useCase)
     {
         if (id == User.GetEmployeeId())
-            return Result.Forbidden(CannotRemoveYourOwnProfileMessage);
+            return Result.Forbidden(Messages.CannotRemoveYourOwnProfile);
 
         return await useCase.ExecuteAsync(id, User);
     }
@@ -40,7 +40,7 @@ public class EmployeeController : ControllerBase
         UpdateAnyEmployeeUseCase useCase)
     {
         if (User.IsAdmin() && id == User.GetEmployeeId())
-            return Result.Forbidden(CannotEditYourOwnProfileMessage);
+            return Result.Forbidden(Messages.CannotEditYourOwnProfile);
 
         return await useCase.ExecuteAsync(id, User, request);
     }

@@ -23,7 +23,7 @@ public class CreateAppointmentUseCase(
             .AnyAsync();
 
         if (isNotAvailable)
-            return Result.Failure(DateAndTimeAppointmentIsNotAvailableMessage);
+            return Result.Failure(Messages.DateAndTimeAppointmentIsNotAvailable);
 
         var appointment = request.MapToAppointment();
         context.Add(appointment);

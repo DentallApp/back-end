@@ -26,7 +26,7 @@ public class DeleteFavoriteDentistUseCase(DbContext context)
             return Result.NotFound();
 
         if (favoriteDentist.UserId != request.UserId)
-            return Result.Forbidden(ResourceFromAnotherUserMessage);
+            return Result.Forbidden(Messages.ResourceFromAnotherUser);
 
         context.Remove(favoriteDentist);
         await context.SaveChangesAsync();

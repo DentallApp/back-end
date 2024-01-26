@@ -37,7 +37,7 @@ public class GetOfficesForHomePageUseCase(DbContext context)
 
         foreach (var office in offices)
         {
-            office.Schedules = office.Schedules.AddMissingSchedules(message: OfficeClosedMessage);
+            office.Schedules = office.Schedules.AddMissingSchedules(message: Messages.OfficeClosed);
         }
 
         return offices;

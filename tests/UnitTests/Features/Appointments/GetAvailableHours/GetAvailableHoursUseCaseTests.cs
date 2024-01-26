@@ -28,14 +28,14 @@ public class GetAvailableHoursUseCaseTests
         // Asserts
         result.IsSuccess.Should().BeFalse();
         result.Data.Should().BeEmpty();
-        result.Message.Should().Be(AppointmentDateIsPublicHolidayMessage);
+        result.Message.Should().Be(Messages.AppointmentDateIsPublicHoliday);
     }
 
     [Test]
     public async Task ExecuteAsync_WhenDentistIsNotAvailableOnGivenDay_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var expectedMessage = string.Format(DentistNotAvailableMessage, WeekDaysType.WeekDays[0]);
+        var expectedMessage = string.Format(Messages.DentistNotAvailable, WeekdayCollection.GetName(0));
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .DoNothing();
@@ -53,7 +53,7 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenEmployeeScheduleIsInactive_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var expectedMessage = string.Format(DentistNotAvailableMessage, WeekDaysType.WeekDays[0]);
+        var expectedMessage = string.Format(Messages.DentistNotAvailable, WeekdayCollection.GetName(0));
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse { IsEmployeeScheculeDeleted = true });
@@ -71,7 +71,7 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenOfficeScheduleIsInactive_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var expectedMessage = string.Format(OfficeClosedForSpecificDayMessage, WeekDaysType.WeekDays[0]);
+        var expectedMessage = string.Format(Messages.OfficeClosedForSpecificDay, WeekdayCollection.GetName(0));
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse { IsOfficeScheduleDeleted = true });
@@ -89,7 +89,7 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenOfficeIsInactive_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var expectedMessage = string.Format(OfficeClosedForSpecificDayMessage, WeekDaysType.WeekDays[0]);
+        var expectedMessage = string.Format(Messages.OfficeClosedForSpecificDay, WeekdayCollection.GetName(0));
         var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse { IsOfficeDeleted = true });
@@ -117,7 +117,7 @@ public class GetAvailableHoursUseCaseTests
         // Asserts
         result.IsSuccess.Should().BeFalse();
         result.Data.Should().BeEmpty();
-        result.Message.Should().Be(NoMorningOrAfternoonHoursMessage);
+        result.Message.Should().Be(Messages.NoMorningOrAfternoonHours);
     }
 
     [Test]
@@ -140,7 +140,7 @@ public class GetAvailableHoursUseCaseTests
         // Asserts
         result.IsSuccess.Should().BeFalse();
         result.Data.Should().BeEmpty();
-        result.Message.Should().Be(DentalServiceNotAvailableMessage);
+        result.Message.Should().Be(Messages.DentalServiceNotAvailable);
     }
 
     [Test]
@@ -292,7 +292,7 @@ public class GetAvailableHoursUseCaseTests
         // Asserts
         result.IsSuccess.Should().BeFalse();
         result.Data.Should().BeEmpty();
-        result.Message.Should().Be(NoSchedulesAvailableMessage);
+        result.Message.Should().Be(Messages.NoSchedulesAvailable);
     }
 }
 

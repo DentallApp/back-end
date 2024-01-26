@@ -13,8 +13,8 @@ public class ImageAttribute : ValidationAttribute
         using var fileStream = formFile.OpenReadStream();
         bool isRecognizableType = FileTypeValidator.IsTypeRecognizable(fileStream);
         if (!isRecognizableType)
-            return new ValidationResult(UnrecognizableFileMessage);
+            return new ValidationResult(Messages.UnrecognizableFile);
         bool isImage = fileStream.IsImage();
-        return isImage ? ValidationResult.Success : new ValidationResult(NotAnImageMessage);
+        return isImage ? ValidationResult.Success : new ValidationResult(Messages.IsNotImage);
     }
 }

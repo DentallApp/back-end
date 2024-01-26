@@ -29,7 +29,7 @@ public class UpdateOfficeScheduleUseCase(DbContext context)
             return Result.NotFound();
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(officeSchedule.OfficeId))
-            return Result.Forbidden(OfficeNotAssignedMessage);
+            return Result.Forbidden(Messages.OfficeNotAssigned);
 
         request.MapToOfficeSchedule(officeSchedule);
         await context.SaveChangesAsync();

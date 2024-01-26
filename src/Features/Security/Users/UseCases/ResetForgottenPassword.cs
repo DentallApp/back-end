@@ -15,10 +15,10 @@ public class ResetForgottenPasswordUseCase(
     {
         var claimIdentity = tokenService.GetClaimsIdentity(request.Token);
         if (claimIdentity is null)
-            return Result.Invalid(PasswordResetTokenInvalidMessage);
+            return Result.Invalid(Messages.PasswordResetTokenInvalid);
 
         if (!claimIdentity.HasClaim(CustomClaimsType.UserId))
-            return Result.Invalid(string.Format(MissingClaimMessage, CustomClaimsType.UserId));
+            return Result.Invalid(string.Format(Messages.MissingClaim, CustomClaimsType.UserId));
 
         var userId = claimIdentity.GetUserId();
         var user = await context.Set<User>()
@@ -26,14 +26,14 @@ public class ResetForgottenPasswordUseCase(
             .FirstOrDefaultAsync();
 
         if (user is null)
-            return Result.NotFound(UsernameNotFoundMessage);
+            return Result.NotFound(Messages.UsernameNotFound);
 
         var claimPrincipal = tokenService.ValidatePasswordResetToken(request.Token, user.Password);
         if (claimPrincipal is null)
-            return Result.Invalid(PasswordResetTokenInvalidMessage);
+            return Result.Invalid(Messages.PasswordResetTokenInvalid);
 
         user.Password = passwordHasher.HashPassword(request.NewPassword);
         await context.SaveChangesAsync();
-        return Result.Success(PasswordSuccessfullyResetMessage);
+        return Result.Success(Messages.PasswordSuccessfullyReset);
     }
 }

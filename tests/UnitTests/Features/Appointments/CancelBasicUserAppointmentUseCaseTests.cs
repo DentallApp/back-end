@@ -34,6 +34,6 @@ public class CancelBasicUserAppointmentUseCaseTests
 
         // Asserts
         result.IsSuccess.Should().BeFalse();
-        result.Message.Should().Be(AppointmentThatHasAlreadyPassedBasicUserMessage);
+        result.Message.Should().Be(Messages.AppointmentThatHasAlreadyPassedBasicUser);
     }
 }

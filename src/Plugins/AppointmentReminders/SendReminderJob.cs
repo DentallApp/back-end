@@ -18,7 +18,7 @@ public class SendReminderJob(
         foreach (var appointment in scheduledAppointments)
         {
             var message = string.Format(
-                MessageTemplates.AppointmentReminderMessageTemplate,
+                Messages.AppointmentReminder,
                 appointment.PatientName,
                 appointment.Date.GetDateInSpanishFormat(),
                 appointment.StartHour.GetHourWithoutSeconds(),

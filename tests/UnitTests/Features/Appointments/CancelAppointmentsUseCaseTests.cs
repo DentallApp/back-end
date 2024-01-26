@@ -42,7 +42,7 @@ public class CancelAppointmentsUseCaseTests
 
         // Asserts
         result.IsSuccess.Should().BeTrue();
-        result.Message.Should().Be(SuccessfullyCancelledAppointmentsMessage);
+        result.Message.Should().Be(Messages.SuccessfullyCancelledAppointments);
         result.Data.Should().BeNull();
     }
 
@@ -77,7 +77,7 @@ public class CancelAppointmentsUseCaseTests
         result.IsSuccess.Should().BeFalse();
         result.Message
             .Should()
-            .Be(string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 2));
+            .Be(string.Format(Messages.AppointmentThatHasAlreadyPassedEmployee, 2));
 
         result.Data
             .AppointmentsId
@@ -116,7 +116,7 @@ public class CancelAppointmentsUseCaseTests
         result.IsSuccess.Should().BeFalse();
         result.Message
             .Should()
-            .Be(string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 5));
+            .Be(string.Format(Messages.AppointmentThatHasAlreadyPassedEmployee, 5));
 
         result.Data
             .AppointmentsId

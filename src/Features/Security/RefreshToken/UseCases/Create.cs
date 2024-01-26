@@ -21,7 +21,7 @@ public class CreateRefreshTokenUseCase(
     {
         var claimPrincipal = tokenService.GetPrincipalFromExpiredAccessToken(request.OldAccessToken);
         if (claimPrincipal is null)
-            return Result.Unauthorized(AccessTokenInvalidMessage);
+            return Result.Unauthorized(Messages.AccessTokenInvalid);
 
         int userId = claimPrincipal.GetUserId();
         var user = await context.Set<User>()
@@ -29,13 +29,13 @@ public class CreateRefreshTokenUseCase(
             .FirstOrDefaultAsync();
 
         if (user is null)
-            return Result.NotFound(UsernameNotFoundMessage);
+            return Result.NotFound(Messages.UsernameNotFound);
 
         if (user.RefreshToken != request.OldRefreshToken)
-            return Result.Unauthorized(RefreshTokenInvalidMessage);
+            return Result.Unauthorized(Messages.RefreshTokenInvalid);
 
         if (dateTimeService.Now >= user.RefreshTokenExpiry)
-            return Result.Unauthorized(RefreshTokenExpiredMessage);
+            return Result.Unauthorized(Messages.RefreshTokenExpired);
 
         var response = new CreateRefreshTokenResponse
         {
@@ -44,6 +44,6 @@ public class CreateRefreshTokenUseCase(
         };
         user.RefreshToken = response.NewRefreshToken;
         await context.SaveChangesAsync();
-        return Result.Success(response, UpdatedAccessTokenMessage);
+        return Result.Success(response, Messages.UpdatedAccessToken);
     }
 }

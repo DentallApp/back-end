@@ -25,10 +25,10 @@ public class SendPasswordResetEmailUseCase(
             .FirstOrDefaultAsync();
 
         if (user is null)
-            return Result.NotFound(UsernameNotFoundMessage);
+            return Result.NotFound(Messages.UsernameNotFound);
 
         var passwordResetToken = tokenService.CreatePasswordResetToken(user.UserId, user.UserName, user.Password);
         await emailService.SendEmailForResetPasswordAsync(user.UserName, user.Name, passwordResetToken);
-        return Result.Success(SendPasswordResetLinkMessage);
+        return Result.Success(Messages.SendPasswordResetLink);
     }
 }

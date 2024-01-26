@@ -21,7 +21,7 @@ public class CreateOfficeScheduleUseCase(DbContext context)
     public async Task<Result<CreatedId>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateOfficeScheduleRequest request)
     {
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
-            return Result.Forbidden(OfficeNotAssignedMessage);
+            return Result.Forbidden(Messages.OfficeNotAssigned);
 
         var officeSchedule = request.MapToOfficeSchedule();
         context.Add(officeSchedule);

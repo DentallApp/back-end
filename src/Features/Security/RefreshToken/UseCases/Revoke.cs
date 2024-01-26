@@ -9,14 +9,14 @@ public class RevokeRefreshTokenUseCase(DbContext context)
             .FirstOrDefaultAsync();
 
         if (user is null)
-            return Result.NotFound(UsernameNotFoundMessage);
+            return Result.NotFound(Messages.UsernameNotFound);
 
         if (user.RefreshToken is null)
-            return Result.Failure(HasNoRefreshTokenMessage);
+            return Result.Failure(Messages.HasNoRefreshToken);
 
         user.RefreshToken = null;
         user.RefreshTokenExpiry = null;
         await context.SaveChangesAsync();
-        return Result.Success(RevokeTokenMessage);
+        return Result.Success(Messages.RevokeToken);
     }
 }

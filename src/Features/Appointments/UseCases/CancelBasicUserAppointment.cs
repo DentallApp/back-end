@@ -13,10 +13,10 @@ public class CancelBasicUserAppointmentUseCase(
             return Result.NotFound();
 
         if (appointment.UserId != currentUserId)
-            return Result.Forbidden(AppointmentNotAssignedMessage);
+            return Result.Forbidden(Messages.AppointmentNotAssigned);
 
         if (dateTimeService.Now > (appointment.Date + appointment.StartHour))
-            return Result.Forbidden(AppointmentThatHasAlreadyPassedBasicUserMessage);
+            return Result.Forbidden(Messages.AppointmentThatHasAlreadyPassedBasicUser);
 
         appointment.AppointmentStatusId = AppointmentStatusId.Canceled;
         await unitOfWork.SaveChangesAsync();

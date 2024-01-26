@@ -10,13 +10,13 @@ public class DeleteEmployeeUseCase(DbContext context)
             .FirstOrDefaultAsync();
 
         if (employee is null)
-            return Result.NotFound(EmployeeNotFoundMessage);
+            return Result.NotFound(Messages.EmployeeNotFound);
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employee.OfficeId))
-            return Result.Forbidden(OfficeNotAssignedMessage);
+            return Result.Forbidden(Messages.OfficeNotAssigned);
 
         if (employee.IsSuperAdmin())
-            return Result.Forbidden(CannotRemoveSuperadminMessage);
+            return Result.Forbidden(Messages.CannotRemoveSuperadmin);
 
         context.SoftDelete(employee);
         await context.SaveChangesAsync();

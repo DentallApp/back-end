@@ -26,7 +26,7 @@ public class HeroCardFactory
     public static List<HeroCard> CreateSchedulesHeroCard(List<AvailableTimeRangeResponse> availableHours)
     {
         if (availableHours.Count == 0)
-            throw new Exception(NoSchedulesAvailableMessage);
+            throw new Exception(Messages.NoSchedulesAvailable);
 
         int totalButtons        = 5;
         int totalAvailableHours = availableHours.Count;
@@ -74,7 +74,7 @@ public class HeroCardFactory
         return new PromptOptions
         {
             Prompt = reply as Activity,
-            RetryPrompt = MessageFactory.Text(SelectScheduleMessage)
+            RetryPrompt = MessageFactory.Text(Messages.SelectSchedule)
         };
     }
 }

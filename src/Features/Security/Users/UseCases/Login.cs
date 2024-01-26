@@ -114,10 +114,10 @@ public class UserLoginUseCase(
     {
         var user = await userRepository.GetFullUserProfileAsync(request.UserName);
         if (user is null || !passwordHasher.Verify(request.Password, user.Password))
-            return Result.Unauthorized(EmailOrPasswordIncorrectMessage);
+            return Result.Unauthorized(Messages.EmailOrPasswordIncorrect);
 
         if (user.IsUnverified())
-            return Result.Forbidden(EmailNotConfirmedMessage);
+            return Result.Forbidden(Messages.EmailNotConfirmed);
 
         user.RefreshToken = tokenService.CreateRefreshToken();
         user.RefreshTokenExpiry = tokenService.CreateExpiryForRefreshToken();
@@ -129,7 +129,7 @@ public class UserLoginUseCase(
             var userClaims = userLoginResponse.MapToUserClaims();
             userLoginResponse.AccessToken = tokenService.CreateAccessToken(userClaims);
             userLoginResponse.RefreshToken = user.RefreshToken;
-            return Result.Success(userLoginResponse, SuccessfulLoginMessage);
+            return Result.Success(userLoginResponse, Messages.SuccessfulLogin);
         }
 
         var employee = await context.Set<Employee>()
@@ -140,7 +140,7 @@ public class UserLoginUseCase(
             .FirstOrDefaultAsync();
 
         if (employee.IsInactive())
-            return Result.Forbidden(InactiveUserAccountMessage);
+            return Result.Forbidden(Messages.InactiveUserAccount);
 
         employee.User = user;
         var employeeLoginResponse = employee.MapToEmployeeLoginResponse();
@@ -148,6 +148,6 @@ public class UserLoginUseCase(
         employeeLoginResponse.AccessToken = tokenService.CreateAccessToken(employeeClaims);
         employeeLoginResponse.RefreshToken = user.RefreshToken;
         UserLoginResponse response = employeeLoginResponse;
-        return Result.Success(response, SuccessfulLoginMessage);
+        return Result.Success(response, Messages.SuccessfulLogin);
     }
 }
