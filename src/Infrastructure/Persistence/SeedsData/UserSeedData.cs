@@ -31,7 +31,7 @@ public static class UserSeedData
                         CellPhone = "0998994332",
                         Email = BasicUserEmail,
                         DateBirth = new DateTime(1999, 08, 27),
-                        GenderId = GendersId.Male,
+                        GenderId = 1
                     }
                );
         builder.AddSeedData(
@@ -65,7 +65,7 @@ public static class UserSeedData
                         CellPhone = "0998994333",
                         Email = SecretaryEmail,
                         DateBirth = new DateTime(1999, 07, 25),
-                        GenderId = GendersId.Female,
+                        GenderId = 2
                     }
                );
         builder.AddSeedData(
@@ -110,7 +110,7 @@ public static class UserSeedData
                         CellPhone = "0998994334",
                         Email = DentistEmail,
                         DateBirth = new DateTime(1999, 07, 21),
-                        GenderId = GendersId.Male,
+                        GenderId = 1
                     }
                );
         builder.AddSeedData(
@@ -155,7 +155,7 @@ public static class UserSeedData
                         CellPhone = "0998994335",
                         Email = AdminEmail,
                         DateBirth = new DateTime(1999, 09, 15),
-                        GenderId = GendersId.Male,
+                        GenderId = 1
                     }
                );
         builder.AddSeedData(
@@ -200,7 +200,7 @@ public static class UserSeedData
                         CellPhone = "0998994336",
                         Email = SuperAdminEmail,
                         DateBirth = new DateTime(1999, 08, 27),
-                        GenderId = GendersId.Male,
+                        GenderId = 1
                     }
                );
         builder.AddSeedData(
@@ -245,7 +245,7 @@ public static class UserSeedData
                         CellPhone = "0998994337",
                         Email = "mary_01@hotmail.com",
                         DateBirth = new DateTime(1999, 01, 10),
-                        GenderId = GendersId.Female,
+                        GenderId = 2
                     },
                     new Person
                     {
@@ -256,7 +256,7 @@ public static class UserSeedData
                         CellPhone = "0998994338",
                         Email = "torres_02@hotmail.com",
                         DateBirth = new DateTime(1998, 02, 07),
-                        GenderId = GendersId.Male,
+                        GenderId = 1
                     }
                );
         builder.AddSeedData(
