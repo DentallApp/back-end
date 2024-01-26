@@ -8,22 +8,22 @@ public static class AppointmentStatusSeedData
             new AppointmentStatus
             {
                 Id = AppointmentStatusId.Scheduled,
-                Name = AppointmentStatusName.Scheduled
+                Name = StatusType.Scheduled
             },
             new AppointmentStatus
             {
                 Id = AppointmentStatusId.NotAssisted,
-                Name = AppointmentStatusName.NotAssisted
+                Name = StatusType.NotAssisted
             },
             new AppointmentStatus
             {
                 Id = AppointmentStatusId.Assisted,
-                Name = AppointmentStatusName.Assisted
+                Name = StatusType.Assisted
             },
             new AppointmentStatus
             {
                 Id = AppointmentStatusId.Canceled,
-                Name = AppointmentStatusName.Canceled
+                Name = StatusType.Canceled
             }
         );
         return builder;

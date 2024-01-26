@@ -7,7 +7,7 @@ public abstract class SoftDeleteEntity : BaseEntity
     [Decompile]
     public string GetStatusName()
     {
-        return IsDeleted? StatusType.Inactive: StatusType.Active;
+        return IsDeleted ? StatusType.Inactive: StatusType.Active;
     }
 
     [Decompile]
