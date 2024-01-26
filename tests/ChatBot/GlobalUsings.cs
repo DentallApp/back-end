@@ -19,4 +19,4 @@ global using DentallApp.Shared.Domain;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Services;
-global using static DentallApp.Shared.Constants.ResponseMessages;
+global using DentallApp.Shared.Resources.ApiResponses;
