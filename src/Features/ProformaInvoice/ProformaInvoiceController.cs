@@ -4,7 +4,7 @@
 [ApiController]
 public class ProformaInvoiceController : ControllerBase
 {
-    [AuthorizeByRole(RolesName.BasicUser)]
+    [AuthorizeByRole(RoleName.BasicUser)]
     [Route("pdf")]
     [HttpPost]
     public async Task<ActionResult> DownloadAsPdf(

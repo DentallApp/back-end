@@ -6,14 +6,14 @@ namespace DentallApp.Features.GeneralTreatments;
 [ApiController]
 public class GeneralTreatmentController
 {
-    [AuthorizeByRole(RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Superadmin)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromForm]CreateGeneralTreatmentRequest request,
         CreateGeneralTreatmentUseCase useCase)
         => await useCase.ExecuteAsync(request);
 
-    [AuthorizeByRole(RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Superadmin)]
     [HttpPut("{id}")]
     public async Task<Result> Update(
         int id, 
@@ -21,7 +21,7 @@ public class GeneralTreatmentController
         UpdateGeneralTreatmentUseCase useCase)
         => await useCase.ExecuteAsync(id, request);
 
-    [AuthorizeByRole(RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Superadmin)]
     [HttpDelete("{id}")]
     public async Task<Result> Delete(
         int id,

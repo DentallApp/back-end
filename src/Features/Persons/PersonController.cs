@@ -2,7 +2,7 @@
 
 namespace DentallApp.Features.Persons;
 
-[AuthorizeByRole(RolesName.Secretary)]
+[AuthorizeByRole(RoleName.Secretary)]
 [Route("person")]
 [ApiController]
 public class PersonController

@@ -15,7 +15,7 @@
     {
       "type": "Input.Date",
       "isRequired": true,
-      "errorMessage": "Error. Escoja una fecha válida",
+      "errorMessage": "Error. Escoja una fecha válida.",
       "id": "date",
       "label": "Seleccione una fecha para la cita"
     }

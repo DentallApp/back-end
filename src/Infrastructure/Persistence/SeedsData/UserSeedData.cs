@@ -31,7 +31,7 @@ public static class UserSeedData
                         CellPhone = "0998994332",
                         Email = BasicUserEmail,
                         DateBirth = new DateTime(1999, 08, 27),
-                        GenderId = GendersId.Male,
+                        GenderId = 1
                     }
                );
         builder.AddSeedData(
@@ -48,7 +48,7 @@ public static class UserSeedData
                     {
                         Id = 1,
                         UserId = 1,
-                        RoleId = RolesId.BasicUser
+                        RoleId = (int)Role.Predefined.BasicUser
                     }
                );
     }
@@ -65,7 +65,7 @@ public static class UserSeedData
                         CellPhone = "0998994333",
                         Email = SecretaryEmail,
                         DateBirth = new DateTime(1999, 07, 25),
-                        GenderId = GendersId.Female,
+                        GenderId = 2
                     }
                );
         builder.AddSeedData(
@@ -93,7 +93,7 @@ public static class UserSeedData
                     {
                         Id = 2,
                         UserId = 2,
-                        RoleId = RolesId.Secretary
+                        RoleId = (int)Role.Predefined.Secretary
                     }
                );
     }
@@ -110,7 +110,7 @@ public static class UserSeedData
                         CellPhone = "0998994334",
                         Email = DentistEmail,
                         DateBirth = new DateTime(1999, 07, 21),
-                        GenderId = GendersId.Male,
+                        GenderId = 1
                     }
                );
         builder.AddSeedData(
@@ -138,7 +138,7 @@ public static class UserSeedData
                     {
                         Id = 3,
                         UserId = 3,
-                        RoleId = RolesId.Dentist
+                        RoleId = (int)Role.Predefined.Dentist
                     }
                );
     }
@@ -155,7 +155,7 @@ public static class UserSeedData
                         CellPhone = "0998994335",
                         Email = AdminEmail,
                         DateBirth = new DateTime(1999, 09, 15),
-                        GenderId = GendersId.Male,
+                        GenderId = 1
                     }
                );
         builder.AddSeedData(
@@ -183,7 +183,7 @@ public static class UserSeedData
                     {
                         Id = 4,
                         UserId = 4,
-                        RoleId = RolesId.Admin
+                        RoleId = (int)Role.Predefined.Admin
                     }
                );
     }
@@ -200,7 +200,7 @@ public static class UserSeedData
                         CellPhone = "0998994336",
                         Email = SuperAdminEmail,
                         DateBirth = new DateTime(1999, 08, 27),
-                        GenderId = GendersId.Male,
+                        GenderId = 1
                     }
                );
         builder.AddSeedData(
@@ -228,7 +228,7 @@ public static class UserSeedData
                     {
                         Id = 5,
                         UserId = 5,
-                        RoleId = RolesId.Superadmin
+                        RoleId = (int)Role.Predefined.Superadmin
                     }
                );
     }
@@ -245,7 +245,7 @@ public static class UserSeedData
                         CellPhone = "0998994337",
                         Email = "mary_01@hotmail.com",
                         DateBirth = new DateTime(1999, 01, 10),
-                        GenderId = GendersId.Female,
+                        GenderId = 2
                     },
                     new Person
                     {
@@ -256,7 +256,7 @@ public static class UserSeedData
                         CellPhone = "0998994338",
                         Email = "torres_02@hotmail.com",
                         DateBirth = new DateTime(1998, 02, 07),
-                        GenderId = GendersId.Male,
+                        GenderId = 1
                     }
                );
         builder.AddSeedData(
@@ -300,13 +300,13 @@ public static class UserSeedData
                     {
                         Id = 6,
                         UserId = 6,
-                        RoleId = RolesId.Dentist
+                        RoleId = (int)Role.Predefined.Dentist
                     },
                     new UserRole
                     {
                         Id = 7,
                         UserId = 7,
-                        RoleId = RolesId.Dentist
+                        RoleId = (int)Role.Predefined.Dentist
                     }
                );
     }

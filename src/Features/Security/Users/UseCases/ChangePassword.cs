@@ -15,13 +15,13 @@ public class ChangePasswordUseCase(DbContext context, IPasswordHasher passwordHa
             .FirstOrDefaultAsync();
 
         if (user is null)
-            return Result.NotFound(UsernameNotFoundMessage);
+            return Result.NotFound(Messages.UsernameNotFound);
 
         if (!passwordHasher.Verify(request.OldPassword, user.Password))
-            return Result.Invalid(OldPasswordIncorrectMessage);
+            return Result.Invalid(Messages.OldPasswordIncorrect);
 
         user.Password = passwordHasher.HashPassword(request.NewPassword);
         await context.SaveChangesAsync();
-        return Result.Success(PasswordSuccessfullyResetMessage);
+        return Result.Success(Messages.PasswordSuccessfullyReset);
     }
 }

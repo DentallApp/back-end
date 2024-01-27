@@ -15,8 +15,8 @@ public class UpdateAnyEmployeeRequest
     public string PostgradeUniversity { get; init; }
 
     [Required]
-    [MaxLength(NumberRoles.MaxRole)]
-    [MinLength(NumberRoles.MinRole)]
+    [MaxLength(Role.Max)]
+    [MinLength(Role.Min)]
     public List<int> Roles { get; init; }
     public List<int> SpecialtiesId { get; init; }
     public bool IsDeleted { get; init; }
@@ -55,18 +55,18 @@ public class UpdateAnyEmployeeUseCase(
             .FirstOrDefaultAsync();
 
         if (employeeToEdit is null)
-            return Result.NotFound(EmployeeNotFoundMessage);
+            return Result.NotFound(Messages.EmployeeNotFound);
 
         // An admin cannot edit a Superadmin's profile.
         // However, the Superadmin can edit his own profile.
         if (!currentEmployee.IsSuperAdmin() && employeeToEdit.IsSuperAdmin())
-            return  Result.Forbidden(CannotEditSuperadminMessage);
+            return  Result.Forbidden(Messages.CannotEditSuperadmin);
 
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employeeToEdit.OfficeId))
-            return Result.Forbidden(OfficeNotAssignedMessage);
+            return Result.Forbidden(Messages.OfficeNotAssigned);
 
         if (currentEmployee.HasNotPermissions(request.Roles, employeeToEdit.Id))
-            return Result.Forbidden(PermitsNotGrantedMessage);
+            return Result.Forbidden(Messages.PermitsNotGranted);
 
         if (request.Password is not null)
             employeeToEdit.User.Password = passwordHasher.HashPassword(request.Password);

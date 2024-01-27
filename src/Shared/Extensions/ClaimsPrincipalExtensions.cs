@@ -21,16 +21,16 @@ public static class ClaimsPrincipalExtensions
         => claims.GetOfficeId() != officeId;
 
     public static bool IsSuperAdmin(this ClaimsPrincipal claims)
-        => claims.IsInRole(RolesName.Superadmin);
+        => claims.IsInRole(RoleName.Superadmin);
 
     public static bool IsAdmin(this ClaimsPrincipal claims)
-        => claims.IsInRole(RolesName.Admin);
+        => claims.IsInRole(RoleName.Admin);
 
     public static bool IsDentist(this ClaimsPrincipal claims)
-        => claims.IsInRole(RolesName.Dentist);
+        => claims.IsInRole(RoleName.Dentist);
 
     public static bool IsOnlyDentist(this ClaimsPrincipal claims)
-        => claims.GetClaimsRoleType().Count() == 1 && claims.IsInRole(RolesName.Dentist);
+        => claims.GetClaimsRoleType().Count() == 1 && claims.IsInRole(RoleName.Dentist);
 
     private static IEnumerable<Claim> GetClaimsRoleType(this ClaimsPrincipal claims)
         => claims.Claims.Where(claim => claim.Type == ClaimTypes.Role);
@@ -44,18 +44,18 @@ public static class ClaimsPrincipalExtensions
     /// <returns><c>true</c> si el administrador o superadministrador no tiene permisos, de lo contrario <c>false</c>.</returns>
     public static bool HasNotPermissions(this ClaimsPrincipal currentEmployee, IEnumerable<int> rolesId, int? employeeId = null)
     {
-        if (currentEmployee.IsInRole(RolesName.Admin))
-            return rolesId.Where(roleId => roleId < RolesId.Secretary || roleId > RolesId.Dentist).Count() > 0;
+        if (currentEmployee.IsInRole(RoleName.Admin))
+            return rolesId.Where(roleId => roleId < (int)Role.Predefined.Secretary || roleId > (int)Role.Predefined.Dentist).Count() > 0;
 
-        else if (currentEmployee.IsInRole(RolesName.Superadmin))
+        else if (currentEmployee.IsInRole(RoleName.Superadmin))
         {
             if(employeeId == currentEmployee.GetEmployeeId())
                 return rolesId.Where(roleId => 
-                                     (roleId != RolesId.Superadmin) && 
-                                     (roleId < RolesId.Secretary || roleId > RolesId.Admin))
+                                     (roleId != (int)Role.Predefined.Superadmin) && 
+                                     (roleId < (int)Role.Predefined.Secretary || roleId > (int)Role.Predefined.Admin))
                               .Count() > 0;
             
-            return rolesId.Where(roleId => roleId < RolesId.Secretary || roleId > RolesId.Admin).Count() > 0;
+            return rolesId.Where(roleId => roleId < (int)Role.Predefined.Secretary || roleId > (int)Role.Predefined.Admin).Count() > 0;
         }
 
         return false;

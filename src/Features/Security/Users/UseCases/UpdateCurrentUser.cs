@@ -31,10 +31,10 @@ public class UpdateCurrentUserUseCase(DbContext context)
             .FirstOrDefaultAsync();
 
         if (person is null)
-            return Result.NotFound(UsernameNotFoundMessage);
+            return Result.NotFound(Messages.UsernameNotFound);
 
         if (person.Id != currentPersonId)
-            return Result.Forbidden(CannotUpdateAnotherUserResource);
+            return Result.Forbidden(Messages.CannotUpdateAnotherUserResource);
 
         request.MapToPerson(person);
         await context.SaveChangesAsync();

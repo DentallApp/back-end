@@ -7,23 +7,23 @@ public static class AppointmentStatusSeedData
         builder.AddSeedData(
             new AppointmentStatus
             {
-                Id = AppointmentStatusId.Scheduled,
-                Name = AppointmentStatusName.Scheduled
+                Id = 1,
+                Name = StatusType.Scheduled
             },
             new AppointmentStatus
             {
-                Id = AppointmentStatusId.NotAssisted,
-                Name = AppointmentStatusName.NotAssisted
+                Id = 2,
+                Name = StatusType.NotAssisted
             },
             new AppointmentStatus
             {
-                Id = AppointmentStatusId.Assisted,
-                Name = AppointmentStatusName.Assisted
+                Id = 3,
+                Name = StatusType.Assisted
             },
             new AppointmentStatus
             {
-                Id = AppointmentStatusId.Canceled,
-                Name = AppointmentStatusName.Canceled
+                Id = 4,
+                Name = StatusType.Canceled
             }
         );
         return builder;

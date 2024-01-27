@@ -2,7 +2,7 @@
 
 namespace DentallApp.Features.Dependents;
 
-[AuthorizeByRole(RolesName.BasicUser)]
+[AuthorizeByRole(RoleName.BasicUser)]
 [Route("dependent")]
 [ApiController]
 public class DependentController : ControllerBase

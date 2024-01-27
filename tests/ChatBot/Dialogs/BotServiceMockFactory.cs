@@ -36,7 +36,7 @@ public static class BotServiceMockFactory
             {
                 IsSuccess = true,
                 Status = ResultStatus.Ok,
-                Message = GetResourceMessage,
+                Message = Messages.GetResource,
                 Data = new List<AvailableTimeRangeResponse>
                 {
                     new() { StartHour = StartHour, EndHour = EndHour }

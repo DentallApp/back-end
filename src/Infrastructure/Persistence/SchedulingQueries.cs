@@ -30,7 +30,7 @@ public class SchedulingQueries(DbContext context) : ISchedulingQueries
              join userRole in context.Set<UserRole>() on employee.UserId equals userRole.UserId
              where employee.IsActive() &&
                    employee.OfficeId == officeId &&
-                   userRole.RoleId == RolesId.Dentist &&
+                   userRole.RoleId == (int)Role.Predefined.Dentist &&
                    employee.EmployeeSchedules.Any() &&
                    (employeeSpecialty.SpecialtyId == specialtyId || HasNoSpecialties(employee))
              select new SchedulingResponse
@@ -80,7 +80,7 @@ public class SchedulingQueries(DbContext context) : ISchedulingQueries
         
         choices.Insert(0, new SchedulingResponse
         {
-            Title = user.FullName + " / " + KinshipsName.Default,
+            Title = user.FullName + " / " + KinshipName.Default,
             Value = user.PersonId.ToString()
         });
 

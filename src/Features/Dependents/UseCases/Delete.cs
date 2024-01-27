@@ -14,7 +14,7 @@ public class DeleteDependentUseCase(DbContext context)
             return Result.NotFound();
 
         if (dependent.UserId != userId)
-            return Result.Forbidden(ResourceFromAnotherUserMessage);
+            return Result.Forbidden(Messages.ResourceFromAnotherUser);
 
         await context.SoftDeleteAsync<Dependent>(dependentId);
         return Result.DeletedResource();

@@ -3,7 +3,7 @@
 /// <summary>
 /// Define las acciones necesarias para el agendamiento de una cita.
 /// </summary>
-[AuthorizeByRole(RolesName.Secretary)]
+[AuthorizeByRole(RoleName.Secretary)]
 [Route("scheduling")]
 [ApiController]
 public class SchedulingController(ISchedulingQueries schedulingQueries)

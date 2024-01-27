@@ -22,13 +22,13 @@ public class GetRolesUseCase(DbContext context)
         if (isSuperadmin)
         {
             var response = roles.Where(role =>
-                role.Id == RolesId.Secretary ||
-                role.Id == RolesId.Dentist ||
-                role.Id == RolesId.Admin
+                role.Id == (int)Role.Predefined.Secretary ||
+                role.Id == (int)Role.Predefined.Dentist ||
+                role.Id == (int)Role.Predefined.Admin
             );
             return response;
         }
 
-        return roles.Where(role => role.Id == RolesId.Secretary || role.Id == RolesId.Dentist);
+        return roles.Where(role => role.Id == (int)Role.Predefined.Secretary || role.Id == (int)Role.Predefined.Dentist);
     }
 }

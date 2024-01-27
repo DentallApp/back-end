@@ -35,7 +35,7 @@ public partial class RootDialog : ComponentDialog
     private async Task<DialogTurnResult> ShowNameOfPatients(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
         if (stepContext.CheckIfResultNextStepIsNone())
-            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectPatientMessage);
+            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: Messages.SelectPatient);
 
         await stepContext.SendTypingActivityAsync();
         var userProfile = stepContext.CreateUserProfileInstance();
@@ -54,11 +54,11 @@ public partial class RootDialog : ComponentDialog
     private async Task<DialogTurnResult> ShowNameOfOffices(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
         if (stepContext.CheckIfResultNextStepIsNone())
-            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectOfficeMessage);
+            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: Messages.SelectOffice);
 
         var selectedPatientId = stepContext.GetSelectedPatientId();
         if (selectedPatientId is null)
-            return await stepContext.PreviousAsync(message: SelectPatientMessage, cancellationToken: cancellationToken);
+            return await stepContext.PreviousAsync(message: Messages.SelectPatient, cancellationToken: cancellationToken);
         stepContext.GetAppointment().PersonId = int.Parse(selectedPatientId);
         await stepContext.SendTypingActivityAsync();
         var choicesTask  = _botService.GetOfficesAsync();
@@ -75,11 +75,11 @@ public partial class RootDialog : ComponentDialog
     private async Task<DialogTurnResult> ShowNameOfServices(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
         if (stepContext.CheckIfResultNextStepIsNone())
-            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectDentalServiceMessage);
+            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: Messages.SelectDentalService);
 
         var selectedOfficeId = stepContext.GetSelectedOfficeId();
         if (selectedOfficeId is null)
-            return await stepContext.PreviousAsync(message: SelectOfficeMessage, cancellationToken: cancellationToken);
+            return await stepContext.PreviousAsync(message: Messages.SelectOffice, cancellationToken: cancellationToken);
         stepContext.GetAppointment().OfficeId = int.Parse(selectedOfficeId);
         await stepContext.SendTypingActivityAsync();
         var choicesTask  = _botService.GetDentalServicesAsync();
@@ -96,11 +96,11 @@ public partial class RootDialog : ComponentDialog
     private async Task<DialogTurnResult> ShowNameOfDentists(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
         if (stepContext.CheckIfResultNextStepIsNone())
-            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectDentistMessage);
+            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: Messages.SelectDentist);
 
         var selectedDentalServiceId = stepContext.GetSelectedDentalServiceId();
         if (selectedDentalServiceId is null)
-            return await stepContext.PreviousAsync(message: SelectDentalServiceMessage, cancellationToken: cancellationToken);
+            return await stepContext.PreviousAsync(message: Messages.SelectDentalService, cancellationToken: cancellationToken);
         stepContext.GetAppointment().GeneralTreatmentId = int.Parse(selectedDentalServiceId);
         await stepContext.SendTypingActivityAsync();
         int officeId     = stepContext.GetAppointment().OfficeId;
@@ -119,11 +119,11 @@ public partial class RootDialog : ComponentDialog
     private async Task<DialogTurnResult> ShowAppointmentDate(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
         if (stepContext.CheckIfResultNextStepIsNone())
-            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: SelectAppointmentDateMessage);
+            return await stepContext.PromptAsync(nameof(AdaptiveCardPrompt), retryMessage: Messages.SelectAppointmentDate);
 
         var selectedDentistId = stepContext.GetSelectedDentistId();
         if (selectedDentistId is null)
-            return await stepContext.PreviousAsync(message: SelectDentistMessage, cancellationToken: cancellationToken);
+            return await stepContext.PreviousAsync(message: Messages.SelectDentist, cancellationToken: cancellationToken);
         stepContext.GetAppointment().DentistId = int.Parse(selectedDentistId);
         await stepContext.SendTypingActivityAsync();
         var dentistScheduleTask = _botService.GetDentistScheduleAsync(stepContext.GetAppointment().DentistId);
@@ -133,7 +133,7 @@ public partial class RootDialog : ComponentDialog
         await stepContext
             .Context
             .SendActivityAsync(
-                string.Format(ShowScheduleToUserMessage, dentistSchedule),
+                string.Format(Messages.ShowScheduleToUser, dentistSchedule),
                 cancellationToken: cancellationToken);
 
         return await stepContext.PromptAsync(
@@ -146,11 +146,11 @@ public partial class RootDialog : ComponentDialog
     private async Task<DialogTurnResult> ShowSchedules(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
         if (stepContext.CheckIfResultNextStepIsNone())
-            return await stepContext.PromptAsync(nameof(TextPrompt), retryMessage: SelectScheduleMessage);
+            return await stepContext.PromptAsync(nameof(TextPrompt), retryMessage: Messages.SelectSchedule);
 
         var selectedAppointmentDate = stepContext.GetSelectedAppointmentDate();
         if (selectedAppointmentDate is null)
-            return await stepContext.PreviousAsync(message: SelectAppointmentDateMessage, cancellationToken: cancellationToken);
+            return await stepContext.PreviousAsync(message: Messages.SelectAppointmentDate, cancellationToken: cancellationToken);
         stepContext.GetAppointment().AppointmentDate = DateTime.Parse(selectedAppointmentDate);
         await stepContext.SendTypingActivityAsync();
         var appointment = stepContext.GetAppointment();
@@ -169,7 +169,7 @@ public partial class RootDialog : ComponentDialog
         await stepContext
             .Context
             .SendActivityAsync(
-                string.Format(TotalHoursAvailableMessage, availableHours.Count),
+                string.Format(Messages.TotalHoursAvailable, availableHours.Count),
                 cancellationToken: cancellationToken);
 
         return await stepContext.PromptAsync(
@@ -191,7 +191,7 @@ public partial class RootDialog : ComponentDialog
         }
         catch(FormatException)
         {
-            return await stepContext.PreviousAsync(message: SelectScheduleMessage, cancellationToken: cancellationToken);
+            return await stepContext.PreviousAsync(message: Messages.SelectSchedule, cancellationToken: cancellationToken);
         }
         await stepContext.SendTypingActivityAsync();
         appointment.RangeToPay = await _botService.GetRangeToPayAsync(appointment.GeneralTreatmentId);
@@ -202,10 +202,10 @@ public partial class RootDialog : ComponentDialog
         await stepContext
             .Context
             .SendActivityAsync(
-                string.Format(SuccessfullyScheduledAppointmentMessage, appointment.RangeToPay?.ToString()), 
+                string.Format(Messages.SuccessfullyScheduledAppointment, appointment.RangeToPay?.ToString()), 
                 cancellationToken: cancellationToken);
 
-        await stepContext.Context.SendActivityAsync(ThanksForUsingServiceMessage, cancellationToken: cancellationToken);
+        await stepContext.Context.SendActivityAsync(Messages.ThanksForUsingService, cancellationToken: cancellationToken);
         return await stepContext.EndDialogAsync(cancellationToken: cancellationToken);
     }
 }

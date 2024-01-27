@@ -36,10 +36,10 @@ public class UpdateCurrentEmployeeUseCase(DbContext context)
             .FirstOrDefaultAsync();
 
         if (employee is null)
-            return Result.NotFound(EmployeeNotFoundMessage);
+            return Result.NotFound(Messages.EmployeeNotFound);
 
         if (employee.Id != currentEmployeeId)
-            return Result.Forbidden(CannotUpdateAnotherUserResource);
+            return Result.Forbidden(Messages.CannotUpdateAnotherUserResource);
 
         request.MapToEmployee(employee);
         await context.SaveChangesAsync();

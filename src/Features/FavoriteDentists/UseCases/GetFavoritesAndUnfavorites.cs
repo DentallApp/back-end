@@ -28,7 +28,7 @@ public class GetFavoriteAndUnfavoriteDentistsUseCase(DbContext context)
              join userRole in context.Set<UserRole>() on
              new
              {
-                 RoleId = RolesId.Dentist,
+                 RoleId = (int)Role.Predefined.Dentist,
                  dentist.UserId
              }
              equals

@@ -7,18 +7,18 @@ public static class KinshipSeedData
         builder.AddSeedData(
             new Kinship
             {
-                Id = KinshipsId.Spouse,
-                Name = KinshipsName.Spouse
+                Id = 1,
+                Name = KinshipName.Spouse
             },
             new Kinship
             {
-                Id = KinshipsId.Child,
-                Name = KinshipsName.Child
+                Id = 2,
+                Name = KinshipName.Child
             },
             new Kinship
             {
-                Id = KinshipsId.Other,
-                Name = KinshipsName.Other
+                Id = 3,
+                Name = KinshipName.Other
             }
         );
         return builder;

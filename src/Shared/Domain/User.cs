@@ -16,7 +16,7 @@ public class User : BaseEntity, IAuditableEntity
 
     public bool IsUnverified()
     {
-        return UserRoles.First().RoleId == RolesId.Unverified;
+        return UserRoles.First().RoleId == (int)Role.Predefined.Unverified;
     }
 
     public bool IsVerified()
@@ -26,6 +26,6 @@ public class User : BaseEntity, IAuditableEntity
 
     public bool IsBasicUser()
     {
-        return UserRoles.Any(userRole => userRole.RoleId == RolesId.BasicUser);
+        return UserRoles.Any(userRole => userRole.RoleId == (int)Role.Predefined.BasicUser);
     }
 }

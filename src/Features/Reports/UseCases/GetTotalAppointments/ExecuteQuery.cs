@@ -24,10 +24,10 @@ public class GetTotalAppointmentsUseCase(IDbConnection dbConnection, ISqlCollect
         string sql = sqlCollection["GetTotalAppointments"];
         var result = await dbConnection.QueryAsync<GetTotalAppointmentsResponse>(sql, new
         {
-            AppointmentStatusId.Assisted,
-            AppointmentStatusId.NotAssisted,
-            AppointmentStatusId.Canceled,
-            AppointmentStatusId.Scheduled,
+            AppointmentStatus.Predefined.Assisted,
+            AppointmentStatus.Predefined.NotAssisted,
+            AppointmentStatus.Predefined.Canceled,
+            AppointmentStatus.Predefined.Scheduled,
             request.From,
             request.To,
             request.OfficeId,

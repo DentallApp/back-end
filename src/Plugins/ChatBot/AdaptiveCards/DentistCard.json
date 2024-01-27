@@ -17,7 +17,7 @@
       "isRequired": true,
       "separator": true,
       "id": "dentistId",
-      "errorMessage": "Error. Escoja un odontólogo",
+      "errorMessage": "Error. Escoja un odontólogo.",
       "label": "Seleccione un odontólogo"
     }
   ],

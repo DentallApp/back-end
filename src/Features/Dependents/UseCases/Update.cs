@@ -35,7 +35,7 @@ public class UpdateDependentUseCase(DbContext context)
             return Result.NotFound();
 
         if (dependent.UserId != userId)
-            return Result.Forbidden(ResourceFromAnotherUserMessage);
+            return Result.Forbidden(Messages.ResourceFromAnotherUser);
 
         request.MapToDependent(dependent);
         await context.SaveChangesAsync();

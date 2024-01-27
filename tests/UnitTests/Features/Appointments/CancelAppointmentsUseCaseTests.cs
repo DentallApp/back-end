@@ -31,7 +31,7 @@ public class CancelAppointmentsUseCaseTests
         var claims = new Claim[]
         {
             new (CustomClaimsType.EmployeeId, "1"),
-            new (ClaimTypes.Role, RolesName.Dentist)
+            new (ClaimTypes.Role, RoleName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
@@ -42,7 +42,7 @@ public class CancelAppointmentsUseCaseTests
 
         // Asserts
         result.IsSuccess.Should().BeTrue();
-        result.Message.Should().Be(SuccessfullyCancelledAppointmentsMessage);
+        result.Message.Should().Be(Messages.SuccessfullyCancelledAppointments);
         result.Data.Should().BeNull();
     }
 
@@ -64,7 +64,7 @@ public class CancelAppointmentsUseCaseTests
         var claims = new Claim[]
         {
             new (CustomClaimsType.EmployeeId, "1"),
-            new (ClaimTypes.Role, RolesName.Dentist)
+            new (ClaimTypes.Role, RoleName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
@@ -77,7 +77,7 @@ public class CancelAppointmentsUseCaseTests
         result.IsSuccess.Should().BeFalse();
         result.Message
             .Should()
-            .Be(string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 2));
+            .Be(string.Format(Messages.AppointmentThatHasAlreadyPassedEmployee, 2));
 
         result.Data
             .AppointmentsId
@@ -103,7 +103,7 @@ public class CancelAppointmentsUseCaseTests
         var claims = new Claim[]
         {
             new (CustomClaimsType.EmployeeId, "1"),
-            new (ClaimTypes.Role, RolesName.Dentist)
+            new (ClaimTypes.Role, RoleName.Dentist)
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 02, 20, 0, 0));
@@ -116,7 +116,7 @@ public class CancelAppointmentsUseCaseTests
         result.IsSuccess.Should().BeFalse();
         result.Message
             .Should()
-            .Be(string.Format(AppointmentThatHasAlreadyPassedEmployeeMessage, 5));
+            .Be(string.Format(Messages.AppointmentThatHasAlreadyPassedEmployee, 5));
 
         result.Data
             .AppointmentsId

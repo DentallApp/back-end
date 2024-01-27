@@ -7,13 +7,13 @@ public static class GenderSeedData
         builder.AddSeedData(
             new Gender
             {
-                Id = GendersId.Male,
-                Name = GendersName.Male
+                Id = 1,
+                Name = GenderName.Male
             },
             new Gender
             {
-                Id = GendersId.Female,
-                Name = GendersName.Female
+                Id = 2,
+                Name = GenderName.Female
             }
         );
         return builder;

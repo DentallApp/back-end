@@ -9,34 +9,34 @@ public partial class RootDialogTests
         await _testClient.SendActivityAsync<IMessageActivity>(CreateInitialActivity());
         _testClient.GetNextReply<IMessageActivity>();
         var reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        reply.Text.Should().Be(SelectPatientMessage);
+        reply.Text.Should().Be(Messages.SelectPatient);
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedPatientId());
         _testClient.GetNextReply<IMessageActivity>();
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        reply.Text.Should().Be(SelectOfficeMessage);
+        reply.Text.Should().Be(Messages.SelectOffice);
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedOfficeId());
         _testClient.GetNextReply<IMessageActivity>();
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        reply.Text.Should().Be(SelectDentalServiceMessage);
+        reply.Text.Should().Be(Messages.SelectDentalService);
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentalServiceId());
         _testClient.GetNextReply<IMessageActivity>();
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        reply.Text.Should().Be(SelectDentistMessage);
+        reply.Text.Should().Be(Messages.SelectDentist);
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentistId());
         _testClient.GetNextReply<IMessageActivity>();
         _testClient.GetNextReply<IMessageActivity>();
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        reply.Text.Should().Be(SelectAppointmentDateMessage);
+        reply.Text.Should().Be(Messages.SelectAppointmentDate);
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDate());
         _testClient.GetNextReply<IMessageActivity>();
         _testClient.GetNextReply<IMessageActivity>();
         reply = await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
-        reply.Text.Should().Be(SelectScheduleMessage);
+        reply.Text.Should().Be(Messages.SelectSchedule);
     }
 
     [Test]
@@ -47,28 +47,28 @@ public partial class RootDialogTests
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         var reply = _testClient.GetNextReply<IMessageActivity>();
-        reply.Text.Should().Be(SelectPatientMessage);
+        reply.Text.Should().Be(Messages.SelectPatient);
         _testClient.GetNextReply<IMessageActivity>();
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedPatientId());
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply = _testClient.GetNextReply<IMessageActivity>();
-        reply.Text.Should().Be(SelectOfficeMessage);
+        reply.Text.Should().Be(Messages.SelectOffice);
         _testClient.GetNextReply<IMessageActivity>();
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedOfficeId());
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply = _testClient.GetNextReply<IMessageActivity>();
-        reply.Text.Should().Be(SelectDentalServiceMessage);
+        reply.Text.Should().Be(Messages.SelectDentalService);
         _testClient.GetNextReply<IMessageActivity>();
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentalServiceId());
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply = _testClient.GetNextReply<IMessageActivity>();
-        reply.Text.Should().Be(SelectDentistMessage);
+        reply.Text.Should().Be(Messages.SelectDentist);
         _testClient.GetNextReply<IMessageActivity>();
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDentistId());
@@ -76,7 +76,7 @@ public partial class RootDialogTests
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply = _testClient.GetNextReply<IMessageActivity>();
-        reply.Text.Should().Be(SelectAppointmentDateMessage);
+        reply.Text.Should().Be(Messages.SelectAppointmentDate);
         _testClient.GetNextReply<IMessageActivity>();
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateActivityWithSelectedDate());
@@ -84,7 +84,7 @@ public partial class RootDialogTests
         _testClient.GetNextReply<IMessageActivity>();
         await _testClient.SendActivityAsync<IMessageActivity>(incomingActivity);
         reply = _testClient.GetNextReply<IMessageActivity>();
-        reply.Text.Should().Be(SelectScheduleMessage);
+        reply.Text.Should().Be(Messages.SelectSchedule);
         _testClient.GetNextReply<IMessageActivity>();
     }
 
@@ -95,7 +95,7 @@ public partial class RootDialogTests
             .ReturnsAsync(new ListedResult<AvailableTimeRangeResponse>
             {
                 IsSuccess = false,
-                Message = NoSchedulesAvailableMessage
+                Message = Messages.NoSchedulesAvailable
             });
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateInitialActivity());
@@ -118,7 +118,7 @@ public partial class RootDialogTests
         _testClient.GetNextReply<IMessageActivity>();
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
         replyNext.Type.Should().Be(ActivityTypes.Message);
-        replyNext.Text.Should().Be(NoSchedulesAvailableMessage);
+        replyNext.Text.Should().Be(Messages.NoSchedulesAvailable);
         replyNext = _testClient.GetNextReply<IMessageActivity>();
         replyNext.Type.Should().Be(ActivityTypes.Message);
     }
@@ -130,7 +130,7 @@ public partial class RootDialogTests
             .ReturnsAsync(new Result<CreatedId>
             {
                 IsSuccess = false,
-                Message = DateAndTimeAppointmentIsNotAvailableMessage
+                Message = Messages.DateAndTimeAppointmentIsNotAvailable
             });
 
         await _testClient.SendActivityAsync<IMessageActivity>(CreateInitialActivity());
@@ -157,7 +157,7 @@ public partial class RootDialogTests
         _testClient.GetNextReply<IMessageActivity>();
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
         replyNext.Type.Should().Be(ActivityTypes.Message);
-        replyNext.Text.Should().Be(DateAndTimeAppointmentIsNotAvailableMessage);
+        replyNext.Text.Should().Be(Messages.DateAndTimeAppointmentIsNotAvailable);
         replyNext = _testClient.GetNextReply<IMessageActivity>();
         replyNext.Type.Should().Be(ActivityTypes.Message);
     }

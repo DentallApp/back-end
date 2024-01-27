@@ -18,12 +18,13 @@ public static class OfficeScheduleList
     /// </remarks>
     public static List<OfficeScheduleResponse> AddMissingSchedules(
         this List<OfficeScheduleResponse> schedules,
-        string message = NotAvailableMessage)
+        string message = "N/A")
     {
-        if (schedules.Count == WeekDaysType.MaxWeekDay)
+        const int MaxWeekDay = 6;
+        if (schedules.Count == MaxWeekDay)
             return schedules;
 
-        foreach (var (weekDayId, weekDayName) in WeekDaysType.WeekDays)
+        foreach ((int weekDayId, string weekDayName) in WeekdayCollection.GetAll())
         {
             if (schedules.Find(schedule => schedule.WeekDayId == weekDayId) is null)
             {

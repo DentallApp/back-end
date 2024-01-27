@@ -20,7 +20,7 @@ public class GetDentistsUseCase(DbContext context)
            (from employee in context.Set<Employee>()
             join person in context.Set<Person>() on employee.PersonId equals person.Id
             join userRole in context.Set<UserRole>() on employee.UserId equals userRole.UserId
-            where userRole.RoleId == RolesId.Dentist
+            where userRole.RoleId == (int)Role.Predefined.Dentist
             select new { employee, person });
 
         var dentists = await queryable

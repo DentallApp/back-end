@@ -22,9 +22,9 @@ public class WeekDayTests
         // Arrange
         var weekDays = new List<WeekDay>()
         {
-            new() { Id = (int)DayOfWeek.Monday, Name = WeekDaysName.Monday }
+            new() { Id = (int)DayOfWeek.Monday, Name = WeekDayName.Monday }
         };
-        var expected = WeekDaysName.Monday;
+        var expected = WeekDayName.Monday;
 
         // Act
         var actual = WeekDay.ConvertToDayRange(weekDays);
@@ -39,10 +39,10 @@ public class WeekDayTests
         // Arrange
         var weekDays = new List<WeekDay>()
         {
-            new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
-            new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday }
+            new() { Id = (int)DayOfWeek.Monday,    Name = WeekDayName.Monday },
+            new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDayName.Wednesday }
         };
-        var expected = $"{WeekDaysName.Monday} y {WeekDaysName.Wednesday}";
+        var expected = $"{WeekDayName.Monday} y {WeekDayName.Wednesday}";
 
         // Act
         var actual = WeekDay.ConvertToDayRange(weekDays);

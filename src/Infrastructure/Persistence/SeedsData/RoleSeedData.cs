@@ -7,33 +7,33 @@ public static class RoleSeedData
          builder.AddSeedData(
             new Role
             {
-                Id = RolesId.Unverified,
-                Name = RolesName.Unverified
+                Id = 1,
+                Name = RoleName.Unverified
             },
             new Role
             {
-                Id = RolesId.BasicUser,
-                Name = RolesName.BasicUser
+                Id = 2,
+                Name = RoleName.BasicUser
             },
             new Role
             {
-                Id = RolesId.Secretary,
-                Name = RolesName.Secretary
+                Id = 3,
+                Name = RoleName.Secretary
             },
             new Role
             {
-                Id = RolesId.Dentist,
-                Name = RolesName.Dentist
+                Id = 4,
+                Name = RoleName.Dentist
             },
             new Role
             {
-                Id = RolesId.Admin,
-                Name = RolesName.Admin
+                Id = 5,
+                Name = RoleName.Admin
             },
             new Role
             {
-                Id = RolesId.Superadmin,
-                Name = RolesName.Superadmin
+                Id = 6,
+                Name = RoleName.Superadmin
             }
         );
         return builder;

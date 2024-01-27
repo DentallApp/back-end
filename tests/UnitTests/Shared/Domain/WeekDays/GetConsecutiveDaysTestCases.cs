@@ -8,83 +8,83 @@ public class GetConsecutiveDaysTestCases : IEnumerable
         {
             new List<WeekDay>
             {
-                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
-                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
-                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday }
+                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDayName.Monday },
+                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDayName.Tuesday },
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDayName.Wednesday }
             },
-            $"{WeekDaysName.Monday} a {WeekDaysName.Wednesday}"
+            $"{WeekDayName.Monday} a {WeekDayName.Wednesday}"
         };
 
         yield return new object[]
         {
             new List<WeekDay>
             {
-                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
-                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
-                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
-                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday }
+                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDayName.Monday },
+                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDayName.Tuesday },
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDayName.Wednesday },
+                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDayName.Thursday }
             },
-            $"{WeekDaysName.Monday} a {WeekDaysName.Thursday}"
+            $"{WeekDayName.Monday} a {WeekDayName.Thursday}"
         };
 
         yield return new object[]
         {
             new List<WeekDay>
             {
-                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
-                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
-                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
-                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday },
-                new() { Id = (int)DayOfWeek.Friday,    Name = WeekDaysName.Friday }
+                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDayName.Monday },
+                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDayName.Tuesday },
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDayName.Wednesday },
+                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDayName.Thursday },
+                new() { Id = (int)DayOfWeek.Friday,    Name = WeekDayName.Friday }
             },
-            $"{WeekDaysName.Monday} a {WeekDaysName.Friday}"
+            $"{WeekDayName.Monday} a {WeekDayName.Friday}"
         };
 
         yield return new object[]
         {
             new List<WeekDay>
             {
-                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDaysName.Monday },
-                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
-                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
-                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday },
-                new() { Id = (int)DayOfWeek.Friday,    Name = WeekDaysName.Friday },
-                new() { Id = (int)DayOfWeek.Saturday,  Name = WeekDaysName.Saturday }
+                new() { Id = (int)DayOfWeek.Monday,    Name = WeekDayName.Monday },
+                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDayName.Tuesday },
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDayName.Wednesday },
+                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDayName.Thursday },
+                new() { Id = (int)DayOfWeek.Friday,    Name = WeekDayName.Friday },
+                new() { Id = (int)DayOfWeek.Saturday,  Name = WeekDayName.Saturday }
             },
-            $"{WeekDaysName.Monday} a {WeekDaysName.Saturday}"
+            $"{WeekDayName.Monday} a {WeekDayName.Saturday}"
         };
 
         yield return new object[]
         {
             new List<WeekDay>
             {
-                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDaysName.Tuesday },
-                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
-                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday }
+                new() { Id = (int)DayOfWeek.Tuesday,   Name = WeekDayName.Tuesday },
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDayName.Wednesday },
+                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDayName.Thursday }
             },
-            $"{WeekDaysName.Tuesday} a {WeekDaysName.Thursday}"
+            $"{WeekDayName.Tuesday} a {WeekDayName.Thursday}"
         };
 
         yield return new object[]
         {
             new List<WeekDay>
             {
-                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDaysName.Wednesday },
-                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDaysName.Thursday },
-                new() { Id = (int)DayOfWeek.Friday,    Name = WeekDaysName.Friday }
+                new() { Id = (int)DayOfWeek.Wednesday, Name = WeekDayName.Wednesday },
+                new() { Id = (int)DayOfWeek.Thursday,  Name = WeekDayName.Thursday },
+                new() { Id = (int)DayOfWeek.Friday,    Name = WeekDayName.Friday }
             },
-            $"{WeekDaysName.Wednesday} a {WeekDaysName.Friday}"
+            $"{WeekDayName.Wednesday} a {WeekDayName.Friday}"
         };
 
         yield return new object[]
         {
             new List<WeekDay>
             {
-                new() { Id = (int)DayOfWeek.Thursday, Name = WeekDaysName.Thursday },
-                new() { Id = (int)DayOfWeek.Friday,   Name = WeekDaysName.Friday },
-                new() { Id = (int)DayOfWeek.Saturday, Name = WeekDaysName.Saturday }
+                new() { Id = (int)DayOfWeek.Thursday, Name = WeekDayName.Thursday },
+                new() { Id = (int)DayOfWeek.Friday,   Name = WeekDayName.Friday },
+                new() { Id = (int)DayOfWeek.Saturday, Name = WeekDayName.Saturday }
             },
-            $"{WeekDaysName.Thursday} a {WeekDaysName.Saturday}"
+            $"{WeekDayName.Thursday} a {WeekDayName.Saturday}"
         };
     }
 }

@@ -1,5 +1,4 @@
 ﻿namespace DentallApp.Shared.Domain;
-using AppointmentType = AppointmentStatusId;
 
 public class Appointment : BaseEntity, IAuditableEntity
 {
@@ -23,7 +22,7 @@ public class Appointment : BaseEntity, IAuditableEntity
     public int DentistId { get; set; }
     [ForeignKey("DentistId")]
     public Employee Employee { get; set; }
-    public int AppointmentStatusId { get; set; } = AppointmentType.Scheduled;
+    public int AppointmentStatusId { get; set; } = (int)AppointmentStatus.Predefined.Scheduled;
     public AppointmentStatus AppointmentStatus { get; set; }
     public int GeneralTreatmentId { get; set; }
     public GeneralTreatment GeneralTreatment { get; set; }
@@ -54,6 +53,6 @@ public class Appointment : BaseEntity, IAuditableEntity
     [Decompile]
     public bool IsNotCanceled()
     {
-        return AppointmentStatusId != AppointmentType.Canceled;
+        return AppointmentStatusId != (int)AppointmentStatus.Predefined.Canceled;
     }
 }

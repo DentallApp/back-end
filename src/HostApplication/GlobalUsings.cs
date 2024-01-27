@@ -11,7 +11,7 @@ global using DentallApp.Infrastructure.Persistence;
 global using DentallApp.Infrastructure.Persistence.Repositories;
 
 global using DentallApp.Shared.Appointments;
-global using static DentallApp.Shared.Constants.ResponseMessages;
+global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Persistence;
 global using DentallApp.Shared.Persistence.Repositories;

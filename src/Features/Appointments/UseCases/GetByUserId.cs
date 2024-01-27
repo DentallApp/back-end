@@ -49,7 +49,7 @@ public class GetAppointmentsByUserIdUseCase(DbContext context)
                  DentistName       = dentistDetails.FullName,
                  DentalServiceName = generalTreatment.Name,
                  OfficeName        = office.Name,
-                 KinshipName       = kinship == null ? KinshipsName.Default : kinship.Name
+                 KinshipName       = kinship == null ? KinshipName.Default : kinship.Name
              })
              .IgnoreQueryFilters()
              .AsNoTracking()

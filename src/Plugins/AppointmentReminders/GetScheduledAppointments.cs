@@ -19,7 +19,7 @@ public class GetScheduledAppointmentsQuery(DbContext context)
     {
         var appointments = context.Set<Appointment>()
             .Where(appointment =>
-                    appointment.AppointmentStatusId == AppointmentStatusId.Scheduled &&
+                    appointment.AppointmentStatusId == (int)AppointmentStatus.Predefined.Scheduled &&
                     DBFunctions.DateDiff(appointment.Date, currentDate) == timeInAdvance &&
                     appointment.CreatedAt != null &&
                     // Para que el recordatorio no se envíe sí el paciente agenda la cita para el día siguiente.

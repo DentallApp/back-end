@@ -6,14 +6,14 @@ namespace DentallApp.Features.SpecificTreatments;
 [ApiController]
 public class SpecificTreatmentController
 {
-    [AuthorizeByRole(RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Superadmin)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateSpecificTreatmentRequest request,
         CreateSpecificTreatmentUseCase useCase)
         => await useCase.ExecuteAsync(request);
 
-    [AuthorizeByRole(RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Superadmin)]
     [HttpPut("{id}")]
     public async Task<Result> Update(
         int id, 
@@ -21,21 +21,21 @@ public class SpecificTreatmentController
         UpdateSpecificTreatmentUseCase useCase)
         => await useCase.ExecuteAsync(id, request);
 
-    [AuthorizeByRole(RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Superadmin)]
     [HttpDelete("{id}")]
     public async Task<Result> Delete(
         int id,
         DeleteSpecificTreatmentUseCase useCase)
         => await useCase.ExecuteAsync(id);
 
-    [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.BasicUser, RoleName.Superadmin)]
     [HttpGet("{generalTreatmentId}")]
     public async Task<IEnumerable<GetTreatmentsByGeneralTreatmentIdResponse>> GetByGeneralTreatmentId(
         int generalTreatmentId,
         GetTreatmentsByGeneralTreatmentIdUseCase useCase)
         => await useCase.ExecuteAsync(generalTreatmentId);
 
-    [AuthorizeByRole(RolesName.BasicUser, RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.BasicUser, RoleName.Superadmin)]
     [HttpGet]
     public async Task<IEnumerable<GetSpecificTreatmentsResponse>> GetAll(
         GetSpecificTreatmentsUseCase useCase)

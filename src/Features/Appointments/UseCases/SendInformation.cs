@@ -20,7 +20,7 @@ public class SendAppointmentInformationUseCase(
         request.RangeToPay ??= await treatmentRepository.GetRangeToPayAsync(request.GeneralTreatmentId);
         var businessName = EnvReader.Instance[AppSettings.BusinessName];
         var appointmentInfo = await GetAppointmentInformationAsync(appointmentId);
-        var msg = string.Format(AppointmentInformationMessageTemplate,
+        var msg = string.Format(Messages.AppointmentInformation,
             appointmentInfo.PatientName,
             businessName,
             appointmentInfo.DentistName,

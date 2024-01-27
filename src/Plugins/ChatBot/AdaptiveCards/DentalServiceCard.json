@@ -17,7 +17,7 @@
       "isRequired": true,
       "separator": true,
       "id": "dentalServiceId",
-      "errorMessage": "Error. Escoja un servicio dental",
+      "errorMessage": "Error. Escoja un servicio dental.",
       "label": "Seleccione un servicio dental"
     }
   ],

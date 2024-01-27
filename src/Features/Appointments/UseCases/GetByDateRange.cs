@@ -36,10 +36,10 @@ public class GetAppointmentsByDateRangeUseCase(DbContext context)
         GetAppointmentsByDateRangeRequest request)
     {
         if (currentEmployee.IsOnlyDentist() && currentEmployee.GetEmployeeId() != request.DentistId)
-            return Result.Forbidden(CanOnlyAccessYourOwnAppointmentsMessage);
+            return Result.Forbidden(Messages.CanOnlyAccessYourOwnAppointments);
 
         if (!currentEmployee.IsSuperAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
-            return Result.Forbidden(OfficeNotAssignedMessage);
+            return Result.Forbidden(Messages.OfficeNotAssigned);
 
         var appointments = await context.Set<Appointment>()
             .OptionalWhere(request.StatusId, appointment => appointment.AppointmentStatusId == request.StatusId)

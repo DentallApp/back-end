@@ -9,7 +9,7 @@ public class OfficeController : ControllerBase
     /// <summary>
     /// Crea un nuevo consultorio.
     /// </summary>
-    [AuthorizeByRole(RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Superadmin)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateOfficeRequest request,
@@ -19,7 +19,7 @@ public class OfficeController : ControllerBase
     /// <summary>
     /// Actualiza la información del consultorio.
     /// </summary>
-    [AuthorizeByRole(RolesName.Superadmin)]
+    [AuthorizeByRole(RoleName.Superadmin)]
     [HttpPut("{id}")]
     public async Task<Result> Update(
         int id,

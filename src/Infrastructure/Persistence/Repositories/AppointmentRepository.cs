@@ -12,9 +12,9 @@ public class AppointmentRepository(DbContext context, IDateTimeService dateTimeS
                 .OptionalWhere(officeId, appointment => appointment.OfficeId == officeId)
                 .OptionalWhere(dentistId, appointment => appointment.DentistId == dentistId)
                 .Where(appointment =>
-                       appointment.AppointmentStatusId == AppointmentStatusId.Scheduled &&
+                       appointment.AppointmentStatusId == (int)AppointmentStatus.Predefined.Scheduled &&
                        appointmentsId.Contains(appointment.Id))
-                .Set(appointment => appointment.AppointmentStatusId, AppointmentStatusId.Canceled)
+                .Set(appointment => appointment.AppointmentStatusId, (int)AppointmentStatus.Predefined.Canceled)
                 .Set(appointment => appointment.IsCancelledByEmployee, true)
                 .Set(appointment => appointment.UpdatedAt, dateTimeService.Now)
                 .UpdateAsync();
