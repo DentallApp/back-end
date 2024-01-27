@@ -54,8 +54,8 @@ public class CancelAppointmentsUseCase(
         // Verify if there are appointments that cannot be cancelled.
         if (request.Appointments.Count() != appointmentsCanBeCancelled.Count())
         {
-            int count = request.Appointments.Count() - appointmentsCanBeCancelled.Count();
-            var message = string.Format(Messages.AppointmentThatHasAlreadyPassedEmployee, count);
+            int pastAppointments = request.Appointments.Count() - appointmentsCanBeCancelled.Count();
+            var message = new AppointmentThatHasAlreadyPassedEmployeeError(pastAppointments).Message;
             var appointmentsThatCannotBeCanceled = new CancelAppointmentsResponse
             {
                 AppointmentsId = request.Appointments

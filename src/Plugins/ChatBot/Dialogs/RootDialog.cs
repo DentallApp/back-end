@@ -133,7 +133,7 @@ public partial class RootDialog : ComponentDialog
         await stepContext
             .Context
             .SendActivityAsync(
-                string.Format(Messages.ShowScheduleToUser, dentistSchedule),
+                new ShowScheduleToUserSuccess(dentistSchedule).Message,
                 cancellationToken: cancellationToken);
 
         return await stepContext.PromptAsync(
@@ -169,7 +169,7 @@ public partial class RootDialog : ComponentDialog
         await stepContext
             .Context
             .SendActivityAsync(
-                string.Format(Messages.TotalHoursAvailable, availableHours.Count),
+                new TotalHoursAvailableSuccess(availableHours.Count).Message,
                 cancellationToken: cancellationToken);
 
         return await stepContext.PromptAsync(
@@ -202,7 +202,7 @@ public partial class RootDialog : ComponentDialog
         await stepContext
             .Context
             .SendActivityAsync(
-                string.Format(Messages.SuccessfullyScheduledAppointment, appointment.RangeToPay?.ToString()), 
+                new SuccessfullyScheduledAppointmentSuccess(appointment.RangeToPay?.ToString()).Message, 
                 cancellationToken: cancellationToken);
 
         await stepContext.Context.SendActivityAsync(Messages.ThanksForUsingService, cancellationToken: cancellationToken);
