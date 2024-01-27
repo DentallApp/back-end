@@ -25,9 +25,6 @@ public class HeroCardFactory
 
     public static List<HeroCard> CreateSchedulesHeroCard(List<AvailableTimeRangeResponse> availableHours)
     {
-        if (availableHours.Count == 0)
-            throw new Exception(Messages.NoSchedulesAvailable);
-
         int totalButtons        = 5;
         int totalAvailableHours = availableHours.Count;
         int totalHeroCards      = availableHours.Count / totalButtons;

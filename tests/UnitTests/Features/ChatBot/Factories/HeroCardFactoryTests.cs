@@ -126,4 +126,17 @@ public class HeroCardFactoryTests
         // Assert
         heroCards.Should().BeEquivalentTo(expectedHeroCards);
     }
+
+    [Test]
+    public void CreateSchedulesHeroCard_WhenThereAreNoAvailableHours_ShouldReturnsEmptyHeroCard()
+    {
+        // Arrange
+        var availableHours = new List<AvailableTimeRangeResponse>();
+
+        // Act
+        var heroCards = HeroCardFactory.CreateSchedulesHeroCard(availableHours);
+
+        // Assert
+        heroCards.Should().BeEmpty();
+    }
 }
