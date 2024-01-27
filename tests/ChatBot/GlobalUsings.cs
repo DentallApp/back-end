@@ -21,3 +21,4 @@ global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Services;
 global using DentallApp.Shared.Resources.ApiResponses;
+global using DentallApp.Shared.Reasons;

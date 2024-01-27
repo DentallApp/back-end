@@ -5,6 +5,7 @@ global using DentallApp.Shared.Constants;
 global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Resources.Statuses;
 global using DentallApp.Shared.Resources.Weekdays;
+global using DentallApp.Shared.Reasons;
 global using DentallApp.Shared.Extensions;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
