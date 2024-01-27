@@ -252,11 +252,11 @@
   <data name="PasswordSuccessfullyReset" xml:space="preserve">
     <value>La contraseña se ha restablecido con éxito.</value>
   </data>
+  <data name="PayableValue" xml:space="preserve">
+    <value>El valor a pagar es de ${0}</value>
+  </data>
   <data name="PermitsNotGranted" xml:space="preserve">
     <value>No tienes permisos para otorgar esos roles.</value>
-  </data>
-  <data name="RangeToPay" xml:space="preserve">
-    <value>El valor a pagar es de ${0}</value>
   </data>
   <data name="RangeToPayMinMax" xml:space="preserve">
     <value>El rango a pagar es de ${0} a ${1}</value>
