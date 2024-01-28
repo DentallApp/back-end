@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Shared.Reasons;
 
-public class SuccessfullyScheduledAppointmentSuccess
+public readonly ref struct SuccessfullyScheduledAppointmentSuccess
 {
     public string Message { get; }
     public SuccessfullyScheduledAppointmentSuccess(string rangeToPay)

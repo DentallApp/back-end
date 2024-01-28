@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Shared.Reasons;
 
-public class PaymentSuccess
+public readonly ref struct PaymentSuccess
 {
     public string Message { get; }
 

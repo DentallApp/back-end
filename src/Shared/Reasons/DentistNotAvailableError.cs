@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Shared.Reasons;
 
-public class DentistNotAvailableError
+public readonly ref struct DentistNotAvailableError
 {
     public string Message { get; }
     public DentistNotAvailableError(string weekDayName)

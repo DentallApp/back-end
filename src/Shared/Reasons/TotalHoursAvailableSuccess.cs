@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Shared.Reasons;
 
-public class TotalHoursAvailableSuccess
+public readonly ref struct TotalHoursAvailableSuccess
 {
     public string Message { get; }
     public TotalHoursAvailableSuccess(int totalHours)

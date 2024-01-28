@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Shared.Reasons;
 
-public class MissingClaimError
+public readonly ref struct MissingClaimError
 {
     public string Message { get; }
     public MissingClaimError(string claimType)

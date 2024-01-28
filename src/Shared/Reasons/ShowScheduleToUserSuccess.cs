@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Shared.Reasons;
 
-public class ShowScheduleToUserSuccess
+public readonly ref struct ShowScheduleToUserSuccess
 {
     public string Message { get; }
     public ShowScheduleToUserSuccess(string dentistSchedule)

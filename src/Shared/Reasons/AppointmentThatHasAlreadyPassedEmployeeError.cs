@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Shared.Reasons;
 
-public class AppointmentThatHasAlreadyPassedEmployeeError
+public readonly ref struct AppointmentThatHasAlreadyPassedEmployeeError
 {
     public string Message { get; }
     public AppointmentThatHasAlreadyPassedEmployeeError(int pastAppointments)
