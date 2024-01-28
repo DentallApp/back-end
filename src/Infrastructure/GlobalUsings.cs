@@ -1,5 +1,9 @@
 global using DentallApp.Infrastructure.Persistence.Extensions;
 global using DentallApp.Infrastructure.Persistence.SeedsData;
+global using DentallApp.Infrastructure.Persistence.Repositories;
+global using DentallApp.Infrastructure.Persistence;
+global using DentallApp.Infrastructure.Services.TokenProvider;
+global using DentallApp.Infrastructure.Services;
 
 global using DentallApp.Shared.Domain;
 global using DentallApp.Shared.Domain.EmployeeSchedules;
