@@ -1,21 +1,17 @@
+global using DentallApp.Features;
 global using DentallApp.Features.Dependents.UseCases;
-global using DentallApp.Features.Appointments.UseCases.GetAvailableHours;
 
 global using DentallApp.HostApplication;
 global using DentallApp.HostApplication.Middlewares;
 global using DentallApp.HostApplication.Extensions;
 
-global using DentallApp.Infrastructure.Services;
-global using DentallApp.Infrastructure.Services.TokenProvider;
+global using DentallApp.Infrastructure;
 global using DentallApp.Infrastructure.Persistence;
-global using DentallApp.Infrastructure.Persistence.Repositories;
 
 global using DentallApp.Shared.Appointments;
 global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Persistence;
-global using DentallApp.Shared.Persistence.Repositories;
-global using DentallApp.Shared.Services;
 global using DentallApp.Shared.Plugin.Contracts;
 
 global using System.Reflection;
