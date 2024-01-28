@@ -11,7 +11,8 @@ builder.Services.AddSingleton(sqlCollection);
 builder.InitializePlugins();
 builder.Configuration.AddEnvironmentVariables();
 builder.Services
-    .AddServices()
+    .AddInfrastructureServices()
+    .AddFeatureServices()
     .RegisterAutoDependencies();
 
 var databaseSettings = new EnvBinder(envVars).Bind<DatabaseSettings>();
