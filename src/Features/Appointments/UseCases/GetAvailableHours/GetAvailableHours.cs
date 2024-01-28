@@ -15,10 +15,10 @@ public class GetAvailableHoursUseCase(IAvailabilityQueries queries, IDateTimeSer
 
         var employeeSchedule  = await queries.GetEmployeeScheduleAsync(dentistId, weekDayId);
         if (employeeSchedule is null || employeeSchedule.IsEmployeeScheculeDeleted)
-            return Result.Failure(string.Format(Messages.DentistNotAvailable, weekDayName));
+            return Result.Failure(new DentistNotAvailableError(weekDayName).Message);
 
         if (employeeSchedule.IsOfficeScheduleDeleted || employeeSchedule.IsOfficeDeleted)
-            return Result.Failure(string.Format(Messages.OfficeClosedForSpecificDay, weekDayName));
+            return Result.Failure(new OfficeClosedForSpecificDayError(weekDayName).Message);
 
         if (employeeSchedule.HasNotSchedule())
             return Result.Failure(Messages.NoMorningOrAfternoonHours);

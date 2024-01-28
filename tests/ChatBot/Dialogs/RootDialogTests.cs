@@ -56,7 +56,7 @@ public partial class RootDialogTests
         reply.Type.Should().Be(ActivityTypes.Typing);
 
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
-        replyNext.Text.Should().Be(string.Format(Messages.ShowScheduleToUser, Schedule));
+        replyNext.Text.Should().Be(new ShowScheduleToUserSuccess(Schedule).Message);
         replyNext.Type.Should().Be(ActivityTypes.Message);
 
         replyNext     = _testClient.GetNextReply<IMessageActivity>();
@@ -77,7 +77,7 @@ public partial class RootDialogTests
         reply.Type.Should().Be(ActivityTypes.Typing);
 
         var replyNext = _testClient.GetNextReply<IMessageActivity>();
-        replyNext.Text.Should().Be(string.Format(Messages.TotalHoursAvailable, 1));
+        replyNext.Text.Should().Be(new TotalHoursAvailableSuccess(totalHours: 1).Message);
         replyNext.Type.Should().Be(ActivityTypes.Message);
 
         replyNext     = _testClient.GetNextReply<IMessageActivity>();
@@ -94,10 +94,10 @@ public partial class RootDialogTests
         reply.Type.Should().Be(ActivityTypes.Typing);
 
         var replyNext     = _testClient.GetNextReply<IMessageActivity>();
-        var rangeToPayMsg = string.Format(Messages.RangeToPayMinMax, PriceMin, PriceMax);
+        var rangeToPayMsg = new PaymentSuccess(PriceMin, PriceMax).Message;
         replyNext.Text
                  .Should()
-                 .Be(string.Format(Messages.SuccessfullyScheduledAppointment, rangeToPayMsg));
+                 .Be(new ScheduledAppointmentSuccess(rangeToPayMsg).Message);
         replyNext.Type.Should().Be(ActivityTypes.Message);
 
         replyNext         = _testClient.GetNextReply<IMessageActivity>();

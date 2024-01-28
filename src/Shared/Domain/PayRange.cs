@@ -8,8 +8,8 @@ public class PayRange : ValueObject
     public override string ToString()
     {
         return PriceMin != PriceMax ?
-            string.Format(Messages.RangeToPayMinMax, PriceMin, PriceMax) :
-            string.Format(Messages.RangeToPay, PriceMax);
+            new PaymentSuccess(PriceMin, PriceMax).Message :
+            new PaymentSuccess(PriceMax).Message;
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

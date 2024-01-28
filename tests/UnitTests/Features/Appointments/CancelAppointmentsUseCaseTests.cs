@@ -50,6 +50,9 @@ public class CancelAppointmentsUseCaseTests
     public async Task ExecuteAsync_WhenSomeAppointmentsCannotBeCancelled_ShouldReturnsResultWithAppointmentsId()
     {
         // Arrange
+        int[] expectedAppointmentsId = { 4, 5 };
+        int pastAppointments = 2;
+        var expectedMessage = new AppointmentThatHasAlreadyPassedEmployeeError(pastAppointments).Message;
         var request = new CancelAppointmentsRequest
         {
             Appointments = new List<CancelAppointmentsRequest.Appointment>
@@ -77,18 +80,21 @@ public class CancelAppointmentsUseCaseTests
         result.IsSuccess.Should().BeFalse();
         result.Message
             .Should()
-            .Be(string.Format(Messages.AppointmentThatHasAlreadyPassedEmployee, 2));
+            .Be(expectedMessage);
 
         result.Data
             .AppointmentsId
             .Should()
-            .BeEquivalentTo(new[] { 4, 5 });
+            .BeEquivalentTo(expectedAppointmentsId);
     }
 
     [Test]
     public async Task ExecuteAsync_WhenAppointmentsCannotBeCancelled_ShouldReturnsResultWithAppointmentsId()
     {
         // Arrange
+        int[] expectedAppointmentsId = { 1, 2, 3, 4, 5 };
+        int pastAppointments = 5;
+        var expectedMessage = new AppointmentThatHasAlreadyPassedEmployeeError(pastAppointments).Message;
         var request = new CancelAppointmentsRequest
         {
             Appointments = new List<CancelAppointmentsRequest.Appointment>
@@ -116,11 +122,11 @@ public class CancelAppointmentsUseCaseTests
         result.IsSuccess.Should().BeFalse();
         result.Message
             .Should()
-            .Be(string.Format(Messages.AppointmentThatHasAlreadyPassedEmployee, 5));
+            .Be(expectedMessage);
 
         result.Data
             .AppointmentsId
             .Should()
-            .BeEquivalentTo(new[] { 1, 2, 3, 4, 5 });
+            .BeEquivalentTo(expectedAppointmentsId);
     }
 }

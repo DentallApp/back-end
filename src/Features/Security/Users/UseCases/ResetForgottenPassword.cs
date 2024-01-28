@@ -18,7 +18,7 @@ public class ResetForgottenPasswordUseCase(
             return Result.Invalid(Messages.PasswordResetTokenInvalid);
 
         if (!claimIdentity.HasClaim(CustomClaimsType.UserId))
-            return Result.Invalid(string.Format(Messages.MissingClaim, CustomClaimsType.UserId));
+            return Result.Invalid(new MissingClaimError(CustomClaimsType.UserId).Message);
 
         var userId = claimIdentity.GetUserId();
         var user = await context.Set<User>()

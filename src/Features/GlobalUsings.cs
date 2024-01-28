@@ -7,6 +7,7 @@ global using DentallApp.Shared.Appointments;
 global using DentallApp.Shared.Constants;
 global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Resources.Kinships;
+global using DentallApp.Shared.Reasons;
 global using DentallApp.Shared.Attributes;
 global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Extensions;

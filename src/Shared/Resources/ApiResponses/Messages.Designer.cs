@@ -466,20 +466,20 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El valor a pagar es de ${0}.
+        /// </summary>
+        public static string PayableValue {
+            get {
+                return ResourceManager.GetString("PayableValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No tienes permisos para otorgar esos roles..
         /// </summary>
         public static string PermitsNotGranted {
             get {
                 return ResourceManager.GetString("PermitsNotGranted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to El valor a pagar es de ${0}.
-        /// </summary>
-        public static string RangeToPay {
-            get {
-                return ResourceManager.GetString("RangeToPay", resourceCulture);
             }
         }
         
