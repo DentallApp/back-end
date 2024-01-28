@@ -97,7 +97,7 @@ public partial class RootDialogTests
         var rangeToPayMsg = new PaymentSuccess(PriceMin, PriceMax).Message;
         replyNext.Text
                  .Should()
-                 .Be(new SuccessfullyScheduledAppointmentSuccess(rangeToPayMsg).Message);
+                 .Be(new ScheduledAppointmentSuccess(rangeToPayMsg).Message);
         replyNext.Type.Should().Be(ActivityTypes.Message);
 
         replyNext         = _testClient.GetNextReply<IMessageActivity>();

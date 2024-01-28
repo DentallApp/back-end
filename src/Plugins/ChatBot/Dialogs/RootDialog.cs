@@ -202,7 +202,7 @@ public partial class RootDialog : ComponentDialog
         await stepContext
             .Context
             .SendActivityAsync(
-                new SuccessfullyScheduledAppointmentSuccess(appointment.RangeToPay?.ToString()).Message, 
+                new ScheduledAppointmentSuccess(appointment.RangeToPay?.ToString()).Message, 
                 cancellationToken: cancellationToken);
 
         await stepContext.Context.SendActivityAsync(Messages.ThanksForUsingService, cancellationToken: cancellationToken);
