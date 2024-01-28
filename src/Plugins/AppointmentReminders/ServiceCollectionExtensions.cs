@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Features.AppointmentReminders;
 
-public static class ReminderExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddReminderServices(this IServiceCollection services, IConfiguration configuration)
     {
