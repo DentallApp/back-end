@@ -1,6 +1,7 @@
 ﻿namespace DentallApp.Features.Reports.UseCases.GetTotalAppointments;
 
 [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
+[ApiController]
 public class ReportTotalAppointmentsController : ControllerBase
 {
     /// <summary>
