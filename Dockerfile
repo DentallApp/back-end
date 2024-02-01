@@ -18,7 +18,7 @@ WORKDIR /app/src/HostApplication
 RUN dotnet restore
 
 # Copy everything else and build app
-COPY src/. ./src/
+COPY src/. /app/src/
 WORKDIR /app/src/Plugins/AppointmentReminders
 RUN dotnet build -c Release --no-restore
 WORKDIR /app/src/Plugins/ChatBot
