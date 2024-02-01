@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+**/Migrations/
+.vs/
+.vscode/
+.github/
+database/
+proxy-conf/
+services-unit/
+tests/
