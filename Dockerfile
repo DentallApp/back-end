@@ -9,6 +9,11 @@ COPY ["src/Infrastructure/*.csproj", "src/Infrastructure/"]
 COPY ["src/Features/*.csproj", "src/Features/"]
 COPY ["src/HostApplication/*.csproj", "src/HostApplication/"]
 COPY *.props .
+WORKDIR /app/src/Plugins/AppointmentReminders
+RUN dotnet restore
+WORKDIR /app/src/Plugins/ChatBot
+RUN dotnet restore
+WORKDIR /app/src/HostApplication
 RUN dotnet restore
 
 # Copy everything else and build app
