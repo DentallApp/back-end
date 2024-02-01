@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -8,6 +8,7 @@ COPY ["src/Shared/*.csproj", "src/Shared/"]
 COPY ["src/Infrastructure/*.csproj", "src/Infrastructure/"]
 COPY ["src/Features/*.csproj", "src/Features/"]
 COPY ["src/HostApplication/*.csproj", "src/HostApplication/"]
+COPY *.sln .
 COPY *.props .
 WORKDIR /app/src/Plugins/AppointmentReminders
 RUN dotnet restore
