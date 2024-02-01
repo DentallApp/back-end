@@ -11,6 +11,7 @@ WORKDIR /app/src/Plugins/AppointmentReminders
 RUN dotnet restore
 WORKDIR /app/src/Plugins/ChatBot
 RUN dotnet restore
+WORKDIR /app
 
 # Copy csproj and restore host application dependencies (entry point)
 COPY ["src/Shared/*.csproj", "src/Shared/"]
