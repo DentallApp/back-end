@@ -15,7 +15,7 @@ services:
       - 3000:3000
     environment: 
       - DirectLine:ServiceUrl=http://indirectline:3000
-      - DirectLine:BotEndpoint=http://webapi:5000/api/messages
+      - DirectLine:BotEndpoint=http://webapi:80/api/messages
       
   mariadb:
     restart: always
