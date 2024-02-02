@@ -27,12 +27,6 @@ services:
       MARIADB_DATABASE: ${DB_DATABASE}
       MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
 
-  webchat-client:
-    restart: always
-    image: mrdave1999/webchat-client
-    ports:
-      - 80:80
-
 volumes:
   mariadb_data:
 
