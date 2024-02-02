@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
+COPY *.sln .
+COPY *.props .
 
 # Copy csproj and restore host application dependencies (entry point)
 COPY ["src/Shared/*.csproj", "src/Shared/"]
@@ -14,8 +16,6 @@ WORKDIR /app
 COPY ["src/Plugins/AppointmentReminders/*.csproj", "src/Plugins/AppointmentReminders/"]
 COPY ["src/Plugins/ChatBot/*.csproj", "src/Plugins/ChatBot/"]
 COPY ["src/Plugins/*.props", "src/Plugins/"]
-COPY *.sln .
-COPY *.props .
 WORKDIR /app/src/Plugins/AppointmentReminders
 RUN dotnet restore
 WORKDIR /app/src/Plugins/ChatBot
