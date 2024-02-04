@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  webapi:
+    restart: always
+    build: .
+    volumes:
+      - dental_services_images:/app/dental_services
+    env_file: .env
+    ports:
+      - 5000:80
+
+  indirectline:
+    restart: always
+    image: mrdave1999/indirectline:0.1.0-alpha
+    ports: 
+      - 3000:3000
+    environment: 
+      - DirectLine:ServiceUrl=http://indirectline:3000
+      - DirectLine:BotEndpoint=http://webapi:80/api/messages
+      
+  mariadb:
+    restart: always
+    image: mariadb:10.11.6
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./database:/docker-entrypoint-initdb.d
+    environment:
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+
+volumes:
+  mariadb_data:
+  dental_services_images:
+    name: 'dental_services' 
+
+networks:
+  default:
+    name: 'DentallApp'
