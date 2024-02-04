@@ -4,6 +4,8 @@ services:
   webapi:
     restart: always
     build: .
+    volumes:
+      - dental_services_images:/app/dental_services
     env_file: .env
     ports:
       - 5000:80
@@ -29,6 +31,8 @@ services:
 
 volumes:
   mariadb_data:
+  dental_services_images:
+    name: 'dental_services' 
 
 networks:
   default:
