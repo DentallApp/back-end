@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/DentallApp.csproj",
+                "${workspaceFolder}/src/HostApplication/DentallApp.HostApplication.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/DentallApp.csproj",
+                "${workspaceFolder}/src/HostApplication/DentallApp.HostApplication.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/src/DentallApp.csproj"
+                "${workspaceFolder}/src/HostApplication/DentallApp.HostApplication.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -43,7 +43,7 @@
             "type": "process",
             "args": [
                 "test",
-                "${workspaceFolder}/tests/DentallApp.Tests.csproj"
+                "${workspaceFolder}/tests/UnitTests/DentallApp.UnitTests.csproj"
             ],
             "problemMatcher": "$msCompile",
             "group": {
@@ -60,7 +60,7 @@
                 "/p:CollectCoverage=true",
                 "/p:CoverletOutputFormat=lcov",
                 "/p:CoverletOutput=./lcov.info",
-                "${workspaceFolder}/tests/DentallApp.Tests.csproj"
+                "${workspaceFolder}/tests/UnitTests/DentallApp.UnitTests.csproj"
             ],
             "problemMatcher": "$msCompile",
             "group": {
