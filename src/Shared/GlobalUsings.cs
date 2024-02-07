@@ -9,7 +9,7 @@ global using DentallApp.Shared.Reasons;
 global using DentallApp.Shared.Extensions;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
-global using DentallApp.Shared.Services;
+global using DentallApp.Shared.Interfaces;
 
 global using System.Text.Json.Serialization;
 global using System.Globalization;
