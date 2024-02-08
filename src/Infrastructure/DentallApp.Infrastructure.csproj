@@ -12,10 +12,9 @@
     <PackageReference Include="EFCore.NamingConventions" />
     <PackageReference Include="EntityFrameworkCore.Exceptions.MySQL.Pomelo" />
     <PackageReference Include="itext7.pdfhtml" />
-    <PackageReference Include="libphonenumber-csharp" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     <PackageReference Include="Scriban" />
-    <PackageReference Include="Twilio" />
-    <PackageReference Include="SendGrid" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
