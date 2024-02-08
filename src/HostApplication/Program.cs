@@ -6,10 +6,10 @@ var builder     = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-PluginStartup.Configure(builder);
 ISqlCollection sqlCollection = new YeSqlLoader().LoadFromDefaultDirectory();
 builder.Services.AddSingleton(sqlCollection);
 builder.Configuration.AddEnvironmentVariables();
+PluginStartup.Configure(builder);
 builder.Services
     .AddInfrastructureServices()
     .AddFeatureServices()
@@ -34,12 +34,10 @@ builder.Services
     .AddApplicationParts();
 
 builder.Services.AddDbContext(databaseSettings);
-builder.Services.AddSendGrid(options => options.ApiKey = appSettings.SendGridApiKey);
 builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(appSettings);
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
