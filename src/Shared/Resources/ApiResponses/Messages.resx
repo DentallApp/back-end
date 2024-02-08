@@ -317,10 +317,12 @@
   </data>
   <data name="ThanksForUsingService" xml:space="preserve">
     <value>Gracias por usar nuestro servicio.
+
 Si desea agendar otra cita, escriba algo para empezar de nuevo el proceso.</value>
   </data>
   <data name="TotalHoursAvailable" xml:space="preserve">
     <value>Total de horas disponibles: {0}.
+
 Seleccione la hora para su cita:</value>
   </data>
   <data name="UnexpectedError" xml:space="preserve">

@@ -644,6 +644,7 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         
         /// <summary>
         ///   Looks up a localized string similar to Gracias por usar nuestro servicio.
+        ///
         ///Si desea agendar otra cita, escriba algo para empezar de nuevo el proceso..
         /// </summary>
         public static string ThanksForUsingService {
@@ -654,6 +655,7 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         
         /// <summary>
         ///   Looks up a localized string similar to Total de horas disponibles: {0}.
+        ///
         ///Seleccione la hora para su cita:.
         /// </summary>
         public static string TotalHoursAvailable {
