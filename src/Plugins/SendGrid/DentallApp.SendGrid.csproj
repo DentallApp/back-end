@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>DentallApp.SendGrid</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SendGrid" />
+    <PackageReference Include="SendGrid.Extensions.DependencyInjection" />
+  </ItemGroup>
+
+</Project>

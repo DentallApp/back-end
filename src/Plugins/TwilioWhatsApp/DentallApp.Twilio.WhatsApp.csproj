@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>DentallApp.Twilio.WhatsApp</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Twilio" />
+    <PackageReference Include="libphonenumber-csharp" />
+  </ItemGroup>
+
+</Project>
