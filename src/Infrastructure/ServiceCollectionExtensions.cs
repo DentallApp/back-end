@@ -15,12 +15,10 @@ public static class InfrastructureServicesExtensions
         services
             .AddScoped(typeof(IEntityService<>), typeof(EntityService<>))
             .AddScoped<ITokenService, TokenService>()
-            .AddScoped<IEmailService, EmailService>()
             .AddSingleton<IDateTimeService, DateTimeService>()
             .AddSingleton<IHtmlConverter, HtmlConverterIText>()
             .AddSingleton<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>()
-            .AddSingleton<IPasswordHasher, PasswordHasherBcrypt>()
-            .AddSingleton<IInstantMessaging, WhatsAppMessaging>();
+            .AddSingleton<IPasswordHasher, PasswordHasherBcrypt>();
 
         return services;
     }
