@@ -1,11 +1,11 @@
 ﻿namespace DentallApp.HostApplication;
 
-public static class Startup
+public static class PluginStartup
 {
     /// <summary>
-    /// Initializes the initial code of each plugin.
+    /// Configures the application plug-ins.
     /// </summary>
-    public static void InitializePlugins(this WebApplicationBuilder builder)
+    public static void Configure(WebApplicationBuilder builder)
     {
         var envConfiguration = new CPluginEnvConfiguration();
         PluginLoader.Load(envConfiguration);
