@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Shared.Services;
+﻿namespace DentallApp.Shared.Interfaces;
 
 /// <summary>
 /// Represents an entity service for CRUD operations.

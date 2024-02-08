@@ -14,11 +14,11 @@ global using static DentallApp.IntegrationTests.ChatBot.Dialogs.ActivityFactory;
 
 global using DentallApp.Features.ChatBot;
 global using DentallApp.Features.ChatBot.Dialogs;
-global using DentallApp.Shared.Appointments;
+global using DentallApp.Shared.Interfaces;
+global using DentallApp.Shared.Interfaces.Appointments;
 
 global using DentallApp.Shared.Domain;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Configuration;
-global using DentallApp.Shared.Services;
 global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Reasons;

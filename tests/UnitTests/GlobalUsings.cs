@@ -16,12 +16,12 @@ global using DentallApp.Features.ChatBot.DirectLine.Services;
 global using DentallApp.Infrastructure.Services;
 
 global using DentallApp.Shared.Domain;
-global using DentallApp.Shared.Appointments;
+global using DentallApp.Shared.Interfaces;
+global using DentallApp.Shared.Interfaces.Appointments;
+global using DentallApp.Shared.Interfaces.Persistence.Repositories;
+global using DentallApp.Shared.Interfaces.Persistence;
 global using DentallApp.Shared.Resources.Weekdays;
 global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Reasons;
 global using DentallApp.Shared.Constants;
-global using DentallApp.Shared.Services;
 global using DentallApp.Shared.Configuration;
-global using DentallApp.Shared.Persistence.Repositories;
-global using DentallApp.Shared.Persistence;

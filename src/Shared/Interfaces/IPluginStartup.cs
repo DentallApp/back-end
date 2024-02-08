@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Shared.Plugin.Contracts;
+﻿namespace DentallApp.Shared.Interfaces;
 
 /// <summary>
 /// Represents the entry point of the plugin.

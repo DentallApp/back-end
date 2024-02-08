@@ -3,7 +3,10 @@ global using DentallApp.Features.Appointments.UseCases.GetAvailableHours;
 
 global using DentallApp.Shared.Domain;
 global using DentallApp.Shared.Domain.EmployeeSchedules;
-global using DentallApp.Shared.Appointments;
+global using DentallApp.Shared.Interfaces;
+global using DentallApp.Shared.Interfaces.Appointments;
+global using DentallApp.Shared.Interfaces.Persistence;
+global using DentallApp.Shared.Interfaces.Persistence.Repositories;
 global using DentallApp.Shared.Constants;
 global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Resources.Kinships;
@@ -13,9 +16,6 @@ global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Extensions;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
-global using DentallApp.Shared.Persistence;
-global using DentallApp.Shared.Persistence.Repositories;
-global using DentallApp.Shared.Services;
 
 global using System.Text.Json.Serialization;
 global using System.Data;

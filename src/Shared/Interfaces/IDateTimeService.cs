@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Shared.Services;
+﻿namespace DentallApp.Shared.Interfaces;
 
 public interface IDateTimeService
 {

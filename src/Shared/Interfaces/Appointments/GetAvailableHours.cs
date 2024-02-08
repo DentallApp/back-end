@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Shared.Appointments;
+﻿namespace DentallApp.Shared.Interfaces.Appointments;
 
 public class AvailableTimeRangeRequest
 {

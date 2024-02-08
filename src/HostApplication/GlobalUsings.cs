@@ -8,11 +8,11 @@ global using DentallApp.HostApplication.Extensions;
 global using DentallApp.Infrastructure;
 global using DentallApp.Infrastructure.Persistence;
 
-global using DentallApp.Shared.Appointments;
+global using DentallApp.Shared.Interfaces;
+global using DentallApp.Shared.Interfaces.Appointments;
+global using DentallApp.Shared.Interfaces.Persistence;
 global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Configuration;
-global using DentallApp.Shared.Persistence;
-global using DentallApp.Shared.Plugin.Contracts;
 
 global using System.Reflection;
 global using System.Net;

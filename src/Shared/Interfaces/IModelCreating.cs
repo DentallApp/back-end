@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Shared.Plugin.Contracts;
+﻿namespace DentallApp.Shared.Interfaces;
 
 /// <summary>
 /// This contract is for plugins to create their own entity configurations using Entity Framework.

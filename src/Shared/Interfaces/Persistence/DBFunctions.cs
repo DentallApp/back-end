@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Shared.Persistence;
+﻿namespace DentallApp.Shared.Interfaces.Persistence;
 
 /// <summary>
 /// Provides methods that get translated to database functions when used in LINQ queries.

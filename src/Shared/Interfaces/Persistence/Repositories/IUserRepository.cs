@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Shared.Persistence.Repositories;
+﻿namespace DentallApp.Shared.Interfaces.Persistence.Repositories;
 
 public interface IUserRepository
 {

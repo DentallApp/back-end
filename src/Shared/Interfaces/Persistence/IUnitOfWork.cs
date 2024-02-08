@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Shared.Persistence;
+﻿namespace DentallApp.Shared.Interfaces.Persistence;
 
 public interface IUnitOfWork
 {
