@@ -27,8 +27,9 @@ RUN dotnet restore
 WORKDIR /app/src/Plugins/TwilioWhatsApp
 RUN dotnet restore
 
-# Copy everything else and build app
-COPY ["src/", "/app/src/"]
+# Copy everything else and build plugins
+COPY ["src/Shared/", "/app/src/Shared/"]
+COPY ["src/Plugins/", "/app/src/Plugins/"]
 WORKDIR /app/src/Plugins/AppointmentReminders
 RUN dotnet build -c Release --no-restore
 WORKDIR /app/src/Plugins/ChatBot
@@ -37,6 +38,9 @@ WORKDIR /app/src/Plugins/SendGrid
 RUN dotnet build -c Release --no-restore
 WORKDIR /app/src/Plugins/TwilioWhatsApp
 RUN dotnet build -c Release --no-restore
+
+# Copy everything else and build app
+COPY ["src/", "/app/src/"]
 WORKDIR /app/src/HostApplication
 RUN dotnet publish -c Release -o /app/out --no-restore
 
