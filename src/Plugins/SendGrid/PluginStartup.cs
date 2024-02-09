@@ -6,8 +6,9 @@ public class PluginStartup : IPluginStartup
 {
     public void ConfigureWebApplicationBuilder(WebApplicationBuilder builder)
     {
-        var apiKey = builder.Configuration["SENDGRID_API_KEY"];
-        builder.Services.AddSendGrid(options => options.ApiKey = apiKey);
+        var settings = new EnvBinder().Bind<SendGridSettings>();
+        builder.Services.AddSendGrid(options => options.ApiKey = settings.SendGridApiKey);
         builder.Services.AddScoped<IEmailService, EmailService>();
+        builder.Services.AddSingleton(settings);
     }
 }
