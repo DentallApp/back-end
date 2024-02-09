@@ -6,6 +6,7 @@ global using DentallApp.HostApplication.Middlewares;
 global using DentallApp.HostApplication.Extensions;
 
 global using DentallApp.Infrastructure;
+global using DentallApp.Infrastructure.Services;
 global using DentallApp.Infrastructure.Persistence;
 
 global using DentallApp.Shared.Interfaces;
@@ -30,12 +31,12 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.IdentityModel.Logging;
 global using Microsoft.Extensions.Options;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using Microsoft.OpenApi.Models;
 
 global using DotEnv.Core;
 global using SimpleResults;
 global using YeSql.Net;
-global using SendGrid.Extensions.DependencyInjection;
 
 global using EntityFramework.Exceptions.Common;
 global using MySqlConnector;

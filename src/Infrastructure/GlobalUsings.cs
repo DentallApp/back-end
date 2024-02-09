@@ -35,9 +35,6 @@ global using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 global using Microsoft.EntityFrameworkCore.ChangeTracking;
 global using Microsoft.IdentityModel.Tokens;
 
-global using SendGrid;
-global using SendGrid.Helpers.Mail;
-
 global using EntityFramework.Exceptions.MySQL.Pomelo;
 global using DelegateDecompiler;
 global using iText.Html2pdf;

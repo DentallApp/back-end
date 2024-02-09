@@ -133,7 +133,13 @@
     <value>La fecha de la cita que seleccionaste no está disponible porque es día festivo.</value>
   </data>
   <data name="AppointmentInformation" xml:space="preserve">
-    <value>Hola {0}, gracias por agendar una cita en el consultorio {1}. La información de su cita es:\n- Odontólogo: {2}\n- Consultorio: {3}\n- Servicio dental: {4}\n- Fecha de la cita: {5}\n- Hora de la cita: {6}\n{7}</value>
+    <value>Hola {0}, gracias por agendar una cita en el consultorio {1}. La información de su cita es:
+- Odontólogo: {2}
+- Consultorio: {3}
+- Servicio dental: {4}
+- Fecha de la cita: {5}
+- Hora de la cita: {6}
+{7}</value>
   </data>
   <data name="AppointmentIsAlreadyCanceled" xml:space="preserve">
     <value>No puede actualizar una cita que ya está cancelada.</value>
@@ -310,10 +316,14 @@
     <value>Cita agendada con éxito. {0}.</value>
   </data>
   <data name="ThanksForUsingService" xml:space="preserve">
-    <value>Gracias por usar nuestro servicio.\n\nSi desea agendar otra cita, escriba algo para empezar de nuevo el proceso.</value>
+    <value>Gracias por usar nuestro servicio.
+
+Si desea agendar otra cita, escriba algo para empezar de nuevo el proceso.</value>
   </data>
   <data name="TotalHoursAvailable" xml:space="preserve">
-    <value>Total de horas disponibles: {0}.\n\nSeleccione la hora para su cita:</value>
+    <value>Total de horas disponibles: {0}.
+
+Seleccione la hora para su cita:</value>
   </data>
   <data name="UnexpectedError" xml:space="preserve">
     <value>Hubo un error inesperado, por favor intente de nuevo.</value>

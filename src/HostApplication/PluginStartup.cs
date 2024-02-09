@@ -9,12 +9,15 @@ public static class PluginStartup
     {
         var envConfiguration = new CPluginEnvConfiguration();
         PluginLoader.Load(envConfiguration);
-        foreach (var pluginStartup in TypeFinder.FindSubtypesOf<IPluginStartup>())
-        {
+        var startups = TypeFinder.FindSubtypesOf<IPluginStartup>();
+        foreach (var pluginStartup in startups)
             pluginStartup.ConfigureWebApplicationBuilder(builder);
-        }
 
-        IEnumerable<IModelCreating> models = TypeFinder.FindSubtypesOf<IModelCreating>();
-        builder.Services.AddSingleton(models);
+        var modelCreatings = TypeFinder.FindSubtypesOf<IModelCreating>();
+        builder.Services.AddSingleton(modelCreatings);
+
+        // These services are only added when no plug-in registers its own implementation.
+        builder.Services.TryAddSingleton<IEmailService, FakeEmailService>();
+        builder.Services.TryAddSingleton<IInstantMessaging, FakeInstantMessaging>();
     }
 }

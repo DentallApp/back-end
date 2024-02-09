@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.AppointmentRemin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.ChatBot", "src\Plugins\ChatBot\DentallApp.ChatBot.csproj", "{BFD8D9F8-AEF4-4661-B0DC-6D79F84F718E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp.Twilio.WhatsApp", "src\Plugins\TwilioWhatsApp\DentallApp.Twilio.WhatsApp.csproj", "{6B8BD4C1-00A7-429B-A22F-25851E7296B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp.SendGrid", "src\Plugins\SendGrid\DentallApp.SendGrid.csproj", "{6917AD6C-E337-4DE6-88D8-B0990E9B8D56}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.Features", "src\Features\DentallApp.Features.csproj", "{1B8756B1-A59A-4724-B757-01AAECADF43C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.Infrastructure", "src\Infrastructure\DentallApp.Infrastructure.csproj", "{8B55ED45-A4D0-4A9C-BBA9-5B27056B346B}"
@@ -66,6 +70,14 @@ Global
 		{3897DDB9-5C4F-4664-94D7-756A5E673951}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3897DDB9-5C4F-4664-94D7-756A5E673951}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3897DDB9-5C4F-4664-94D7-756A5E673951}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B8BD4C1-00A7-429B-A22F-25851E7296B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B8BD4C1-00A7-429B-A22F-25851E7296B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B8BD4C1-00A7-429B-A22F-25851E7296B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B8BD4C1-00A7-429B-A22F-25851E7296B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6917AD6C-E337-4DE6-88D8-B0990E9B8D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6917AD6C-E337-4DE6-88D8-B0990E9B8D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6917AD6C-E337-4DE6-88D8-B0990E9B8D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6917AD6C-E337-4DE6-88D8-B0990E9B8D56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

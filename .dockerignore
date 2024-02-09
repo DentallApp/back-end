@@ -1,6 +1,7 @@
 **/bin/
 **/obj/
 **/Migrations/
+.git/
 .vs/
 .vscode/
 .github/

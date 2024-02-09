@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Infrastructure.Services;
+﻿namespace DentallApp.SendGrid;
 
 public class EmailTemplateLoader
 {

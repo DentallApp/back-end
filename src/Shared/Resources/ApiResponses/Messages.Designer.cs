@@ -106,7 +106,13 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hola {0}, gracias por agendar una cita en el consultorio {1}. La información de su cita es:\n- Odontólogo: {2}\n- Consultorio: {3}\n- Servicio dental: {4}\n- Fecha de la cita: {5}\n- Hora de la cita: {6}\n{7}.
+        ///   Looks up a localized string similar to Hola {0}, gracias por agendar una cita en el consultorio {1}. La información de su cita es:
+        ///- Odontólogo: {2}
+        ///- Consultorio: {3}
+        ///- Servicio dental: {4}
+        ///- Fecha de la cita: {5}
+        ///- Hora de la cita: {6}
+        ///{7}.
         /// </summary>
         public static string AppointmentInformation {
             get {
@@ -637,7 +643,9 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gracias por usar nuestro servicio.\n\nSi desea agendar otra cita, escriba algo para empezar de nuevo el proceso..
+        ///   Looks up a localized string similar to Gracias por usar nuestro servicio.
+        ///
+        ///Si desea agendar otra cita, escriba algo para empezar de nuevo el proceso..
         /// </summary>
         public static string ThanksForUsingService {
             get {
@@ -646,7 +654,9 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total de horas disponibles: {0}.\n\nSeleccione la hora para su cita:.
+        ///   Looks up a localized string similar to Total de horas disponibles: {0}.
+        ///
+        ///Seleccione la hora para su cita:.
         /// </summary>
         public static string TotalHoursAvailable {
             get {

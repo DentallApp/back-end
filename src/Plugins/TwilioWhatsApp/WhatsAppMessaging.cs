@@ -1,20 +1,16 @@
-﻿using PhoneNumbers;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
-
-namespace DentallApp.Infrastructure.Services;
+﻿namespace DentallApp.Twilio.WhatsApp;
 
 public class WhatsAppMessaging(AppSettings settings) : IInstantMessaging
 {
     private CreateMessageOptions ConfigureOptions(string phoneNumber, string message)
     {
-        TwilioClient.Init(settings.TwilioAccountSid, settings.TwilioAuthToken);
+        TwilioProvider.TwilioClient.Init(settings.TwilioAccountSid, settings.TwilioAuthToken);
         var util    = PhoneNumberUtil.GetInstance();
         var number  = util.Parse(phoneNumber, settings.TwilioRegionCode);
         var to      = util.Format(number, PhoneNumberFormat.E164);
         var messageOptions = new CreateMessageOptions(
-            new Twilio.Types.PhoneNumber($"whatsapp:{to}"));
-        messageOptions.From = new Twilio.Types.PhoneNumber($"whatsapp:{settings.TwilioFromNumber}");
+            new TwilioProvider.Types.PhoneNumber($"whatsapp:{to}"));
+        messageOptions.From = new TwilioProvider.Types.PhoneNumber($"whatsapp:{settings.TwilioFromNumber}");
         messageOptions.Body = message;
         return messageOptions;
     }

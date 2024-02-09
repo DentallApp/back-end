@@ -13,6 +13,8 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="7.3.1" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="7.3.1" />
     <PackageVersion Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
     <PackageVersion Include="linq2db.EntityFrameworkCore" Version="7.0.0" />
     <PackageVersion Include="File.TypeChecker" Version="3.0.0" />
