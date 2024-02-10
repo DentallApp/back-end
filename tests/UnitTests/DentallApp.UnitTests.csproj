@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <RootNamespace>DentallApp.UnitTests</RootNamespace>
+    <RootNamespace>UnitTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
