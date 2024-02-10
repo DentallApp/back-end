@@ -5,14 +5,6 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.HostApplication", "src\HostApplication\DentallApp.HostApplication.csproj", "{E354A181-1E6C-4F76-8D99-96E5A6824FC1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.AppointmentReminders", "src\Plugins\AppointmentReminders\DentallApp.AppointmentReminders.csproj", "{EACB8B54-AAFE-4A46-A1D9-1FB23ADDA41C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.ChatBot", "src\Plugins\ChatBot\DentallApp.ChatBot.csproj", "{BFD8D9F8-AEF4-4661-B0DC-6D79F84F718E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp.Twilio.WhatsApp", "src\Plugins\TwilioWhatsApp\DentallApp.Twilio.WhatsApp.csproj", "{6B8BD4C1-00A7-429B-A22F-25851E7296B5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentallApp.SendGrid", "src\Plugins\SendGrid\DentallApp.SendGrid.csproj", "{6917AD6C-E337-4DE6-88D8-B0990E9B8D56}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.Features", "src\Features\DentallApp.Features.csproj", "{1B8756B1-A59A-4724-B757-01AAECADF43C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.Infrastructure", "src\Infrastructure\DentallApp.Infrastructure.csproj", "{8B55ED45-A4D0-4A9C-BBA9-5B27056B346B}"
@@ -21,7 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.Shared", "src\Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.UnitTests", "tests\UnitTests\DentallApp.UnitTests.csproj", "{BE6318A1-900B-4E8E-8AAE-C391F881C844}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.IntegrationTests.ChatBot", "tests\ChatBot\DentallApp.IntegrationTests.ChatBot.csproj", "{3897DDB9-5C4F-4664-94D7-756A5E673951}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.AppointmentReminders", "src\Plugins\AppointmentReminders\Plugin.AppointmentReminders.csproj", "{EACB8B54-AAFE-4A46-A1D9-1FB23ADDA41C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.ChatBot", "src\Plugins\ChatBot\Plugin.ChatBot.csproj", "{BFD8D9F8-AEF4-4661-B0DC-6D79F84F718E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.ChatBot.IntegrationTests", "tests\ChatBot\Plugin.ChatBot.IntegrationTests.csproj", "{3897DDB9-5C4F-4664-94D7-756A5E673951}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Twilio.WhatsApp", "src\Plugins\TwilioWhatsApp\Plugin.Twilio.WhatsApp.csproj", "{6B8BD4C1-00A7-429B-A22F-25851E7296B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.SendGrid", "src\Plugins\SendGrid\Plugin.SendGrid.csproj", "{6917AD6C-E337-4DE6-88D8-B0990E9B8D56}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Elements", "Solution Elements", "{D66CD840-8EE9-4697-9FFA-B4E5B0F25D80}"
 	ProjectSection(SolutionItems) = preProject
