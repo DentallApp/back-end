@@ -24,4 +24,4 @@ jobs:
     - name: Test 
       run: |
        dotnet test ./tests/UnitTests/DentallApp.UnitTests.csproj -c Release
-       dotnet test ./tests/ChatBot/DentallApp.IntegrationTests.ChatBot.csproj -c Release
+       dotnet test ./tests/ChatBot/Plugin.ChatBot.IntegrationTests.csproj -c Release
