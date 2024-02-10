@@ -1,4 +1,4 @@
-namespace DentallApp.UnitTests.Shared.Domain.WeekDays;
+namespace UnitTests.Shared.Domain.WeekDays;
 
 public class GetConsecutiveDaysTestCases : IEnumerable
 {

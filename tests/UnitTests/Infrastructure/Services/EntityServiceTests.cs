@@ -1,4 +1,4 @@
-﻿namespace DentallApp.UnitTests.Infrastructure.Services;
+﻿namespace UnitTests.Infrastructure.Services;
 
 public class EntityServiceTests
 {

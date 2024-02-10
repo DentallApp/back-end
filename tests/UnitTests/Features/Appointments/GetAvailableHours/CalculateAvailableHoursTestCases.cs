@@ -1,4 +1,4 @@
-namespace DentallApp.UnitTests.Features.Appointments.GetAvailableHours;
+namespace UnitTests.Features.Appointments.GetAvailableHours;
 
 public class CalculateAvailableHoursTestCases : IEnumerable
 {
