@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotEnv.Core" />
     <PackageReference Include="AdaptiveCards" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" />

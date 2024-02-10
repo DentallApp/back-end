@@ -24,6 +24,7 @@ public class CancelAppointmentsResponse
 }
 
 public class CancelAppointmentsUseCase(
+    AppSettings settings,
     IAppointmentRepository appointmentRepository,
     IInstantMessaging instantMessaging,
     IDateTimeService dateTimeService)
@@ -74,12 +75,11 @@ public class CancelAppointmentsUseCase(
         IEnumerable<CancelAppointmentsRequest.Appointment> appointmentsCanBeCancelled,
         string reason)
     {
-        var businessName = EnvReader.Instance[AppSettings.BusinessName];
         foreach (var appointment in appointmentsCanBeCancelled)
         {
             var msg = string.Format(Messages.AppointmentCancellation,
                 appointment.PatientName,
-                businessName,
+                settings.BusinessName,
                 appointment.AppointmentDate.GetDateInSpanishFormat(),
                 appointment.StartHour.GetHourWithoutSeconds(),
                 reason);

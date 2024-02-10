@@ -2,15 +2,17 @@
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddReminderServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddReminderServices(this IServiceCollection services)
     {
+        var settings = new EnvBinder().Bind<ReminderSettings>();
         services.AddQuartz(q =>
         {
             q.UseMicrosoftDependencyInjectionJobFactory();
-            q.AddJobAndTrigger(configuration["REMINDER_CRON_EXPR"]);
+            q.AddJobAndTrigger(settings.ReminderCronExpr);
         });
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
         services.AddScoped<GetScheduledAppointmentsQuery>();
+        services.AddSingleton(settings);
         return services;
     }
 

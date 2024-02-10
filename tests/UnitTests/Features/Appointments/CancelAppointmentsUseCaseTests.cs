@@ -10,6 +10,7 @@ public class CancelAppointmentsUseCaseTests
     {
         _dateTimeService           = Mock.Create<IDateTimeService>();
         _cancelAppointmentsUseCase = new CancelAppointmentsUseCase(
+            new AppSettings(),
             Mock.Create<IAppointmentRepository>(),
             Mock.Create<IInstantMessaging>(),
             _dateTimeService);
@@ -35,7 +36,6 @@ public class CancelAppointmentsUseCaseTests
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
-        Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
         var result = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
@@ -71,7 +71,6 @@ public class CancelAppointmentsUseCaseTests
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
-        Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
         var result = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
@@ -113,7 +112,6 @@ public class CancelAppointmentsUseCaseTests
         };
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 02, 20, 0, 0));
-        Environment.SetEnvironmentVariable(AppSettings.BusinessName, " ");
 
         // Act
         var result = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);

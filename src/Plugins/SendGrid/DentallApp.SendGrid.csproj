@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotEnv.Core" />
     <PackageReference Include="SendGrid" />
     <PackageReference Include="SendGrid.Extensions.DependencyInjection" />
   </ItemGroup>

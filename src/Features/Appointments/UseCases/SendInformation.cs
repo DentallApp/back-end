@@ -11,6 +11,7 @@ public class GetAppointmentInformationResponse
 
 public class SendAppointmentInformationUseCase(
     DbContext context,
+    AppSettings settings,
     IInstantMessaging instantMessaging,
     ITreatmentRepository treatmentRepository)
 {
@@ -18,11 +19,10 @@ public class SendAppointmentInformationUseCase(
     {
         // The query is executed in case the scheduling of appointments is done manually by the secretary.
         request.RangeToPay ??= await treatmentRepository.GetRangeToPayAsync(request.GeneralTreatmentId);
-        var businessName = EnvReader.Instance[AppSettings.BusinessName];
         var appointmentInfo = await GetAppointmentInformationAsync(appointmentId);
         var msg = string.Format(Messages.AppointmentInformation,
             appointmentInfo.PatientName,
-            businessName,
+            settings.BusinessName,
             appointmentInfo.DentistName,
             appointmentInfo.OfficeName,
             appointmentInfo.DentalServiceName,

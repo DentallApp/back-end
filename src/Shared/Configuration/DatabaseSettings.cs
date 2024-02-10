@@ -5,7 +5,7 @@
 /// </summary>
 public class DatabaseSettings
 {
-    public string DbConnectionString { get; set; }
+    public string DbConnectionString { get; set; } = string.Empty;
     public int DbMaxRetryCount { get; set; }
     public int DbMaxRetryDelay { get; set;  }
 }

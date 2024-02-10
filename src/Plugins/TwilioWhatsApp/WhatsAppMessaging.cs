@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Twilio.WhatsApp;
 
-public class WhatsAppMessaging(AppSettings settings) : IInstantMessaging
+public class WhatsAppMessaging(TwilioSettings settings) : IInstantMessaging
 {
     private CreateMessageOptions ConfigureOptions(string phoneNumber, string message)
     {

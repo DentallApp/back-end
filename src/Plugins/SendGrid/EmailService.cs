@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.SendGrid;
 
-public class EmailService(ISendGridClient client, AppSettings settings) : IEmailService
+public class EmailService(ISendGridClient client, SendGridSettings settings) : IEmailService
 {
     private async Task<bool> SendEmailAsync(string recipientEmail, string recipientName, string subject, string body)
     {
