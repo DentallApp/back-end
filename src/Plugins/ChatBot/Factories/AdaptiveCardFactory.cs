@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.Factories;
+﻿namespace Plugin.ChatBot.Factories;
 
 public class AdaptiveCardFactory
 {

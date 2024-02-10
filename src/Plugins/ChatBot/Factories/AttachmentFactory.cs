@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.Factories;
+﻿namespace Plugin.ChatBot.Factories;
 using Attachment = Microsoft.Bot.Schema.Attachment;
 
 public class AttachmentFactory

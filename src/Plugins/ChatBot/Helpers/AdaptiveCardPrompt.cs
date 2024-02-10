@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.Helpers;
+﻿namespace Plugin.ChatBot.Helpers;
 
 /// <summary>
 /// <para>Prompts a user to enter information on the adaptive card.</para>

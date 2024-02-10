@@ -1,6 +1,6 @@
 ﻿[assembly: Plugin(typeof(PluginStartup))]
 
-namespace DentallApp.Twilio.WhatsApp;
+namespace Plugin.Twilio.WhatsApp;
 
 public class PluginStartup : IPluginStartup
 {

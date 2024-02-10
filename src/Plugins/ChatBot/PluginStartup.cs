@@ -1,6 +1,6 @@
 ﻿[assembly: Plugin(typeof(PluginStartup))]
 
-namespace DentallApp.Features.ChatBot;
+namespace Plugin.ChatBot;
 
 public class PluginStartup : IPluginStartup
 {

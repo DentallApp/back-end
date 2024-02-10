@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.Models;
+﻿namespace Plugin.ChatBot.Models;
 
 /// <summary>
 /// Represents the data of a channel such as Direct Line or WebChat.

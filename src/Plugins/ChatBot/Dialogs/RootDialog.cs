@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.Dialogs;
+﻿namespace Plugin.ChatBot.Dialogs;
 
 public partial class RootDialog : ComponentDialog
 {

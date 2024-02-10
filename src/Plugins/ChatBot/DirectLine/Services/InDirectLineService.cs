@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.DirectLine.Services;
+﻿namespace Plugin.ChatBot.DirectLine.Services;
 
 /// <summary>
 /// Represents an own implementation of Direct Line API that runs without Azure.

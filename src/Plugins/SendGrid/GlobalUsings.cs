@@ -1,4 +1,4 @@
-﻿global using DentallApp.SendGrid;
+﻿global using Plugin.SendGrid;
 global using DentallApp.Shared.Interfaces;
 global using SendGrid;
 global using SendGrid.Extensions.DependencyInjection;

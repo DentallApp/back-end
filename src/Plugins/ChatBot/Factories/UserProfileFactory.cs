@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.Factories;
+﻿namespace Plugin.ChatBot.Factories;
 
 /// <summary>
 /// A factory that can create <see cref="AuthenticatedUser" /> instances.

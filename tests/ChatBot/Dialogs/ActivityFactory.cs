@@ -1,4 +1,4 @@
-﻿namespace DentallApp.IntegrationTests.ChatBot.Dialogs;
+﻿namespace Plugin.ChatBot.IntegrationTests.Dialogs;
 
 public static class ActivityFactory
 {
