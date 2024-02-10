@@ -1,4 +1,4 @@
-﻿namespace DentallApp.UnitTests.Features.Appointments;
+﻿namespace UnitTests.Features.Appointments;
 
 public class CancelAppointmentsUseCaseTests
 {
