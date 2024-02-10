@@ -1,4 +1,4 @@
-﻿global using DentallApp.Twilio.WhatsApp;
+﻿global using Plugin.Twilio.WhatsApp;
 global using DentallApp.Shared.Interfaces;
 global using PhoneNumbers;
 global using TwilioProvider = Twilio;

@@ -1,4 +1,4 @@
-﻿namespace DentallApp.SendGrid;
+﻿namespace Plugin.SendGrid;
 
 public class SendGridSettings
 {

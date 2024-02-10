@@ -1,4 +1,4 @@
-﻿namespace DentallApp.IntegrationTests.ChatBot;
+﻿namespace Plugin.ChatBot.IntegrationTests;
 
 [SetUpFixture]
 public class TestFixtureProjectSetup

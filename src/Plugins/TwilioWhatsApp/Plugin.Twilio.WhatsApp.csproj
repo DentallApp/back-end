@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>DentallApp.Twilio.WhatsApp</RootNamespace>
+    <RootNamespace>Plugin.Twilio.WhatsApp</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

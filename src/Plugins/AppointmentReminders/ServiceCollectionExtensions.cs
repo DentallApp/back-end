@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.AppointmentReminders;
+﻿namespace Plugin.AppointmentReminders;
 
 public static class ServiceCollectionExtensions
 {

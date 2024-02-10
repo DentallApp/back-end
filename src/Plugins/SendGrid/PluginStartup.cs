@@ -1,6 +1,6 @@
 ﻿[assembly: Plugin(typeof(PluginStartup))]
 
-namespace DentallApp.SendGrid;
+namespace Plugin.SendGrid;
 
 public class PluginStartup : IPluginStartup
 {

@@ -9,16 +9,14 @@ global using Microsoft.Bot.Schema;
 global using Newtonsoft.Json.Linq;
 global using SimpleResults;
 
-global using static DentallApp.IntegrationTests.ChatBot.Dialogs.BotServiceMockFactory;
-global using static DentallApp.IntegrationTests.ChatBot.Dialogs.ActivityFactory;
-
-global using DentallApp.Features.ChatBot;
-global using DentallApp.Features.ChatBot.Dialogs;
 global using DentallApp.Shared.Interfaces;
 global using DentallApp.Shared.Interfaces.Appointments;
-
 global using DentallApp.Shared.Domain;
 global using DentallApp.Shared.Models;
-global using DentallApp.Features.ChatBot.Configuration;
 global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Reasons;
+
+global using Plugin.ChatBot.Dialogs;
+global using Plugin.ChatBot.Configuration;
+global using static Plugin.ChatBot.IntegrationTests.Dialogs.BotServiceMockFactory;
+global using static Plugin.ChatBot.IntegrationTests.Dialogs.ActivityFactory;

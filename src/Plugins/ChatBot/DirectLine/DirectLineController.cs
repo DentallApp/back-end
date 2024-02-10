@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.DirectLine;
+﻿namespace Plugin.ChatBot.DirectLine;
 
 [Route("directline/token")]
 [ApiController]

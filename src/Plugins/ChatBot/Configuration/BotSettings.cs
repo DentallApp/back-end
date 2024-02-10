@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.Configuration;
+﻿namespace Plugin.ChatBot.Configuration;
 
 public class BotSettings
 {

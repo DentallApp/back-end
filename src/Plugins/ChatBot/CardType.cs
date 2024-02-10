@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot;
+﻿namespace Plugin.ChatBot;
 
 /// <summary>
 /// Representa los tipos de tarjetas que utiliza el chatbot para la aplicación.

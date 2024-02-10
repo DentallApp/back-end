@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.DirectLine.Services;
+﻿namespace Plugin.ChatBot.DirectLine.Services;
 
 /// <summary>
 /// Represents the client that obtains the Direct Line token.

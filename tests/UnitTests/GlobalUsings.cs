@@ -8,11 +8,6 @@ global using DotEnv.Core;
 
 global using DentallApp.Features.Appointments.UseCases;
 global using DentallApp.Features.Appointments.UseCases.GetAvailableHours;
-global using DentallApp.Features.ChatBot.Factories;
-global using DentallApp.Features.ChatBot.Models;
-global using DentallApp.Features.ChatBot.DirectLine;
-global using DentallApp.Features.ChatBot.DirectLine.Services;
-
 global using DentallApp.Infrastructure.Services;
 
 global using DentallApp.Shared.Domain;
@@ -25,3 +20,8 @@ global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Reasons;
 global using DentallApp.Shared.Constants;
 global using DentallApp.Shared.Configuration;
+
+global using Plugin.ChatBot.Factories;
+global using Plugin.ChatBot.Models;
+global using Plugin.ChatBot.DirectLine;
+global using Plugin.ChatBot.DirectLine.Services;

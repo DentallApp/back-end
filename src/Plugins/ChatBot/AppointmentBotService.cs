@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot;
+﻿namespace Plugin.ChatBot;
 
 public class AppointmentBotService(IServiceProvider serviceProvider) : IAppointmentBotService
 {

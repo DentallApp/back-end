@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>DentallApp.Features.AppointmentReminders</RootNamespace>
+    <RootNamespace>Plugin.ChatBot</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="DotEnv.Core" />
-    <PackageReference Include="Quartz" />
-    <PackageReference Include="Quartz.Extensions.Hosting" />
+    <PackageReference Include="AdaptiveCards" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

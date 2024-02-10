@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>DentallApp.SendGrid</RootNamespace>
+    <RootNamespace>Plugin.SendGrid</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

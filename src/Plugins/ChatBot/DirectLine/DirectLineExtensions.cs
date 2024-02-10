@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.DirectLine;
+﻿namespace Plugin.ChatBot.DirectLine;
 
 public static class DirectLineExtensions
 {

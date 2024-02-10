@@ -1,13 +1,13 @@
-global using DentallApp.Features.ChatBot;
-global using DentallApp.Features.ChatBot.DirectLine;
-global using DentallApp.Features.ChatBot.DirectLine.Services;
-global using DentallApp.Features.ChatBot.Dialogs;
-global using DentallApp.Features.ChatBot.Factories;
-global using DentallApp.Features.ChatBot.Helpers;
-global using DentallApp.Features.ChatBot.Models;
-global using DentallApp.Features.ChatBot.Handlers;
-global using DentallApp.Features.ChatBot.Extensions;
-global using DentallApp.Features.ChatBot.Configuration;
+global using Plugin.ChatBot;
+global using Plugin.ChatBot.DirectLine;
+global using Plugin.ChatBot.DirectLine.Services;
+global using Plugin.ChatBot.Dialogs;
+global using Plugin.ChatBot.Factories;
+global using Plugin.ChatBot.Helpers;
+global using Plugin.ChatBot.Models;
+global using Plugin.ChatBot.Handlers;
+global using Plugin.ChatBot.Extensions;
+global using Plugin.ChatBot.Configuration;
 
 global using DentallApp.Shared.Domain;
 global using DentallApp.Shared.Domain.EmployeeSchedules;

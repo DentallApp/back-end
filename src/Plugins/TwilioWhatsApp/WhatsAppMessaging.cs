@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Twilio.WhatsApp;
+﻿namespace Plugin.Twilio.WhatsApp;
 
 public class WhatsAppMessaging(TwilioSettings settings) : IInstantMessaging
 {

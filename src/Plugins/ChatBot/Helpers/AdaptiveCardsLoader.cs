@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.Helpers;
+﻿namespace Plugin.ChatBot.Helpers;
 
 public class AdaptiveCardsLoader
 {

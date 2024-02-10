@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Features.ChatBot.Extensions;
+﻿namespace Plugin.ChatBot.Extensions;
 
 public static class WaterfallStepContextExtensions
 {

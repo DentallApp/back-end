@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <RootNamespace>DentallApp.IntegrationTests.ChatBot</RootNamespace>
+    <RootNamespace>Plugin.ChatBot.IntegrationTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +20,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Plugins\ChatBot\DentallApp.ChatBot.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\ChatBot\Plugin.ChatBot.csproj" />
     <ProjectReference Include="..\..\src\Shared\DentallApp.Shared.csproj" />
   </ItemGroup>
 
