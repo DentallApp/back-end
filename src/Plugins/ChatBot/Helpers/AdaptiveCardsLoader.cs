@@ -8,12 +8,12 @@ public class AdaptiveCardsLoader
     {
         // This path is used by the chatbot test project.
         s_basePath = Path.Combine(AppContext.BaseDirectory, "AdaptiveCards");
-        if (!Directory.Exists(s_basePath))
-        {
-            // This path is used by the Host Application.
-            var path2 = "plugins/DentallApp.ChatBot/AdaptiveCards";
-            s_basePath = Path.Combine(AppContext.BaseDirectory, path2);
-        }
+        if (Directory.Exists(s_basePath)) return;
+
+        var rootNamespace = typeof(PluginStartup).Namespace;
+        // This path is used by the Host Application.
+        var path2 = $"plugins/{rootNamespace}/AdaptiveCards";
+        s_basePath = Path.Combine(AppContext.BaseDirectory, path2);
     }
 
     public static Task<string> LoadDentalServiceCardAsync()
