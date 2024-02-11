@@ -11,6 +11,7 @@ global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
 global using DentallApp.Shared.Interfaces;
 
+global using System.Text.Json;
 global using System.Text.Json.Serialization;
 global using System.Globalization;
 global using System.Data;

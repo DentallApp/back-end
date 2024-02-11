@@ -30,6 +30,10 @@ builder.Services
         options.SuppressAsyncSuffixInActionNames = false;
         options.Filters.Add<TranslateResultToActionResultAttribute>();
     })
+    .AddJsonOptions(jsonOpts =>
+    {
+        jsonOpts.JsonSerializerOptions.Converters.Add(new TimeSpanJsonConverter());
+    })
     .AddCustomInvalidModelStateResponse()
     .AddApplicationParts();
 
