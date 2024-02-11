@@ -1,4 +1,6 @@
 global using System.Collections;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
 global using NUnit.Framework;
 global using FluentAssertions;
 global using Microsoft.Bot.Schema;
@@ -10,6 +12,7 @@ global using DentallApp.Features.Appointments.UseCases;
 global using DentallApp.Features.Appointments.UseCases.GetAvailableHours;
 global using DentallApp.Infrastructure.Services;
 
+global using DentallApp.Shared;
 global using DentallApp.Shared.Domain;
 global using DentallApp.Shared.Interfaces;
 global using DentallApp.Shared.Interfaces.Appointments;
