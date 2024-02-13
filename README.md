@@ -128,6 +128,8 @@ You can also remove all plugins. The host application will work without any prob
 <details>
 <summary><b>More details</b></summary>
 
+![relational-model](https://github.com/DentallApp/back-end/blob/docs/README/diagrams/relational-model.png)
+
 </details>
 
 ### General architecture
