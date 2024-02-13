@@ -9,9 +9,10 @@ DentallApp is a web application with chatbot for appointment management, reminde
 - [Software Engineering](#software-engineering)
 - [Installation](#installation)
 - [Plugin configuration](#plugin-configuration)
+- [Credentials](#credentials)
 - [Diagrams](#diagrams)
-  - [Relational model](#relational-model)
   - [General architecture](#general-architecture)
+  - [Relational model](#relational-model)
 
 ## Important
 
@@ -100,7 +101,7 @@ http://localhost:5000/swagger
 https://dentallapp.github.io/webchat-client
 ```
 
-**NOTE:** Twilio.WhatsApp and SendGrid (these are plugins) are not loaded by default. So the app will use a fake provider that uses a console logger.
+**NOTE:** Twilio.WhatsApp and SendGrid (these are plugins) are not loaded by default. So the app will use a fake provider that uses a console logger (useful for a development environment).
 
 ## Plugin configuration
 
@@ -121,22 +122,67 @@ Of course, for this to work, you will need to create an account on [Twilio](http
 
 You can also remove all plugins. The host application will work without any problems. 
 
-## Diagrams
+## Credentials
 
-### Relational model
+The following table shows the default credentials for authentication from the application.
 
+| Email                   | Password                    |
+|-------------------------|-----------------------------|
+| basic_user@hotmail.com  | 123456                      |
+| secretary@hotmail.com   | 123456                      |
+| dentist@hotmail.com     | 123456                      |
+| admin@hotmail.com       | 123456                      |
+| superadmin@hotmail.com  | 123456                      |
+
+**Example:**
 <details>
-<summary><b>More details</b></summary>
-
-![relational-model](https://github.com/DentallApp/back-end/blob/docs/README/diagrams/relational-model.png)
-
+<summary>Login</summary>
+![login](https://github.com/DentallApp/back-end/assets/43916038/142a5339-d463-4e6a-8c60-12b69e4dfdee)
 </details>
+
+## Diagrams
 
 ### General architecture
 
 <details>
 <summary><b>More details</b></summary>
 
-![general-architecture](https://github.com/DentallApp/back-end/blob/docs/README/diagrams/general-architecture.png)
+![general-architecture](https://github.com/DentallApp/back-end/blob/dev/diagrams/general-architecture.png)
+
+</details>
+
+#### Overview of each component
+- **Host Application.** Contains everything needed to run the application. It represents the entry point of the application.
+  This layer performs other tasks such as:
+  - Load plugins from a configuration file (.env) using the library called [CPlugin.Net](https://github.com/MrDave1999/CPlugin.Net).
+  - Finds the types that implement the interfaces shared between the host application and the plugins to create instances of those types.
+  - Add services to the service collection, register middleware, load SQL files, load the .env file, among other things.
+- **Shared Layer.** It contains common classes and interfaces between many components. 
+  - This layer contains the interfaces that allow communication between the host application and the plugins.
+  - It contains other concerns such as extension classes, domain models, language resources, custom validators, among others.
+  - This layer does not contain the implementation of a functional requirement.
+- **Feature Layer.** Contains the essential features of the application. 
+  - Each feature represents a functional requirement of what the app should do. 
+  - A feature contains the minimum code to execute a functional requirement. 
+  - The purpose of grouping related elements of a feature is to increase cohesion.
+- **Infrastructure Layer.** Contains the implementation (concrete classes) of an interface defined in the shared layer. 
+  - The purpose of this layer is to hide external dependencies that you do not have control over.
+  - This layer is useful because it avoids exposing third party dependencies to other components, so if the dependency is changed/removed it should not affect any other component. The purpose is to minimize third party dependencies.
+  - Not all third party dependencies are added in this layer. For example, Entity Framework Core is used directly in the features to avoid introducing more complexity.
+- **ChatBot.** It is an plugin that allows a basic user to schedule appointments from a chatbot.
+- **Appointment Reminders.** It is a plugin that allows to send appointment reminders to patients through a background service.
+- **SendGrid Email.** It is a plugin that allows to send emails in cases such as:
+  - When a customer registers in the application, an email is sent to confirm the user's email address.
+  - When a user wants to reset their password, an email is sent with the security token.
+- **Twilio WhatsApp.** It is a plugin that allows to send messages by whatsapp in cases such as:
+  - When an appointment is scheduled from the chatbot, the user is sent the appointment information to whatsapp.
+  - When an employee needs to cancel an appointment, he/she should notify patients by whatsapp.
+
+### Relational model
+
+<details>
+<summary><b>More details</b></summary>
+
+![relational-model](https://github.com/DentallApp/back-end/blob/dev/diagrams/relational-model.png)
 
 </details>
