@@ -82,7 +82,7 @@ git clone https://github.com/DentallApp/back-end.git
 ```sh
 cd back-end
 ```
-- Copy the contents of .env.example into .env:
+- Copy the contents of `.env.example` to `.env`:
 ```sh
 cp .env.example .env
 # On Windows use the "xcopy" command.
