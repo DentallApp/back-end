@@ -137,4 +137,6 @@ You can also remove all plugins. The host application will work without any prob
 <details>
 <summary><b>More details</b></summary>
 
+![general-architecture](https://github.com/DentallApp/back-end/blob/docs/README/diagrams/general-architecture.png)
+
 </details>
