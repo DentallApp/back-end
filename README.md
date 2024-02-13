@@ -126,7 +126,7 @@ You can also remove all plugins. The host application will work without any prob
 
 The following table shows the default credentials for authentication from the application.
 
-| Email                   | Password                    |
+| Username                | Password                    |
 |-------------------------|-----------------------------|
 | basic_user@hotmail.com  | 123456                      |
 | secretary@hotmail.com   | 123456                      |
@@ -134,11 +134,7 @@ The following table shows the default credentials for authentication from the ap
 | admin@hotmail.com       | 123456                      |
 | superadmin@hotmail.com  | 123456                      |
 
-**Example:**
-<details>
-<summary>Login</summary>
-![login](https://github.com/DentallApp/back-end/assets/43916038/142a5339-d463-4e6a-8c60-12b69e4dfdee)
-</details>
+See this [example](https://github.com/DentallApp/back-end/assets/43916038/142a5339-d463-4e6a-8c60-12b69e4dfdee).
 
 ## Diagrams
 
