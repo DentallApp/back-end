@@ -8,6 +8,10 @@ DentallApp is a web application with chatbot for appointment management, reminde
 
 - [Important](#important)
 - [Technologies used](#technologies-used)
+  - [Softwares](#softwares)
+  - [Frameworks and libraries](#frameworks-and-libraries)
+  - [Testing](#testing)
+  - [Own libraries](#own-libraries)
 - [Software Engineering](#software-engineering)
 - [Installation](#installation)
 - [Plugin configuration](#plugin-configuration)
@@ -24,7 +28,17 @@ In the end, this project was never deployed in that dental office for personal r
 
 ## Technologies used
 
-List of frameworks and libraries used for this project:
+### Softwares
+- [.NET CLI](https://learn.microsoft.com/en-us/dotnet/core/tools)
+- [Docker](https://github.com/docker)
+- [Postman](https://www.postman.com)
+- [InDirectLine](https://github.com/newbienewbie/InDirectLine)
+- [MariaDB](https://github.com/mariadb)
+- [BotFramework-Emulator](https://github.com/microsoft/BotFramework-Emulator)
+- [Git](https://git-scm.com)
+- [draw.io](https://app.diagrams.net)
+
+### Frameworks and libraries
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
 - [Microsoft Bot Framework](https://github.com/microsoft/botframework-sdk)
 - [AdaptiveCards](https://github.com/microsoft/AdaptiveCards)
@@ -50,13 +64,13 @@ List of frameworks and libraries used for this project:
 - [File.TypeChecker](https://github.com/AJMitev/FileTypeChecker)
 - [FluentValidation](https://github.com/FluentValidation/FluentValidation)
 
-Testing:
+### Testing
 - [NUnit](https://github.com/nunit/nunit)
 - [FluentAssertions](https://github.com/fluentassertions/fluentassertions)
 - [JustMock](https://github.com/telerik/JustMockLite)
 - [Microsoft.Bot.Builder.Testing](https://www.nuget.org/packages/Microsoft.Bot.Builder.Testing)
 
-List of own libraries for this project:
+### Own libraries
 - [DotEnv.Core](https://github.com/MrDave1999/dotenv.core)
 - [YeSql.Net](https://github.com/ose-net/yesql.net)
 - [CPlugin.Net](https://github.com/MrDave1999/CPlugin.Net)
@@ -77,15 +91,15 @@ Software engineering concepts have been applied in this project:
 
 To run this application, it is recommended to install [Docker](https://docs.docker.com/get-docker), it is much easier to install the app with [Docker](https://docs.docker.com/get-docker).
 
-- Clone the repository with this command:
+- Clone the repository with this command.
 ```sh
 git clone https://github.com/DentallApp/back-end.git
 ```
-- Change directory:
+- Change directory.
 ```sh
 cd back-end
 ```
-- Copy the contents of `.env.example` to `.env`:
+- Copy the contents of `.env.example` to `.env`.
 ```sh
 cp .env.example .env
 # On Windows use the "xcopy" command.
@@ -95,15 +109,15 @@ The logical thing to do would be to choose the time zone in which the dental cli
 ```sh
 echo -e '\nTZ=America/Guayaquil' >> .env
 ```
-- Build the image and initiate services:
+- Build the image and initiate services.
 ```sh
 docker-compose up --build -d
 ```
-- Access the application with this URL:
+- Access the application with this URL.
 ```
 http://localhost:5000/swagger
 ```
-- If you wish to test the chatbot, you can do so with the [test client](https://github.com/DentallApp/webchat-client). Access this URL:
+- If you wish to test the chatbot, you can do so with the [test client](https://github.com/DentallApp/webchat-client). Access this URL.
 ```
 https://dentallapp.github.io/webchat-client
 ```
@@ -162,7 +176,7 @@ See this [example](https://github.com/DentallApp/back-end/assets/43916038/142a53
   - Add services to the service collection, register middleware, load SQL files, load the .env file, among other things.
 - **Shared Layer.** It contains common classes and interfaces between many components. 
   - This layer contains the interfaces that allow communication between the host application and the plugins.
-  - It contains other concerns such as extension classes, domain models, language resources, custom validators, among others.
+  - It contains other concerns such as extension classes, entities, models, language resources, custom validators, among others.
   - This layer does not contain the implementation of a functional requirement.
 - **Feature Layer.** Contains the essential features of the application. 
   - Each feature represents a functional requirement of what the app should do. 
