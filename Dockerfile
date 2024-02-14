@@ -1,3 +1,6 @@
+#
+# Build stage/image
+#
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 COPY *.sln .
@@ -6,7 +9,7 @@ COPY *.props .
 # Copy csproj and restore host application dependencies (entry point)
 COPY ["src/Shared/*.csproj", "src/Shared/"]
 COPY ["src/Infrastructure/*.csproj", "src/Infrastructure/"]
-COPY ["src/Features/*.csproj", "src/Features/"]
+COPY ["src/Core/*.csproj", "src/Core/"]
 COPY ["src/HostApplication/*.csproj", "src/HostApplication/"]
 WORKDIR /app/src/HostApplication
 RUN dotnet restore
@@ -44,7 +47,9 @@ COPY ["src/", "/app/src/"]
 WORKDIR /app/src/HostApplication
 RUN dotnet publish -c Release -o /app/out --no-restore
 
+#
 # Final stage/image
+#
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 
