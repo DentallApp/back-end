@@ -29,8 +29,8 @@ public static class SwaggerGen
                     new string[] { }
                 }
             });
-            var featureAssemblyName = typeof(GetDependentsByUserIdUseCase).Assembly.GetName().Name;
-            var filePath = Path.Combine(AppContext.BaseDirectory, featureAssemblyName + ".xml");
+            var coreAssemblyName = typeof(GetDependentsByUserIdUseCase).Assembly.GetName().Name;
+            var filePath = Path.Combine(AppContext.BaseDirectory, coreAssemblyName + ".xml");
             options.IncludeXmlComments(filePath);
 
             foreach(Assembly assembly in PluginLoader.Assemblies) 

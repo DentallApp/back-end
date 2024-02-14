@@ -188,7 +188,7 @@ Request body:
   - This layer contains the interfaces that allow communication between the host application and the plugins.
   - It contains other concerns such as extension classes, entities, models, language resources, custom validators, among others.
   - This layer does not contain the implementation of a functional requirement.
-- **Feature Layer.** Contains the essential features of the application. 
+- **Core Layer.** Contains the essential features of the application, it is like the heart of the system where the functional requirements are implemented. 
   - Each feature represents a functional requirement of what the app should do. 
   - A feature contains the minimum code to execute a functional requirement. 
   - The purpose of grouping related elements of a feature is to increase cohesion.

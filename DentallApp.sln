@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.HostApplication", "src\HostApplication\DentallApp.HostApplication.csproj", "{E354A181-1E6C-4F76-8D99-96E5A6824FC1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.Features", "src\Features\DentallApp.Features.csproj", "{1B8756B1-A59A-4724-B757-01AAECADF43C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.Core", "src\Core\DentallApp.Core.csproj", "{1B8756B1-A59A-4724-B757-01AAECADF43C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DentallApp.Infrastructure", "src\Infrastructure\DentallApp.Infrastructure.csproj", "{8B55ED45-A4D0-4A9C-BBA9-5B27056B346B}"
 EndProject

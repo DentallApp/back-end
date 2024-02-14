@@ -8,8 +8,8 @@ global using Telerik.JustMock;
 global using System.Security.Claims;
 global using DotEnv.Core;
 
-global using DentallApp.Features.Appointments.UseCases;
-global using DentallApp.Features.Appointments.UseCases.GetAvailableHours;
+global using DentallApp.Core.Appointments.UseCases;
+global using DentallApp.Core.Appointments.UseCases.GetAvailableHours;
 global using DentallApp.Infrastructure.Services;
 
 global using DentallApp.Shared;
