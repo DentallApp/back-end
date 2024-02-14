@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Features\DentallApp.Features.csproj" />
+    <ProjectReference Include="..\Core\DentallApp.Core.csproj" />
     <ProjectReference Include="..\Infrastructure\DentallApp.Infrastructure.csproj" />
   </ItemGroup>
 
