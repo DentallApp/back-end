@@ -1,6 +1,8 @@
-# DentallApp BackEnd
+# back-end
 
 DentallApp is a web application with chatbot for appointment management, reminders and sending appointment cancellation messages for the dental clinic called [World Dental CO](https://www.tiktok.com/@worlddentalco).
+
+> The maintainer of this repository is [Dave Roman](https://github.com/MrDave1999).
 
 ## Index
 
@@ -87,6 +89,11 @@ cd back-end
 ```sh
 cp .env.example .env
 # On Windows use the "xcopy" command.
+```
+- You must specify the [time zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for the Docker container. This is necessary for the calculation of available hours for a medical appointment to return consistent results.
+The logical thing to do would be to choose the time zone in which the dental clinic is located (which in this case would be **America/Guayaquil**).
+```sh
+echo -e '\nTZ=America/Guayaquil' >> .env
 ```
 - Build the image and initiate services:
 ```sh
