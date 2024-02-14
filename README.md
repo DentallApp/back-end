@@ -1,6 +1,6 @@
 # back-end
 
-DentallApp is a web application with chatbot for appointment management, reminders and sending appointment cancellation messages for the dental clinic called [World Dental CO](https://www.tiktok.com/@worlddentalco).
+DentallApp is a web application with chatbot for appointment management, reminders and sending appointment cancellation messages for the dental office called [World Dental CO](https://www.tiktok.com/@worlddentalco).
 
 > The maintainer of this repository is [Dave Roman](https://github.com/MrDave1999).
 
