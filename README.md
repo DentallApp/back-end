@@ -81,7 +81,7 @@ In the end, this project was never deployed in that dental office for personal r
 Software engineering concepts have been applied in this project:
 - [Vertical Slice Architecture](https://garywoodfine.com/implementing-vertical-slice-architecture)
 - [CQRS](https://en.wikipedia.org/wiki/Command_Query_Responsibility_Segregation)
-- [Plugin Architecture](https://www.devleader.ca/2023/09/07/plugin-architecture-design-pattern-a-beginners-guide-to-modularity)
+- [Plugin Architecture](https://www.linkedin.com/pulse/plugin-architecture-design-pattern-beginners-guide-nick-cosentino)
 - [Open–closed principle](https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle)
 - [Modular programming](https://en.wikipedia.org/wiki/Modular_programming)
 - [Separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
