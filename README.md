@@ -170,7 +170,7 @@ See this [example](https://github.com/DentallApp/back-end/assets/43916038/142a53
   - The purpose of grouping related elements of a feature is to increase cohesion.
 - **Infrastructure Layer.** Contains the implementation (concrete classes) of an interface defined in the shared layer. 
   - The purpose of this layer is to hide external dependencies that you do not have control over.
-  - This layer is useful because it avoids exposing third party dependencies to other components, so if the dependency is changed/removed it should not affect any other component. The purpose is to minimize third party dependencies.
+  - This layer is useful because it avoids exposing third party dependencies to other components, so if the dependency is changed/removed it should not affect any other component.
   - Not all third party dependencies are added in this layer. For example, Entity Framework Core is used directly in the features to avoid introducing more complexity.
 - **ChatBot.** It is an plugin that allows a basic user to schedule appointments from a chatbot.
 - **Appointment Reminders.** It is a plugin that allows to send appointment reminders to patients through a background service.
