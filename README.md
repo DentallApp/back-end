@@ -155,7 +155,17 @@ The following table shows the default credentials for authentication from the ap
 | admin@hotmail.com       | 123456                      |
 | superadmin@hotmail.com  | 123456                      |
 
-See this [example](https://github.com/DentallApp/back-end/assets/43916038/142a5339-d463-4e6a-8c60-12b69e4dfdee).
+Use this route for authentication:
+```
+POST - /api/user/login
+```
+Request body:
+```json
+{
+  "userName": "basic_user@hotmail.com",
+  "password": "123456"
+}
+```
 
 ## Diagrams
 
