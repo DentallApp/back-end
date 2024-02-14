@@ -1,5 +1,5 @@
-global using DentallApp.Features;
-global using DentallApp.Features.Dependents.UseCases;
+global using DentallApp.Core;
+global using DentallApp.Core.Dependents.UseCases;
 
 global using DentallApp.HostApplication;
 global using DentallApp.HostApplication.Middlewares;
