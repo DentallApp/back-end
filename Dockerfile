@@ -47,5 +47,15 @@ RUN dotnet publish -c Release -o /app/out --no-restore
 # Final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
+
+# The tzdata package (contains time zone data) is installed so that the "TZ" variable can be set at runtime
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+apt-get install -y --no-install-recommends tzdata \
+&& rm -rf /var/lib/apt/lists/*
+
+# Copy artifact from build stage to final image
 COPY --from=build /app/out ./
+
+# Run application
 ENTRYPOINT ["dotnet", "DentallApp.HostApplication.dll"]
