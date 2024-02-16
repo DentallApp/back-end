@@ -1,4 +1,4 @@
-﻿namespace UnitTests.Shared.Domain.WeekDays;
+﻿namespace UnitTests.Shared.Entities.WeekDays;
 
 public class WeekDayTests
 {
