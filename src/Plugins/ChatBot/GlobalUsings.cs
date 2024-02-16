@@ -9,8 +9,9 @@ global using Plugin.ChatBot.Handlers;
 global using Plugin.ChatBot.Extensions;
 global using Plugin.ChatBot.Configuration;
 
-global using DentallApp.Shared.Domain;
-global using DentallApp.Shared.Domain.EmployeeSchedules;
+global using DentallApp.Shared.Entities.WeekDays;
+global using DentallApp.Shared.Entities.EmployeeSchedules;
+global using DentallApp.Shared.ValueObjects;
 global using DentallApp.Shared.Interfaces;
 global using DentallApp.Shared.Interfaces.Appointments;
 global using DentallApp.Shared.Interfaces.Persistence;

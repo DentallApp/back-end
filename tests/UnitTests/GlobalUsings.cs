@@ -13,7 +13,8 @@ global using DentallApp.Core.Appointments.UseCases.GetAvailableHours;
 global using DentallApp.Infrastructure.Services;
 
 global using DentallApp.Shared;
-global using DentallApp.Shared.Domain;
+global using DentallApp.Shared.Entities;
+global using DentallApp.Shared.Entities.WeekDays;
 global using DentallApp.Shared.Interfaces;
 global using DentallApp.Shared.Interfaces.Appointments;
 global using DentallApp.Shared.Interfaces.Persistence.Repositories;
