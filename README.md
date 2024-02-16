@@ -44,10 +44,13 @@ Another of my reasons is that what I learn about software engineering, I like to
 
 ### Softwares
 - [.NET CLI](https://learn.microsoft.com/en-us/dotnet/core/tools)
+- [Visual Studio 2022](https://visualstudio.microsoft.com)
+- [vscode](https://github.com/microsoft/vscode)
 - [Docker](https://github.com/docker)
 - [Postman](https://www.postman.com)
 - [InDirectLine](https://github.com/newbienewbie/InDirectLine)
 - [MariaDB](https://github.com/mariadb)
+- [HeidiSQL](https://github.com/HeidiSQL)
 - [BotFramework-Emulator](https://github.com/microsoft/BotFramework-Emulator)
 - [Git](https://git-scm.com)
 - [draw.io](https://app.diagrams.net)
@@ -87,8 +90,11 @@ Another of my reasons is that what I learn about software engineering, I like to
 ### Own libraries
 - [DotEnv.Core](https://github.com/MrDave1999/dotenv.core)
 - [YeSql.Net](https://github.com/ose-net/yesql.net)
-- [CPlugin.Net](https://github.com/MrDave1999/CPlugin.Net)
 - [SimpleResults](https://github.com/MrDave1999/SimpleResults)
+- [CPlugin.Net](https://github.com/MrDave1999/CPlugin.Net)
+- [CPlugin.Net.Attributes](https://www.nuget.org/packages/CPlugin.Net.Attributes)
+- [CopySqlFilesToOutputDirectory](https://www.nuget.org/packages/CopySqlFilesToOutputDirectory)
+- [CopyPluginsToPublishDirectory](https://www.nuget.org/packages/CopyPluginsToPublishDirectory)
 
 ## Software Engineering
 
