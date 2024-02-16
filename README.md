@@ -100,6 +100,7 @@ Software engineering concepts have been applied in this project:
 - [Modular programming](https://en.wikipedia.org/wiki/Modular_programming)
 - [Separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
 - [Interface-based programming](https://en.wikipedia.org/wiki/Interface-based_programming)
+- [SOLID](https://en.wikipedia.org/wiki/SOLID)
 
 ## Installation
 
@@ -216,6 +217,11 @@ Request body:
   - Each feature represents a functional requirement of what the app should do. 
   - A feature contains the minimum code to execute a functional requirement. 
   - The purpose of grouping related elements of a feature is to increase cohesion.
+  - By convention, each feature module contains a:
+    - Controller
+    - Request/Response
+    - Validator
+    - Use case class (has the logic of the functional requirement)
 - **Infrastructure Layer.** Contains the implementation (concrete classes) of an interface defined in the shared layer. 
   - The purpose of this layer is to hide external dependencies that you do not have control over.
   - This layer is useful because it avoids exposing third party dependencies to other components, so if the dependency is changed/removed it should not affect any other component.
