@@ -5,9 +5,11 @@ global using DentallApp.Infrastructure.Persistence;
 global using DentallApp.Infrastructure.Services.TokenProvider;
 global using DentallApp.Infrastructure.Services;
 
-global using DentallApp.Shared.Domain;
-global using DentallApp.Shared.Domain.EmployeeSchedules;
-global using DentallApp.Shared.Domain.Common;
+global using DentallApp.Shared.Entities;
+global using DentallApp.Shared.Entities.EmployeeSchedules;
+global using DentallApp.Shared.Entities.WeekDays;
+global using DentallApp.Shared.Entities.Common;
+global using DentallApp.Shared.ValueObjects;
 global using DentallApp.Shared.Constants;
 global using DentallApp.Shared.Resources.Statuses;
 global using DentallApp.Shared.Resources.Kinships;
