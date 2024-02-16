@@ -9,6 +9,7 @@ DentallApp is a web application with chatbot for appointment management, reminde
 ## Index
 
 - [Important](#important)
+- [Motivations](#motivations)
 - [Technologies used](#technologies-used)
   - [Softwares](#softwares)
   - [Frameworks and libraries](#frameworks-and-libraries)
@@ -21,12 +22,23 @@ DentallApp is a web application with chatbot for appointment management, reminde
 - [Diagrams](#diagrams)
   - [General architecture](#general-architecture)
   - [Relational model](#relational-model)
+- [Direct Line API](#direct-line-api)
 
 ## Important
 
 This application was developed as a degree project for the [University of Guayaquil](https://www.ug.edu.ec), however, it is not ready to run in a production environment. All requirements for this project were obtained through interviews with the owner dentist of [World Dental CO](https://www.facebook.com/worlddentalco).
 
 In the end, this project was never deployed in that dental office for personal reasons of the authors. However, it was decided to publish the source code of this application so that the community can use it for learning purposes (learn from it or even improve it).
+
+## Motivations
+
+I have continued to maintain this project because I have been experimenting with plugin-based architecture and I love it.
+
+I have not found any .NET project that has applied this architecture and I don't mean a sample project, but one that solves a problem. For that reason I decided to apply it in this project, I'm sure many will find it useful as knowledge.
+
+Another of my reasons is that what I learn about software engineering, I like to share it through this project for the community. That's why I have been inspired to improve it.
+
+> The best way to learn things is to do projects.
 
 ## Technologies used
 
@@ -215,3 +227,21 @@ Request body:
 ![relational-model](https://github.com/DentallApp/back-end/blob/dev/diagrams/relational-model.png)
 
 </details>
+
+## Direct Line API
+
+[Direct Line API](https://learn.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-api-reference) allows your client application to communicate with the bot. It acts as a bridge between the client and the bot.
+
+For development and test environments you can use [InDirectLine](https://github.com/newbienewbie/InDirectLine) to avoid having to use Azure. [InDirectLine](https://github.com/newbienewbie/InDirectLine) is a bridge that implements the Direct Line API, but should not be used for production.
+
+By default, the configuration file (.env) contains a key called `DIRECT_LINE_BASE_URL`.
+```.env
+DIRECT_LINE_BASE_URL=http://indirectline:3000/
+```
+The provider called [InDirectLine](https://github.com/newbienewbie/InDirectLine) is used by default.
+
+In production, the value of this key must be changed to:
+```.env
+DIRECT_LINE_BASE_URL=https://directline.botframework.com/
+```
+In that case the provider to use will be the Direct Line channel of Azure Bot. The backend application is able to switch providers just by reading the URL.
