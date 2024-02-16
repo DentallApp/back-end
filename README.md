@@ -198,7 +198,7 @@ Request body:
   - Load plugins from a configuration file (.env) using the library called [CPlugin.Net](https://github.com/MrDave1999/CPlugin.Net).
   - Finds the types that implement the interfaces shared between the host application and the plugins to create instances of those types.
   - Add services to the service collection, register middleware, load SQL files, load the .env file, among other things.
-- **Shared Layer.** It contains common classes and interfaces between many components. 
+- **Shared Layer.** It contains common classes and interfaces between many components. This layer has [aspects](https://en.wikipedia.org/wiki/Aspect_(computer_programming)) (additional parts) that are not related to the main processes of the application.
   - This layer contains the interfaces that allow communication between the host application and the plugins.
   - This layer does not contain the implementation of a functional requirement.
   - It contains other things such as:
@@ -207,10 +207,12 @@ Request body:
     - Data models
     - Value objects
     - Objects that represent error and success messages
+    - Constants
+    - Settings objects
     - Language resources 
     - Custom validators
     - Repository and service interfaces
-- **Core Layer.** Contains the essential features of the application, it is like the heart of the system where the functional requirements are implemented. 
+- **Core Layer.** Contains the main processes (essential features) of the application, it is like the heart of the system where the functional requirements are implemented. 
   - Each feature represents a functional requirement of what the app should do. 
   - A feature contains the minimum code to execute a functional requirement. 
   - The purpose of grouping related elements of a feature is to increase cohesion.
