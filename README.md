@@ -36,7 +36,7 @@ I have continued to maintain this project because I have been experimenting with
 
 I have not found any .NET project that has applied this architecture and I don't mean a sample project, but one that solves a problem. For that reason I decided to apply it in this project, I'm sure many will find it useful as knowledge.
 
-Another of my reasons is that what I learn about software engineering, I like to share it through this project for the community. That's why I have been inspired to improve it.
+Another of my reasons is that what I learn about software engineering, I like to share with the community. That's why I have been inspired to improve it.
 
 > The best way to learn things is to do projects.
 
@@ -200,8 +200,16 @@ Request body:
   - Add services to the service collection, register middleware, load SQL files, load the .env file, among other things.
 - **Shared Layer.** It contains common classes and interfaces between many components. 
   - This layer contains the interfaces that allow communication between the host application and the plugins.
-  - It contains other concerns such as extension classes, entities, models, language resources, custom validators, among others.
   - This layer does not contain the implementation of a functional requirement.
+  - It contains other things such as:
+    - Extension classes
+    - Classes mapped to the database schema (entities)
+    - Data models
+    - Value objects
+    - Objects that represent error and success messages
+    - Language resources 
+    - Custom validators
+    - Repository and service interfaces
 - **Core Layer.** Contains the essential features of the application, it is like the heart of the system where the functional requirements are implemented. 
   - Each feature represents a functional requirement of what the app should do. 
   - A feature contains the minimum code to execute a functional requirement. 
