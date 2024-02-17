@@ -21,6 +21,7 @@ DentallApp is a web application with chatbot for appointment management, reminde
 - [Credentials](#credentials)
 - [Diagrams](#diagrams)
   - [General architecture](#general-architecture)
+  - [Core layer](#core-layer)
   - [Relational model](#relational-model)
 - [Direct Line API](#direct-line-api)
 
@@ -244,6 +245,19 @@ Request body:
 - **Twilio WhatsApp.** It is a plugin that allows to send messages by whatsapp in cases such as:
   - When an appointment is scheduled from the chatbot, the user is sent the appointment information to whatsapp.
   - When an employee needs to cancel an appointment, he/she should notify patients by whatsapp.
+
+### Core layer
+
+<details>
+<summary><b>More details</b></summary>
+
+![core-layer](https://github.com/DentallApp/back-end/blob/dev/diagrams/core-layer.png)
+
+</details>
+
+The above diagram describes in more detail which feature modules are contained in the core layer. 
+
+In the presented diagram it can be identified that the feature modules are not coupled to each other, the purpose of this is not to cause a [dependency hell](https://en.wikipedia.org/wiki/Dependency_hell), in order to maintain a dependency graph that is as simple as possible, which increases the compression of the architecture.
 
 ### Relational model
 
