@@ -102,11 +102,15 @@ Software engineering concepts have been applied in this project:
 - [Vertical Slice Architecture](https://garywoodfine.com/implementing-vertical-slice-architecture)
 - [CQRS](https://en.wikipedia.org/wiki/Command_Query_Responsibility_Segregation)
 - [Plugin Architecture](https://www.linkedin.com/pulse/plugin-architecture-design-pattern-beginners-guide-nick-cosentino)
-- [Open–closed principle](https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle)
-- [Modular programming](https://en.wikipedia.org/wiki/Modular_programming)
+- [Open-closed principle](https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle)
+- [Acyclic dependencies principle](https://en.wikipedia.org/wiki/Acyclic_dependencies_principle)
+- [Explicit dependencies](https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles#explicit-dependencies)
+- [Dependency inversion](https://en.wikipedia.org/wiki/Dependency_inversion_principle)
 - [Separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
+- [Dependency injection](https://en.wikipedia.org/wiki/Dependency_injection)
+- [Modular programming](https://en.wikipedia.org/wiki/Modular_programming)
 - [Interface-based programming](https://en.wikipedia.org/wiki/Interface-based_programming)
-- [SOLID](https://en.wikipedia.org/wiki/SOLID)
+- [SOLID Principles](https://en.wikipedia.org/wiki/SOLID)
 
 ## Installation
 
