@@ -6,12 +6,12 @@ public static class DbContextServiceExtensions
 {
     public static IServiceCollection AddDbContext(this IServiceCollection services, string hostAppName)
     {
-        var settings = new EnvBinder().Bind<DatabaseSettings>();
         LinqToDBForEFTools.Initialize();
-        var cs = settings.DbConnectionString;
+        var settings = new EnvBinder().Bind<DatabaseSettings>();
+        var connectionString = CreateDbConnectionString(settings);
         services.AddDbContext<DbContext, AppDbContext>(options =>
         {
-            options.UseMySql(cs, ServerVersion.AutoDetect(cs),
+            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
                     mySqlOptionsAction: sqlOptions =>
                     {
                         sqlOptions
@@ -25,9 +25,23 @@ public static class DbContextServiceExtensions
         });
 
         services
-            .AddSingleton<IDbConnectionFactory>(new MariaDbConnectionFactory(settings.DbConnectionString))
-            .AddScoped<IDbConnection>(serviceProvider => new MySqlConnection(settings.DbConnectionString));
+            .AddSingleton<IDbConnectionFactory>(new MariaDbConnectionFactory(connectionString))
+            .AddScoped<IDbConnection>(serviceProvider => new MySqlConnection(connectionString));
 
         return services;
+    }
+
+    private static string CreateDbConnectionString(DatabaseSettings settings)
+    {
+        var builder = new MySqlConnectionStringBuilder
+        {
+            UserID   = settings.DbUserName, 
+            Password = settings.DbPassword,
+            Server   = settings.DbHost,
+            Port     = settings.DbPort,
+            Database = settings.DbDatabase
+        };
+
+        return builder.ConnectionString;
     }
 }
