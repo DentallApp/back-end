@@ -14,7 +14,7 @@ builder.Services
     .AddSingleton(appSettings)
     .AddInfrastructureServices()
     .AddDbContext(hostAppName: typeof(PluginStartup).Namespace)
-    .AddFeatureServices()
+    .AddCoreServices()
     .RegisterAutoDependencies();
 
 builder.Services

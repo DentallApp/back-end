@@ -1,8 +1,8 @@
 ﻿namespace DentallApp.Core;
 
-public static class FeatureServicesExtensions
+public static class CoreServicesExtensions
 {
-    public static IServiceCollection AddFeatureServices(this IServiceCollection services)
+    public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
         services
             .AddScoped<IAvailabilityQueries, AvailabilityQueries>();
