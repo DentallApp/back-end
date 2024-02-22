@@ -12,7 +12,6 @@ global using DentallApp.Infrastructure.Persistence;
 global using DentallApp.Shared;
 global using DentallApp.Shared.Interfaces;
 global using DentallApp.Shared.Interfaces.Appointments;
-global using DentallApp.Shared.Interfaces.Persistence;
 global using DentallApp.Shared.Resources.ApiResponses;
 global using DentallApp.Shared.Configuration;
 
@@ -28,17 +27,14 @@ global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Diagnostics;
 
-global using Microsoft.EntityFrameworkCore;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.IdentityModel.Logging;
 global using Microsoft.Extensions.Options;
 global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using Microsoft.OpenApi.Models;
+global using EntityFramework.Exceptions.Common;
 
 global using DotEnv.Core;
 global using SimpleResults;
 global using YeSql.Net;
-
-global using EntityFramework.Exceptions.Common;
-global using MySqlConnector;
 global using CPlugin.Net;
