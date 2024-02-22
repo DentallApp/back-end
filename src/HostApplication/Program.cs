@@ -11,17 +11,11 @@ builder.Services.AddSingleton(sqlCollection);
 builder.Configuration.AddEnvironmentVariables();
 PluginStartup.Configure(builder);
 builder.Services
+    .AddSingleton(appSettings)
     .AddInfrastructureServices()
+    .AddDbContext(hostAppName: typeof(PluginStartup).Namespace)
     .AddFeatureServices()
     .RegisterAutoDependencies();
-
-var databaseSettings = new EnvBinder(envVars).Bind<DatabaseSettings>();
-builder.Services
-    .AddSingleton(appSettings)
-    .AddSingleton<IDbConnectionFactory>(new MariaDbConnectionFactory(databaseSettings.DbConnectionString));
-
-builder.Services
-    .AddScoped<IDbConnection>(serviceProvider => new MySqlConnection(databaseSettings.DbConnectionString));
 
 builder.Services
     .AddHttpClient()
@@ -37,7 +31,6 @@ builder.Services
     .AddCustomInvalidModelStateResponse()
     .AddApplicationParts();
 
-builder.Services.AddDbContext(databaseSettings);
 builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(appSettings);
 
