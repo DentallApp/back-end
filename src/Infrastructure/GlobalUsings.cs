@@ -42,3 +42,4 @@ global using DelegateDecompiler;
 global using iText.Html2pdf;
 global using Scriban;
 global using MySqlConnector;
+global using DotEnv.Core;

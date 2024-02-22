@@ -1,11 +1,12 @@
 ﻿using LinqToDB.EntityFrameworkCore;
 
-namespace DentallApp.HostApplication.Extensions;
+namespace DentallApp.Infrastructure;
 
-public static class DbContextService
+public static class DbContextServiceExtensions
 {
-    public static IServiceCollection AddDbContext(this IServiceCollection services, DatabaseSettings settings)
+    public static IServiceCollection AddDbContext(this IServiceCollection services, string hostAppName)
     {
+        var settings = new EnvBinder().Bind<DatabaseSettings>();
         LinqToDBForEFTools.Initialize();
         var cs = settings.DbConnectionString;
         services.AddDbContext<DbContext, AppDbContext>(options =>
@@ -18,10 +19,14 @@ public static class DbContextService
                             maxRetryCount: settings.DbMaxRetryCount,
                             maxRetryDelay: TimeSpan.FromSeconds(settings.DbMaxRetryDelay),
                             errorNumbersToAdd: null)
-                         .MigrationsAssembly("DentallApp.HostApplication");
+                         .MigrationsAssembly(hostAppName);
                     })
                    .UseSnakeCaseNamingConvention();
         });
+
+        services
+            .AddSingleton<IDbConnectionFactory>(new MariaDbConnectionFactory(settings.DbConnectionString))
+            .AddScoped<IDbConnection>(serviceProvider => new MySqlConnection(settings.DbConnectionString));
 
         return services;
     }
