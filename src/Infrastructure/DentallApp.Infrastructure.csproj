@@ -6,10 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotEnv.Core" />
     <PackageReference Include="BCrypt.Net-Next" />
     <PackageReference Include="linq2db.EntityFrameworkCore" />
     <PackageReference Include="EFCore.CustomQueryPreprocessor" />
     <PackageReference Include="EFCore.NamingConventions" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" />
     <PackageReference Include="EntityFrameworkCore.Exceptions.MySQL.Pomelo" />
     <PackageReference Include="itext7.pdfhtml" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" />
