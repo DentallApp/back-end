@@ -102,16 +102,19 @@ Another of my reasons is that what I learn about software engineering, I like to
 Software engineering concepts have been applied in this project:
 - [Vertical Slice Architecture](https://garywoodfine.com/implementing-vertical-slice-architecture)
 - [CQRS](https://en.wikipedia.org/wiki/Command_Query_Responsibility_Segregation)
-- [Plugin Architecture](https://www.linkedin.com/pulse/plugin-architecture-design-pattern-beginners-guide-nick-cosentino)
+- [Plugin-based architecture](https://www.linkedin.com/pulse/plugin-architecture-design-pattern-beginners-guide-nick-cosentino)
+- [Interface-based programming](https://en.wikipedia.org/wiki/Interface-based_programming)
+- [Modular programming](https://en.wikipedia.org/wiki/Modular_programming)
+- [Dependency injection](https://en.wikipedia.org/wiki/Dependency_injection)
+- [Operation Result Pattern](https://medium.com/@wgyxxbf/result-pattern-a01729f42f8c)
 - [Open-closed principle](https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle)
 - [Acyclic dependencies principle](https://en.wikipedia.org/wiki/Acyclic_dependencies_principle)
 - [Explicit dependencies](https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles#explicit-dependencies)
 - [Dependency inversion](https://en.wikipedia.org/wiki/Dependency_inversion_principle)
 - [Separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
-- [Dependency injection](https://en.wikipedia.org/wiki/Dependency_injection)
-- [Modular programming](https://en.wikipedia.org/wiki/Modular_programming)
-- [Interface-based programming](https://en.wikipedia.org/wiki/Interface-based_programming)
 - [SOLID Principles](https://en.wikipedia.org/wiki/SOLID)
+
+There is a website called [DevIQ](https://deviq.com), it is useful to learn about design concepts.
 
 ## Installation
 
@@ -224,7 +227,7 @@ Request body:
     - Language resources 
     - Custom validators
     - Repository and service interfaces
-- **Core Layer.** Contains the main processes (essential features) of the application, it is like the heart of the system where the functional requirements are implemented. 
+- **Core Layer.** Contains the main processes (essential features) of the application.
   - Each feature represents a functional requirement of what the app should do. 
   - A feature contains the minimum code to execute a functional requirement. 
   - The purpose of grouping related elements of a feature is to increase cohesion.
@@ -257,7 +260,7 @@ Request body:
 
 The above diagram describes in more detail which feature modules are contained in the core layer. 
 
-In the presented diagram it can be identified that the feature modules are not coupled to each other, the purpose of this is not to cause a [dependency hell](https://en.wikipedia.org/wiki/Dependency_hell), in order to maintain a dependency graph that is as simple as possible, which increases the compression of the architecture.
+In the presented diagram it can be identified that the feature modules are not coupled to each other, the purpose of this is not to cause a [dependency hell](https://en.wikipedia.org/wiki/Dependency_hell), in order to maintain a dependency graph that is as simple as possible. The purpose is to make it easier to understand the parts of the backend application.
 
 ### Relational model
 
