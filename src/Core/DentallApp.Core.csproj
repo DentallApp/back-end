@@ -9,6 +9,7 @@
     <PackageReference Include="CopySqlFilesToOutputDirectory" />
     <PackageReference Include="YeSql.Net" />
     <PackageReference Include="SimpleResults.AspNetCore" />
+    <PackageReference Include="SimpleResults.FluentValidation" />
     <PackageReference Include="linq2db.EntityFrameworkCore" />
     <PackageReference Include="Dapper" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers">
