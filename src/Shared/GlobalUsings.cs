@@ -29,3 +29,4 @@ global using SimpleResults;
 global using DelegateDecompiler;
 global using FileTypeChecker;
 global using FileTypeChecker.Extensions;
+global using FluentValidation;

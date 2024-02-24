@@ -31,3 +31,4 @@ global using Microsoft.EntityFrameworkCore;
 global using SimpleResults;
 global using YeSql.Net;
 global using Dapper;
+global using FluentValidation;
