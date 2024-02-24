@@ -33,6 +33,7 @@ builder.Services
 
 builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(appSettings);
+builder.Services.AddValidators();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
