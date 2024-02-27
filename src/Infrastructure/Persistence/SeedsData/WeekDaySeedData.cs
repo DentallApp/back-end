@@ -34,6 +34,11 @@ public static class WeekDaySeedData
             {
                 Id = 6,
                 Name = WeekDayName.Saturday
+            },
+            new WeekDay
+            {
+                Id = 7,
+                Name = WeekDayName.Sunday
             }
         );
         return builder;
