@@ -4,7 +4,6 @@ public class CreateGeneralTreatmentRequest
 {
     public string Name { get; init; }
     public string Description { get; init; }
-    [Image]
     public IFormFile Image { get; init; }
     public int Duration { get; init; }
 
@@ -19,11 +18,13 @@ public class CreateGeneralTreatmentRequest
 
 public class CreateGeneralTreatmentValidator : AbstractValidator<CreateGeneralTreatmentRequest>
 {
-    public CreateGeneralTreatmentValidator()
+    public CreateGeneralTreatmentValidator(IFileTypeValidator fileTypeValidator)
     {
         RuleFor(request => request.Name).NotEmpty();
         RuleFor(request => request.Description).NotEmpty();
-        RuleFor(request => request.Image).NotEmpty();
+        RuleFor(request => request.Image)
+            .NotEmpty()
+            .MustBeValidImage(fileTypeValidator);
         RuleFor(request => request.Duration).GreaterThan(0);
     }
 }
