@@ -19,7 +19,13 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenAppointmentDateIsPublicHoliday_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
+        var request = new AvailableTimeRangeRequest 
+        { 
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2023, 01, 01) 
+        };
         Mock.Arrange(() => _queries.IsPublicHolidayAsync(Arg.AnyInt, Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(true);
 
@@ -38,7 +44,13 @@ public class GetAvailableHoursUseCaseTests
         // Arrange
         var weekDayName = WeekdayCollection.GetName(DayOfWeek.Sunday);
         var expectedMessage = new DentistNotAvailableError(weekDayName).Message;
-        var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
+        var request = new AvailableTimeRangeRequest 
+        {
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2023, 01, 01) 
+        };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .DoNothing();
 
@@ -57,7 +69,13 @@ public class GetAvailableHoursUseCaseTests
         // Arrange
         var weekDayName = WeekdayCollection.GetName(DayOfWeek.Sunday);
         var expectedMessage = new DentistNotAvailableError(weekDayName).Message;
-        var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
+        var request = new AvailableTimeRangeRequest 
+        {
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2023, 01, 01) 
+        };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse { IsEmployeeScheculeDeleted = true });
 
@@ -76,7 +94,13 @@ public class GetAvailableHoursUseCaseTests
         // Arrange
         var weekDayName = WeekdayCollection.GetName(DayOfWeek.Sunday);
         var expectedMessage = new OfficeClosedForSpecificDayError(weekDayName).Message;
-        var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
+        var request = new AvailableTimeRangeRequest 
+        {
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2023, 01, 01) 
+        };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse { IsOfficeScheduleDeleted = true });
 
@@ -95,7 +119,13 @@ public class GetAvailableHoursUseCaseTests
         // Arrange
         var weekDayName = WeekdayCollection.GetName(DayOfWeek.Sunday);
         var expectedMessage = new OfficeClosedForSpecificDayError(weekDayName).Message;
-        var request = new AvailableTimeRangeRequest { AppointmentDate = new DateTime(2023, 01, 01) };
+        var request = new AvailableTimeRangeRequest 
+        {
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2023, 01, 01) 
+        };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse { IsOfficeDeleted = true });
 
@@ -112,7 +142,13 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenEmployeeDoesNotHaveMorningOrAfternoonSchedule_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var request = new AvailableTimeRangeRequest();
+        var request = new AvailableTimeRangeRequest
+        {
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2023, 01, 01)
+        };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse());
 
@@ -129,7 +165,13 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenDentalServiceIdIsInvalid_ShouldReturnsAnErrorMessage()
     {
         // Arrange
-        var request = new AvailableTimeRangeRequest();
+        var request = new AvailableTimeRangeRequest
+        {
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2023, 01, 01)
+        };
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse
             { 
@@ -152,7 +194,13 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenEmployeeHasMorningAndAfternoonSchedule_ShouldReturnsAvailableHours()
     {
         // Arrange
-        var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
+        var request = new AvailableTimeRangeRequest
+        {
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2022, 05, 10) 
+        };
         var expectedList = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "09:00", EndHour = "09:40" },
@@ -197,7 +245,13 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenEmployeeHasMorningSchedule_ShouldReturnsAvailableHours()
     {
         // Arrange
-        var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
+        var request = new AvailableTimeRangeRequest
+        {
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2022, 05, 10) 
+        };
         var expectedList = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "09:00", EndHour = "09:40" },
@@ -235,7 +289,13 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenEmployeeHasAfternoonSchedule_ShouldReturnsAvailableHours()
     {
         // Arrange
-        var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
+        var request = new AvailableTimeRangeRequest
+        {
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2022, 05, 10) 
+        };
         var expectedList = new List<AvailableTimeRangeResponse>
         {
             new() { StartHour = "13:00", EndHour = "13:40" },
@@ -271,7 +331,13 @@ public class GetAvailableHoursUseCaseTests
     public async Task ExecuteAsync_WhenSchedulesAreNotAvailable_ShouldReturnsResultWithoutAvailableHours()
     {
         // Arrange
-        var request = new AvailableTimeRangeRequest() { AppointmentDate = new DateTime(2022, 05, 10) };
+        var request = new AvailableTimeRangeRequest 
+        {
+            OfficeId = 1,
+            DentistId = 1,
+            DentalServiceId = 1,
+            AppointmentDate = new DateTime(2022, 05, 10) 
+        };
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 05, 01, 8, 30, 0));
         Mock.Arrange(() => _queries.GetEmployeeScheduleAsync(Arg.AnyInt, Arg.AnyInt))
             .ReturnsAsync(new EmployeeScheduleResponse
@@ -300,5 +366,3 @@ public class GetAvailableHoursUseCaseTests
         result.Message.Should().Be(Messages.NoSchedulesAvailable);
     }
 }
-
-
