@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="File.TypeChecker" />
     <PackageReference Include="DotEnv.Core" />
     <PackageReference Include="BCrypt.Net-Next" />
     <PackageReference Include="linq2db.EntityFrameworkCore" />
