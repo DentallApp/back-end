@@ -17,7 +17,7 @@ global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Extensions;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
-global using DentallApp.Shared.CustomValidators;
+global using DentallApp.Shared.ValidationRules;
 
 global using System.Text.Json.Serialization;
 global using System.Data;
