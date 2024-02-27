@@ -17,11 +17,11 @@ global using DentallApp.Shared.Configuration;
 global using DentallApp.Shared.Extensions;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
+global using DentallApp.Shared.CustomValidators;
 
 global using System.Text.Json.Serialization;
 global using System.Data;
 global using System.Security.Claims;
-global using System.ComponentModel.DataAnnotations;
 
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authorization;
