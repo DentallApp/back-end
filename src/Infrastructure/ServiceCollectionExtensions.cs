@@ -18,7 +18,8 @@ public static class InfrastructureServicesExtensions
             .AddSingleton<IDateTimeService, DateTimeService>()
             .AddSingleton<IHtmlConverter, HtmlConverterIText>()
             .AddSingleton<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>()
-            .AddSingleton<IPasswordHasher, PasswordHasherBcrypt>();
+            .AddSingleton<IPasswordHasher, PasswordHasherBcrypt>()
+            .AddSingleton<IFileTypeValidator, FileTypeService>();
 
         return services;
     }
