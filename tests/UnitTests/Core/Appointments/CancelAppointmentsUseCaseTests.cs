@@ -13,7 +13,8 @@ public class CancelAppointmentsUseCaseTests
             new AppSettings(),
             Mock.Create<IAppointmentRepository>(),
             Mock.Create<IInstantMessaging>(),
-            _dateTimeService);
+            _dateTimeService,
+            new CancelAppointmentsValidator());
     }
 
     [Test]

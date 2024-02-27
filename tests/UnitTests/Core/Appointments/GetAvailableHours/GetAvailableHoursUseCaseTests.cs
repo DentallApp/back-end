@@ -9,9 +9,10 @@ public class GetAvailableHoursUseCaseTests
     [SetUp]
     public void TestInitialize()
     {
+        var validator             = new GetAvailableHoursValidator();
         _queries                  = Mock.Create<IAvailabilityQueries>();
         _dateTimeService          = Mock.Create<IDateTimeService>();
-        _getAvailableHoursUseCase = new GetAvailableHoursUseCase(_queries, _dateTimeService);
+        _getAvailableHoursUseCase = new GetAvailableHoursUseCase(_queries, _dateTimeService, validator);
     }
 
     [Test]
