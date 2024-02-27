@@ -6,13 +6,27 @@ public class ResetForgottenPasswordRequest
     public string NewPassword { get; init; }
 }
 
+public class ResetForgottenPasswordValidator : AbstractValidator<ResetForgottenPasswordRequest>
+{
+    public ResetForgottenPasswordValidator()
+    {
+        RuleFor(request => request.Token).NotEmpty();
+        RuleFor(request => request.NewPassword).NotEmpty();
+    }
+}
+
 public class ResetForgottenPasswordUseCase(
     DbContext context,
     ITokenService tokenService,
-    IPasswordHasher passwordHasher)
+    IPasswordHasher passwordHasher,
+    ResetForgottenPasswordValidator validator)
 {
     public async Task<Result> ExecuteAsync(ResetForgottenPasswordRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var claimIdentity = tokenService.GetClaimsIdentity(request.Token);
         if (claimIdentity is null)
             return Result.Invalid(Messages.PasswordResetTokenInvalid);

@@ -17,12 +17,29 @@ public class UpdateGeneralTreatmentRequest
     }
 }
 
-public class UpdateGeneralTreatmentUseCase(DbContext context, AppSettings settings)
+public class UpdateGeneralTreatmentValidator : AbstractValidator<UpdateGeneralTreatmentRequest>
+{
+    public UpdateGeneralTreatmentValidator()
+    {
+        RuleFor(request => request.Name).NotEmpty();
+        RuleFor(request => request.Description).NotEmpty();
+        RuleFor(request => request.Duration).GreaterThan(0);
+    }
+}
+
+public class UpdateGeneralTreatmentUseCase(
+    DbContext context, 
+    AppSettings settings,
+    UpdateGeneralTreatmentValidator validator)
 {
     private readonly string _basePath = settings.DentalServicesImagesPath;
 
     public async Task<Result> ExecuteAsync(int id, UpdateGeneralTreatmentRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var generalTreatment = await context.Set<GeneralTreatment>()
             .Where(treatment => treatment.Id == id)
             .FirstOrDefaultAsync();

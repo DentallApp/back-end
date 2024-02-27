@@ -14,10 +14,24 @@ public class UpdateSpecificTreatmentRequest
     }
 }
 
-public class UpdateSpecificTreatmentUseCase(DbContext context)
+public class UpdateSpecificTreatmentValidator : AbstractValidator<UpdateSpecificTreatmentRequest>
+{
+    public UpdateSpecificTreatmentValidator()
+    {
+        RuleFor(request => request.Name).NotEmpty();
+        RuleFor(request => request.GeneralTreatmentId).GreaterThan(0);
+        RuleFor(request => request.Price).GreaterThan(0);
+    }
+}
+
+public class UpdateSpecificTreatmentUseCase(DbContext context, UpdateSpecificTreatmentValidator validator)
 {
     public async Task<Result> ExecuteAsync(int id, UpdateSpecificTreatmentRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var specificTreatment = await context.Set<SpecificTreatment>()
             .Where(treatment => treatment.Id == id)
             .FirstOrDefaultAsync();

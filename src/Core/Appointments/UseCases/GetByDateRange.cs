@@ -9,6 +9,18 @@ public class GetAppointmentsByDateRangeRequest
     public int StatusId { get; init; }
 }
 
+public class GetAppointmentsByDateRangeValidator 
+    : AbstractValidator<GetAppointmentsByDateRangeRequest>
+{
+    public GetAppointmentsByDateRangeValidator()
+    {
+        RuleFor(request => request.From).LessThanOrEqualTo(request => request.To);
+        RuleFor(request => request.OfficeId).GreaterThanOrEqualTo(0);
+        RuleFor(request => request.DentistId).GreaterThanOrEqualTo(0);
+        RuleFor(request => request.StatusId).GreaterThanOrEqualTo(0);
+    }
+}
+
 public class GetAppointmentsByDateRangeResponse
 {
     public int AppointmentId { get; init; }
@@ -29,12 +41,18 @@ public class GetAppointmentsByDateRangeResponse
     public string OfficeName { get; init; }
 }
 
-public class GetAppointmentsByDateRangeUseCase(DbContext context)
+public class GetAppointmentsByDateRangeUseCase(
+    DbContext context,
+    GetAppointmentsByDateRangeValidator validator)
 {
     public async Task<ListedResult<GetAppointmentsByDateRangeResponse>> ExecuteAsync(
         ClaimsPrincipal currentEmployee, 
         GetAppointmentsByDateRangeRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         if (currentEmployee.IsOnlyDentist() && currentEmployee.GetEmployeeId() != request.DentistId)
             return Result.Forbidden(Messages.CanOnlyAccessYourOwnAppointments);
 

@@ -2,13 +2,9 @@
 
 public class UpdatePublicHolidayRequest
 {
-    [Required]
     public string Description { get; init; }
-    [Range(1, 31)]
     public int Day { get; init; }
-    [Range(1, 12)]
     public int Month { get; init; }
-    [Required]
     public List<int> OfficesId { get; init; }
 
     public void MapToPublicHoliday(PublicHoliday publicHoliday)
@@ -19,12 +15,35 @@ public class UpdatePublicHolidayRequest
     }
 }
 
+public class UpdatePublicHolidayValidator : AbstractValidator<UpdatePublicHolidayRequest>
+{
+    public UpdatePublicHolidayValidator()
+    {
+        RuleFor(request => request.Description).NotEmpty();
+        RuleFor(request => request.Day).InclusiveBetween(1, 31);
+        RuleFor(request => request.Month).InclusiveBetween(1, 12);
+        RuleFor(request => request.OfficesId).NotEmpty();
+        RuleForEach(request => request.OfficesId)
+            .ChildRules(validator =>
+            {
+                validator
+                    .RuleFor(officeId => officeId)
+                    .GreaterThan(0);
+            });
+    }
+}
+
 public class UpdatePublicHolidayUseCase(
     DbContext context,
-    IEntityService<OfficeHoliday> officeHolidayService)
+    IEntityService<OfficeHoliday> officeHolidayService,
+    UpdatePublicHolidayValidator validator)
 {
     public async Task<Result> ExecuteAsync(int id, UpdatePublicHolidayRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var holiday = await context.Set<PublicHoliday>()
             .Include(publicHoliday => publicHoliday.Offices)
             .Where(publicHoliday => publicHoliday.Id == id)

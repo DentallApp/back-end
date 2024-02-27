@@ -15,6 +15,30 @@ public class CancelAppointmentsRequest
     public IEnumerable<Appointment> Appointments { get; init; }
 }
 
+public class CancelAppointmentsValidator : AbstractValidator<CancelAppointmentsRequest>
+{
+    public CancelAppointmentsValidator()
+    {
+        RuleFor(request => request.Reason).NotEmpty();
+        RuleFor(request => request.Appointments).NotEmpty();
+        RuleForEach(request => request.Appointments)
+            .ChildRules(validator =>
+            {
+                validator
+                    .RuleFor(appointment => appointment.AppointmentId)
+                    .GreaterThan(0);
+
+                validator
+                    .RuleFor(appointment => appointment.PatientName)
+                    .NotEmpty();
+
+                validator
+                    .RuleFor(appointment => appointment.PatientCellPhone)
+                    .NotEmpty();
+            });
+    }
+}
+
 /// <summary>
 /// Represents the appointments that cannot be canceled.
 /// </summary>
@@ -27,10 +51,15 @@ public class CancelAppointmentsUseCase(
     AppSettings settings,
     IAppointmentRepository appointmentRepository,
     IInstantMessaging instantMessaging,
-    IDateTimeService dateTimeService)
+    IDateTimeService dateTimeService,
+    CancelAppointmentsValidator validator)
 {
     public async Task<Result<CancelAppointmentsResponse>> ExecuteAsync(ClaimsPrincipal currentEmployee, CancelAppointmentsRequest request)
     {
+        var result = validator.Validate(request);
+        if(result.IsFailed()) 
+            return result.Invalid();
+
         // Stores appointments whose stipulated date and time have not passed.
         var appointmentsCanBeCancelled = request.Appointments
             .Where(appointment => (appointment.AppointmentDate + appointment.StartHour) > dateTimeService.Now);

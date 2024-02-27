@@ -2,13 +2,9 @@
 
 public class CreatePublicHolidayRequest
 {
-    [Required]
     public string Description { get; init; }
-    [Range(1, 31)]
     public int Day { get; init; }
-    [Range(1, 12)]
     public int Month { get; init; }
-    [Required]
     public List<int> OfficesId { get; init; }
 
     public PublicHoliday MapToPublicHoliday() => new()
@@ -19,10 +15,32 @@ public class CreatePublicHolidayRequest
     };
 }
 
-public class CreatePublicHolidayUseCase(DbContext context)
+public class CreatePublicHolidayValidator : AbstractValidator<CreatePublicHolidayRequest>
+{
+    public CreatePublicHolidayValidator()
+    {
+        RuleFor(request => request.Description).NotEmpty();
+        RuleFor(request => request.Day).InclusiveBetween(1, 31);
+        RuleFor(request => request.Month).InclusiveBetween(1, 12);
+        RuleFor(request => request.OfficesId).NotEmpty();
+        RuleForEach(request => request.OfficesId)
+            .ChildRules(validator =>
+            {
+                validator
+                    .RuleFor(officeId => officeId)
+                    .GreaterThan(0);
+            });
+    }
+}
+
+public class CreatePublicHolidayUseCase(DbContext context, CreatePublicHolidayValidator validator)
 {
     public async Task<Result<CreatedId>> ExecuteAsync(CreatePublicHolidayRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var publicHoliday = request.MapToPublicHoliday();
         foreach (int officeId in request.OfficesId.RemoveDuplicates())
         {

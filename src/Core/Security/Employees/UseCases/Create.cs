@@ -9,14 +9,10 @@ public class CreateEmployeeRequest
     public string LastNames { get; init; }
     public string CellPhone { get; init; }
     public DateTime? DateBirth { get; init; }
-    public int? GenderId { get; init; }
+    public int GenderId { get; init; }
     public int OfficeId { get; init; }
     public string PregradeUniversity { get; init; }
     public string PostgradeUniversity { get; init; }
-
-    [Required]
-    [MaxLength(Role.Max)]
-    [MinLength(Role.Min)]
     public IEnumerable<int> Roles { get; init; }
     public IEnumerable<int> SpecialtiesId { get; init; }
 
@@ -50,13 +46,44 @@ public class CreateEmployeeRequest
     }
 }
 
+public class CreateEmployeeValidator : AbstractValidator<CreateEmployeeRequest>
+{
+    public CreateEmployeeValidator()
+    {
+        RuleFor(request => request.UserName)
+            .NotEmpty()
+            .EmailAddress();
+        RuleFor(request => request.Password).NotEmpty();
+        RuleFor(request => request.Document).NotEmpty();
+        RuleFor(request => request.Names).NotEmpty();
+        RuleFor(request => request.LastNames).NotEmpty();
+        RuleFor(request => request.CellPhone).NotEmpty();
+        RuleFor(request => request.DateBirth).NotEmpty();
+        RuleFor(request => request.GenderId).GreaterThan(0);
+        RuleFor(request => request.OfficeId).GreaterThan(0);
+        RuleFor(request => request.Roles).NotEmpty();
+        RuleForEach(request => request.Roles)
+            .ChildRules(validator =>
+            {
+                validator
+                    .RuleFor(roleId => roleId)
+                    .InclusiveBetween(Role.Min, Role.Max);
+            });
+    }
+}
+
 public class CreateEmployeeUseCase(
     DbContext context,
     IUserRepository userRepository,
-    IPasswordHasher passwordHasher)
+    IPasswordHasher passwordHasher,
+    CreateEmployeeValidator validator)
 {
     public async Task<Result<CreatedId>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateEmployeeRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         if (await userRepository.UserExistsAsync(request.UserName))
             return Result.Conflict(Messages.UsernameAlreadyExists);
 

@@ -20,10 +20,26 @@ public class UpdateEmployeeScheduleRequest
     }
 }
 
-public class UpdateEmployeeScheduleUseCase(DbContext context)
+public class UpdateEmployeeScheduleValidator : AbstractValidator<UpdateEmployeeScheduleRequest>
+{
+    public UpdateEmployeeScheduleValidator()
+    {
+        RuleFor(request => request.WeekDayId).InclusiveBetween(1, 7);
+        RuleFor(request => request.MorningStartHour).NotEmpty();
+        RuleFor(request => request.MorningEndHour).NotEmpty();
+        RuleFor(request => request.AfternoonStartHour).NotEmpty();
+        RuleFor(request => request.AfternoonEndHour).NotEmpty();
+    }
+}
+
+public class UpdateEmployeeScheduleUseCase(DbContext context, UpdateEmployeeScheduleValidator validator)
 {
     public async Task<Result> ExecuteAsync(int id, UpdateEmployeeScheduleRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var employeeSchedule = await context.Set<EmployeeSchedule>()
             .Where(employeeSchedule => employeeSchedule.Id == id)
             .IgnoreQueryFilters()

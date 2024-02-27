@@ -16,10 +16,23 @@ public class UpdateOfficeScheduleRequest
     }
 }
 
-public class UpdateOfficeScheduleUseCase(DbContext context)
+public class UpdateOfficeScheduleValidator : AbstractValidator<UpdateOfficeScheduleRequest>
+{
+    public UpdateOfficeScheduleValidator()
+    {
+        RuleFor(request => request.WeekDayId).InclusiveBetween(1, 7);
+        RuleFor(request => request.StartHour).LessThan(request => request.EndHour);
+    }
+}
+
+public class UpdateOfficeScheduleUseCase(DbContext context, UpdateOfficeScheduleValidator validator)
 {
     public async Task<Result> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateOfficeScheduleRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var officeSchedule = await context.Set<OfficeSchedule>()
             .Where(officeSchedule => officeSchedule.Id == id)
             .IgnoreQueryFilters()

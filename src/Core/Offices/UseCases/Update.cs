@@ -39,10 +39,26 @@ public class UpdateOfficeRequest
     }
 }
 
-public class UpdateOfficeUseCase(DbContext context, IDateTimeService dateTimeService)
+public class UpdateOfficeValidator : AbstractValidator<UpdateOfficeRequest>
+{
+    public UpdateOfficeValidator()
+    {
+        RuleFor(request => request.Name).NotEmpty();
+        RuleFor(request => request.Address).NotEmpty();
+    }
+}
+
+public class UpdateOfficeUseCase(
+    DbContext context, 
+    IDateTimeService dateTimeService,
+    UpdateOfficeValidator validator)
 {
     public async Task<Result> ExecuteAsync(int officeId, int currentEmployeeId, UpdateOfficeRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var currentOffice = await context.Set<Office>()
             .Where(office => office.Id == officeId)
             .IgnoreQueryFilters()

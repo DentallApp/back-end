@@ -6,10 +6,26 @@ public class ChangePasswordRequest
     public string NewPassword { get; init; }
 }
 
-public class ChangePasswordUseCase(DbContext context, IPasswordHasher passwordHasher)
+public class ChangePasswordValidator : AbstractValidator<ChangePasswordRequest>
+{
+    public ChangePasswordValidator()
+    {
+        RuleFor(request => request.OldPassword).NotEmpty();
+        RuleFor(request => request.NewPassword).NotEmpty();
+    }
+}
+
+public class ChangePasswordUseCase(
+    DbContext context, 
+    IPasswordHasher passwordHasher,
+    ChangePasswordValidator validator)
 {
     public async Task<Result> ExecuteAsync(int userId, ChangePasswordRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var user = await context.Set<User>()
             .Where(user => user.Id == userId)
             .FirstOrDefaultAsync();
