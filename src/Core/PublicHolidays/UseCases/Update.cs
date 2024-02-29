@@ -23,13 +23,7 @@ public class UpdatePublicHolidayValidator : AbstractValidator<UpdatePublicHolida
         RuleFor(request => request.Day).InclusiveBetween(1, 31);
         RuleFor(request => request.Month).InclusiveBetween(1, 12);
         RuleFor(request => request.OfficesId).NotEmpty();
-        RuleForEach(request => request.OfficesId)
-            .ChildRules(validator =>
-            {
-                validator
-                    .RuleFor(officeId => officeId)
-                    .GreaterThan(0);
-            });
+        RuleForEach(request => request.OfficesId).GreaterThan(0);
     }
 }
 
