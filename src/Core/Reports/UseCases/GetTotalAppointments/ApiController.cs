@@ -8,14 +8,14 @@ public class ReportTotalAppointmentsController : ControllerBase
     /// Obtiene el reporte sobre el total de citas asistidas, no asistidas y canceladas.
     /// </summary>
     [HttpPost("report/appointment")]
-    public async Task<ActionResult<GetTotalAppointmentsResponse>> Get(
+    public async Task<Result<GetTotalAppointmentsResponse>> Get(
         [FromBody]GetTotalAppointmentsRequest request,
         GetTotalAppointmentsUseCase useCase)
     {
         if (User.IsAdmin() && User.IsNotInOffice(request.OfficeId))
-            return Forbid();
+            return Result.Forbidden();
 
-        return Ok(await useCase.ExecuteAsync(request));
+        return await useCase.ExecuteAsync(request);
     }
 
     /// <summary>
@@ -26,7 +26,8 @@ public class ReportTotalAppointmentsController : ControllerBase
         [FromBody]DownloadTotalAppointmentsReportRequest request,
         DownloadTotalAppointmentsReportUseCase useCase)
     {
-        var contents = await useCase.DownloadAsPdfAsync(request);
-        return File(contents, "application/pdf", "Reporte sobre el total de citas.pdf");
+        return (await useCase.DownloadAsPdfAsync(request))
+            .ToActionResult()
+            .Result;
     }
 }

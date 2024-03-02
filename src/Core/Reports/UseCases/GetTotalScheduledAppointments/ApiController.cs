@@ -8,14 +8,14 @@ public class ReportTotalScheduledAppointmentsController : ControllerBase
     /// Obtiene el reporte sobre el total de citas agendadas por odontólogo.
     /// </summary>
     [HttpPost("report/appointment/scheduled")]
-    public async Task<ActionResult<IEnumerable<GetTotalScheduledAppointmentsResponse>>> Get(
+    public async Task<ListedResult<GetTotalScheduledAppointmentsResponse>> Get(
         [FromBody]GetTotalScheduledAppointmentsRequest request,
         GetTotalScheduledAppointmentsUseCase useCase)
     {
         if (User.IsAdmin() && User.IsNotInOffice(request.OfficeId))
-            return Forbid();
+            return Result.Forbidden();
 
-        return Ok(await useCase.ExecuteAsync(request));
+        return await useCase.ExecuteAsync(request);
     }
 
     /// <summary>
@@ -26,7 +26,8 @@ public class ReportTotalScheduledAppointmentsController : ControllerBase
         [FromBody]DownloadScheduledAppointmentsReportRequest request,
         DownloadScheduledAppointmentsReportUseCase useCase)
     {
-        var contents = await useCase.DownloadAsPdfAsync(request);
-        return File(contents, "application/pdf", "Reporte sobre el total de citas agendadas.pdf");
+        return (await useCase.DownloadAsPdfAsync(request))
+            .ToActionResult()
+            .Result;
     }
 }

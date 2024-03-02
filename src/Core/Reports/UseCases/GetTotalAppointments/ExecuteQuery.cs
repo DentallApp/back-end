@@ -8,6 +8,16 @@ public class GetTotalAppointmentsRequest
     public int DentistId { get; init; }
 }
 
+public class GetTotalAppointmentsValidator : AbstractValidator<GetTotalAppointmentsRequest>
+{
+    public GetTotalAppointmentsValidator()
+    {
+        RuleFor(request => request.From).LessThanOrEqualTo(request => request.To);
+        RuleFor(request => request.OfficeId).GreaterThanOrEqualTo(0);
+        RuleFor(request => request.DentistId).GreaterThanOrEqualTo(0);
+    }
+}
+
 public class GetTotalAppointmentsResponse
 {
     public int Total { get; init; }
@@ -17,12 +27,19 @@ public class GetTotalAppointmentsResponse
     public int TotalAppointmentsCancelledByEmployee { get; init; }
 }
 
-public class GetTotalAppointmentsUseCase(IDbConnection dbConnection, ISqlCollection sqlCollection)
+public class GetTotalAppointmentsUseCase(
+    IDbConnection dbConnection, 
+    ISqlCollection sqlCollection,
+    GetTotalAppointmentsValidator validator)
 {
-    public async Task<GetTotalAppointmentsResponse> ExecuteAsync(GetTotalAppointmentsRequest request)
+    public async Task<Result<GetTotalAppointmentsResponse>> ExecuteAsync(GetTotalAppointmentsRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         string sql = sqlCollection["GetTotalAppointments"];
-        var result = await dbConnection.QueryAsync<GetTotalAppointmentsResponse>(sql, new
+        var totalAppointments = await dbConnection.QueryFirstAsync<GetTotalAppointmentsResponse>(sql, new
         {
             AppointmentStatus.Predefined.Assisted,
             AppointmentStatus.Predefined.NotAssisted,
@@ -33,6 +50,7 @@ public class GetTotalAppointmentsUseCase(IDbConnection dbConnection, ISqlCollect
             request.OfficeId,
             request.DentistId
         });
-        return result.First();
+
+        return Result.ObtainedResource(totalAppointments);
     }
 }

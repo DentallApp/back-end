@@ -8,14 +8,14 @@ public class ReportMostRequestedServicesController : ControllerBase
     /// Obtiene el reporte de los servicios dentales más solicitados.
     /// </summary>
     [HttpPost("report/most-requested/services")]
-    public async Task<ActionResult<IEnumerable<GetMostRequestedServicesResponse>>> Get(
+    public async Task<ListedResult<GetMostRequestedServicesResponse>> Get(
         [FromBody]GetMostRequestedServicesRequest request,
         GetMostRequestedServicesUseCase useCase)
     {
         if (User.IsAdmin() && User.IsNotInOffice(request.OfficeId))
-            return Forbid();
+            return Result.Forbidden();
 
-        return Ok(await useCase.ExecuteAsync(request));
+        return await useCase.ExecuteAsync(request);
     }
 
     /// <summary>
@@ -26,7 +26,8 @@ public class ReportMostRequestedServicesController : ControllerBase
         [FromBody]DownloadDentalServicesReportRequest request,
         DownloadDentalServicesReportUseCase useCase)
     {
-        var contents = await useCase.DownloadAsPdfAsync(request);
-        return File(contents, "application/pdf", "Reporte sobre los servicios mas solicitados.pdf");
+        return (await useCase.DownloadAsPdfAsync(request))
+            .ToActionResult()
+            .Result;
     }
 }

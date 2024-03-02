@@ -2,28 +2,68 @@
 
 public class DownloadDentalServicesReportRequest
 {
-    public string From { get; init; }
-    public string To { get; init; }
+    public class Service
+    {
+        public string DentalServiceName { get; init; }
+        public int TotalAppointmentsAssisted { get; init; }
+    }
+
+    public DateTime From { get; init; }
+    public DateTime To { get; init; }
     public string OfficeName { get; init; }
-    public IEnumerable<GetMostRequestedServicesResponse> Services { get; init; }
+    public IEnumerable<Service> Services { get; init; }
 
     public object MapToObject() => new
     {
-        From,
-        To,
+        From = From.GetDateWithStandardFormat(),
+        To   = To.GetDateWithStandardFormat(),
         OfficeName,
         Services
     };
 }
 
+public class DownloadDentalServicesReportValidator 
+    : AbstractValidator<DownloadDentalServicesReportRequest>
+{
+    public DownloadDentalServicesReportValidator()
+    {
+        RuleFor(request => request.From).LessThanOrEqualTo(request => request.To);
+        RuleFor(request => request.OfficeName).NotEmpty();
+        RuleFor(request => request.Services).NotEmpty();
+        RuleForEach(request => request.Services)
+            .ChildRules(validator =>
+            {
+                validator
+                    .RuleFor(service => service.DentalServiceName)
+                    .NotEmpty();
+
+                validator
+                    .RuleFor(service => service.TotalAppointmentsAssisted)
+                    .GreaterThanOrEqualTo(0);
+            });
+    }
+}
+
 public class DownloadDentalServicesReportUseCase(
     IHtmlTemplateLoader htmlTemplateLoader,
-    IHtmlConverter htmlConverter)
+    IHtmlConverter htmlConverter,
+    DownloadDentalServicesReportValidator validator)
 {
-    public async Task<byte[]> DownloadAsPdfAsync(DownloadDentalServicesReportRequest request)
+    public async Task<Result<ByteArrayFileContent>> DownloadAsPdfAsync(
+        DownloadDentalServicesReportRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var html = await htmlTemplateLoader
             .LoadAsync("./Templates/ReportDentalServices.html", request.MapToObject());
-        return htmlConverter.ConvertToPdf(html, new MemoryStream());
+
+        byte[] fileContents = htmlConverter.ConvertToPdf(html, new MemoryStream());
+        return Result.File(new ByteArrayFileContent(fileContents)
+        {
+            ContentType = MediaTypeNames.Application.Pdf,
+            FileName = "DentalServices.pdf"
+        });
     }
 }

@@ -7,16 +7,32 @@ public class GetMostRequestedServicesRequest
     public int OfficeId { get; init; }
 }
 
+public class GetMostRequestedServicesValidator : AbstractValidator<GetMostRequestedServicesRequest>
+{
+    public GetMostRequestedServicesValidator()
+    {
+        RuleFor(request => request.From).LessThanOrEqualTo(request => request.To);
+        RuleFor(request => request.OfficeId).GreaterThanOrEqualTo(0);
+    }
+}
+
 public class GetMostRequestedServicesResponse
 {
     public string DentalServiceName { get; init; }
     public int TotalAppointmentsAssisted { get; init; }
 }
 
-public class GetMostRequestedServicesUseCase(DbContext context)
+public class GetMostRequestedServicesUseCase(
+    DbContext context, 
+    GetMostRequestedServicesValidator validator)
 {
-    public async Task<IEnumerable<GetMostRequestedServicesResponse>> ExecuteAsync(GetMostRequestedServicesRequest request)
+    public async Task<ListedResult<GetMostRequestedServicesResponse>> ExecuteAsync(
+        GetMostRequestedServicesRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var appointments = await context.Set<Appointment>()
             .Where(appointment =>
                   appointment.AppointmentStatusId == (int)AppointmentStatus.Predefined.Assisted &&
@@ -37,6 +53,6 @@ public class GetMostRequestedServicesUseCase(DbContext context)
             .AsNoTracking()
             .ToListAsync();
 
-        return appointments;
+        return Result.ObtainedResources(appointments);
     }
 }

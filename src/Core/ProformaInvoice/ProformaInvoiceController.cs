@@ -2,7 +2,7 @@
 
 [Route("proforma-invoice")]
 [ApiController]
-public class ProformaInvoiceController : ControllerBase
+public class ProformaInvoiceController
 {
     [AuthorizeByRole(RoleName.BasicUser)]
     [Route("pdf")]
@@ -11,7 +11,8 @@ public class ProformaInvoiceController : ControllerBase
         [FromBody]DownloadProformaInvoiceRequest request,
         DownloadProformaInvoiceUseCase useCase)
     {
-        var contents = await useCase.DownloadAsPdfAsync(request);
-        return File(contents, "application/pdf", "ProformaReporte.pdf");
+        return (await useCase.DownloadAsPdfAsync(request))
+            .ToActionResult()
+            .Result;
     }
 }

@@ -25,14 +25,52 @@ public class DownloadProformaInvoiceRequest
     };
 }
 
+public class DownloadProformaInvoiceValidator 
+    : AbstractValidator<DownloadProformaInvoiceRequest>
+{
+    public DownloadProformaInvoiceValidator()
+    {
+        RuleFor(request => request.FullName).NotEmpty();
+        RuleFor(request => request.Document).NotEmpty();
+        RuleFor(request => request.TotalPrice).GreaterThan(0);
+        RuleFor(request => request.DentalTreatments).NotEmpty();
+        RuleForEach(request => request.DentalTreatments)
+            .ChildRules(validator =>
+            {
+                validator
+                    .RuleFor(treatment => treatment.GeneralTreatmentName)
+                    .NotEmpty();
+
+                validator
+                    .RuleFor(treatment => treatment.SpecificTreatmentName)
+                    .NotEmpty();
+
+                validator
+                    .RuleFor(treatment => treatment.Price)
+                    .GreaterThan(0);
+            });
+    }
+}
+
 public class DownloadProformaInvoiceUseCase(
     IHtmlTemplateLoader htmlTemplateLoader,
-    IHtmlConverter htmlConverter)
+    IHtmlConverter htmlConverter,
+    DownloadProformaInvoiceValidator validator)
 {
-    public async Task<byte[]> DownloadAsPdfAsync(DownloadProformaInvoiceRequest request)
+    public async Task<Result<ByteArrayFileContent>> DownloadAsPdfAsync(DownloadProformaInvoiceRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var html = await htmlTemplateLoader
             .LoadAsync("./Templates/ProformaInvoice.html", request.MapToObject());
-        return htmlConverter.ConvertToPdf(html, new MemoryStream());
+
+        byte[] fileContents = htmlConverter.ConvertToPdf(html, new MemoryStream());
+        return Result.File(new ByteArrayFileContent(fileContents)
+        {
+            ContentType = MediaTypeNames.Application.Pdf,
+            FileName = "ProformaInvoice.pdf"
+        });
     }
 }
