@@ -19,6 +19,7 @@ global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
 global using DentallApp.Shared.ValidationRules;
 
+global using System.Net.Mime;
 global using System.Text.Json.Serialization;
 global using System.Data;
 global using System.Security.Claims;
