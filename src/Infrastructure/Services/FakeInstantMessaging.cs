@@ -1,5 +1,4 @@
-﻿
-namespace DentallApp.Infrastructure.Services;
+﻿namespace DentallApp.Infrastructure.Services;
 
 public class FakeInstantMessaging(ILogger<FakeInstantMessaging> logger) : IInstantMessaging
 {

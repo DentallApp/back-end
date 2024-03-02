@@ -1,9 +1,26 @@
 ﻿namespace DentallApp.Core.Appointments.UseCases.GetAvailableHours;
 
-public class GetAvailableHoursUseCase(IAvailabilityQueries queries, IDateTimeService dateTimeService) : IGetAvailableHoursUseCase
+public class GetAvailableHoursValidator : AbstractValidator<AvailableTimeRangeRequest>
+{
+    public GetAvailableHoursValidator()
+    {
+        RuleFor(request => request.OfficeId).GreaterThan(0);
+        RuleFor(request => request.DentistId).GreaterThan(0);
+        RuleFor(request => request.DentalServiceId).GreaterThan(0);
+    }
+}
+
+public class GetAvailableHoursUseCase(
+    IAvailabilityQueries queries, 
+    IDateTimeService dateTimeService,
+    GetAvailableHoursValidator validator) : IGetAvailableHoursUseCase
 {
     public async Task<ListedResult<AvailableTimeRangeResponse>> ExecuteAsync(AvailableTimeRangeRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         int officeId             = request.OfficeId;
         int dentistId            = request.DentistId;
         int serviceId            = request.DentalServiceId;

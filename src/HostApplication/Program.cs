@@ -19,20 +19,11 @@ builder.Services
 
 builder.Services
     .AddHttpClient()
-    .AddControllers(options =>
-    {
-        options.SuppressAsyncSuffixInActionNames = false;
-        options.Filters.Add<TranslateResultToActionResultAttribute>();
-    })
-    .AddJsonOptions(jsonOpts =>
-    {
-        jsonOpts.JsonSerializerOptions.Converters.Add(new TimeSpanJsonConverter());
-    })
-    .AddCustomInvalidModelStateResponse()
-    .AddApplicationParts();
+    .AddControllersAsService();
 
 builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(appSettings);
+builder.Services.AddValidators();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

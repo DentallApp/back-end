@@ -9,7 +9,7 @@ public class CreateBasicUserRequest
     public string LastNames { get; init; }
     public string CellPhone { get; init; }
     public DateTime? DateBirth { get; init; }
-    public int? GenderId { get; init; }
+    public int GenderId { get; init; }
 
     public User MapToUser(string password)
     {
@@ -33,15 +33,37 @@ public class CreateBasicUserRequest
     }
 }
 
+public class CreateBasicUserValidator : AbstractValidator<CreateBasicUserRequest>
+{
+    public CreateBasicUserValidator()
+    {
+        RuleFor(request => request.UserName)
+            .NotEmpty()
+            .EmailAddress();
+        RuleFor(request => request.Password).NotEmpty();
+        RuleFor(request => request.Document).NotEmpty();
+        RuleFor(request => request.Names).NotEmpty();
+        RuleFor(request => request.LastNames).NotEmpty();
+        RuleFor(request => request.CellPhone).NotEmpty();
+        RuleFor(request => request.DateBirth).NotEmpty();
+        RuleFor(request => request.GenderId).GreaterThan(0);
+    }
+}
+
 public class CreateBasicUserUseCase(
     DbContext context,
     IUserRepository userRepository,
     IPasswordHasher passwordHasher,
     ITokenService tokenService,
-    IEmailService emailService)
+    IEmailService emailService,
+    CreateBasicUserValidator validator)
 {
     public async Task<Result> ExecuteAsync(CreateBasicUserRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         if (await userRepository.UserExistsAsync(request.UserName))
             return Result.Conflict(Messages.UsernameAlreadyExists);
 

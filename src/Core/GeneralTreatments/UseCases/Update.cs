@@ -4,7 +4,6 @@ public class UpdateGeneralTreatmentRequest
 {
     public string Name { get; init; }
     public string Description { get; init; }
-    [Image]
     public IFormFile Image { get; init; }
     public int Duration { get; init; }
 
@@ -17,12 +16,30 @@ public class UpdateGeneralTreatmentRequest
     }
 }
 
-public class UpdateGeneralTreatmentUseCase(DbContext context, AppSettings settings)
+public class UpdateGeneralTreatmentValidator : AbstractValidator<UpdateGeneralTreatmentRequest>
+{
+    public UpdateGeneralTreatmentValidator(IFileTypeValidator fileTypeValidator)
+    {
+        RuleFor(request => request.Name).NotEmpty();
+        RuleFor(request => request.Description).NotEmpty();
+        RuleFor(request => request.Duration).GreaterThan(0);
+        RuleFor(request => request.Image).MustBeValidImage(fileTypeValidator);
+    }
+}
+
+public class UpdateGeneralTreatmentUseCase(
+    DbContext context, 
+    AppSettings settings,
+    UpdateGeneralTreatmentValidator validator)
 {
     private readonly string _basePath = settings.DentalServicesImagesPath;
 
     public async Task<Result> ExecuteAsync(int id, UpdateGeneralTreatmentRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var generalTreatment = await context.Set<GeneralTreatment>()
             .Where(treatment => treatment.Id == id)
             .FirstOrDefaultAsync();

@@ -8,15 +8,11 @@ public class UpdateAnyEmployeeRequest
     public string Names { get; init; }
     public string LastNames { get; init; }
     public string CellPhone { get; init; }
-    public DateTime DateBirth { get; init; }
+    public DateTime? DateBirth { get; init; }
     public int GenderId { get; init; }
     public int OfficeId { get; init; }
     public string PregradeUniversity { get; init; }
     public string PostgradeUniversity { get; init; }
-
-    [Required]
-    [MaxLength(Role.Max)]
-    [MinLength(Role.Min)]
     public List<int> Roles { get; init; }
     public List<int> SpecialtiesId { get; init; }
     public bool IsDeleted { get; init; }
@@ -38,14 +34,40 @@ public class UpdateAnyEmployeeRequest
     }
 }
 
+public class UpdateAnyEmployeeValidator : AbstractValidator<UpdateAnyEmployeeRequest>
+{
+    public UpdateAnyEmployeeValidator()
+    {
+        RuleFor(request => request.Email)
+            .NotEmpty()
+            .EmailAddress();
+        RuleFor(request => request.Password).NotEmpty();
+        RuleFor(request => request.Document).NotEmpty();
+        RuleFor(request => request.Names).NotEmpty();
+        RuleFor(request => request.LastNames).NotEmpty();
+        RuleFor(request => request.CellPhone).NotEmpty();
+        RuleFor(request => request.DateBirth).NotEmpty();
+        RuleFor(request => request.GenderId).GreaterThan(0);
+        RuleFor(request => request.OfficeId).GreaterThan(0);
+        RuleFor(request => request.Roles).NotEmpty();
+        RuleForEach(request => request.Roles).InclusiveBetween(Role.Min, Role.Max);
+        RuleForEach(request => request.SpecialtiesId).GreaterThan(0);
+    }
+}
+
 public class UpdateAnyEmployeeUseCase(
     DbContext context,
     IPasswordHasher passwordHasher,
     IEntityService<UserRole> userRoleService,
-    IEntityService<EmployeeSpecialty> employeeSpecialtyService)
+    IEntityService<EmployeeSpecialty> employeeSpecialtyService,
+    UpdateAnyEmployeeValidator validator)
 {
     public async Task<Result> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee, UpdateAnyEmployeeRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var employeeToEdit = await context.Set<Employee>()
             .Include(employee => employee.Person)
             .Include(employee => employee.User.UserRoles)

@@ -11,6 +11,7 @@
     <PackageReference Include="DotEnv.Core" />
     <PackageReference Include="Swashbuckle.AspNetCore" />
     <PackageReference Include="Scrutor" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers">
       <PrivateAssets>all</PrivateAssets>

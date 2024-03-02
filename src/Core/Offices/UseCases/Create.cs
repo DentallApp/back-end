@@ -14,10 +14,23 @@ public class CreateOfficeRequest
     };
 }
 
-public class CreateOfficeUseCase(DbContext context)
+public class CreateOfficeValidator : AbstractValidator<CreateOfficeRequest>
+{
+    public CreateOfficeValidator()
+    {
+        RuleFor(request => request.Name).NotEmpty();
+        RuleFor(request => request.Address).NotEmpty();
+    }
+}
+
+public class CreateOfficeUseCase(DbContext context, CreateOfficeValidator validator)
 {
     public async Task<Result<CreatedId>> ExecuteAsync(CreateOfficeRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var office = request.MapToOffice();
         context.Add(office);
         await context.SaveChangesAsync();

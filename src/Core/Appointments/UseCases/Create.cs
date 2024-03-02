@@ -1,12 +1,30 @@
 ﻿namespace DentallApp.Core.Appointments.UseCases;
 
+public class CreateAppointmentValidator : AbstractValidator<CreateAppointmentRequest>
+{
+    public CreateAppointmentValidator()
+    {
+        RuleFor(request => request.UserId).GreaterThan(0);
+        RuleFor(request => request.PersonId).GreaterThan(0);
+        RuleFor(request => request.DentistId).GreaterThan(0);
+        RuleFor(request => request.GeneralTreatmentId).GreaterThan(0);
+        RuleFor(request => request.OfficeId).GreaterThan(0);
+        RuleFor(request => request.StartHour).LessThan(request => request.EndHour);
+    }
+}
+
 public class CreateAppointmentUseCase(
     DbContext context,
     IDateTimeService dateTimeService,
-    SendAppointmentInformationUseCase sendInformationUseCase) : ICreateAppointmentUseCase
+    SendAppointmentInformationUseCase sendInformationUseCase,
+    CreateAppointmentValidator validator) : ICreateAppointmentUseCase
 {
     public async Task<Result<CreatedId>> ExecuteAsync(CreateAppointmentRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed()) 
+            return result.Invalid();
+
         // Checks if the date and time of the appointment is not available.
         bool isNotAvailable = await context.Set<Appointment>()
             .Where(appointment =>

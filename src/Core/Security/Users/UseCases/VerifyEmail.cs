@@ -5,13 +5,26 @@ public class VerifyEmailRequest
     public string Token { get; init; }
 }
 
+public class VerifyEmailValidator : AbstractValidator<VerifyEmailRequest>
+{
+    public VerifyEmailValidator()
+    {
+        RuleFor(request => request.Token).NotEmpty();
+    }
+}
+
 public class VerifyEmailUseCase(
     DbContext context,
     IUserRepository userRepository,
-    ITokenService tokenService)
+    ITokenService tokenService,
+    VerifyEmailValidator validator)
 {
     public async Task<Result<UserLoginResponse>> ExecuteAsync(VerifyEmailRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var claimPrincipal = tokenService.ValidateEmailVerificationToken(request.Token);
         if (claimPrincipal is null)
             return Result.Invalid(Messages.EmailVerificationTokenInvalid);

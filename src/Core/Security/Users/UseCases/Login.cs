@@ -6,6 +6,17 @@ public class UserLoginRequest
     public string Password { get; init; }
 }
 
+public class UserLoginValidator : AbstractValidator<UserLoginRequest>
+{
+    public UserLoginValidator()
+    {
+        RuleFor(request => request.UserName)
+            .NotEmpty()
+            .EmailAddress();
+        RuleFor(request => request.Password).NotEmpty();
+    }
+}
+
 // This is to identify the base type in the payload.
 [JsonDerivedType(typeof(UserLoginResponse), typeDiscriminator: "user")]
 [JsonDerivedType(typeof(EmployeeLoginResponse), typeDiscriminator: "employee")]
@@ -108,10 +119,15 @@ public class UserLoginUseCase(
     DbContext context,
     IUserRepository userRepository,
     ITokenService tokenService,
-    IPasswordHasher passwordHasher)
+    IPasswordHasher passwordHasher,
+    UserLoginValidator validator)
 {
     public async Task<Result<UserLoginResponse>> ExecuteAsync(UserLoginRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var user = await userRepository.GetFullUserProfileAsync(request.UserName);
         if (user is null || !passwordHasher.Verify(request.Password, user.Password))
             return Result.Unauthorized(Messages.EmailOrPasswordIncorrect);

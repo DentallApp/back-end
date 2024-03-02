@@ -6,6 +6,15 @@ public class CreateRefreshTokenRequest
     public string OldRefreshToken { get; init; }
 }
 
+public class CreateRefreshTokenValidator : AbstractValidator<CreateRefreshTokenRequest>
+{
+    public CreateRefreshTokenValidator()
+    {
+        RuleFor(request => request.OldAccessToken).NotEmpty();
+        RuleFor(request => request.OldRefreshToken).NotEmpty();
+    }
+}
+
 public class CreateRefreshTokenResponse
 {
     public string NewAccessToken { get; init; }
@@ -15,10 +24,15 @@ public class CreateRefreshTokenResponse
 public class CreateRefreshTokenUseCase(
     DbContext context,
     ITokenService tokenService,
-    IDateTimeService dateTimeService)
+    IDateTimeService dateTimeService,
+    CreateRefreshTokenValidator validator)
 {
     public async Task<Result<CreateRefreshTokenResponse>> ExecuteAsync(CreateRefreshTokenRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var claimPrincipal = tokenService.GetPrincipalFromExpiredAccessToken(request.OldAccessToken);
         if (claimPrincipal is null)
             return Result.Unauthorized(Messages.AccessTokenInvalid);

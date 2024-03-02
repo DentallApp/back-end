@@ -38,3 +38,4 @@ global using DotEnv.Core;
 global using SimpleResults;
 global using YeSql.Net;
 global using CPlugin.Net;
+global using FluentValidation;

@@ -13,7 +13,8 @@ public class CancelAppointmentsUseCaseTests
             new AppSettings(),
             Mock.Create<IAppointmentRepository>(),
             Mock.Create<IInstantMessaging>(),
-            _dateTimeService);
+            _dateTimeService,
+            new CancelAppointmentsValidator());
     }
 
     [Test]
@@ -22,11 +23,33 @@ public class CancelAppointmentsUseCaseTests
         // Arrange
         var request = new CancelAppointmentsRequest
         {
+            Reason = "Reason",
             Appointments = new List<CancelAppointmentsRequest.Appointment>
             {
-                new () { AppointmentId = 1, AppointmentDate = new DateTime(2022, 08, 02), StartHour = new TimeSpan(14, 0, 0) },
-                new () { AppointmentId = 2, AppointmentDate = new DateTime(2022, 08, 02), StartHour = new TimeSpan(15, 0, 0) },
-                new () { AppointmentId = 3, AppointmentDate = new DateTime(2022, 08, 02), StartHour = new TimeSpan(13, 0, 0) }
+                new() 
+                { 
+                    AppointmentId = 1, 
+                    PatientName = "Bob", 
+                    PatientCellPhone = "3053581032", 
+                    AppointmentDate = new DateTime(2022, 08, 02), 
+                    StartHour = new TimeSpan(14, 0, 0) 
+                },
+                new() 
+                { 
+                    AppointmentId = 2,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 02), 
+                    StartHour = new TimeSpan(15, 0, 0) 
+                },
+                new() 
+                { 
+                    AppointmentId = 3,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 02), 
+                    StartHour = new TimeSpan(13, 0, 0) 
+                }
             }
         };
         var claims = new Claim[]
@@ -55,13 +78,49 @@ public class CancelAppointmentsUseCaseTests
         var expectedMessage = new AppointmentThatHasAlreadyPassedEmployeeError(pastAppointments).Message;
         var request = new CancelAppointmentsRequest
         {
+            Reason = "Reason",
             Appointments = new List<CancelAppointmentsRequest.Appointment>
             {
-                new () { AppointmentId = 1, AppointmentDate = new DateTime(2022, 08, 02), StartHour = new TimeSpan(14, 0, 0) },
-                new () { AppointmentId = 2, AppointmentDate = new DateTime(2022, 08, 02), StartHour = new TimeSpan(15, 0, 0) },
-                new () { AppointmentId = 3, AppointmentDate = new DateTime(2022, 08, 02), StartHour = new TimeSpan(08, 0, 0) },
-                new () { AppointmentId = 4, AppointmentDate = new DateTime(2022, 08, 01), StartHour = new TimeSpan(09, 0, 0) },
-                new () { AppointmentId = 5, AppointmentDate = new DateTime(2022, 08, 01), StartHour = new TimeSpan(13, 0, 0) }
+                new() 
+                { 
+                    AppointmentId = 1,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 02), 
+                    StartHour = new TimeSpan(14, 0, 0) 
+                },
+                new() 
+                { 
+                    AppointmentId = 2,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 02), 
+                    StartHour = new TimeSpan(15, 0, 0) 
+                },
+                new() 
+                { 
+                    AppointmentId = 3,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 02), 
+                    StartHour = new TimeSpan(08, 0, 0) 
+                },
+                new() 
+                { 
+                    AppointmentId = 4,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 01), 
+                    StartHour = new TimeSpan(09, 0, 0) 
+                },
+                new() 
+                { 
+                    AppointmentId = 5,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 01), 
+                    StartHour = new TimeSpan(13, 0, 0) 
+                }
             }
         };
         var claims = new Claim[]
@@ -96,13 +155,49 @@ public class CancelAppointmentsUseCaseTests
         var expectedMessage = new AppointmentThatHasAlreadyPassedEmployeeError(pastAppointments).Message;
         var request = new CancelAppointmentsRequest
         {
+            Reason = "Reason",
             Appointments = new List<CancelAppointmentsRequest.Appointment>
             {
-                new () { AppointmentId = 1, AppointmentDate = new DateTime(2022, 08, 02), StartHour = new TimeSpan(14, 0, 0) },
-                new () { AppointmentId = 2, AppointmentDate = new DateTime(2022, 08, 02), StartHour = new TimeSpan(15, 0, 0) },
-                new () { AppointmentId = 3, AppointmentDate = new DateTime(2022, 08, 02), StartHour = new TimeSpan(08, 0, 0) },
-                new () { AppointmentId = 4, AppointmentDate = new DateTime(2022, 08, 01), StartHour = new TimeSpan(09, 0, 0) },
-                new () { AppointmentId = 5, AppointmentDate = new DateTime(2022, 08, 01), StartHour = new TimeSpan(13, 0, 0) }
+                new() 
+                { 
+                    AppointmentId = 1,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 02), 
+                    StartHour = new TimeSpan(14, 0, 0) 
+                },
+                new() 
+                { 
+                    AppointmentId = 2,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 02), 
+                    StartHour = new TimeSpan(15, 0, 0) 
+                },
+                new() 
+                { 
+                    AppointmentId = 3,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 02), 
+                    StartHour = new TimeSpan(08, 0, 0) 
+                },
+                new() 
+                { 
+                    AppointmentId = 4,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 01), 
+                    StartHour = new TimeSpan(09, 0, 0) 
+                },
+                new() 
+                { 
+                    AppointmentId = 5,
+                    PatientName = "Bob",
+                    PatientCellPhone = "3053581032",
+                    AppointmentDate = new DateTime(2022, 08, 01), 
+                    StartHour = new TimeSpan(13, 0, 0) 
+                }
             }
         };
         var claims = new Claim[]

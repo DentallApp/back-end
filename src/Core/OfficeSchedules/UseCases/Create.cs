@@ -16,10 +16,24 @@ public class CreateOfficeScheduleRequest
     };
 }
 
-public class CreateOfficeScheduleUseCase(DbContext context)
+public class CreateOfficeScheduleValidator : AbstractValidator<CreateOfficeScheduleRequest>
+{
+    public CreateOfficeScheduleValidator()
+    {
+        RuleFor(request => request.WeekDayId).InclusiveBetween(1, 7);
+        RuleFor(request => request.OfficeId).GreaterThan(0);
+        RuleFor(request => request.StartHour).LessThan(request => request.EndHour);
+    }
+}
+
+public class CreateOfficeScheduleUseCase(DbContext context, CreateOfficeScheduleValidator validator)
 {
     public async Task<Result<CreatedId>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateOfficeScheduleRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
             return Result.Forbidden(Messages.OfficeNotAssigned);
 

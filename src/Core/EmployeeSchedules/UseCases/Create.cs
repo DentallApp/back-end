@@ -20,10 +20,27 @@ public class CreateEmployeeScheduleRequest
     };
 }
 
-public class CreateEmployeeScheduleUseCase(DbContext context)
+public class CreateEmployeeScheduleValidator : AbstractValidator<CreateEmployeeScheduleRequest>
+{
+    public CreateEmployeeScheduleValidator()
+    {
+        RuleFor(request => request.EmployeeId).GreaterThan(0);
+        RuleFor(request => request.WeekDayId).InclusiveBetween(1, 7);
+        RuleFor(request => request.MorningStartHour).NotEmpty();
+        RuleFor(request => request.MorningEndHour).NotEmpty();
+        RuleFor(request => request.AfternoonStartHour).NotEmpty();
+        RuleFor(request => request.AfternoonEndHour).NotEmpty();
+    }
+}
+
+public class CreateEmployeeScheduleUseCase(DbContext context, CreateEmployeeScheduleValidator validator)
 {
     public async Task<Result<CreatedId>> ExecuteAsync(CreateEmployeeScheduleRequest request)
     {
+        var result = validator.Validate(request);
+        if (result.IsFailed())
+            return result.Invalid();
+
         var employeeSchedule = request.MapToEmployeeSchedule();
         context.Add(employeeSchedule);
         await context.SaveChangesAsync();
