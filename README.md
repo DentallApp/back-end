@@ -62,6 +62,7 @@ Another of my reasons is that what I learn about software engineering, I like to
 - [AdaptiveCards](https://github.com/microsoft/AdaptiveCards)
 - [Twilio](https://github.com/twilio/twilio-csharp)
 - [SendGrid](https://github.com/sendgrid/sendgrid-csharp)
+- [libphonenumber-csharp](https://github.com/twcclegg/libphonenumber-csharp)
 - [Quartz.NET](https://github.com/quartznet/quartznet)
 - [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
 - [Scrutor](https://github.com/khellang/Scrutor)
@@ -73,6 +74,7 @@ Another of my reasons is that what I learn about software engineering, I like to
 - [EFCore.CustomQueryPreprocessor](https://github.com/MrDave1999/EFCore.CustomQueryPreprocessor)
 - [DelegateDecompiler](https://github.com/hazzik/DelegateDecompiler)
 - [Dapper](https://github.com/DapperLib/Dapper)
+- [Microsoft.VisualStudio.Threading.Analyzers](https://github.com/microsoft/vs-threading)
 - [Microsoft.AspNetCore.Authentication.JwtBearer](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer)
 - [Microsoft.IdentityModel.Tokens](https://www.nuget.org/packages/Microsoft.IdentityModel.Tokens)
 - [System.IdentityModel.Tokens.Jwt](https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt)
@@ -86,6 +88,7 @@ Another of my reasons is that what I learn about software engineering, I like to
 - [NUnit](https://github.com/nunit/nunit)
 - [FluentAssertions](https://github.com/fluentassertions/fluentassertions)
 - [JustMock](https://github.com/telerik/JustMockLite)
+- [coverlet.msbuild](https://github.com/coverlet-coverage/coverlet)
 - [Microsoft.Bot.Builder.Testing](https://www.nuget.org/packages/Microsoft.Bot.Builder.Testing)
 
 ### Own libraries
@@ -107,6 +110,8 @@ Software engineering concepts have been applied in this project:
 - [Modular programming](https://en.wikipedia.org/wiki/Modular_programming)
 - [Dependency injection](https://en.wikipedia.org/wiki/Dependency_injection)
 - [Operation Result Pattern](https://medium.com/@wgyxxbf/result-pattern-a01729f42f8c)
+- [Guard Clause](https://deviq.com/design-patterns/guard-clause)
+- [Fail Fast](https://deviq.com/principles/fail-fast)
 - [Open-closed principle](https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle)
 - [Acyclic dependencies principle](https://en.wikipedia.org/wiki/Acyclic_dependencies_principle)
 - [Explicit dependencies](https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles#explicit-dependencies)
