@@ -43,8 +43,8 @@ public static class AuthenticationJwtBearer
         /// </summary>
         private const string BotPath = "/messages";
 
-        public CustomJwtBearerHandler(IOptionsMonitor<JwtBearerOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
-            : base(options, logger, encoder, clock) { }
+        public CustomJwtBearerHandler(IOptionsMonitor<JwtBearerOptions> options, ILoggerFactory logger, UrlEncoder encoder)
+            : base(options, logger, encoder) { }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
             => Context.Request.Path.StartsWithSegments(BotPath) ? 
