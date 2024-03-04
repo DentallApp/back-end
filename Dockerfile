@@ -50,7 +50,7 @@ RUN dotnet publish -c Release -o /app/out --no-restore
 #
 # Final stage/image
 #
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 
 # The tzdata package (contains time zone data) is installed so that the "TZ" variable can be set at runtime
