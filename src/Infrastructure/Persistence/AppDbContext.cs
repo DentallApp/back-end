@@ -1,7 +1,7 @@
 namespace DentallApp.Infrastructure.Persistence;
 
 public partial class AppDbContext(
-    IEnumerable<IModelCreating> modelCreatings,
+    IEnumerable<IEntityTypeConfigurator> entityTypeConfigurators,
     IWebHostEnvironment env,
     DbContextOptions<AppDbContext> options) : DbContext(options)
 {
@@ -16,10 +16,10 @@ public partial class AppDbContext(
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Execute the entity configurations that expose the plug-ins.
-        foreach (var modelCreating in modelCreatings)
+        // Execute the entity configurations that expose the plugins.
+        foreach (IEntityTypeConfigurator entityTypeConfigurator in entityTypeConfigurators)
         {
-            modelCreating.OnModelCreating(modelBuilder);
+            entityTypeConfigurator.ConfigureEntities(modelBuilder);
         }
 
         modelBuilder
