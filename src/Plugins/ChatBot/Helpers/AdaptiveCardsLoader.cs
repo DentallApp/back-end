@@ -10,7 +10,7 @@ public class AdaptiveCardsLoader
         s_basePath = Path.Combine(AppContext.BaseDirectory, "AdaptiveCards");
         if (Directory.Exists(s_basePath)) return;
 
-        var rootNamespace = typeof(PluginStartup).Namespace;
+        var rootNamespace = typeof(DependencyServicesRegisterer).Namespace;
         // This path is used by the Host Application.
         var path2 = $"plugins/{rootNamespace}/AdaptiveCards";
         s_basePath = Path.Combine(AppContext.BaseDirectory, path2);

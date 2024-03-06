@@ -3,15 +3,15 @@
 public static class PluginStartup
 {
     /// <summary>
-    /// Configures the application plug-ins.
+    /// Configures the plugins.
     /// </summary>
     public static void Configure(WebApplicationBuilder builder)
     {
         var envConfiguration = new CPluginEnvConfiguration();
         PluginLoader.Load(envConfiguration);
-        var startups = TypeFinder.FindSubtypesOf<IPluginStartup>();
-        foreach (var pluginStartup in startups)
-            pluginStartup.ConfigureWebApplicationBuilder(builder);
+        var dependencyServicesRegisterers = TypeFinder.FindSubtypesOf<IDependencyServicesRegisterer>();
+        foreach (var dependencyServicesRegisterer in dependencyServicesRegisterers)
+            dependencyServicesRegisterer.RegisterServices(builder.Services, builder.Configuration);
 
         var modelCreatings = TypeFinder.FindSubtypesOf<IModelCreating>();
         builder.Services.AddSingleton(modelCreatings);
