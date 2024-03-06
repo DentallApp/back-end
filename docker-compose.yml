@@ -8,7 +8,7 @@ services:
       - dental_services_images:/app/dental_services
     env_file: .env
     ports:
-      - 5000:80
+      - 5000:8080
 
   indirectline:
     restart: always
@@ -17,7 +17,7 @@ services:
       - 3000:3000
     environment: 
       - DirectLine:ServiceUrl=http://indirectline:3000
-      - DirectLine:BotEndpoint=http://webapi:80/api/messages
+      - DirectLine:BotEndpoint=http://webapi:8080/api/messages
       
   mariadb:
     restart: always
