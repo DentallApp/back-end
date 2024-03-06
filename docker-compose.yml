@@ -12,7 +12,7 @@ services:
 
   indirectline:
     restart: always
-    image: mrdave1999/indirectline:0.1.0-alpha
+    image: mrdave1999/indirectline:0.2.0-alpha
     ports: 
       - 3000:3000
     environment: 
