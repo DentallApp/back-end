@@ -13,8 +13,13 @@ public static class PluginStartup
         foreach (var dependencyServicesRegisterer in dependencyServicesRegisterers)
             dependencyServicesRegisterer.RegisterServices(builder.Services, builder.Configuration);
 
-        var modelCreatings = TypeFinder.FindSubtypesOf<IModelCreating>();
-        builder.Services.AddSingleton(modelCreatings);
+        var entityTypeConfigurators = TypeFinder
+            .FindSubtypesOf<IEntityTypeConfigurator>()
+            .ToList();
+
+        builder
+            .Services
+            .AddSingleton<IEnumerable<IEntityTypeConfigurator>>(entityTypeConfigurators);
 
         // These services are only added when no plug-in registers its own implementation.
         builder.Services.TryAddSingleton<IEmailService, FakeEmailService>();
