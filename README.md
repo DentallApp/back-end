@@ -62,8 +62,10 @@ Another of my reasons is that what I learn about software engineering, I like to
 - [AdaptiveCards](https://github.com/microsoft/AdaptiveCards)
 - [Twilio](https://github.com/twilio/twilio-csharp)
 - [SendGrid](https://github.com/sendgrid/sendgrid-csharp)
+- [SendGrid.Extensions.DependencyInjection](https://www.nuget.org/packages/SendGrid.Extensions.DependencyInjection)
 - [libphonenumber-csharp](https://github.com/twcclegg/libphonenumber-csharp)
-- [Quartz.NET](https://github.com/quartznet/quartznet)
+- [Quartz.Net](https://github.com/quartznet/quartznet)
+- [Quartz.Extensions.Hosting](https://www.nuget.org/packages/Quartz.Extensions.Hosting)
 - [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
 - [Scrutor](https://github.com/khellang/Scrutor)
 - [efcore](https://github.com/dotnet/efcore)
@@ -83,6 +85,7 @@ Another of my reasons is that what I learn about software engineering, I like to
 - [itext7.pdfhtml](https://github.com/itext/i7n-pdfhtml)
 - [File.TypeChecker](https://github.com/AJMitev/FileTypeChecker)
 - [FluentValidation](https://github.com/FluentValidation/FluentValidation)
+- [FluentValidation.DependencyInjectionExtensions](https://www.nuget.org/packages/FluentValidation.DependencyInjectionExtensions)
 
 ### Testing
 - [NUnit](https://github.com/nunit/nunit)
