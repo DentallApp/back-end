@@ -282,6 +282,9 @@
   <data name="RangeToPayMinMax" xml:space="preserve">
     <value>El rango a pagar es de ${0} a ${1}</value>
   </data>
+  <data name="ReferenceConstraintViolated" xml:space="preserve">
+    <value>Se ha detectado una violación de restricción de referencia desde la base de datos.</value>
+  </data>
   <data name="RefreshTokenExpired" xml:space="preserve">
     <value>Refresh-token ha expirado.</value>
   </data>
@@ -341,13 +344,13 @@ Si desea agendar otra cita, escriba algo para empezar de nuevo el proceso.</valu
 Seleccione la hora para su cita:</value>
   </data>
   <data name="UnexpectedError" xml:space="preserve">
-    <value>Hubo un error inesperado, por favor intente de nuevo.</value>
+    <value>Se ha producido un error inesperado, inténtelo de nuevo.</value>
   </data>
   <data name="UnexpectedErrors" xml:space="preserve">
     <value>Se encontraron errores inesperados, por favor intente de nuevo.</value>
   </data>
   <data name="UniqueConstraintViolated" xml:space="preserve">
-    <value>Se detectó una violación a una restricción única (UNIQUE INDEX). Por favor, no envíe una entrada duplicada.</value>
+    <value>Se ha detectado una violación de restricción única desde la base de datos.</value>
   </data>
   <data name="UnrecognizableFile" xml:space="preserve">
     <value>El archivo está irreconocible. No lo puede reconocer el sistema.</value>
