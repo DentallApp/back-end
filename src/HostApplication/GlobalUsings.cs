@@ -2,7 +2,7 @@ global using DentallApp.Core;
 global using DentallApp.Core.Dependents.UseCases;
 
 global using DentallApp.HostApplication;
-global using DentallApp.HostApplication.Middlewares;
+global using DentallApp.HostApplication.ExceptionHandlers;
 global using DentallApp.HostApplication.Extensions;
 
 global using DentallApp.Infrastructure;

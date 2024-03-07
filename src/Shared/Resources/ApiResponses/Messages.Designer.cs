@@ -544,6 +544,15 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Se ha detectado una violación de restricción de referencia desde la base de datos..
+        /// </summary>
+        public static string ReferenceConstraintViolated {
+            get {
+                return ResourceManager.GetString("ReferenceConstraintViolated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refresh-token ha expirado..
         /// </summary>
         public static string RefreshTokenExpired {
@@ -710,7 +719,7 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hubo un error inesperado, por favor intente de nuevo..
+        ///   Looks up a localized string similar to Se ha producido un error inesperado, inténtelo de nuevo..
         /// </summary>
         public static string UnexpectedError {
             get {
@@ -728,7 +737,7 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Se detectó una violación a una restricción única (UNIQUE INDEX). Por favor, no envíe una entrada duplicada..
+        ///   Looks up a localized string similar to Se ha detectado una violación de restricción única desde la base de datos..
         /// </summary>
         public static string UniqueConstraintViolated {
             get {
