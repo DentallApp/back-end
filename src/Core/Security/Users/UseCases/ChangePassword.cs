@@ -11,7 +11,7 @@ public class ChangePasswordValidator : AbstractValidator<ChangePasswordRequest>
     public ChangePasswordValidator()
     {
         RuleFor(request => request.OldPassword).NotEmpty();
-        RuleFor(request => request.NewPassword).NotEmpty();
+        RuleFor(request => request.NewPassword).MustBeSecurePassword();
     }
 }
 

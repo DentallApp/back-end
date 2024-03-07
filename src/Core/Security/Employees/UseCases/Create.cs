@@ -53,7 +53,7 @@ public class CreateEmployeeValidator : AbstractValidator<CreateEmployeeRequest>
         RuleFor(request => request.UserName)
             .NotEmpty()
             .EmailAddress();
-        RuleFor(request => request.Password).NotEmpty();
+        RuleFor(request => request.Password).MustBeSecurePassword();
         RuleFor(request => request.Document).NotEmpty();
         RuleFor(request => request.Names).NotEmpty();
         RuleFor(request => request.LastNames).NotEmpty();
