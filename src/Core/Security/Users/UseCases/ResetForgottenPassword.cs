@@ -11,7 +11,7 @@ public class ResetForgottenPasswordValidator : AbstractValidator<ResetForgottenP
     public ResetForgottenPasswordValidator()
     {
         RuleFor(request => request.Token).NotEmpty();
-        RuleFor(request => request.NewPassword).NotEmpty();
+        RuleFor(request => request.NewPassword).MustBeSecurePassword();
     }
 }
 

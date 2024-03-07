@@ -454,6 +454,51 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to La contraseña debe tener al menos una letra minúscula..
+        /// </summary>
+        public static string PasswordHasNotLowerCaseLetters {
+            get {
+                return ResourceManager.GetString("PasswordHasNotLowerCaseLetters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La contraseña debe tener al menos un número..
+        /// </summary>
+        public static string PasswordHasNotNumbers {
+            get {
+                return ResourceManager.GetString("PasswordHasNotNumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La contraseña debe tener al menos una letra mayúscula..
+        /// </summary>
+        public static string PasswordHasNotUpperCaseLetters {
+            get {
+                return ResourceManager.GetString("PasswordHasNotUpperCaseLetters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La contraseña no puede estar vacía..
+        /// </summary>
+        public static string PasswordIsEmpty {
+            get {
+                return ResourceManager.GetString("PasswordIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La contraseña debe tener al menos 5 caracteres..
+        /// </summary>
+        public static string PasswordMinimumCharacters {
+            get {
+                return ResourceManager.GetString("PasswordMinimumCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El token de restablecimiento de contraseña es inválido..
         /// </summary>
         public static string PasswordResetTokenInvalid {
