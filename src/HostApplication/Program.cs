@@ -25,18 +25,22 @@ builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(appSettings);
 builder.Services.AddValidators();
 
+builder.Services
+    .AddExceptionHandler<ReferenceConstraintExceptionHandler>()
+    .AddExceptionHandler<UniqueConstraintExceptionHandler>()
+    .AddExceptionHandler<GlobalExceptionHandler>();
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(options => options.SwaggerEndpoint("v1/swagger.json", "DentallApi V1"));
     IdentityModelEventSource.ShowPII = true;
 }
 else
 {
-    app.UseExceptionHandling();
+    app.UseExceptionHandler("/");
 }
 
 app.UseRequestLocalization(appSettings.Language);
