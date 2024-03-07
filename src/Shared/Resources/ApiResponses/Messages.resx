@@ -252,6 +252,21 @@
   <data name="OldPasswordIncorrect" xml:space="preserve">
     <value>La contraseña antigua es incorrecta.</value>
   </data>
+  <data name="PasswordHasNotLowerCaseLetters" xml:space="preserve">
+    <value>La contraseña debe tener al menos una letra minúscula.</value>
+  </data>
+  <data name="PasswordHasNotNumbers" xml:space="preserve">
+    <value>La contraseña debe tener al menos un número.</value>
+  </data>
+  <data name="PasswordHasNotUpperCaseLetters" xml:space="preserve">
+    <value>La contraseña debe tener al menos una letra mayúscula.</value>
+  </data>
+  <data name="PasswordIsEmpty" xml:space="preserve">
+    <value>La contraseña no puede estar vacía.</value>
+  </data>
+  <data name="PasswordMinimumCharacters" xml:space="preserve">
+    <value>La contraseña debe tener al menos 5 caracteres.</value>
+  </data>
   <data name="PasswordResetTokenInvalid" xml:space="preserve">
     <value>El token de restablecimiento de contraseña es inválido.</value>
   </data>
