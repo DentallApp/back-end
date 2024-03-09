@@ -23,6 +23,7 @@ global using DentallApp.Shared.Models.Claims;
 global using DentallApp.Shared.Interfaces;
 global using DentallApp.Shared.Interfaces.Persistence;
 global using DentallApp.Shared.Interfaces.Persistence.Repositories;
+global using DentallApp.Shared.Exceptions;
 
 global using System.Data;
 global using System.Text;

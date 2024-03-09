@@ -12,6 +12,7 @@ global using DentallApp.Shared.Extensions;
 global using DentallApp.Shared.Models;
 global using DentallApp.Shared.Models.Claims;
 global using DentallApp.Shared.Interfaces;
+global using DentallApp.Shared.Exceptions;
 
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
