@@ -20,8 +20,8 @@ public class TokenService(AppSettings settings, IDateTimeService dateTimeService
             expires: dateTimeService.UtcNow.AddHours(settings.EmailVerificationTokenExpires), 
             key: settings.EmailVerificationTokenKey);
 
-    public string CreateEmailVerificationToken(UserClaims userClaims)
-        => CreateEmailVerificationToken(CreateClaimsForUser(userClaims));
+    public string CreateEmailVerificationToken(UserClaims user)
+        => CreateEmailVerificationToken(CreateClaimsForUser(user));
 
     public string CreatePasswordResetToken(int userId, string userName, string passwordHash)
     {
@@ -83,27 +83,27 @@ public class TokenService(AppSettings settings, IDateTimeService dateTimeService
                      .AllowValidateLifetime()
                      .Decode(token);
 
-    private static List<Claim> CreateClaimsForUser(UserClaims userClaims)
+    private static List<Claim> CreateClaimsForUser(UserClaims user)
     {
         var claims = new List<Claim>
         {
-            new (CustomClaimsType.UserId,   userClaims.UserId.ToString()),
-            new (CustomClaimsType.PersonId, userClaims.PersonId.ToString()),
-            new (CustomClaimsType.UserName, userClaims.UserName),
-            new (CustomClaimsType.FullName, userClaims.FullName)
+            new (CustomClaimsType.UserId,   user.UserId.ToString()),
+            new (CustomClaimsType.PersonId, user.PersonId.ToString()),
+            new (CustomClaimsType.UserName, user.UserName),
+            new (CustomClaimsType.FullName, user.FullName)
          };
 
-        foreach (var role in userClaims.Roles)
+        foreach (var role in user.Roles)
             claims.Add(new(ClaimTypes.Role, role));
 
         return claims;
     }
 
-    private static List<Claim> CreateClaimsForEmployee(EmployeeClaims employeeClaims)
+    private static List<Claim> CreateClaimsForEmployee(EmployeeClaims employee)
     {
-        var claims = CreateClaimsForUser(employeeClaims);
-        claims.Add(new(CustomClaimsType.EmployeeId, employeeClaims.EmployeeId.ToString()));
-        claims.Add(new(CustomClaimsType.OfficeId,   employeeClaims.OfficeId.ToString()));
+        var claims = CreateClaimsForUser(employee);
+        claims.Add(new(CustomClaimsType.EmployeeId, employee.EmployeeId.ToString()));
+        claims.Add(new(CustomClaimsType.OfficeId,   employee.OfficeId.ToString()));
         return claims;
     }
 }
