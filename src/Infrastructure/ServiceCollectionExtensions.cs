@@ -15,11 +15,22 @@ public static class InfrastructureServicesExtensions
         services
             .AddScoped(typeof(IEntityService<>), typeof(EntityService<>))
             .AddScoped<ITokenService, TokenService>()
+            .AddScoped<ICurrentUser, CurrentUserService>()
+            .AddScoped<ICurrentEmployee, CurrentEmployeeService>()
             .AddSingleton<IDateTimeService, DateTimeService>()
             .AddSingleton<IHtmlConverter, HtmlConverterIText>()
             .AddSingleton<IHtmlTemplateLoader, HtmlTemplateLoaderScriban>()
             .AddSingleton<IPasswordHasher, PasswordHasherBcrypt>()
             .AddSingleton<IFileTypeValidator, FileTypeService>();
+
+        services.AddScoped(serviceProvider =>
+        {
+            ClaimsPrincipal user = serviceProvider
+                .GetService<IHttpContextAccessor>()
+                .HttpContext
+                .User;
+            return user;
+        });
 
         return services;
     }
