@@ -35,7 +35,7 @@ public static class ScrutorExtensions
         // Specifies the assembly for Scrutor to search for types.
         var assemblies = new List<Assembly>
         {
-            typeof(GetDependentsByUserIdUseCase).Assembly,
+            typeof(GetDependentsByCurrentUserIdUseCase).Assembly,
             typeof(IGetAvailableHoursUseCase).Assembly
         };
 
