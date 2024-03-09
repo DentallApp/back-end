@@ -8,7 +8,7 @@ public class CurrentUserService(ClaimsPrincipal claimsPrincipal) : ICurrentUser
         {
             string personId = claimsPrincipal.FindFirstValue(CustomClaimsType.PersonId);
             return personId is null ?
-                throw new InvalidOperationException("Claim type 'person_id' was not found.") :
+                throw new ClaimNotFoundException(CustomClaimsType.PersonId) :
                 int.Parse(personId);
         }
     }
@@ -19,7 +19,7 @@ public class CurrentUserService(ClaimsPrincipal claimsPrincipal) : ICurrentUser
         {
             string userId = claimsPrincipal.FindFirstValue(CustomClaimsType.UserId);
             return userId is null ?
-                throw new InvalidOperationException("Claim type 'user_id' was not found.") :
+                throw new ClaimNotFoundException(CustomClaimsType.UserId) :
                 int.Parse(userId);
         }
     }
@@ -30,7 +30,7 @@ public class CurrentUserService(ClaimsPrincipal claimsPrincipal) : ICurrentUser
         {
             string userName = claimsPrincipal.FindFirstValue(CustomClaimsType.UserName);
             return userName is null ?
-                throw new InvalidOperationException("Claim type 'username' was not found.") :
+                throw new ClaimNotFoundException(CustomClaimsType.UserName) :
                 userName;
         }
     }

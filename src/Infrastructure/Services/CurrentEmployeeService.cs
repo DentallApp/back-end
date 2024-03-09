@@ -8,7 +8,7 @@ public class CurrentEmployeeService(ClaimsPrincipal claimsPrincipal) : ICurrentE
         {
             string officeId = claimsPrincipal.FindFirstValue(CustomClaimsType.OfficeId);
             return officeId is null ? 
-                throw new InvalidOperationException("Claim type 'office_id' was not found.") : 
+                throw new ClaimNotFoundException(CustomClaimsType.OfficeId) : 
                 int.Parse(officeId);
         }
     }
@@ -19,7 +19,7 @@ public class CurrentEmployeeService(ClaimsPrincipal claimsPrincipal) : ICurrentE
         {
             string employeeId = claimsPrincipal.FindFirstValue(CustomClaimsType.EmployeeId);
             return employeeId is null ?
-                throw new InvalidOperationException("Claim type 'employee_id' was not found.") :
+                throw new ClaimNotFoundException(CustomClaimsType.EmployeeId) :
                 int.Parse(employeeId);
         }
     }
@@ -30,7 +30,7 @@ public class CurrentEmployeeService(ClaimsPrincipal claimsPrincipal) : ICurrentE
         {
             string userName = claimsPrincipal.FindFirstValue(CustomClaimsType.UserName);
             return userName is null ?
-                throw new InvalidOperationException("Claim type 'username' was not found.") :
+                throw new ClaimNotFoundException(CustomClaimsType.UserName) :
                 userName;
         }
     }
