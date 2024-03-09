@@ -4,7 +4,7 @@ namespace DentallApp.Core.Offices;
 
 [Route("office")]
 [ApiController]
-public class OfficeController : ControllerBase
+public class OfficeController
 {
     /// <summary>
     /// Crea un nuevo consultorio.
@@ -25,7 +25,7 @@ public class OfficeController : ControllerBase
         int id,
         [FromBody]UpdateOfficeRequest request,
         UpdateOfficeUseCase useCase)
-        => await useCase.ExecuteAsync(id, User.GetEmployeeId(), request);
+        => await useCase.ExecuteAsync(id, request);
 
     /// <summary>
     /// Obtiene los nombres de cada consultorio.

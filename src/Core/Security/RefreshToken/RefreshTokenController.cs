@@ -4,7 +4,7 @@ namespace DentallApp.Core.Security.RefreshToken;
 
 [Route("token")]
 [ApiController]
-public class RefreshTokenController : ControllerBase
+public class RefreshTokenController
 {
     [Route("refresh")]
     [HttpPost]
@@ -17,5 +17,5 @@ public class RefreshTokenController : ControllerBase
     [HttpPost, Authorize]
     public async Task<Result> Revoke(
         RevokeRefreshTokenUseCase useCase)
-        => await useCase.ExecuteAsync(User.GetUserId());
+        => await useCase.ExecuteAsync();
 }

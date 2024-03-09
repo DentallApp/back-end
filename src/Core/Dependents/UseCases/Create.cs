@@ -48,15 +48,18 @@ public class CreateDependentValidator : AbstractValidator<CreateDependentRequest
     }
 }
 
-public class CreateDependentUseCase(DbContext context, CreateDependentValidator validator)
+public class CreateDependentUseCase(
+    DbContext context, 
+    ICurrentUser currentUser,
+    CreateDependentValidator validator)
 {
-    public async Task<Result<CreatedId>> ExecuteAsync(int userId, CreateDependentRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(CreateDependentRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())
             return result.Invalid();
 
-        var dependent = request.MapToDependent(userId);
+        var dependent = request.MapToDependent(currentUser.UserId);
         context.Add(dependent);
         await context.SaveChangesAsync();
         return Result.CreatedResource(dependent.Id);

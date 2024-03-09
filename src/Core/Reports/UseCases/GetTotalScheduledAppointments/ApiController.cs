@@ -2,7 +2,7 @@
 
 [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
 [ApiController]
-public class ReportTotalScheduledAppointmentsController : ControllerBase
+public class ReportTotalScheduledAppointmentsController
 {
     /// <summary>
     /// Obtiene el reporte sobre el total de citas agendadas por odontólogo.
@@ -11,12 +11,7 @@ public class ReportTotalScheduledAppointmentsController : ControllerBase
     public async Task<ListedResult<GetTotalScheduledAppointmentsResponse>> Get(
         [FromBody]GetTotalScheduledAppointmentsRequest request,
         GetTotalScheduledAppointmentsUseCase useCase)
-    {
-        if (User.IsAdmin() && User.IsNotInOffice(request.OfficeId))
-            return Result.Forbidden();
-
-        return await useCase.ExecuteAsync(request);
-    }
+        => await useCase.ExecuteAsync(request);
 
     /// <summary>
     /// Descarga el reporte sobre el total de citas agendadas por odontólogo.

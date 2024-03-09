@@ -2,7 +2,7 @@
 
 [Route("appointment")]
 [ApiController]
-public class AppointmentController : ControllerBase
+public class AppointmentController
 {
     /// <summary>
     /// Crea una cita médica para cualquier persona.
@@ -23,7 +23,7 @@ public class AppointmentController : ControllerBase
         int id, 
         [FromBody]UpdateAppointmentRequest request, 
         UpdateAppointmentUseCase useCase)
-        => await useCase.ExecuteAsync(id, User, request);
+        => await useCase.ExecuteAsync(id, request);
 
     /// <summary>
     /// Permite al usuario básico cancelar su cita agendada.
@@ -33,7 +33,7 @@ public class AppointmentController : ControllerBase
     public async Task<Result> CancelBasicUserAppointment(
         int id, 
         CancelBasicUserAppointmentUseCase useCase)
-        => await useCase.ExecuteAsync(id, User.GetUserId());
+        => await useCase.ExecuteAsync(id);
 
     /// <summary>
     /// Permite cancelar las citas agendadas de los odontólogos.
@@ -49,16 +49,16 @@ public class AppointmentController : ControllerBase
     public async Task<Result<CancelAppointmentsResponse>> CancelAppointments(
         [FromBody]CancelAppointmentsRequest request, 
         CancelAppointmentsUseCase useCase)
-        => await useCase.ExecuteAsync(User, request);
+        => await useCase.ExecuteAsync(request);
 
     /// <summary>
     /// Obtiene el historial de citas del usuario básico.
     /// </summary>
     [AuthorizeByRole(RoleName.BasicUser)]
     [HttpGet("basic-user")]
-    public async Task<IEnumerable<GetAppointmentsByUserIdResponse>> GetByUserId(
-        GetAppointmentsByUserIdUseCase useCase)
-        => await useCase.ExecuteAsync(User.GetUserId());
+    public async Task<IEnumerable<GetAppointmentsByCurrentUserIdResponse>> GetByCurrentUserId(
+        GetAppointmentsByCurrentUserIdUseCase useCase)
+        => await useCase.ExecuteAsync();
 
     /// <summary>
     /// Obtiene las citas de los odontólogos para un empleado.
@@ -74,7 +74,7 @@ public class AppointmentController : ControllerBase
     public async Task<ListedResult<GetAppointmentsByDateRangeResponse>> GetByDateRange(
         [FromBody]GetAppointmentsByDateRangeRequest request,
         GetAppointmentsByDateRangeUseCase useCase)
-        => await useCase.ExecuteAsync(User, request);
+        => await useCase.ExecuteAsync(request);
 
     /// <summary>
     /// Obtiene las horas disponibles para la reserva de una cita.

@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Core.FavoriteDentists.UseCases;
 
-public class GetFavoriteDentistsByUserIdResponse
+public class GetFavoriteDentistsByCurrentUserIdResponse
 {
     public int FavoriteDentistId { get; init; }
     public string FullName { get; init; }
@@ -10,17 +10,19 @@ public class GetFavoriteDentistsByUserIdResponse
     public string OfficeName { get; init; }
 }
 
-public class GetFavoriteDentistsByUserIdUseCase(DbContext context)
+public class GetFavoriteDentistsByCurrentUserIdUseCase(
+    DbContext context,
+    ICurrentUser currentUser)
 {
-    public async Task<IEnumerable<GetFavoriteDentistsByUserIdResponse>> ExecuteAsync(int userId)
+    public async Task<IEnumerable<GetFavoriteDentistsByCurrentUserIdResponse>> ExecuteAsync()
     {
         var favoriteDentists = await 
             (from favoriteDentist in context.Set<FavoriteDentist>()
              join dentist in context.Set<Employee>() on favoriteDentist.DentistId equals dentist.Id
              join dentistDetails in context.Set<Person>() on dentist.PersonId equals dentistDetails.Id
              join office in context.Set<Office>() on dentist.OfficeId equals office.Id
-             where favoriteDentist.UserId == userId
-             select new GetFavoriteDentistsByUserIdResponse
+             where favoriteDentist.UserId == currentUser.UserId
+             select new GetFavoriteDentistsByCurrentUserIdResponse
              {
                  FavoriteDentistId   = favoriteDentist.Id,
                  FullName            = dentistDetails.FullName,

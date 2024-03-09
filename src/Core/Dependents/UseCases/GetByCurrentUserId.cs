@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Core.Dependents.UseCases;
 
-public class GetDependentsByUserIdResponse
+public class GetDependentsByCurrentUserIdResponse
 {
     public string Document { get; init; }
     public string Names { get; init; }
@@ -16,13 +16,13 @@ public class GetDependentsByUserIdResponse
     public int KinshipId { get; init; }
 }
 
-public class GetDependentsByUserIdUseCase(DbContext context)
+public class GetDependentsByCurrentUserIdUseCase(DbContext context, ICurrentUser currentUser)
 {
-    public async Task<IEnumerable<GetDependentsByUserIdResponse>> ExecuteAsync(int userId)
+    public async Task<IEnumerable<GetDependentsByCurrentUserIdResponse>> ExecuteAsync()
     {
         var dependents = await context.Set<Dependent>()
-            .Where(dependent => dependent.UserId == userId)
-            .Select(dependent => new GetDependentsByUserIdResponse
+            .Where(dependent => dependent.UserId == currentUser.UserId)
+            .Select(dependent => new GetDependentsByCurrentUserIdResponse
             {
                 DependentId = dependent.Id,
                 Document    = dependent.Person.Document,

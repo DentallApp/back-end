@@ -1,12 +1,15 @@
 ﻿namespace DentallApp.Core.Security.Employees.UseCases;
 
-public class DeleteEmployeeUseCase(DbContext context)
+public class DeleteEmployeeUseCase(DbContext context, ICurrentEmployee currentEmployee)
 {
-    public async Task<Result> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee)
+    public async Task<Result> ExecuteAsync(int id)
     {
+        if (id == currentEmployee.EmployeeId)
+            return Result.Forbidden(Messages.CannotRemoveYourOwnProfile);
+
         var employee = await context.Set<Employee>()
             .Include(employee => employee.User.UserRoles)
-            .Where(employee => employee.Id == employeeId)
+            .Where(employee => employee.Id == id)
             .FirstOrDefaultAsync();
 
         if (employee is null)

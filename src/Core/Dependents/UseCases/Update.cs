@@ -36,9 +36,12 @@ public class UpdateDependentValidator : AbstractValidator<UpdateDependentRequest
     }
 }
 
-public class UpdateDependentUseCase(DbContext context, UpdateDependentValidator validator)
+public class UpdateDependentUseCase(
+    DbContext context, 
+    ICurrentUser currentUser,
+    UpdateDependentValidator validator)
 {
-    public async Task<Result> ExecuteAsync(int dependentId, int userId, UpdateDependentRequest request)
+    public async Task<Result> ExecuteAsync(int id, UpdateDependentRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())
@@ -46,13 +49,13 @@ public class UpdateDependentUseCase(DbContext context, UpdateDependentValidator 
 
         var dependent = await context.Set<Dependent>()
             .Include(dependent => dependent.Person)
-            .Where(dependent => dependent.Id == dependentId)
+            .Where(dependent => dependent.Id == id)
             .FirstOrDefaultAsync();
 
         if (dependent is null)
             return Result.NotFound();
 
-        if (dependent.UserId != userId)
+        if (dependent.UserId != currentUser.UserId)
             return Result.Forbidden(Messages.ResourceFromAnotherUser);
 
         request.MapToDependent(dependent);

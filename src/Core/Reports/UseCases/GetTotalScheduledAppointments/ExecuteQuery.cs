@@ -27,11 +27,15 @@ public class GetTotalScheduledAppointmentsResponse
 public class GetTotalScheduledAppointmentsUseCase(
     IDbConnection dbConnection, 
     ISqlCollection sqlCollection,
+    ICurrentEmployee currentEmployee,
     GetTotalScheduledAppointmentsValidator validator)
 {
     public async Task<ListedResult<GetTotalScheduledAppointmentsResponse>> ExecuteAsync(
         GetTotalScheduledAppointmentsRequest request)
     {
+        if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
+            return Result.Forbidden();
+
         var result = validator.Validate(request);
         if (result.IsFailed())
             return result.Invalid();

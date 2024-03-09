@@ -3,16 +3,17 @@
 public class CancelBasicUserAppointmentUseCase(
     IUnitOfWork unitOfWork,
     IRepository<Appointment> repository,
-    IDateTimeService dateTimeService)
+    IDateTimeService dateTimeService,
+    ICurrentUser currentUser)
 {
-    public async Task<Result> ExecuteAsync(int appointmentId, int currentUserId)
+    public async Task<Result> ExecuteAsync(int id)
     {
-        var appointment = await repository.GetByIdAsync(appointmentId);
+        var appointment = await repository.GetByIdAsync(id);
 
         if (appointment is null)
             return Result.NotFound();
 
-        if (appointment.UserId != currentUserId)
+        if (appointment.UserId != currentUser.UserId)
             return Result.Forbidden(Messages.AppointmentNotAssigned);
 
         if (dateTimeService.Now > (appointment.Date + appointment.StartHour))

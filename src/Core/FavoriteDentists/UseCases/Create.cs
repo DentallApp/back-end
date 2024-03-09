@@ -13,9 +13,12 @@ public class CreateFavoriteDentistValidator : AbstractValidator<CreateFavoriteDe
     }
 }
 
-public class CreateFavoriteDentistUseCase(DbContext context, CreateFavoriteDentistValidator validator)
+public class CreateFavoriteDentistUseCase(
+    DbContext context, 
+    ICurrentUser currentUser,
+    CreateFavoriteDentistValidator validator)
 {
-    public async Task<Result<CreatedId>> ExecuteAsync(int userId, CreateFavoriteDentistRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(CreateFavoriteDentistRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())
@@ -23,7 +26,7 @@ public class CreateFavoriteDentistUseCase(DbContext context, CreateFavoriteDenti
 
         var favoriteDentist = new FavoriteDentist
         {
-            UserId    = userId,
+            UserId    = currentUser.UserId,
             DentistId = request.DentistId
         };
         context.Add(favoriteDentist);

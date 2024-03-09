@@ -24,11 +24,15 @@ public class GetMostRequestedServicesResponse
 
 public class GetMostRequestedServicesUseCase(
     DbContext context, 
+    ICurrentEmployee currentEmployee,
     GetMostRequestedServicesValidator validator)
 {
     public async Task<ListedResult<GetMostRequestedServicesResponse>> ExecuteAsync(
         GetMostRequestedServicesRequest request)
     {
+        if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
+            return Result.Forbidden();
+
         var result = validator.Validate(request);
         if (result.IsFailed())
             return result.Invalid();

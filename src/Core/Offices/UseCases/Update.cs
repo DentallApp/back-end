@@ -51,16 +51,17 @@ public class UpdateOfficeValidator : AbstractValidator<UpdateOfficeRequest>
 public class UpdateOfficeUseCase(
     DbContext context, 
     IDateTimeService dateTimeService,
+    ICurrentEmployee currentEmployee,
     UpdateOfficeValidator validator)
 {
-    public async Task<Result> ExecuteAsync(int officeId, int currentEmployeeId, UpdateOfficeRequest request)
+    public async Task<Result> ExecuteAsync(int id, UpdateOfficeRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())
             return result.Invalid();
 
         var currentOffice = await context.Set<Office>()
-            .Where(office => office.Id == officeId)
+            .Where(office => office.Id == id)
             .IgnoreQueryFilters()
             .FirstOrDefaultAsyncEF();
 
@@ -73,7 +74,7 @@ public class UpdateOfficeUseCase(
             {
                 using var transaction = await context.Database.BeginTransactionAsync();
                 if (request.IsInactive() && request.IsCheckboxTicked && currentOffice.IsEnabledEmployeeAccounts)
-                    await DisableEmployeeAccountsAsync(currentEmployeeId, currentOffice);
+                    await DisableEmployeeAccountsAsync(currentEmployee.EmployeeId, currentOffice);
                 else if (request.IsInactive() && request.IsCheckboxUnticked && currentOffice.IsDisabledEmployeeAccounts)
                     await EnableEmployeeAccountsAsync(currentOffice);
 

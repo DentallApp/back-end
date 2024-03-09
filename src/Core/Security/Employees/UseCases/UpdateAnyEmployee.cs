@@ -50,7 +50,8 @@ public class UpdateAnyEmployeeValidator : AbstractValidator<UpdateAnyEmployeeReq
         RuleFor(request => request.GenderId).GreaterThan(0);
         RuleFor(request => request.OfficeId).GreaterThan(0);
         RuleFor(request => request.Roles).NotEmpty();
-        RuleForEach(request => request.Roles).InclusiveBetween(Role.Min, Role.Max);
+        RuleForEach(request => request.Roles)
+            .InclusiveBetween(Role.Range.Min, Role.Range.Max);
         RuleForEach(request => request.SpecialtiesId).GreaterThan(0);
     }
 }
@@ -60,10 +61,14 @@ public class UpdateAnyEmployeeUseCase(
     IPasswordHasher passwordHasher,
     IEntityService<UserRole> userRoleService,
     IEntityService<EmployeeSpecialty> employeeSpecialtyService,
+    ICurrentEmployee currentEmployee,
     UpdateAnyEmployeeValidator validator)
 {
-    public async Task<Result> ExecuteAsync(int employeeId, ClaimsPrincipal currentEmployee, UpdateAnyEmployeeRequest request)
+    public async Task<Result> ExecuteAsync(int id, UpdateAnyEmployeeRequest request)
     {
+        if (currentEmployee.IsAdmin() && id == currentEmployee.EmployeeId)
+            return Result.Forbidden(Messages.CannotEditYourOwnProfile);
+
         var result = validator.Validate(request);
         if (result.IsFailed())
             return result.Invalid();
@@ -72,7 +77,7 @@ public class UpdateAnyEmployeeUseCase(
             .Include(employee => employee.Person)
             .Include(employee => employee.User.UserRoles)
             .Include(employee => employee.EmployeeSpecialties)
-            .Where(employee => employee.Id == employeeId)
+            .Where(employee => employee.Id == id)
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync();
 
@@ -87,7 +92,7 @@ public class UpdateAnyEmployeeUseCase(
         if (currentEmployee.IsAdmin() && currentEmployee.IsNotInOffice(employeeToEdit.OfficeId))
             return Result.Forbidden(Messages.OfficeNotAssigned);
 
-        if (currentEmployee.HasNotPermissions(request.Roles, employeeToEdit.Id))
+        if (currentEmployee.HasNotPermissions(request.Roles))
             return Result.Forbidden(Messages.PermitsNotGranted);
 
         if (request.Password is not null)
