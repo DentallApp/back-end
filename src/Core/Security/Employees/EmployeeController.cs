@@ -4,33 +4,28 @@ namespace DentallApp.Core.Security.Employees;
 
 [Route("employee")]
 [ApiController]
-public class EmployeeController : ControllerBase
+public class EmployeeController
 {
     [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateEmployeeRequest request,
         CreateEmployeeUseCase useCase)
-        => await useCase.ExecuteAsync(User, request);
+        => await useCase.ExecuteAsync(request);
 
     [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpDelete("{id}")]
     public async Task<Result> Delete(
         int id,
         DeleteEmployeeUseCase useCase)
-    {
-        if (id == User.GetEmployeeId())
-            return Result.Forbidden(Messages.CannotRemoveYourOwnProfile);
-
-        return await useCase.ExecuteAsync(id, User);
-    }
+        => await useCase.ExecuteAsync(id);
 
     [AuthorizeByRole(RoleName.Secretary, RoleName.Dentist, RoleName.Admin, RoleName.Superadmin)]
     [HttpPut]
     public async Task<Result> UpdateCurrentEmployee(
         [FromBody]UpdateCurrentEmployeeRequest request,
         UpdateCurrentEmployeeUseCase useCase)
-        => await useCase.ExecuteAsync(User.GetEmployeeId(), request);
+        => await useCase.ExecuteAsync(request);
 
     [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpPut("{id}")]
@@ -38,18 +33,13 @@ public class EmployeeController : ControllerBase
         int id, 
         [FromBody]UpdateAnyEmployeeRequest request,
         UpdateAnyEmployeeUseCase useCase)
-    {
-        if (User.IsAdmin() && id == User.GetEmployeeId())
-            return Result.Forbidden(Messages.CannotEditYourOwnProfile);
-
-        return await useCase.ExecuteAsync(id, User, request);
-    }
+        => await useCase.ExecuteAsync(id, request);
 
     [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpGet("edit")]
     public async Task<IEnumerable<GetEmployeesToEditResponse>> GetEmployeesToEdit(
         GetEmployeesToEditUseCase useCase)
-        => await useCase.ExecuteAsync(User);
+        => await useCase.ExecuteAsync();
 
     /// <summary>
     /// Obtiene los odontólogos de un consultorio.
@@ -63,15 +53,10 @@ public class EmployeeController : ControllerBase
     /// </remarks>
     [AuthorizeByRole(RoleName.Secretary, RoleName.Admin, RoleName.Superadmin)]
     [HttpPost("dentist")]
-    public async Task<ActionResult<IEnumerable<GetDentistsResponse>>> GetDentists(
+    public async Task<ListedResult<GetDentistsResponse>> GetDentists(
         [FromBody]GetDentistsRequest request,
         GetDentistsUseCase useCase)
-    {
-        if (!User.IsSuperAdmin() && User.IsNotInOffice(request.OfficeId))
-            return Forbid();
-
-        return Ok(await useCase.ExecuteAsync(request));
-    }
+        => await useCase.ExecuteAsync(request);
 
     /// <summary>
     /// Obtiene todos los horarios de los empleados.
@@ -81,5 +66,5 @@ public class EmployeeController : ControllerBase
     [HttpGet("overview")]
     public async Task<IEnumerable<GetEmployeeOverviewResponse>> GetOverview(
         GetEmployeeOverviewUseCase useCase)
-        => await useCase.ExecuteAsync(User.GetOfficeId());
+        => await useCase.ExecuteAsync();
 }

@@ -16,9 +16,10 @@ public class UpdateAppointmentValidator : AbstractValidator<UpdateAppointmentReq
 public class UpdateAppointmentUseCase(
     DbContext context, 
     IDateTimeService dateTimeService,
+    ICurrentEmployee currentEmployee,
     UpdateAppointmentValidator validator)
 {
-    public async Task<Result> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateAppointmentRequest request)
+    public async Task<Result> ExecuteAsync(int id, UpdateAppointmentRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())
@@ -37,7 +38,7 @@ public class UpdateAppointmentUseCase(
         if (dateTimeService.Now.Date > appointment.Date)
             return Result.Forbidden(Messages.AppointmentCannotBeUpdatedForPreviousDays);
 
-        if (currentEmployee.IsOnlyDentist() && appointment.DentistId != currentEmployee.GetEmployeeId())
+        if (currentEmployee.IsOnlyDentist() && appointment.DentistId != currentEmployee.EmployeeId)
             return Result.Forbidden(Messages.AppointmentNotAssigned);
 
         if (currentEmployee.IsNotInOffice(appointment.OfficeId))

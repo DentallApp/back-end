@@ -25,9 +25,12 @@ public class UpdateOfficeScheduleValidator : AbstractValidator<UpdateOfficeSched
     }
 }
 
-public class UpdateOfficeScheduleUseCase(DbContext context, UpdateOfficeScheduleValidator validator)
+public class UpdateOfficeScheduleUseCase(
+    DbContext context, 
+    ICurrentEmployee currentEmployee,
+    UpdateOfficeScheduleValidator validator)
 {
-    public async Task<Result> ExecuteAsync(int id, ClaimsPrincipal currentEmployee, UpdateOfficeScheduleRequest request)
+    public async Task<Result> ExecuteAsync(int id, UpdateOfficeScheduleRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())

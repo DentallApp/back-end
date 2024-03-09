@@ -1,31 +1,32 @@
 ﻿namespace DentallApp.Core.FavoriteDentists.UseCases;
 
-public class DeleteFavoriteDentistRequest
+public class FavoriteDentistId
 {
-    public int UserId { get; init; }
-    public int FavoriteDentistId { get; init; }
+    public int Value { get; init; }
 }
 
 /// <summary>
 /// Represents the use case to delete a favorite dentist of a basic user.
 /// </summary>
-public class DeleteFavoriteDentistUseCase(DbContext context)
+public class DeleteFavoriteDentistUseCase(
+    DbContext context,
+    ICurrentUser currentUser)
 {
     /// <summary>
     /// Executes the use case. Deletes by favorite dentist id.
     /// </summary>
-    /// <param name="request">Contains the user id and favorite dentist id.</param>
-    public async Task<Result> ExecuteAsync(DeleteFavoriteDentistRequest request)
+    /// <param name="id">Contains the favorite dentist id.</param>
+    public async Task<Result> ExecuteAsync(FavoriteDentistId id)
     {
         var favoriteDentist = await context.Set<FavoriteDentist>()
-            .Where(favoriteDentist => favoriteDentist.Id == request.FavoriteDentistId)
+            .Where(favoriteDentist => favoriteDentist.Id == id.Value)
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
         if (favoriteDentist is null)
             return Result.NotFound();
 
-        if (favoriteDentist.UserId != request.UserId)
+        if (favoriteDentist.UserId != currentUser.UserId)
             return Result.Forbidden(Messages.ResourceFromAnotherUser);
 
         context.Remove(favoriteDentist);
@@ -34,15 +35,14 @@ public class DeleteFavoriteDentistUseCase(DbContext context)
     }
 
     /// <summary>
-    /// Executes the use case. Deletes by user id and dentist id.
+    /// Executes the use case. Deletes by dentist id.
     /// </summary>
-    /// <param name="userId">The basic user id.</param>
     /// <param name="dentistId">The dentist id.</param>
-    public async Task<Result> ExecuteAsync(int userId, int dentistId)
+    public async Task<Result> ExecuteAsync(int dentistId)
     {
         int deletedRows = await context.Set<FavoriteDentist>()
             .Where(favoriteDentist =>
-                favoriteDentist.UserId == userId &&
+                favoriteDentist.UserId == currentUser.UserId &&
                 favoriteDentist.DentistId == dentistId)
             .ExecuteDeleteAsync();
 

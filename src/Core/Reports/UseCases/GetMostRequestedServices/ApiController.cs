@@ -2,7 +2,7 @@
 
 [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
 [ApiController]
-public class ReportMostRequestedServicesController : ControllerBase
+public class ReportMostRequestedServicesController
 {
     /// <summary>
     /// Obtiene el reporte de los servicios dentales más solicitados.
@@ -11,12 +11,7 @@ public class ReportMostRequestedServicesController : ControllerBase
     public async Task<ListedResult<GetMostRequestedServicesResponse>> Get(
         [FromBody]GetMostRequestedServicesRequest request,
         GetMostRequestedServicesUseCase useCase)
-    {
-        if (User.IsAdmin() && User.IsNotInOffice(request.OfficeId))
-            return Result.Forbidden();
-
-        return await useCase.ExecuteAsync(request);
-    }
+        => await useCase.ExecuteAsync(request);
 
     /// <summary>
     /// Descarga el reporte sobre los servicios dentales más solicitados.

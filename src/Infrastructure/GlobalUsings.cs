@@ -2,7 +2,7 @@ global using DentallApp.Infrastructure.Persistence.Extensions;
 global using DentallApp.Infrastructure.Persistence.SeedsData;
 global using DentallApp.Infrastructure.Persistence.Repositories;
 global using DentallApp.Infrastructure.Persistence;
-global using DentallApp.Infrastructure.Services.TokenProvider;
+global using DentallApp.Infrastructure.Services.Tokens;
 global using DentallApp.Infrastructure.Services;
 
 global using DentallApp.Shared.Entities;
@@ -23,6 +23,7 @@ global using DentallApp.Shared.Models.Claims;
 global using DentallApp.Shared.Interfaces;
 global using DentallApp.Shared.Interfaces.Persistence;
 global using DentallApp.Shared.Interfaces.Persistence.Repositories;
+global using DentallApp.Shared.Exceptions;
 
 global using System.Data;
 global using System.Text;

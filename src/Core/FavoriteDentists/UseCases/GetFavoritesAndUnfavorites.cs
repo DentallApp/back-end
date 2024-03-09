@@ -17,9 +17,11 @@ public class GetFavoriteAndUnfavoriteDentistsResponse
 /// <summary>
 /// Represents a use case to get the favorite and unfavorite dentists of a basic user.
 /// </summary>
-public class GetFavoriteAndUnfavoriteDentistsUseCase(DbContext context)
+public class GetFavoriteAndUnfavoriteDentistsUseCase(
+    DbContext context,
+    ICurrentUser currentUser)
 {
-    public async Task<IEnumerable<GetFavoriteAndUnfavoriteDentistsResponse>> ExecuteAsync(int userId)
+    public async Task<IEnumerable<GetFavoriteAndUnfavoriteDentistsResponse>> ExecuteAsync()
     {
         var dentists = await 
             (from dentist in context.Set<Employee>()
@@ -40,7 +42,7 @@ public class GetFavoriteAndUnfavoriteDentistsUseCase(DbContext context)
              join favoriteDentist in context.Set<FavoriteDentist>() on
              new
              {
-                 UserId = userId,
+                 UserId = currentUser.UserId,
                  dentist.Id
              }
              equals

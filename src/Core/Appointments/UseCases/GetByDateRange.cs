@@ -43,17 +43,17 @@ public class GetAppointmentsByDateRangeResponse
 
 public class GetAppointmentsByDateRangeUseCase(
     DbContext context,
+    ICurrentEmployee currentEmployee,
     GetAppointmentsByDateRangeValidator validator)
 {
-    public async Task<ListedResult<GetAppointmentsByDateRangeResponse>> ExecuteAsync(
-        ClaimsPrincipal currentEmployee, 
+    public async Task<ListedResult<GetAppointmentsByDateRangeResponse>> ExecuteAsync( 
         GetAppointmentsByDateRangeRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())
             return result.Invalid();
 
-        if (currentEmployee.IsOnlyDentist() && currentEmployee.GetEmployeeId() != request.DentistId)
+        if (currentEmployee.IsOnlyDentist() && currentEmployee.EmployeeId != request.DentistId)
             return Result.Forbidden(Messages.CanOnlyAccessYourOwnAppointments);
 
         if (!currentEmployee.IsSuperAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))

@@ -62,7 +62,8 @@ public class CreateEmployeeValidator : AbstractValidator<CreateEmployeeRequest>
         RuleFor(request => request.GenderId).GreaterThan(0);
         RuleFor(request => request.OfficeId).GreaterThan(0);
         RuleFor(request => request.Roles).NotEmpty();
-        RuleForEach(request => request.Roles).InclusiveBetween(Role.Min, Role.Max);
+        RuleForEach(request => request.Roles)
+            .InclusiveBetween(Role.Range.Min, Role.Range.Max);
         RuleForEach(request => request.SpecialtiesId).GreaterThan(0);
     }
 }
@@ -71,9 +72,10 @@ public class CreateEmployeeUseCase(
     DbContext context,
     IUserRepository userRepository,
     IPasswordHasher passwordHasher,
+    ICurrentEmployee currentEmployee,
     CreateEmployeeValidator validator)
 {
-    public async Task<Result<CreatedId>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateEmployeeRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(CreateEmployeeRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())

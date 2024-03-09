@@ -29,7 +29,7 @@ public static class SwaggerGen
                     new string[] { }
                 }
             });
-            var coreAssemblyName = typeof(GetDependentsByUserIdUseCase).Assembly.GetName().Name;
+            var coreAssemblyName = typeof(GetDependentsByCurrentUserIdUseCase).Assembly.GetName().Name;
             var filePath = Path.Combine(AppContext.BaseDirectory, coreAssemblyName + ".xml");
             options.IncludeXmlComments(filePath);
 

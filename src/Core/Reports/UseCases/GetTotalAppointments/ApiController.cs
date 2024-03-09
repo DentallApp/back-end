@@ -2,7 +2,7 @@
 
 [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
 [ApiController]
-public class ReportTotalAppointmentsController : ControllerBase
+public class ReportTotalAppointmentsController
 {
     /// <summary>
     /// Obtiene el reporte sobre el total de citas asistidas, no asistidas y canceladas.
@@ -11,12 +11,7 @@ public class ReportTotalAppointmentsController : ControllerBase
     public async Task<Result<GetTotalAppointmentsResponse>> Get(
         [FromBody]GetTotalAppointmentsRequest request,
         GetTotalAppointmentsUseCase useCase)
-    {
-        if (User.IsAdmin() && User.IsNotInOffice(request.OfficeId))
-            return Result.Forbidden();
-
-        return await useCase.ExecuteAsync(request);
-    }
+        => await useCase.ExecuteAsync(request);
 
     /// <summary>
     /// Descarga el reporte sobre el total de citas asistidas, no asistidas y canceladas.

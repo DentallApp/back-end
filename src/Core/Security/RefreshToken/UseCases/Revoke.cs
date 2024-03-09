@@ -1,11 +1,11 @@
 ﻿namespace DentallApp.Core.Security.RefreshToken.UseCases;
 
-public class RevokeRefreshTokenUseCase(DbContext context)
+public class RevokeRefreshTokenUseCase(DbContext context, ICurrentUser currentUser)
 {
-    public async Task<Result> ExecuteAsync(int userId)
+    public async Task<Result> ExecuteAsync()
     {
         var user = await context.Set<User>()
-            .Where(user => user.Id == userId)
+            .Where(user => user.Id == currentUser.UserId)
             .FirstOrDefaultAsync();
 
         if (user is null)

@@ -12,10 +12,13 @@ public class GetDentistsResponse
     public string FullName { get; init; }
 }
 
-public class GetDentistsUseCase(DbContext context)
+public class GetDentistsUseCase(DbContext context, ICurrentEmployee currentEmployee)
 {
-    public async Task<IEnumerable<GetDentistsResponse>> ExecuteAsync(GetDentistsRequest request)
+    public async Task<ListedResult<GetDentistsResponse>> ExecuteAsync(GetDentistsRequest request)
     {
+        if (!currentEmployee.IsSuperAdmin() && currentEmployee.IsNotInOffice(request.OfficeId))
+            return Result.Forbidden();
+
         var queryable = 
            (from employee in context.Set<Employee>()
             join person in context.Set<Person>() on employee.PersonId equals person.Id
@@ -35,6 +38,6 @@ public class GetDentistsUseCase(DbContext context)
             .AsNoTracking()
             .ToListAsync();
 
-        return dentists;
+        return Result.ObtainedResources(dentists);
     }
 }

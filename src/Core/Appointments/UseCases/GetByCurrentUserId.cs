@@ -1,6 +1,6 @@
 ﻿namespace DentallApp.Core.Appointments.UseCases;
 
-public class GetAppointmentsByUserIdResponse
+public class GetAppointmentsByCurrentUserIdResponse
 {
     public int AppointmentId { get; init; }
     public string PatientName { get; init; }
@@ -19,9 +19,9 @@ public class GetAppointmentsByUserIdResponse
     public string OfficeName { get; init; }
 }
 
-public class GetAppointmentsByUserIdUseCase(DbContext context)
+public class GetAppointmentsByCurrentUserIdUseCase(DbContext context, ICurrentUser currentUser)
 {
-    public async Task<IEnumerable<GetAppointmentsByUserIdResponse>> ExecuteAsync(int userId)
+    public async Task<IEnumerable<GetAppointmentsByCurrentUserIdResponse>> ExecuteAsync()
     {
         var appointments = await 
             (from appointment in context.Set<Appointment>()
@@ -35,9 +35,9 @@ public class GetAppointmentsByUserIdUseCase(DbContext context)
              from dependent in dependents.DefaultIfEmpty()
              join kinship in context.Set<Kinship>() on dependent.KinshipId equals kinship.Id into kinships
              from kinship in kinships.DefaultIfEmpty()
-             where appointment.UserId == userId
+             where appointment.UserId == currentUser.UserId
              orderby appointment.CreatedAt descending
-             select new GetAppointmentsByUserIdResponse
+             select new GetAppointmentsByCurrentUserIdResponse
              {
                  AppointmentId     = appointment.Id,
                  PatientName       = patientDetails.FullName,

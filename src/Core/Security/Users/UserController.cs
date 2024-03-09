@@ -5,7 +5,7 @@ namespace DentallApp.Core.Security.Users;
 [Authorize]
 [Route("user")]
 [ApiController]
-public class UserController : ControllerBase
+public class UserController
 {
     [AllowAnonymous]
     [HttpPost]
@@ -26,14 +26,14 @@ public class UserController : ControllerBase
     public async Task<Result> UpdateCurrentUser(
         [FromBody]UpdateCurrentUserRequest request,
         UpdateCurrentUserUseCase useCase)
-        => await useCase.ExecuteAsync(currentPersonId: User.GetPersonId(), request);
+        => await useCase.ExecuteAsync(request);
 
     [Route("password")]
     [HttpPut]
     public async Task<Result> ChangePassword(
         [FromBody]ChangePasswordRequest request,
         ChangePasswordUseCase useCase)
-        => await useCase.ExecuteAsync(User.GetUserId(), request);
+        => await useCase.ExecuteAsync(request);
 
     [AllowAnonymous]
     [Route("email-verification")]

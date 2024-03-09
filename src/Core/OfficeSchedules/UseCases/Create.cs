@@ -26,9 +26,12 @@ public class CreateOfficeScheduleValidator : AbstractValidator<CreateOfficeSched
     }
 }
 
-public class CreateOfficeScheduleUseCase(DbContext context, CreateOfficeScheduleValidator validator)
+public class CreateOfficeScheduleUseCase(
+    DbContext context, 
+    ICurrentEmployee currentEmployee,
+    CreateOfficeScheduleValidator validator)
 {
-    public async Task<Result<CreatedId>> ExecuteAsync(ClaimsPrincipal currentEmployee, CreateOfficeScheduleRequest request)
+    public async Task<Result<CreatedId>> ExecuteAsync(CreateOfficeScheduleRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())

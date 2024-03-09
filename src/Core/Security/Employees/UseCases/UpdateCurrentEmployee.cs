@@ -38,9 +38,12 @@ public class UpdateCurrentEmployeeValidator : AbstractValidator<UpdateCurrentEmp
 /// Current Employee is the Employee who is current logged in. 
 /// The current employee can edit his own information.
 /// </summary>
-public class UpdateCurrentEmployeeUseCase(DbContext context, UpdateCurrentEmployeeValidator validator)
+public class UpdateCurrentEmployeeUseCase(
+    DbContext context, 
+    ICurrentEmployee currentEmployee,
+    UpdateCurrentEmployeeValidator validator)
 {
-    public async Task<Result> ExecuteAsync(int currentEmployeeId, UpdateCurrentEmployeeRequest request)
+    public async Task<Result> ExecuteAsync(UpdateCurrentEmployeeRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())
@@ -48,13 +51,13 @@ public class UpdateCurrentEmployeeUseCase(DbContext context, UpdateCurrentEmploy
 
         var employee = await context.Set<Employee>()
             .Include(employee => employee.Person)
-            .Where(employee => employee.Id == currentEmployeeId)
+            .Where(employee => employee.Id == currentEmployee.EmployeeId)
             .FirstOrDefaultAsync();
 
         if (employee is null)
             return Result.NotFound(Messages.EmployeeNotFound);
 
-        if (employee.Id != currentEmployeeId)
+        if (employee.Id != currentEmployee.EmployeeId)
             return Result.Forbidden(Messages.CannotUpdateAnotherUserResource);
 
         request.MapToEmployee(employee);

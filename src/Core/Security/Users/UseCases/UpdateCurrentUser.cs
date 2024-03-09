@@ -34,22 +34,25 @@ public class UpdateCurrentUserValidator : AbstractValidator<UpdateCurrentUserReq
 /// Current User is the User who is current logged in. 
 /// The current user can edit his own information.
 /// </summary>
-public class UpdateCurrentUserUseCase(DbContext context, UpdateCurrentUserValidator validator)
+public class UpdateCurrentUserUseCase(
+    DbContext context, 
+    ICurrentUser currentUser,
+    UpdateCurrentUserValidator validator)
 {
-    public async Task<Result> ExecuteAsync(int currentPersonId, UpdateCurrentUserRequest request)
+    public async Task<Result> ExecuteAsync(UpdateCurrentUserRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())
             return result.Invalid();
 
         var person = await context.Set<Person>()
-            .Where(person => person.Id == currentPersonId)
+            .Where(person => person.Id == currentUser.PersonId)
             .FirstOrDefaultAsync();
 
         if (person is null)
             return Result.NotFound(Messages.UsernameNotFound);
 
-        if (person.Id != currentPersonId)
+        if (person.Id != currentUser.PersonId)
             return Result.Forbidden(Messages.CannotUpdateAnotherUserResource);
 
         request.MapToPerson(person);

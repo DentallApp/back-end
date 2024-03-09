@@ -18,16 +18,17 @@ public class ChangePasswordValidator : AbstractValidator<ChangePasswordRequest>
 public class ChangePasswordUseCase(
     DbContext context, 
     IPasswordHasher passwordHasher,
+    ICurrentUser currentUser,
     ChangePasswordValidator validator)
 {
-    public async Task<Result> ExecuteAsync(int userId, ChangePasswordRequest request)
+    public async Task<Result> ExecuteAsync(ChangePasswordRequest request)
     {
         var result = validator.Validate(request);
         if (result.IsFailed())
             return result.Invalid();
 
         var user = await context.Set<User>()
-            .Where(user => user.Id == userId)
+            .Where(user => user.Id == currentUser.UserId)
             .FirstOrDefaultAsync();
 
         if (user is null)

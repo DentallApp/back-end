@@ -1,4 +1,4 @@
-﻿namespace DentallApp.Infrastructure.Services.TokenProvider;
+﻿namespace DentallApp.Infrastructure.Services.Tokens;
 
 public class JwtEncoder
 {

@@ -52,9 +52,10 @@ public class CancelAppointmentsUseCase(
     IAppointmentRepository appointmentRepository,
     IInstantMessaging instantMessaging,
     IDateTimeService dateTimeService,
+    ICurrentEmployee currentEmployee,
     CancelAppointmentsValidator validator)
 {
-    public async Task<Result<CancelAppointmentsResponse>> ExecuteAsync(ClaimsPrincipal currentEmployee, CancelAppointmentsRequest request)
+    public async Task<Result<CancelAppointmentsResponse>> ExecuteAsync(CancelAppointmentsRequest request)
     {
         var result = validator.Validate(request);
         if(result.IsFailed()) 
@@ -70,11 +71,11 @@ public class CancelAppointmentsUseCase(
         if (currentEmployee.IsOnlyDentist())
         {
             await appointmentRepository
-                .CancelAppointmentsByDentistIdAsync(currentEmployee.GetEmployeeId(), appointmentsIdCanBeCancelled);
+                .CancelAppointmentsByDentistIdAsync(currentEmployee.EmployeeId, appointmentsIdCanBeCancelled);
         }
         else
         {
-            int officeId = currentEmployee.IsSuperAdmin() ? default : currentEmployee.GetOfficeId();
+            int officeId = currentEmployee.IsSuperAdmin() ? default : currentEmployee.OfficeId;
             await appointmentRepository
                 .CancelAppointmentsByOfficeIdAsync(officeId, appointmentsIdCanBeCancelled);
         }

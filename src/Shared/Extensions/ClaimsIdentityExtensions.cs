@@ -6,8 +6,19 @@ public static class ClaimsIdentityExtensions
         => claims.HasClaim(claim => claim.Type == type);
 
     public static int GetUserId(this ClaimsIdentity claims)
-        => int.Parse(claims.FindFirst(CustomClaimsType.UserId).Value);
+    {
+        Claim claim = claims.FindFirst(CustomClaimsType.UserId);
+        return claim is null ?
+            throw new ClaimNotFoundException(CustomClaimsType.UserId) :
+            int.Parse(claim.Value);
+
+    }
 
     public static string GetUserName(this ClaimsIdentity claims)
-        => claims.FindFirst(CustomClaimsType.UserName).Value;
+    {
+        Claim claim = claims.FindFirst(CustomClaimsType.UserName);
+        return claim is null ?
+            throw new ClaimNotFoundException(CustomClaimsType.UserName) :
+            claim.Value;
+    }
 }

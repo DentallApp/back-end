@@ -33,16 +33,15 @@ public class GetEmployeesToEditResponse
     public bool IsDeleted { get; init; }
 }
 
-public class GetEmployeesToEditUseCase(DbContext context)
+public class GetEmployeesToEditUseCase(DbContext context, ICurrentEmployee currentEmployee)
 {
-    public async Task<IEnumerable<GetEmployeesToEditResponse>> ExecuteAsync(ClaimsPrincipal currentEmployee)
+    public async Task<IEnumerable<GetEmployeesToEditResponse>> ExecuteAsync()
     {
         var queryable = context.Set<Employee>().AsQueryable();
-
         if (currentEmployee.IsAdmin())
         {
-            int officeId = currentEmployee.GetOfficeId();
-            int currentEmployeeId = currentEmployee.GetEmployeeId();
+            int officeId = currentEmployee.OfficeId;
+            int currentEmployeeId = currentEmployee.EmployeeId;
             queryable = queryable.Where(employee => employee.OfficeId == officeId && employee.Id != currentEmployeeId);
         }
 
