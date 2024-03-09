@@ -3,17 +3,20 @@
 public class CancelAppointmentsUseCaseTests
 {
     private IDateTimeService _dateTimeService;
+    private ICurrentEmployee _currentEmployee;
     private CancelAppointmentsUseCase _cancelAppointmentsUseCase;
 
     [SetUp]
     public void TestInitialize()
     {
         _dateTimeService           = Mock.Create<IDateTimeService>();
+        _currentEmployee           = Mock.Create<ICurrentEmployee>();
         _cancelAppointmentsUseCase = new CancelAppointmentsUseCase(
             new AppSettings(),
             Mock.Create<IAppointmentRepository>(),
             Mock.Create<IInstantMessaging>(),
             _dateTimeService,
+            _currentEmployee,
             new CancelAppointmentsValidator());
     }
 
@@ -52,16 +55,11 @@ public class CancelAppointmentsUseCaseTests
                 }
             }
         };
-        var claims = new Claim[]
-        {
-            new (CustomClaimsType.EmployeeId, "1"),
-            new (ClaimTypes.Role, RoleName.Dentist)
-        };
-        var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
+        Mock.Arrange(() => _currentEmployee.IsOnlyDentist()).Returns(false);
 
         // Act
-        var result = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
+        var result = await _cancelAppointmentsUseCase.ExecuteAsync(request);
 
         // Asserts
         result.IsSuccess.Should().BeTrue();
@@ -123,16 +121,11 @@ public class CancelAppointmentsUseCaseTests
                 }
             }
         };
-        var claims = new Claim[]
-        {
-            new (CustomClaimsType.EmployeeId, "1"),
-            new (ClaimTypes.Role, RoleName.Dentist)
-        };
-        var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 01, 20, 0, 0));
+        Mock.Arrange(() => _currentEmployee.IsOnlyDentist()).Returns(false);
 
         // Act
-        var result = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
+        var result = await _cancelAppointmentsUseCase.ExecuteAsync(request);
 
         // Asserts
         result.IsSuccess.Should().BeFalse();
@@ -200,16 +193,11 @@ public class CancelAppointmentsUseCaseTests
                 }
             }
         };
-        var claims = new Claim[]
-        {
-            new (CustomClaimsType.EmployeeId, "1"),
-            new (ClaimTypes.Role, RoleName.Dentist)
-        };
-        var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
         Mock.Arrange(() => _dateTimeService.Now).Returns(new DateTime(2022, 08, 02, 20, 0, 0));
+        Mock.Arrange(() => _currentEmployee.IsOnlyDentist()).Returns(false);
 
         // Act
-        var result = await _cancelAppointmentsUseCase.ExecuteAsync(claimsPrincipal, request);
+        var result = await _cancelAppointmentsUseCase.ExecuteAsync(request);
 
         // Asserts
         result.IsSuccess.Should().BeFalse();
