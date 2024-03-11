@@ -3,7 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-Migrations/
+# Custom config
+**/Migrations/
+**/.env
+**/.env.test
 
 # User-specific files
 *.rsuser
@@ -11,9 +14,6 @@ Migrations/
 *.user
 *.userosscache
 *.sln.docstates
-
-# environment variables for development
-.env
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
