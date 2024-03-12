@@ -12,10 +12,6 @@
     <PackageReference Include="SimpleResults.FluentValidation" />
     <PackageReference Include="linq2db.EntityFrameworkCore" />
     <PackageReference Include="Dapper" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
