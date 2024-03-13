@@ -5,7 +5,8 @@ public static class SwaggerGen
     public static IServiceCollection AddSwagger(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>
-        {
+        { 
+            options.EnableAnnotations();
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "DentallApi", Version = "v1" });
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
