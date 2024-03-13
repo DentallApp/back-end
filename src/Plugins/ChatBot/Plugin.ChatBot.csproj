@@ -10,6 +10,13 @@
     <PackageReference Include="AdaptiveCards" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations">
+      <!-- 
+        This avoids having to copy Swashbuckle.AspNetCore.Annotations.dll 
+        and its dependencies to the plug-in output directory. 
+      -->
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

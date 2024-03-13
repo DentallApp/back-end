@@ -12,6 +12,7 @@
     <PackageReference Include="SimpleResults.FluentValidation" />
     <PackageReference Include="linq2db.EntityFrameworkCore" />
     <PackageReference Include="Dapper" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" />
   </ItemGroup>
 
   <ItemGroup>
