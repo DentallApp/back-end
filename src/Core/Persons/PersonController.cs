@@ -8,8 +8,10 @@ namespace DentallApp.Core.Persons;
 public class PersonController
 {
     /// <summary>
-    /// Create a person's information.
+    /// Creates a person's information.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
     [HttpPost]
 	public async Task<Result> Create(
         [FromBody]CreatePersonRequest request,
@@ -23,6 +25,7 @@ public class PersonController
     /// The value to search for (can be the name, last name or document).
     /// </param>
     /// <param name="useCase"></param>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet("search")]
 	public async Task<IEnumerable<GetPersonsResponse>> GetAll(
         [FromQuery]string value,

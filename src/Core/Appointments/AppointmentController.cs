@@ -5,8 +5,11 @@
 public class AppointmentController
 {
     /// <summary>
-    /// Crea una cita médica para cualquier persona.
+    /// Creates a medical appointment for a customer.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<Result>(StatusCodes.Status422UnprocessableEntity)]
     [AuthorizeByRole(RoleName.Secretary)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
@@ -15,8 +18,13 @@ public class AppointmentController
         => await useCase.ExecuteAsync(request);
 
     /// <summary>
-    /// Actualiza el estado de una cita por su ID.
+    /// Updates the status of an appointment by ID.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<Result>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<Result>(StatusCodes.Status409Conflict)]
+    [ProducesResponseType<Result>(StatusCodes.Status403Forbidden)]
     [AuthorizeByRole(RoleName.Secretary, RoleName.Dentist, RoleName.Admin, RoleName.Superadmin)]
     [HttpPut("{id}")]
     public async Task<Result> Update(
@@ -26,8 +34,11 @@ public class AppointmentController
         => await useCase.ExecuteAsync(id, request);
 
     /// <summary>
-    /// Permite al usuario básico cancelar su cita agendada.
+    /// Allows the current basic user to cancel their scheduled appointment.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<Result>(StatusCodes.Status403Forbidden)]
     [AuthorizeByRole(RoleName.BasicUser)]
     [HttpDelete("{id}/basic-user")]
     public async Task<Result> CancelBasicUserAppointment(
@@ -36,14 +47,16 @@ public class AppointmentController
         => await useCase.ExecuteAsync(id);
 
     /// <summary>
-    /// Permite cancelar las citas agendadas de los odontólogos.
+    /// Cancels scheduled appointments of any dentist.
     /// </summary>
     /// <remarks>
-    /// Detalles a tomar en cuenta:
-    /// <para>- El odontólogo solo podrá cancelar sus propias citas.</para>
-    /// <para>- La secretaria/admin solo pueden cancelar las citas del consultorio al que pertenecen.</para>
-    /// <para>- El superadmin puede cancelar las citas de cualquier consultorio.</para>
+    /// Details to consider:
+    /// <para>- The dentist may only cancel his own appointments.</para>
+    /// <para>- The secretary/admin can only cancel appointments for the office to which they belong.</para>
+    /// <para>- The superadmin can cancel appointments for any office.</para>
     /// </remarks>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
     [AuthorizeByRole(RoleName.Secretary, RoleName.Dentist, RoleName.Admin, RoleName.Superadmin)]
     [HttpPost("cancel/dentist")]
     public async Task<Result<CancelAppointmentsResponse>> CancelAppointments(
@@ -52,8 +65,9 @@ public class AppointmentController
         => await useCase.ExecuteAsync(request);
 
     /// <summary>
-    /// Obtiene el historial de citas del usuario básico.
+    /// Gets the appointment history of the current basic user.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [AuthorizeByRole(RoleName.BasicUser)]
     [HttpGet("basic-user")]
     public async Task<IEnumerable<GetAppointmentsByCurrentUserIdResponse>> GetByCurrentUserId(
@@ -61,14 +75,17 @@ public class AppointmentController
         => await useCase.ExecuteAsync();
 
     /// <summary>
-    /// Obtiene las citas de los odontólogos para un empleado.
+    /// Gets the appointments from a specified date range.
     /// </summary>
     /// <remarks>
-    /// Detalles a tomar en cuenta:
-    /// <para>- Sí <see cref="GetAppointmentsByDateRangeRequest.OfficeId"/> es <c>0</c>, traerá las citas de TODOS los consultorios.</para>
-    /// <para>- Sí <see cref="GetAppointmentsByDateRangeRequest.DentistId"/> es <c>0</c>, traerá las citas de TODOS los odontólogos.</para>
-    /// <para>- Sí <see cref="GetAppointmentsByDateRangeRequest.StatusId"/> es <c>0</c>, traerá las citas de TODOS los estados.</para>
+    /// Details to consider:
+    /// <para>- If <c>OfficeId</c> is <c>0</c>, it will retrieve appointments from all offices.</para>
+    /// <para>- If <c>DentistId</c> is <c>0</c>, it will retrieve appointments from all dentists.</para>
+    /// <para>- If <c>StatusId</c> is <c>0</c>, it will retrieve appointments from all statuses.</para>
     /// </remarks>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<Result>(StatusCodes.Status403Forbidden)]
     [AuthorizeByRole(RoleName.Secretary, RoleName.Dentist, RoleName.Admin, RoleName.Superadmin)]
     [HttpPost("dentist")]
     public async Task<ListedResult<GetAppointmentsByDateRangeResponse>> GetByDateRange(
@@ -77,8 +94,11 @@ public class AppointmentController
         => await useCase.ExecuteAsync(request);
 
     /// <summary>
-    /// Obtiene las horas disponibles para la reserva de una cita.
+    /// Gets the available hours for the reservation of an appointment.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<Result>(StatusCodes.Status422UnprocessableEntity)]
     [AuthorizeByRole(RoleName.Secretary)]
     [Route("available-hours")]
     [HttpPost]

@@ -10,6 +10,8 @@ public class FavoriteDentistController
     /// <summary>
     /// Creates a new favorite dentist for the current basic user.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateFavoriteDentistRequest request,
@@ -17,17 +19,22 @@ public class FavoriteDentistController
         => await useCase.ExecuteAsync(request);
 
     /// <summary>
-    /// Deletes a favorite dentist from the current basic user.
+    /// Deletes a favorite dentist from the current basic user by ID.
     /// </summary>
-    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<Result>(StatusCodes.Status403Forbidden)]
+    [HttpDelete("{favoriteDentistId}")]
     public async Task<Result> DeleteByFavoriteDentistId(
-        int id,
+        int favoriteDentistId,
         DeleteFavoriteDentistUseCase useCase)
-        => await useCase.ExecuteAsync(new FavoriteDentistId { Value = id });
+        => await useCase.ExecuteAsync(new FavoriteDentistId { Value = favoriteDentistId });
 
     /// <summary>
-    /// Deletes a favorite dentist from the current basic user.
+    /// Deletes a favorite dentist from the current basic user by DentistId.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status404NotFound)]
     [HttpDelete("dentist/{dentistId}")]
     public async Task<Result> DeleteByDentistId(
         int dentistId,
@@ -38,6 +45,7 @@ public class FavoriteDentistController
     /// Gets the dentists preferred by the basic user and 
     /// also includes in the result the dentists that are not preferred by the basic user.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet("dentist")]
     public async Task<IEnumerable<GetFavoriteAndUnfavoriteDentistsResponse>> GetFavoritesAndUnfavorites(
         GetFavoriteAndUnfavoriteDentistsUseCase useCase)
@@ -46,6 +54,7 @@ public class FavoriteDentistController
     /// <summary>
     /// Gets only the basic user's favorite dentists.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet]
     public async Task<IEnumerable<GetFavoriteDentistsByCurrentUserIdResponse>> GetFavoriteDentistsByCurrentUserId(
         GetFavoriteDentistsByCurrentUserIdUseCase useCase)

@@ -6,6 +6,9 @@ namespace DentallApp.Core.Security.Roles;
 [ApiController]
 public class RoleController
 {
+    /// <summary>
+    /// Gets a list of role.
+    /// </summary>
     [HttpGet("{isSuperadmin}")]
     public async Task<IEnumerable<GetRolesResponse>> GetAll(
         bool isSuperadmin,

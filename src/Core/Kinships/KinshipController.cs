@@ -6,6 +6,9 @@ namespace DentallApp.Core.Kinships;
 [ApiController]
 public class KinshipController
 {
+    /// <summary>
+    /// Gets a list of kinship.
+    /// </summary>
     [HttpGet]
     public async Task<IEnumerable<GetKinshipsResponse>> GetAll(
         GetKinshipsUseCase useCase)

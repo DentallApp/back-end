@@ -6,6 +6,9 @@ namespace DentallApp.Core.AppointmentStatuses;
 [ApiController]
 public class AppointmentStatusController
 {
+    /// <summary>
+    /// Gets the appointment statuses.
+    /// </summary>
     [HttpGet]
     public async Task<IEnumerable<GetAppointmentStatusesResponse>> GetAll(
         GetAppointmentStatusesUseCase useCase)
