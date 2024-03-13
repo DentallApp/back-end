@@ -22,7 +22,6 @@ global using DentallApp.Shared.ValidationRules;
 global using System.Net.Mime;
 global using System.Text.Json.Serialization;
 global using System.Data;
-global using System.Security.Claims;
 
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authorization;
@@ -33,3 +32,4 @@ global using SimpleResults;
 global using YeSql.Net;
 global using Dapper;
 global using FluentValidation;
+global using Swashbuckle.AspNetCore.Annotations;
