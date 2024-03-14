@@ -7,8 +7,10 @@ namespace DentallApp.Core.Offices;
 public class OfficeController
 {
     /// <summary>
-    /// Crea un nuevo consultorio.
+    /// Creates a new dental office.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
     [AuthorizeByRole(RoleName.Superadmin)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
@@ -17,8 +19,11 @@ public class OfficeController
         => await useCase.ExecuteAsync(request);
 
     /// <summary>
-    /// Actualiza la información del consultorio.
+    /// Updates a dental office by its ID
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<Result>(StatusCodes.Status404NotFound)]
     [AuthorizeByRole(RoleName.Superadmin)]
     [HttpPut("{id}")]
     public async Task<Result> Update(
@@ -28,14 +33,21 @@ public class OfficeController
         => await useCase.ExecuteAsync(id, request);
 
     /// <summary>
-    /// Obtiene los nombres de cada consultorio.
+    /// Gets the names of each dental office.
     /// </summary>
     /// <remarks>
-    /// Detalles a tomar en cuenta:
-    /// <para>- Sí <c>status</c> es <c>null</c>, traerá TODOS los consultorios activo e inactivo.</para>
-    /// <para>- Sí <c>status</c> es <c>true</c>, traerá los consultorios activos.</para>
-    /// <para>- Sí <c>status</c> es <c>false</c>, traerá los consultorios inactivos.</para>
+    /// Details to consider:
+    /// <para>
+    /// - If <c>status</c> is <c>null</c>, you will get all active and inactive offices.
+    /// </para>
+    /// <para>
+    /// - If <c>status</c> is <c>true</c>, you will get all active offices.
+    /// </para>
+    /// <para>
+    /// - If <c>status</c> is <c>false</c>, you will get all inactive offices.
+    /// </para>
     /// </remarks>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [Route("name")]
     [HttpGet]
     public async Task<IEnumerable<GetOfficeNamesResponse>> GetNames(
@@ -44,8 +56,9 @@ public class OfficeController
         => await useCase.ExecuteAsync(status);
 
     /// <summary>
-    /// Obtiene la información de cada consultorio para el formulario de editar.
+    /// Gets the offices that will be used to edit from a form.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [Route("edit")]
     [HttpGet]
     public async Task<IEnumerable<GetOfficesToEditResponse>> GetOfficesToEdit(
@@ -53,9 +66,10 @@ public class OfficeController
         => await useCase.ExecuteAsync();
 
     /// <summary>
-    /// Obtiene los consultorios activos (incluyendo los horarios) para la página de inicio.
+    /// Gets the active offices (including schedules) to be displayed on the home page.
     /// </summary>
-    /// <remarks>El consultorio debe tener al menos un horario activo.</remarks>
+    /// <remarks>The dental office must have at least one active schedule.</remarks>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [Route("home-page")]
     [HttpGet]
     public async Task<IEnumerable<GetOfficesForHomePageResponse>> GetOfficesForHomePage(
@@ -63,8 +77,9 @@ public class OfficeController
         => await useCase.ExecuteAsync();
 
     /// <summary>
-    /// Obtiene una vista general de la información de cada consultorio activo e inactivo.
+    /// You will get an overview of the information of each active and inactive office.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [Route("overview")]
     [HttpGet]
     public async Task<IEnumerable<GetOfficeOverviewResponse>> GetOverview(

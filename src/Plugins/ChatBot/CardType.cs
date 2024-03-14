@@ -1,8 +1,8 @@
 ﻿namespace Plugin.ChatBot;
 
 /// <summary>
-/// Representa los tipos de tarjetas que utiliza el chatbot para la aplicación.
-/// Por ejemplo: PatientCard, OfficeCard, etc.
+/// Represents the types of cards that the chatbot uses for the application.
+/// For example: PatientCard and OfficeCard.
 /// </summary>
 public static class CardType
 {

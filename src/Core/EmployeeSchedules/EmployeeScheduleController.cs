@@ -8,8 +8,10 @@ namespace DentallApp.Core.EmployeeSchedules;
 public class EmployeeScheduleController
 {
     /// <summary>
-    /// Crea un nuevo horario para el empleado.
+    /// Creates a new schedule for the employee.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
         [FromBody]CreateEmployeeScheduleRequest request,
@@ -17,8 +19,11 @@ public class EmployeeScheduleController
         => await useCase.ExecuteAsync(request);
 
     /// <summary>
-    /// Actualiza el horario de un empleado.
+    /// Updates the schedule of an employee.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<Result>(StatusCodes.Status404NotFound)]
     [HttpPut("{id}")]
     public async Task<Result> Update(
         int id, 
@@ -27,8 +32,9 @@ public class EmployeeScheduleController
         => await useCase.ExecuteAsync(id, request);
 
     /// <summary>
-    /// Obtiene el horario de un empleado.
+    /// Gets the schedules of an employee.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet("{employeeId}")]
     public async Task<IEnumerable<GetSchedulesByEmployeeIdResponse>> GetByEmployeeId(
         int employeeId,

@@ -1,52 +1,51 @@
 ﻿namespace DentallApp.Core.AppointmentScheduling;
 
-/// <summary>
-/// Define las acciones necesarias para el agendamiento de una cita.
-/// </summary>
 [AuthorizeByRole(RoleName.Secretary)]
 [Route("scheduling")]
 [ApiController]
 public class SchedulingController(ISchedulingQueries schedulingQueries)
 {
     /// <summary>
-    /// Obtiene los consultorios activos para el agendamiento.
-    /// El consultorio debe tener al menos un horario activo.
+    /// Gets the active offices for scheduling.
+    /// The office must have at least one active schedule.
     /// </summary>
     /// <remarks>
-    /// Solicitud de muestra:
-    ///
+    /// Sample request:
+    /// 
     ///     GET /office
     ///     {
-    ///        "title": "Mapasingue",
-    ///        "value": "1"
+    ///         "title": "Mapasingue",
+    ///         "value": "1"
     ///     }
-    /// Nota: La propiedad <c>value</c> almacena el ID del consultorio.
+    ///
+    /// Note: The <c>value</c> property stores the ID of the office.
     /// </remarks>
     [HttpGet("office")]
     public async Task<List<SchedulingResponse>> GetOffices()
 		=> await schedulingQueries.GetOfficesAsync();
 
     /// <summary>
-    /// Obtiene los servicios dentales activos para el agendamiento. 
-    /// El servicio dental debe tener al menos un tratamiento específico.
+    /// Gets the active dental services for scheduling. 
+    /// The dental service must have at least one specific treatment.
     /// </summary>
     /// <remarks>
-    /// Solicitud de muestra:
+    /// Sample request:
     ///
     ///     GET /dental-service
     ///     {
-    ///        "title": "Ortodoncia/brackets",
-    ///        "value": "1"
+    ///         "title": "Ortodoncia/brackets",
+    ///         "value": "1"
     ///     }
-    /// Nota: La propiedad <c>value</c> almacena el ID del servicio dental.
+    /// 
+    /// Note: The <c>value</c> property stores the ID of the dental service.
     /// </remarks>
     [HttpGet("dental-service")]
     public async Task<List<SchedulingResponse>> GetDentalServices()
 		=> await schedulingQueries.GetDentalServicesAsync();
 
     /// <summary>
-    /// Obtiene los odontólogos activos de un consultorio para el agendamiento.
-    /// El odontólogo debe tener al menos un horario activo.
+    /// Gets the active dentists in a office for scheduling.
+    /// The dentist must have at least one active schedule.
     /// </summary>
     [HttpGet("dentist")]
     public async Task<List<SchedulingResponse>> GetDentists([FromQuery]SchedulingGetDentistsRequest request)

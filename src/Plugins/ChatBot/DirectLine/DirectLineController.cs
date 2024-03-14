@@ -4,25 +4,19 @@
 [ApiController]
 public class DirectLineController(
     DirectLineService directLineService, 
-    ICurrentUser currentUser) : ControllerBase
+    ICurrentUser currentUser)
 {
+    /// <summary>
+    /// Gets the Direct Line token to be able to communicate with the bot.
+    /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status500InternalServerError)]
     [AuthorizeByRole(RoleName.BasicUser)]
     [HttpGet]
-    public async Task<ActionResult> Get()
-    {
-        var user = new AuthenticatedUser 
-        { 
-            UserId   = currentUser.UserId, 
-            PersonId = currentUser.PersonId
-        };
-        var result = await directLineService.GetTokenAsync(user);
-        if (result.IsSuccess)
-            return Ok(new { result.Data.Token });
-
-        var objectResult = new ObjectResult(new { result.Message })
+    public async Task<Result<GetDirectLineTokenResponse>> Get()
+        => await directLineService.GetTokenAsync(new AuthenticatedUser
         {
-            StatusCode = StatusCodes.Status500InternalServerError
-        };
-        return objectResult;
-    }
+            UserId   = currentUser.UserId,
+            PersonId = currentUser.PersonId
+        });
 }

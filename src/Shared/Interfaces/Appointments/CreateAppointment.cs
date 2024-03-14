@@ -3,12 +3,12 @@
 public class CreateAppointmentRequest
 {
     /// <summary>
-    /// El ID del usuario que agendó la cita.
+    /// The ID of the user who scheduled the appointment.
     /// </summary>
     public int UserId { get; set; }
 
     /// <summary>
-    /// El ID de la persona que recibirá la atención médica.
+    /// The ID of the person who will receive medical care.
     /// </summary>
     public int PersonId { get; set; }
     public int DentistId { get; set; }

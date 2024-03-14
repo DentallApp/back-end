@@ -7,8 +7,11 @@ namespace DentallApp.Core.OfficeSchedules;
 public class OfficeScheduleController
 {
     /// <summary>
-    /// Crea un nuevo horario para el consultorio.
+    /// Creates a new schedule for the dental office.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<Result>(StatusCodes.Status403Forbidden)]
     [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpPost]
     public async Task<Result<CreatedId>> Create(
@@ -17,8 +20,12 @@ public class OfficeScheduleController
         => await useCase.ExecuteAsync(request);
 
     /// <summary>
-    /// Actualiza el horario de un consultorio.
+    /// Updates the schedule of a dental office.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<Result>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<Result>(StatusCodes.Status403Forbidden)]
     [AuthorizeByRole(RoleName.Admin, RoleName.Superadmin)]
     [HttpPut("{scheduleId}")]
     public async Task<Result> Update(
@@ -28,8 +35,9 @@ public class OfficeScheduleController
         => await useCase.ExecuteAsync(scheduleId, request);
 
     /// <summary>
-    /// Obtiene el horario de un consultorio activo o inactivo.
+    /// Gets the schedules of an active or inactive office.
     /// </summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet("{officeId}")]
     public async Task<IEnumerable<GetSchedulesByOfficeIdResponse>> GetByOfficeId(
         int officeId,

@@ -1,38 +1,41 @@
 ﻿namespace DentallApp.Core.Appointments.UseCases.GetAvailableHours;
 
 /// <summary>
-/// Representa las opciones que se utilizan para el método <see cref="Availability.CalculateAvailableHours(AvailabilityOptions)"/>.
+/// Represents the options used for the method called 
+/// <see cref="Availability.CalculateAvailableHours(AvailabilityOptions)"/>.
 /// </summary>
 public class AvailabilityOptions
 {
     /// <summary>
-    /// Obtiene o establece la hora de trabajo de inicio del odontólogo.
+    /// Gets or sets the dentist's start hour.
     /// </summary>
     public TimeSpan DentistStartHour { get; init; }
 
     /// <summary>
-    /// Obtiene o establece la hora de trabajo de finalización del odontólogo.
+    /// Gets or sets the dentist's end hour.
     /// </summary>
     public TimeSpan DentistEndHour { get; init; }
 
     /// <summary>
-    /// Obtiene o establece el tiempo de duración de un servicio dental (debe estar expresado en minutos).
+    /// Gets or sets the duration time of a dental service (must be expressed in minutes).
     /// </summary>
     public TimeSpan ServiceDuration { get; init; }
 
     /// <summary>
-    /// Obtiene o establece una colección con los rangos de tiempos no disponibles.
-    /// La colección debe estar ordenada de forma ascendente y no debe tener franjas de horario duplicadas.
+    /// Gets or sets a collection of unavailable time ranges.
     /// </summary>
+    /// <remarks>
+    /// The collection should be sorted in ascending order and should not have duplicate time slots.
+    /// </remarks>
     public List<UnavailableTimeRangeResponse> Unavailables { get; init; }
 
     /// <summary>
-    /// Obtiene o establece la fecha de la cita.
+    /// Gets or sets the date of the appointment.
     /// </summary>
     public DateTime? AppointmentDate { get; init; }
 
     /// <summary>
-    /// Obtiene o establece la fecha y hora actual.
+    /// Gets or sets the current date and time.
     /// </summary>
     public DateTime CurrentTimeAndDate { get; init; } = DateTime.Now;
 }

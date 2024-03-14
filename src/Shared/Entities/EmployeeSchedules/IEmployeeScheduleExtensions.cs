@@ -3,7 +3,7 @@
 public static class IEmployeeScheduleExtensions
 {
     /// <summary>
-    /// Comprueba sí el horario del empleado es de mañana.
+    /// Checks if the employee's schedule is in the morning.
     /// </summary>
     public static bool IsMorningSchedule(this IEmployeeSchedule employeeSchedule)
     {
@@ -12,7 +12,7 @@ public static class IEmployeeScheduleExtensions
     }
 
     /// <summary>
-    /// Comprueba sí el horario del empleado es de tarde.
+    /// Checks if the employee's schedule is in the afternoon.
     /// </summary>
     public static bool IsAfternoonSchedule(this IEmployeeSchedule employeeSchedule)
     {
@@ -21,7 +21,7 @@ public static class IEmployeeScheduleExtensions
     }
 
     /// <summary>
-    /// Comprueba sí el empleado no tiene horario de mañana ni de tarde.
+    /// Checks if the employee does not have morning and afternoon schedule.
     /// </summary>
     public static bool HasNotSchedule(this IEmployeeSchedule employeeSchedule)
     {
@@ -30,7 +30,7 @@ public static class IEmployeeScheduleExtensions
     }
 
     /// <summary>
-    /// Comprueba sí el empleado tiene un horario de mañana y tarde.
+    /// Checks if the employee has a morning and afternoon schedule.
     /// </summary>
     public static bool HasFullSchedule(this IEmployeeSchedule employeeSchedule)
     {

@@ -6,6 +6,9 @@ namespace DentallApp.Core.Genders;
 [ApiController]
 public class GenderController
 {
+    /// <summary>
+    /// Gets a list of gender.
+    /// </summary>
     [HttpGet]
     public async Task<IEnumerable<GetGendersResponse>> GetAll(
         GetGendersUseCase useCase)

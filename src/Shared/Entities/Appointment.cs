@@ -3,20 +3,20 @@
 public class Appointment : BaseEntity, IAuditableEntity
 {
     /// <summary>
-    /// El ID del usuario que agendó la cita.
+    /// The ID of the user who scheduled the appointment.
     /// </summary>
     public int UserId { get; set; }
     /// <summary>
-    /// Representa el usuario que agendó la cita.
+    /// Represents the user who schedules the appointment.
     /// </summary>
     public User User { get; set; }
 
     /// <summary>
-    /// El ID de la persona que recibirá la atención médica.
+    /// The ID of the person who will receive medical care.
     /// </summary>
     public int PersonId { get; set; }
     /// <summary>
-    /// Representa la persona que recibirá la atención médica.
+    /// Represents the person who will receive medical care.
     /// </summary>
     public Person Person { get; set; }
     public int DentistId { get; set; }
@@ -36,19 +36,19 @@ public class Appointment : BaseEntity, IAuditableEntity
     public DateTime? UpdatedAt { get; set; }
 
     /// <summary>
-    /// Comprueba sí la cita fue cancelada por el empleado.
+    /// Checks if the appointment was canceled by the employee.
     /// </summary>
     /// <remarks>
-    /// Esta propiedad permite que la fecha y hora de la cita cancelada por el empleado 
-    /// no se muestre como disponible cuando el usuario básico agende una nueva cita.
+    /// This property allows that the date and time of the appointment canceled by the employee 
+    /// to not be shown as available when the basic user schedules a new appointment.
     /// </remarks>
     public bool IsCancelledByEmployee { get; set; }
 
     /// <summary>
-    /// Comprueba sí la cita médica no está cancelada.
+    /// Checks if the medical appointment has not been cancelled.
     /// </summary>
     /// <returns>
-    /// <c>true</c> sí la cita no está cancelada, de lo contrario devuelve <c>false</c>.
+    /// <c>true</c> if the appointment is not cancelled, otherwise it returns <c>false</c>.
     /// </returns>
     [Decompile]
     public bool IsNotCanceled()

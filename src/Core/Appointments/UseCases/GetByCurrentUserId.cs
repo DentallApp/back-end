@@ -10,8 +10,8 @@ public class GetAppointmentsByCurrentUserIdResponse
     public string EndHour { get; init; }
     public string DentalServiceName { get; init; }
     /// <summary>
-    /// Obtiene o establece el nombre del parentesco.
-    /// Por ejemplo: Hijo/a, Esposo/a, y Otros.
+    /// Gets or sets the name of the kinship.
+    /// For example: Child, Spouse and Other.
     /// </summary>
     public string KinshipName { get; init; }
     public string Status { get; init; }
