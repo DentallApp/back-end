@@ -12,14 +12,13 @@ public class SchedulingController(ISchedulingQueries schedulingQueries)
     /// <remarks>
     /// Sample request:
     /// 
-    /// <para>GET /office</para>
-    /// <para>{</para>
-    /// <para>  "title": "Mapasingue",</para>
-    /// <para>  "value": "1"</para>
-    /// <para>}</para>
-    /// <para>
+    ///     GET /office
+    ///     {
+    ///         "title": "Mapasingue",
+    ///         "value": "1"
+    ///     }
+    ///
     /// Note: The <c>value</c> property stores the ID of the office.
-    /// </para>
     /// </remarks>
     [HttpGet("office")]
     public async Task<List<SchedulingResponse>> GetOffices()
@@ -32,14 +31,13 @@ public class SchedulingController(ISchedulingQueries schedulingQueries)
     /// <remarks>
     /// Sample request:
     ///
-    /// <para>GET /dental-service</para>
-    /// <para>{</para>
-    /// <para>   "title": "Ortodoncia/brackets",</para>
-    /// <para>   "value": "1"</para>
-    /// <para>}</para>
-    /// <para>
+    ///     GET /dental-service
+    ///     {
+    ///         "title": "Ortodoncia/brackets",
+    ///         "value": "1"
+    ///     }
+    /// 
     /// Note: The <c>value</c> property stores the ID of the dental service.
-    /// </para>
     /// </remarks>
     [HttpGet("dental-service")]
     public async Task<List<SchedulingResponse>> GetDentalServices()
