@@ -55,8 +55,12 @@ public class AppointmentController
     /// <para>- The secretary/admin can only cancel appointments for the office to which they belong.</para>
     /// <para>- The superadmin can cancel appointments for any office.</para>
     /// </remarks>
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType<Result>(StatusCodes.Status400BadRequest)]
+    /// <response code="400">
+    /// Returns appointments that could not be cancelled.
+    /// Past appointments cannot be cancelled.
+    /// </response>
+    [ProducesResponseType<Result>(StatusCodes.Status200OK)]
+    [ProducesResponseType<Result<CancelAppointmentsResponse>>(StatusCodes.Status400BadRequest)]
     [AuthorizeByRole(RoleName.Secretary, RoleName.Dentist, RoleName.Admin, RoleName.Superadmin)]
     [HttpPost("cancel/dentist")]
     public async Task<Result<CancelAppointmentsResponse>> CancelAppointments(
