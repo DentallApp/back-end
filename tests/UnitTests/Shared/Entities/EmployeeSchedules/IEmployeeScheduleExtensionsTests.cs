@@ -37,7 +37,7 @@ public class IEmployeeScheduleExtensionsTests
     }
 
     [Test]
-    public void HasNotSchedule_WhenThereAreSchedules_ShouldReturnsTrue()
+    public void HasNotSchedule_WhenThereAreNoSchedules_ShouldReturnsTrue()
     {
         // Arrange
         var employeeSchedule = new EmployeeScheduleFake();
@@ -50,7 +50,7 @@ public class IEmployeeScheduleExtensionsTests
     }
 
     [Test]
-    public void HasFullSchedule_WhenItHasFullSchedule_ShouldReturnsTrue()
+    public void HasFullSchedule_WhenHasFullSchedule_ShouldReturnsTrue()
     {
         // Arrange
         var employeeSchedule = new EmployeeScheduleFake
