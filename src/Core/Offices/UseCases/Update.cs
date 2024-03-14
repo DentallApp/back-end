@@ -10,18 +10,21 @@ public class UpdateOfficeRequest
     public string ContactNumber { get; init; }
 
     /// <summary>
-    /// Un valor que indica sí el consultorio debe ser eliminado temporalmente.
+    /// A value that indicates whether the dental office should be temporarily deleted.
     /// </summary>
     public bool IsDeleted { get; init; }
 
     /// <summary>
-    /// Un valor que indica sí la casilla de verificación (checkbox) está marcada.
-    /// Con esta propiedad se puede verificar sí las cuentas de los empleados deben ser eliminadas temporalmente cuando el consultorio queda inactivo.
+    /// A value that indicates whether the checkbox is checked. 
     /// </summary>
+    /// <remarks>
+    /// With this property you can check whether employee accounts 
+    /// should be temporarily deleted when the dental office becomes inactive.
+    /// </remarks>
     public bool IsCheckboxTicked { get; init; }
 
     /// <summary>
-    /// Un valor que indica sí la casilla de verificación (checkbox) está desmarcada.
+    /// A value that indicates whether the checkbox is unchecked.
     /// </summary>
     [JsonIgnore]
     public bool IsCheckboxUnticked => !IsCheckboxTicked;

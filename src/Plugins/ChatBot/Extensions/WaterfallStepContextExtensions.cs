@@ -28,11 +28,11 @@ public static class WaterfallStepContextExtensions
         => (CreateAppointmentRequest)stepContext.Values[AppointmentInfo];
 
     /// <summary>
-    /// Obtiene el valor que seleccionó el usuario desde una instancia de tipo <see cref="JObject"/>.
+    /// Gets the value that the user selected from an instance of type <see cref="JObject"/>.
     /// </summary>
-    /// <param name="propertyName">El nombre de la propiedad del valor.</param>
+    /// <param name="propertyName">The name of the property.</param>
     /// <param name="stepContext"></param>
-    /// <returns>El valor de la propiedad; de lo contrario, <c>null</c> sí la propiedad no está asociada con el valor.</returns>
+    /// <returns>Property value; otherwise <c>null</c> if the property is not associated with the value.</returns>
     public static string GetValueFromJObject(this WaterfallStepContext stepContext, string propertyName)
     {
         try
@@ -47,13 +47,13 @@ public static class WaterfallStepContextExtensions
     }
 
     /// <summary>
-    /// Obtiene el valor que seleccionó el usuario desde una instancia de tipo <see cref="string"/>.
+    /// Gets the value that the user selected from an instance of type <see cref="string"/>.
     /// </summary>
     public static string GetValueFromString(this WaterfallStepContext stepContext)
         => stepContext.Context.Activity.Value.ToString();
 
     /// <summary>
-    /// Regresa al anterior paso del diálogo cascada.
+    /// Returns to the previous step of the waterfall dialog.
     /// </summary>
     public static async Task<DialogTurnResult> PreviousAsync(this WaterfallStepContext stepContext, string message, CancellationToken cancellationToken = default)
     {
@@ -64,9 +64,9 @@ public static class WaterfallStepContextExtensions
     }
 
     /// <summary>
-    /// Comprueba sí el siguiente paso no ha enviado un resultado <see cref="None" />.
+    /// Checks if the next step has not sent a result called <see cref="None" />.
     /// </summary>
-    /// <returns><c>true</c> sí el siguiente paso no envió un resultado <see cref="None" />; de lo contrario, <c>false</c>.</returns>
+    /// <returns><c>true</c> if the next step has not sent a result; otherwise, <c>false</c>.</returns>
     public static bool CheckNextStepHasNotSentResultNone(this WaterfallStepContext stepContext)
     {
         var result = stepContext.Result;
@@ -74,7 +74,7 @@ public static class WaterfallStepContextExtensions
     }
 
     /// <summary>
-    /// Comprueba si el resultado del siguiente paso es <see cref="None" />.
+    /// Checks if the result of the next step is <see cref="None" />.
     /// </summary>
     public static bool CheckIfResultNextStepIsNone(this WaterfallStepContext stepContext)
         => !stepContext.CheckNextStepHasNotSentResultNone();

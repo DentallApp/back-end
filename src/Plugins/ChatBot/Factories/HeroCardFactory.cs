@@ -33,7 +33,7 @@ public class HeroCardFactory
         int availableHourIndex  = 0;
         int cardActionIndex;
 
-        // Esto crea varios heroCards y en cada subiteración se agrega cinco botones al heroCard.
+        // This creates multiple hero cards and each subiteration adds five buttons to the hero card.
         while (heroCardIndex++ < totalHeroCards)
         {
             var heroCard = CreateHeroCard();
@@ -46,8 +46,8 @@ public class HeroCardFactory
             }
         }
 
-        // Esta condición verifica sí es necesario agregar un último heroCard.
-        // Esto garantiza que las horas disponibles faltantes estén en algún heroCard.
+        // This condition checks whether it is necessary to add a last hero card.
+        // This ensures that the missing available hours are on any hero card.
         if (availableHourIndex < totalAvailableHours)
         {
             var heroCard = CreateHeroCard();

@@ -11,7 +11,7 @@ public class GetScheduledAppointmentsResponse
 }
 
 /// <summary>
-/// Representa una consulta en la cual obtiene las citas agendadas que están próximas a la fecha estipulada.
+/// Represents a query that retrieves scheduled appointments that are close to the stipulated date.
 /// </summary>
 public class GetScheduledAppointmentsQuery(DbContext context)
 {
@@ -22,8 +22,8 @@ public class GetScheduledAppointmentsQuery(DbContext context)
                     appointment.AppointmentStatusId == (int)AppointmentStatus.Predefined.Scheduled &&
                     DBFunctions.DateDiff(appointment.Date, currentDate) == timeInAdvance &&
                     appointment.CreatedAt != null &&
-                    // Para que el recordatorio no se envíe sí el paciente agenda la cita para el día siguiente.
-                    // El caso anterior sucede cuando el tiempo de antelación (timeInAdvance) es de 1 día.
+                    // So that the reminder is not sent if the patient schedules the appointment for the next day.
+                    // The previous case occurs when the time in advance is one day.
                     currentDate != DBFunctions.GetDate(appointment.CreatedAt)
                   )
             .Select(appointment => new GetScheduledAppointmentsResponse

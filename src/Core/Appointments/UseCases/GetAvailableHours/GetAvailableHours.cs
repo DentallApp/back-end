@@ -96,9 +96,9 @@ public class GetAvailableHoursUseCase(
     }
 
     /// <summary>
-    /// Obtiene el tiempo libre (o punto de descanso) del empleado. 
-    /// Este tiempo se descarta para el cálculo de los horarios disponibles.
+    /// Gets the employee's time off.
     /// </summary>
+    /// <remarks>This time is discarded for the calculation of the available hours.</remarks>
     private static UnavailableTimeRangeResponse GetTimeOff(EmployeeScheduleResponse employeeSchedule) => new()
     {
         StartHour = (TimeSpan)employeeSchedule.MorningEndHour,

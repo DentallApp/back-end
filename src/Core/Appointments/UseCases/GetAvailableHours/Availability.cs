@@ -1,26 +1,34 @@
 ﻿namespace DentallApp.Core.Appointments.UseCases.GetAvailableHours;
 
 /// <summary>
-/// Representa la disponibilidad de horas para el agendamiento de citas.
+/// Represents the availability of hours for appointment scheduling.
 /// </summary>
 public static class Availability
 {
     /// <summary>
-    /// Comprueba sí la nueva hora de inicio y finalización no están disponible para una reserva de cita.
+    /// Checks if the new start and end hour is not available for an appointment booking.
     /// </summary>
-    /// <remarks>El método verificará sí la nueva franja de horario entra en conflicto con la franja de horario ocupada.</remarks>
-    /// <param name="newStartHour">La nueva hora de inicio generada.</param>
-    /// <param name="newEndHour">La nueva hora de finalización generada.</param>
-    /// <param name="unavailableTimeRange">Una instancia con el rango de tiempo no disponible.</param>
-    /// <returns><c>true</c> sí la nueva franja de horario no está disponible, de lo contrario devuelve <c>false</c>.</returns>
+    /// <remarks>
+    /// The method will check if the new time slot conflicts with the occupied time slot.
+    /// </remarks>
+    /// <param name="newStartHour">The new start hour generated.</param>
+    /// <param name="newEndHour">The new end hour generated.</param>
+    /// <param name="unavailableTimeRange">An instance with the time range not available.</param>
+    /// <returns>
+    /// true if the new time slot is not available, otherwise it returns false.
+    /// </returns>
     public static bool IsNotAvailable(ref TimeSpan newStartHour, ref TimeSpan newEndHour, UnavailableTimeRangeResponse unavailableTimeRange)
         => unavailableTimeRange.StartHour < newEndHour && newStartHour < unavailableTimeRange.EndHour;
 
     /// <summary>
-    /// Calcula las horas disponibles para la reserva de una cita médica.
+    /// Calculate the hours available to book a medical appointment.
     /// </summary>
-    /// <param name="options">Una instancia con las opciones requeridas para obtener las horas disponibles.</param>
-    /// <returns>Una colección con las horas disponibles, de lo contrario devuelve <c>null</c>.</returns>
+    /// <param name="options">
+    /// An instance with the required options to obtain the available hours.
+    /// </param>
+    /// <returns>
+    /// A collection with the available hours, otherwise returns <c>null</c>.
+    /// </returns>
     public static List<AvailableTimeRangeResponse> CalculateAvailableHours(AvailabilityOptions options)
     {
         if (options.ServiceDuration == TimeSpan.Zero)
@@ -29,7 +37,7 @@ public static class Availability
         var availableHours                   = new List<AvailableTimeRangeResponse>();
         int unavailableTimeRangeIndex        = 0;
         int totalUnavailableHours            = options.Unavailables.Count;
-        // Para verificar sí la fecha de la cita no es la fecha actual.
+        // To verify if the date of the appointment is not the current date.
         bool appointmentDateIsNotCurrentDate = options.CurrentTimeAndDate.Date != options.AppointmentDate;
         TimeSpan currentTime                 = options.CurrentTimeAndDate.TimeOfDay;
         TimeSpan newStartHour                = options.DentistStartHour;
@@ -65,7 +73,7 @@ public static class Availability
     }
 
     /// <summary>
-    /// Obtiene el siguiente índice de rango de tiempo no disponible.
+    /// Gets the following unavailable time range index.
     /// </summary>
     private static void MoveNextUnavailableTimeRangeIndex(this ref int i) => i++;
 }
