@@ -39,10 +39,7 @@ public class CancelAppointmentsValidator : AbstractValidator<CancelAppointmentsR
     }
 }
 
-/// <summary>
-/// Represents the appointments that cannot be canceled.
-/// </summary>
-public class CancelAppointmentsResponse
+public class AppointmentsThatCannotBeCanceledResponse
 {
     public IEnumerable<int> AppointmentsId { get; init; }
 }
@@ -55,7 +52,7 @@ public class CancelAppointmentsUseCase(
     ICurrentEmployee currentEmployee,
     CancelAppointmentsValidator validator)
 {
-    public async Task<Result<CancelAppointmentsResponse>> ExecuteAsync(CancelAppointmentsRequest request)
+    public async Task<Result<AppointmentsThatCannotBeCanceledResponse>> ExecuteAsync(CancelAppointmentsRequest request)
     {
         var result = validator.Validate(request);
         if(result.IsFailed()) 
@@ -87,15 +84,16 @@ public class CancelAppointmentsUseCase(
         {
             int pastAppointments = request.Appointments.Count() - appointmentsCanBeCancelled.Count();
             var message = new AppointmentThatHasAlreadyPassedEmployeeError(pastAppointments).Message;
-            var appointmentsThatCannotBeCanceled = new CancelAppointmentsResponse
+            var response = new AppointmentsThatCannotBeCanceledResponse
             {
                 AppointmentsId = request.Appointments
                     .Select(appointment => appointment.AppointmentId)
                     .Except(appointmentsIdCanBeCancelled)
             };
 
-            return Result.Invalid(message)
-                         .WithData(appointmentsThatCannotBeCanceled);
+            return Result
+                .Invalid(message)
+                .WithData(response);
         }
 
         return Result.Success(Messages.SuccessfullyCancelledAppointments);

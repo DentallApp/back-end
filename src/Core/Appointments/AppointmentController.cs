@@ -60,10 +60,10 @@ public class AppointmentController
     /// Past appointments cannot be cancelled.
     /// </response>
     [ProducesResponseType<Result>(StatusCodes.Status200OK)]
-    [ProducesResponseType<Result<CancelAppointmentsResponse>>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<Result<AppointmentsThatCannotBeCanceledResponse>>(StatusCodes.Status400BadRequest)]
     [AuthorizeByRole(RoleName.Secretary, RoleName.Dentist, RoleName.Admin, RoleName.Superadmin)]
     [HttpPost("cancel/dentist")]
-    public async Task<Result<CancelAppointmentsResponse>> CancelAppointments(
+    public async Task<Result<AppointmentsThatCannotBeCanceledResponse>> CancelAppointments(
         [FromBody]CancelAppointmentsRequest request, 
         CancelAppointmentsUseCase useCase)
         => await useCase.ExecuteAsync(request);
