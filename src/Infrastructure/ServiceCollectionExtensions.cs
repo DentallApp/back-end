@@ -25,10 +25,13 @@ public static class InfrastructureServicesExtensions
 
         services.AddScoped(serviceProvider =>
         {
-            ClaimsPrincipal user = serviceProvider
-                .GetService<IHttpContextAccessor>()
+            var httpContextAccessor = serviceProvider
+                .GetService<IHttpContextAccessor>();
+
+            ClaimsPrincipal user = httpContextAccessor
                 .HttpContext
                 .User;
+
             return user;
         });
 
