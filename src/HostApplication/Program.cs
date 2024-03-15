@@ -19,7 +19,8 @@ builder.Services
 
 builder.Services
     .AddHttpClient()
-    .AddControllersAsService();
+    .AddControllersAsService()
+    .AddHttpContextAccessor();
 
 builder.Services.AddSwagger();
 builder.Services.AddAuthenticationJwtBearer(appSettings);
