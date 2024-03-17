@@ -9,9 +9,11 @@ public static class ControllersExtensions
             options.SuppressAsyncSuffixInActionNames = false;
             options.Filters.Add<TranslateResultToActionResultAttribute>();
         })
-        .AddJsonOptions(jsonOpts =>
+        .AddJsonOptions(options =>
         {
-            jsonOpts.JsonSerializerOptions.Converters.Add(new TimeSpanJsonConverter());
+            options.JsonSerializerOptions.Converters.Add(new TimeSpanJsonConverter());
+            // Shows enum values in the swagger schema.
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter<ResultStatus>());
         })
         .AddCustomInvalidModelStateResponse()
         .AddApplicationParts();
