@@ -52,7 +52,5 @@ public class Appointment : BaseEntity, IAuditableEntity
     /// </returns>
     [Decompile]
     public bool IsNotCanceled()
-    {
-        return AppointmentStatusId != (int)AppointmentStatus.Predefined.Canceled;
-    }
+        => AppointmentStatusId != (int)AppointmentStatus.Predefined.Canceled;
 }

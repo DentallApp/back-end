@@ -13,9 +13,7 @@ public class OfficeSchedule : SoftDeleteEntity, IAuditableEntity
 
     [Decompile]
     public override string ToString()
-    {
-        return StartHour.GetHourWithoutSeconds() + 
-            " - " + 
-            EndHour.GetHourWithoutSeconds();
-    }
+        => StartHour.GetHourWithoutSeconds() + 
+           " - " + 
+           EndHour.GetHourWithoutSeconds();
 }

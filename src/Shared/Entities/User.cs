@@ -15,17 +15,11 @@ public class User : BaseEntity, IAuditableEntity
     public List<UserRole> UserRoles { get; set; }
 
     public bool IsUnverified()
-    {
-        return UserRoles.First().RoleId == (int)Role.Predefined.Unverified;
-    }
+        => UserRoles.First().RoleId == (int)Role.Predefined.Unverified;
 
     public bool IsVerified()
-    {
-        return !IsUnverified();
-    }
+        => !IsUnverified();
 
     public bool IsBasicUser()
-    {
-        return UserRoles.Any(userRole => userRole.RoleId == (int)Role.Predefined.BasicUser);
-    }
+        => UserRoles.Any(userRole => userRole.RoleId == (int)Role.Predefined.BasicUser);
 }

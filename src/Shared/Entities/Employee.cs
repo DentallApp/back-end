@@ -16,7 +16,7 @@ public class Employee : SoftDeleteEntity, IAuditableEntity
     public List<EmployeeSpecialty> EmployeeSpecialties { get; set; }
 
     public bool IsSuperAdmin()
-    {
-        return User.UserRoles.Any(userRole => userRole.RoleId == (int)Role.Predefined.Superadmin);
-    }
+        => User
+        .UserRoles
+        .Any(userRole => userRole.RoleId == (int)Role.Predefined.Superadmin);
 }
