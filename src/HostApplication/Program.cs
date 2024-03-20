@@ -9,7 +9,7 @@ var builder     = WebApplication.CreateBuilder(args);
 ISqlCollection sqlCollection = new YeSqlLoader().LoadFromDefaultDirectory();
 builder.Services.AddSingleton(sqlCollection);
 builder.Configuration.AddEnvironmentVariables();
-PluginStartup.Configure(builder);
+PluginStartup.ConfigureServices(builder);
 builder.Services
     .AddSingleton(appSettings)
     .AddInfrastructureServices()
