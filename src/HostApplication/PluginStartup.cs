@@ -2,10 +2,7 @@
 
 public static class PluginStartup
 {
-    /// <summary>
-    /// Configures the plugins.
-    /// </summary>
-    public static void Configure(WebApplicationBuilder builder)
+    public static void ConfigureServices(WebApplicationBuilder builder)
     {
         var envConfiguration = new CPluginEnvConfiguration();
         PluginLoader.Load(envConfiguration);
@@ -13,15 +10,11 @@ public static class PluginStartup
         foreach (var dependencyServicesRegisterer in dependencyServicesRegisterers)
             dependencyServicesRegisterer.RegisterServices(builder.Services, builder.Configuration);
 
-        var entityTypeConfigurators = TypeFinder
-            .FindSubtypesOf<IEntityTypeConfigurator>()
-            .ToList();
-
         builder
             .Services
-            .AddSingleton<IEnumerable<IEntityTypeConfigurator>>(entityTypeConfigurators);
+            .AddSubtypesOf<IEntityTypeConfigurator>(ServiceLifetime.Transient);
 
-        // These services are only added when no plug-in registers its own implementation.
+        // These services are only added when no plugin registers its own implementation.
         builder.Services.TryAddSingleton<IEmailService, FakeEmailService>();
         builder.Services.TryAddSingleton<IInstantMessaging, FakeInstantMessaging>();
     }
