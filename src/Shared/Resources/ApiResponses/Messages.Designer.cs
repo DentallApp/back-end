@@ -301,6 +301,42 @@ namespace DentallApp.Shared.Resources.ApiResponses {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El documento de identidad está vacío..
+        /// </summary>
+        public static string DocumentIsEmpty {
+            get {
+                return ResourceManager.GetString("DocumentIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El documento de identidad es inválido..
+        /// </summary>
+        public static string DocumentIsInvalid {
+            get {
+                return ResourceManager.GetString("DocumentIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El documento de identidad debe tener {0} caracteres..
+        /// </summary>
+        public static string DocumentMaxCharacters {
+            get {
+                return ResourceManager.GetString("DocumentMaxCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El documento de identidad debe ser numérico..
+        /// </summary>
+        public static string DocumentMustBeNumeric {
+            get {
+                return ResourceManager.GetString("DocumentMustBeNumeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El correo electrónico no está confirmado..
         /// </summary>
         public static string EmailNotConfirmed {
