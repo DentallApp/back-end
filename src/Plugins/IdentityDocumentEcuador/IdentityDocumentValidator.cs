@@ -13,7 +13,7 @@ public class IdentityDocumentValidator : IIdentityDocumentValidator
         if (string.IsNullOrWhiteSpace(document))
             return Result.Invalid(Messages.DocumentIsEmpty);
 
-        if (document.Length == 10)
+        if (document.Length != 10)
             return Result.Invalid(string.Format(Messages.DocumentMaxCharacters, 10));
 
         if(IsNotNumeric(document))
