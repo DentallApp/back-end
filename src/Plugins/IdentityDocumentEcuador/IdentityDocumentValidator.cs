@@ -22,7 +22,7 @@ public class IdentityDocumentValidator : IIdentityDocumentValidator
         if(HasInvalidRegionDigit(document))
             return Result.Invalid(Messages.DocumentIsInvalid);
 
-        int verificationDigit = int.Parse(document.Substring(9, 10));
+        int verificationDigit = int.Parse(document[^1].ToString());
         int total = 0;
         foreach(char c in document)
         {
