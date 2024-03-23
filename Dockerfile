@@ -20,6 +20,7 @@ COPY ["src/Plugins/AppointmentReminders/*.csproj", "src/Plugins/AppointmentRemin
 COPY ["src/Plugins/ChatBot/*.csproj", "src/Plugins/ChatBot/"]
 COPY ["src/Plugins/SendGrid/*.csproj", "src/Plugins/SendGrid/"]
 COPY ["src/Plugins/TwilioWhatsApp/*.csproj", "src/Plugins/TwilioWhatsApp/"]
+COPY ["src/Plugins/IdentityDocumentEcuador/*.csproj", "src/Plugins/IdentityDocumentEcuador/"]
 COPY ["src/Plugins/*.props", "src/Plugins/"]
 WORKDIR /app/src/Plugins/AppointmentReminders
 RUN dotnet restore
@@ -28,6 +29,8 @@ RUN dotnet restore
 WORKDIR /app/src/Plugins/SendGrid
 RUN dotnet restore
 WORKDIR /app/src/Plugins/TwilioWhatsApp
+RUN dotnet restore
+WORKDIR /app/src/Plugins/IdentityDocumentEcuador
 RUN dotnet restore
 
 # Copy everything else and build plugins
@@ -40,6 +43,8 @@ RUN dotnet build -c Release --no-restore
 WORKDIR /app/src/Plugins/SendGrid
 RUN dotnet build -c Release --no-restore
 WORKDIR /app/src/Plugins/TwilioWhatsApp
+RUN dotnet build -c Release --no-restore
+WORKDIR /app/src/Plugins/IdentityDocumentEcuador
 RUN dotnet build -c Release --no-restore
 
 # Copy everything else and build app

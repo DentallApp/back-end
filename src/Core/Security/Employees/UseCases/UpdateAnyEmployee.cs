@@ -36,13 +36,14 @@ public class UpdateAnyEmployeeRequest
 
 public class UpdateAnyEmployeeValidator : AbstractValidator<UpdateAnyEmployeeRequest>
 {
-    public UpdateAnyEmployeeValidator()
+    public UpdateAnyEmployeeValidator(IIdentityDocumentValidator documentValidator)
     {
         RuleFor(request => request.Email)
             .NotEmpty()
             .EmailAddress();
         RuleFor(request => request.Password).MustBeSecurePassword();
-        RuleFor(request => request.Document).NotEmpty();
+        RuleFor(request => request.Document)
+            .MustBeValidIdentityDocument(documentValidator);
         RuleFor(request => request.Names).NotEmpty();
         RuleFor(request => request.LastNames).NotEmpty();
         RuleFor(request => request.CellPhone).NotEmpty();

@@ -17,5 +17,6 @@ public static class PluginStartup
         // These services are only added when no plugin registers its own implementation.
         builder.Services.TryAddSingleton<IEmailService, FakeEmailService>();
         builder.Services.TryAddSingleton<IInstantMessaging, FakeInstantMessaging>();
+        builder.Services.TryAddSingleton<IIdentityDocumentValidator, FakeIdentityDocument>();
     }
 }

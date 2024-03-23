@@ -201,6 +201,18 @@
   <data name="DirectLineTokenFailed" xml:space="preserve">
     <value>Error en la llamada a la API del token de Direct Line.</value>
   </data>
+  <data name="DocumentIsEmpty" xml:space="preserve">
+    <value>El documento de identidad está vacío.</value>
+  </data>
+  <data name="DocumentIsInvalid" xml:space="preserve">
+    <value>El documento de identidad es inválido.</value>
+  </data>
+  <data name="DocumentMaxCharacters" xml:space="preserve">
+    <value>El documento de identidad debe tener {0} caracteres.</value>
+  </data>
+  <data name="DocumentMustBeNumeric" xml:space="preserve">
+    <value>El documento de identidad debe ser numérico.</value>
+  </data>
   <data name="EmailNotConfirmed" xml:space="preserve">
     <value>El correo electrónico no está confirmado.</value>
   </data>

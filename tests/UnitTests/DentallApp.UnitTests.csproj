@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Plugins\ChatBot\Plugin.ChatBot.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\IdentityDocumentEcuador\Plugin.IdentityDocument.Ecuador.csproj" />
     <ProjectReference Include="..\..\src\Core\DentallApp.Core.csproj" />
     <ProjectReference Include="..\..\src\Infrastructure\DentallApp.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Shared\DentallApp.Shared.csproj" />
