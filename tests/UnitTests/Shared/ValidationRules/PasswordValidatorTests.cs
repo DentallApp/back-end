@@ -2,20 +2,6 @@
 
 public class PasswordValidatorTests
 {
-    private class User
-    {
-        public string Password { get; init; }
-    }
-
-    private class UserValidator : AbstractValidator<User>
-    {
-        public UserValidator()
-        {
-            RuleFor(user => user.Password)
-                .MustBeSecurePassword();
-        }
-    }
-
     [TestCase("1234")]
     [TestCase("D234")]
     [TestCase("DD34")]
@@ -62,5 +48,19 @@ public class PasswordValidatorTests
         var model = new User { Password = password };
         var result = validator.TestValidate(model);
         result.ShouldHaveValidationErrorFor(user => user.Password);
+    }
+
+    private class User
+    {
+        public string Password { get; init; }
+    }
+
+    private class UserValidator : AbstractValidator<User>
+    {
+        public UserValidator()
+        {
+            RuleFor(user => user.Password)
+                .MustBeSecurePassword();
+        }
     }
 }
