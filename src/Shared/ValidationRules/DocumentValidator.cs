@@ -2,7 +2,7 @@
 
 public static class DocumentValidator
 {
-    public static IRuleBuilderOptions<T, string> MustBeValidDocument<T>(
+    public static IRuleBuilderOptions<T, string> MustBeValidIdentityDocument<T>(
         this IRuleBuilder<T, string> ruleBuilder,
         IIdentityDocumentValidator documentValidator)
     {

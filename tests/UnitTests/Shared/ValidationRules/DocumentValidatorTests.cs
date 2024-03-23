@@ -41,7 +41,7 @@ public class DocumentValidatorTests
         public UserValidator(IIdentityDocumentValidator documentValidator)
         {
             RuleFor(user => user.Document)
-                .MustBeValidDocument(documentValidator);
+                .MustBeValidIdentityDocument(documentValidator);
         }
     }
 }
