@@ -27,11 +27,11 @@ public class IdentityDocumentValidator : IIdentityDocumentValidator
         bool isEvenPosition = false;
         // The verification digit is not considered.
         int len = document.Length - 1;
-        for (int i = 0; i < len; i++)
+        for (int position = 0; position < len; position++)
         {
             isEvenPosition = !isEvenPosition;
             int coefficient = isEvenPosition ? 2 : 1;
-            int digit = document[i].ToInt() * coefficient;
+            int digit = document[position].ToInt() * coefficient;
             int result = digit > 9 ? digit - 9 : digit;
             total += result;
         }
