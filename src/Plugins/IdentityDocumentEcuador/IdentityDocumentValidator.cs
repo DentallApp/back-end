@@ -24,13 +24,13 @@ public class IdentityDocumentValidator : IIdentityDocumentValidator
 
         int verificationDigit = document[^1].ToInt();
         int total = 0;
-        bool isOddPosition = false;
+        bool isEvenPosition = false;
         // The verification digit is not considered.
         int len = document.Length - 1;
         for (int i = 0; i < len; i++)
         {
-            isOddPosition = !isOddPosition;
-            int coefficient = isOddPosition ? 2 : 1;
+            isEvenPosition = !isEvenPosition;
+            int coefficient = isEvenPosition ? 2 : 1;
             int digit = document[i].ToInt() * coefficient;
             int result = digit > 9 ? digit - 9 : digit;
             total += result;
