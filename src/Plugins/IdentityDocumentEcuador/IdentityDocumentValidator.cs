@@ -22,7 +22,7 @@ public class IdentityDocumentValidator : IIdentityDocumentValidator
         if(HasInvalidRegionDigit(document))
             return Result.Invalid(Messages.DocumentIsInvalid);
 
-        int verificationDigit = int.Parse(document[^1].ToString());
+        int verificationDigit = document[^1].ToInt();
         int total = 0;
         bool isOddPosition = false;
         // The verification digit is not considered.
@@ -31,7 +31,7 @@ public class IdentityDocumentValidator : IIdentityDocumentValidator
         {
             isOddPosition = !isOddPosition;
             int coefficient = isOddPosition ? 2 : 1;
-            int digit = (document[i] - '0') * coefficient;
+            int digit = document[i].ToInt() * coefficient;
             int result = digit > 9 ? digit - 9 : digit;
             total += result;
         }
@@ -60,4 +60,9 @@ public class IdentityDocumentValidator : IIdentityDocumentValidator
         // 30 is assigned for Ecuadorians abroad.
         return regionDigit is (>= 1 and <= 24) or 30;
     }
+}
+
+public static class CharExtensions
+{
+    public static int ToInt(this char c) => c - '0';
 }
