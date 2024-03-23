@@ -4,7 +4,7 @@
 /// Represents a validator for Ecuadorian identity documents.
 /// </summary>
 /// <remarks>
-/// Link to the algorithm: <see href="https://www.jybaro.com/blog/cedula-de-identidad-ecuatoriana"/>
+/// Link to the algorithm: <see href="https://www.skypack.dev/view/udv-ec"/>
 /// </remarks>
 public class IdentityDocumentValidator : IIdentityDocumentValidator
 {
@@ -24,17 +24,16 @@ public class IdentityDocumentValidator : IIdentityDocumentValidator
 
         int verificationDigit = int.Parse(document[^1].ToString());
         int total = 0;
-        foreach(char c in document)
+        bool isOddPosition = false;
+        // The verification digit is not considered.
+        int len = document.Length - 1;
+        for (int i = 0; i < len; i++)
         {
-            int digit = c - '0';
-            bool isOdd = digit % 2 == 1;
-            if (isOdd)
-            {
-                int result = digit * 2 > 9 ? digit - 9 : digit;
-                total += result;
-                continue;
-            }
-            total += digit;
+            isOddPosition = !isOddPosition;
+            int coefficient = isOddPosition ? 2 : 1;
+            int digit = (document[i] - '0') * coefficient;
+            int result = digit > 9 ? digit - 9 : digit;
+            total += result;
         }
 
         bool isValidDocument = 
