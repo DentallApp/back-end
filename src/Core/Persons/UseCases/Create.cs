@@ -24,9 +24,10 @@ public class CreatePersonRequest
 
 public class CreatePersonValidator : AbstractValidator<CreatePersonRequest>
 {
-    public CreatePersonValidator()
+    public CreatePersonValidator(IIdentityDocumentValidator documentValidator)
     {
-        RuleFor(request => request.Document).NotEmpty();
+        RuleFor(request => request.Document)
+            .MustBeValidIdentityDocument(documentValidator);
         RuleFor(request => request.Names).NotEmpty();
         RuleFor(request => request.LastNames).NotEmpty();
         RuleFor(request => request.CellPhone).NotEmpty();

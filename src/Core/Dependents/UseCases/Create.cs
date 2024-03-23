@@ -35,9 +35,10 @@ public class CreateDependentRequest
 
 public class CreateDependentValidator : AbstractValidator<CreateDependentRequest>
 {
-    public CreateDependentValidator()
+    public CreateDependentValidator(IIdentityDocumentValidator documentValidator)
     {
-        RuleFor(request => request.Document).NotEmpty();
+        RuleFor(request => request.Document)
+            .MustBeValidIdentityDocument(documentValidator);
         RuleFor(request => request.Names).NotEmpty();
         RuleFor(request => request.LastNames).NotEmpty();
         RuleFor(request => request.CellPhone).NotEmpty();
