@@ -209,13 +209,15 @@ Request body:
 ### General architecture
 
 <details>
-<summary><b>More details</b></summary>
+<summary><b>Show diagram</b></summary>
 
 ![general-architecture](https://github.com/DentallApp/back-end/blob/dev/diagrams/general-architecture.png)
 
 </details>
 
-#### Overview of each component
+<details>
+<summary><b>More details</b></summary>
+
 - **Host Application.** Contains everything needed to run the application. It represents the entry point of the application.
   This layer performs other tasks such as:
   - Load plugins from a configuration file (.env) using the library called [CPlugin.Net](https://github.com/MrDave1999/CPlugin.Net).
@@ -256,24 +258,33 @@ Request body:
 - **Twilio WhatsApp.** It is a plugin that allows to send messages by whatsapp in cases such as:
   - When an appointment is scheduled from the chatbot, the user is sent the appointment information to whatsapp.
   - When an employee needs to cancel an appointment, he/she should notify patients by whatsapp.
+- **IdentityDocument.Ecuador.** It is a plugin that allows to validate identity documents registered in Ecuador.
+  This plugin uses an [algorithm](https://www.skypack.dev/view/udv-ec) to verify if the identity document is valid or not.
+
+</details>
 
 ### Core layer
 
 <details>
-<summary><b>More details</b></summary>
+<summary><b>Show diagram</b></summary>
 
 ![core-layer](https://github.com/DentallApp/back-end/blob/dev/diagrams/core-layer.png)
 
 </details>
 
+<details>
+<summary><b>More details</b></summary>
+
 The above diagram describes in more detail which feature modules are contained in the core layer. 
 
 In the presented diagram it can be identified that the feature modules are not coupled to each other, the purpose of this is not to cause a [dependency hell](https://en.wikipedia.org/wiki/Dependency_hell), in order to maintain a dependency graph that is as simple as possible. The purpose is to make it easier to understand the parts of the backend application.
 
+</details>
+
 ### Relational model
 
 <details>
-<summary><b>More details</b></summary>
+<summary><b>Show diagram</b></summary>
 
 ![relational-model](https://github.com/DentallApp/back-end/blob/dev/diagrams/relational-model.png)
 
