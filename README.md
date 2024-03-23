@@ -19,6 +19,7 @@ DentallApp is a web application with chatbot for appointment management, reminde
 - [Installation](#installation)
 - [Plugin configuration](#plugin-configuration)
 - [Credentials](#credentials)
+- [Validate identity documents](#validate-identity-documents)
 - [Diagrams](#diagrams)
   - [General architecture](#general-architecture)
   - [Core layer](#core-layer)
@@ -203,6 +204,20 @@ Request body:
   "password": "123456"
 }
 ```
+
+## Validate identity documents
+
+To validate identity documents, it depends largely on the country where the dental office is located. At the moment, we can only validate identity documents registered in Ecuador.
+
+You can enable it from the configuration file, e.g.
+```.env
+PLUGINS="
+Plugin.IdentityDocument.Ecuador.dll
+"
+```
+In case there is no plugin loaded to validate the identity document, the host application will use a fake provider called [FakeIdentityDocument](https://github.com/DentallApp/back-end/blob/dev/src/Infrastructure/Services/FakeIdentityDocument.cs).
+
+It was decided to implement the logic to validate identity documents from a plugin, because it is flexible, since it allows to change the implementation without having to modify the source code of the host application.
 
 ## Diagrams
 
