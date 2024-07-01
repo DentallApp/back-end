@@ -48,15 +48,21 @@ public static class SwaggerGen
 
     private class AcceptLanguageHeaderParameter(IConfiguration configuration) : IOperationFilter
     {
+        private readonly IList<IOpenApiAny> _languageOptions = CreateLanguageOptions(configuration);
+        private readonly string _defaultLanguage = configuration.GetDefaultLanguage();
+
+        private static List<IOpenApiAny> CreateLanguageOptions(IConfiguration configuration)
+        {
+            var languageOptions = new List<IOpenApiAny>();
+            var languages = configuration.GetLanguages();
+            foreach (var language in languages)
+                languageOptions.Add(new OpenApiString(language));
+            return languageOptions;
+        }
+
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             operation.Parameters ??= [];
-            var languageOptions = new List<IOpenApiAny>();
-            var languages = configuration.GetLanguages();
-            var defaultLanguage = configuration.GetDefaultLanguage();
-            foreach (var language in languages) 
-                languageOptions.Add(new OpenApiString(language));
-
             operation.Parameters.Add(new OpenApiParameter
             {
                 Name = "Accept-Language",
@@ -66,8 +72,8 @@ public static class SwaggerGen
                 Schema = new OpenApiSchema
                 {
                     Type = "string",
-                    Default = new OpenApiString(defaultLanguage),
-                    Enum = languageOptions
+                    Default = new OpenApiString(_defaultLanguage),
+                    Enum = _languageOptions
                 }
             });
         }
