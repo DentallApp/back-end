@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccessTokenInvalid" xml:space="preserve">
+    <value>The access token is invalid.</value>
+  </data>
+  <data name="AccountAlreadyVerified" xml:space="preserve">
+    <value>The user account has already been verified.</value>
+  </data>
+  <data name="AppointmentCancellation" xml:space="preserve">
+    <value>Dear user {0}, your appointment scheduled at the dental office {1} for day {2} at {3} has been canceled for the following reason: {4}</value>
+  </data>
+  <data name="AppointmentCannotBeUpdatedForPreviousDays" xml:space="preserve">
+    <value>You cannot change the appointment status from the previous day to the current date.</value>
+  </data>
+  <data name="AppointmentDateIsPublicHoliday" xml:space="preserve">
+    <value>The appointment date you selected is not available because it is a public holiday.</value>
+  </data>
+  <data name="AppointmentInformation" xml:space="preserve">
+    <value>Hello {0}, thank you for scheduling an appointment at the office {1}. Your appointment information is:
+- Dentist: {2}
+- Office: {3}
+- Dental service: {4}
+- Appointment date: {5}
+- Appointment time: {6}
+{7}</value>
+  </data>
+  <data name="AppointmentIsAlreadyCanceled" xml:space="preserve">
+    <value>You cannot update an appointment that is already cancelled.</value>
+  </data>
+  <data name="AppointmentNotAssigned" xml:space="preserve">
+    <value>This appointment has not been assigned for you.</value>
+  </data>
+  <data name="AppointmentReminder" xml:space="preserve">
+    <value>Dear user {0}, we remind you that on day {1} at {2} you have an appointment scheduled in the office {3} with the dentist {4}</value>
+  </data>
+  <data name="AppointmentThatHasAlreadyPassedBasicUser" xml:space="preserve">
+    <value>You cannot cancel an appointment that has already passed. Our employees will take care of changing the status of this appointment later.</value>
+  </data>
+  <data name="AppointmentThatHasAlreadyPassedEmployee" xml:space="preserve">
+    <value>Some appointments could not be canceled because the stipulated date and time had passed. Count: {0}.</value>
+  </data>
+  <data name="CannotEditSuperadmin" xml:space="preserve">
+    <value>Sorry, you cannot edit a Super Administrator's data.</value>
+  </data>
+  <data name="CannotEditYourOwnProfile" xml:space="preserve">
+    <value>You cannot edit your own profile.</value>
+  </data>
+  <data name="CannotRemoveSuperadmin" xml:space="preserve">
+    <value>Sorry, you can't delete a Super Administrator.</value>
+  </data>
+  <data name="CannotRemoveYourOwnProfile" xml:space="preserve">
+    <value>You cannot delete your own profile.</value>
+  </data>
+  <data name="CannotUpdateAnotherUserResource" xml:space="preserve">
+    <value>You cannot update another user resource.</value>
+  </data>
+  <data name="CanOnlyAccessYourOwnAppointments" xml:space="preserve">
+    <value>You can only access your own appointments.</value>
+  </data>
+  <data name="CouldNotSendEmail" xml:space="preserve">
+    <value>The email could not be sent.</value>
+  </data>
+  <data name="CreateBasicUserAccount" xml:space="preserve">
+    <value>The basic user account has been created successfully. Please confirm your email address.</value>
+  </data>
+  <data name="CreateEmployeeAccount" xml:space="preserve">
+    <value>The employee's account has been created successfully.</value>
+  </data>
+  <data name="CreateResource" xml:space="preserve">
+    <value>The resource was created successfully.</value>
+  </data>
+  <data name="DateAndTimeAppointmentIsNotAvailable" xml:space="preserve">
+    <value>The appointment date and time you have selected is not available.</value>
+  </data>
+  <data name="DeleteResource" xml:space="preserve">
+    <value>The resource was successfully deleted.</value>
+  </data>
+  <data name="DentalServiceNotAvailable" xml:space="preserve">
+    <value>Dental service is not available. An invalid ID may have been passed.</value>
+  </data>
+  <data name="DentistNotAvailable" xml:space="preserve">
+    <value>The dentist is not available on day {0}. Please choose another day.</value>
+  </data>
+  <data name="DirectLineTokenFailed" xml:space="preserve">
+    <value>Direct Line token API call failed.</value>
+  </data>
+  <data name="DocumentIsEmpty" xml:space="preserve">
+    <value>The identity document is empty.</value>
+  </data>
+  <data name="DocumentIsInvalid" xml:space="preserve">
+    <value>The identity document is invalid.</value>
+  </data>
+  <data name="DocumentMaxCharacters" xml:space="preserve">
+    <value>The identity document must have {0} characters.</value>
+  </data>
+  <data name="DocumentMustBeNumeric" xml:space="preserve">
+    <value>The identity document must be numerical.</value>
+  </data>
+  <data name="EmailNotConfirmed" xml:space="preserve">
+    <value>The email is not confirmed.</value>
+  </data>
+  <data name="EmailOrPasswordIncorrect" xml:space="preserve">
+    <value>The email or password is incorrect.</value>
+  </data>
+  <data name="EmailSuccessfullyVerified" xml:space="preserve">
+    <value>Email successfully verified.</value>
+  </data>
+  <data name="EmailVerificationTokenInvalid" xml:space="preserve">
+    <value>The email verification token is invalid.</value>
+  </data>
+  <data name="EmployeeNotFound" xml:space="preserve">
+    <value>Employee not found.</value>
+  </data>
+  <data name="GetResource" xml:space="preserve">
+    <value>Successfully obtained resource.</value>
+  </data>
+  <data name="HasNoRefreshToken" xml:space="preserve">
+    <value>You do not have a refresh-token to revoke.</value>
+  </data>
+  <data name="InactiveUserAccount" xml:space="preserve">
+    <value>Inactive user account.</value>
+  </data>
+  <data name="InvalidModelState" xml:space="preserve">
+    <value>One or more validation errors have occurred.</value>
+  </data>
+  <data name="IsNotImage" xml:space="preserve">
+    <value>The attached file is not an image.</value>
+  </data>
+  <data name="MissingClaim" xml:space="preserve">
+    <value>Missing claim in token: {0}</value>
+  </data>
+  <data name="NoMorningOrAfternoonHours" xml:space="preserve">
+    <value>The dentist does not have morning or afternoon hours.</value>
+  </data>
+  <data name="NoSchedulesAvailable" xml:space="preserve">
+    <value>There are no times available.</value>
+  </data>
+  <data name="OfficeClosed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="OfficeClosedForSpecificDay" xml:space="preserve">
+    <value>The dental office will be closed during day {0}.</value>
+  </data>
+  <data name="OfficeNotAssigned" xml:space="preserve">
+    <value>You cannot manage the resources of a branch to which it has not been assigned.</value>
+  </data>
+  <data name="OldPasswordIncorrect" xml:space="preserve">
+    <value>The old password is incorrect.</value>
+  </data>
+  <data name="PasswordHasNotLowerCaseLetters" xml:space="preserve">
+    <value>The password must have at least one lowercase letter.</value>
+  </data>
+  <data name="PasswordHasNotNumbers" xml:space="preserve">
+    <value>The password must have at least one number.</value>
+  </data>
+  <data name="PasswordHasNotUpperCaseLetters" xml:space="preserve">
+    <value>The password must have at least one uppercase letter.</value>
+  </data>
+  <data name="PasswordIsEmpty" xml:space="preserve">
+    <value>The password cannot be empty.</value>
+  </data>
+  <data name="PasswordMinimumCharacters" xml:space="preserve">
+    <value>The password must be at least 5 characters.</value>
+  </data>
+  <data name="PasswordResetTokenInvalid" xml:space="preserve">
+    <value>The password reset token is invalid.</value>
+  </data>
+  <data name="PasswordSuccessfullyReset" xml:space="preserve">
+    <value>The password has been reset successfully.</value>
+  </data>
+  <data name="PayableValue" xml:space="preserve">
+    <value>The amount to pay is ${0}</value>
+  </data>
+  <data name="PermitsNotGranted" xml:space="preserve">
+    <value>You do not have permissions to grant those roles.</value>
+  </data>
+  <data name="RangeToPayMinMax" xml:space="preserve">
+    <value>The range to pay is from ${0} to ${1}</value>
+  </data>
+  <data name="ReferenceConstraintViolated" xml:space="preserve">
+    <value>A reference constraint violation has been detected from the database.</value>
+  </data>
+  <data name="RefreshTokenExpired" xml:space="preserve">
+    <value>Refresh-token has expired.</value>
+  </data>
+  <data name="RefreshTokenInvalid" xml:space="preserve">
+    <value>Refresh-token is invalid.</value>
+  </data>
+  <data name="ResourceFromAnotherUser" xml:space="preserve">
+    <value>The resource belongs to another user.</value>
+  </data>
+  <data name="ResourceNotFound" xml:space="preserve">
+    <value>Resource not found.</value>
+  </data>
+  <data name="RevokeToken" xml:space="preserve">
+    <value>Refresh token has been revoked.</value>
+  </data>
+  <data name="SelectAppointmentDate" xml:space="preserve">
+    <value>Error. Choose a valid date.</value>
+  </data>
+  <data name="SelectDentalService" xml:space="preserve">
+    <value>Error. Choose a dental service.</value>
+  </data>
+  <data name="SelectDentist" xml:space="preserve">
+    <value>Error. Choose a dentist.</value>
+  </data>
+  <data name="SelectOffice" xml:space="preserve">
+    <value>Error. Choose a dental office.</value>
+  </data>
+  <data name="SelectPatient" xml:space="preserve">
+    <value>Error. Choose a patient.</value>
+  </data>
+  <data name="SelectSchedule" xml:space="preserve">
+    <value>Error. Choose a schedule.</value>
+  </data>
+  <data name="SendPasswordResetLink" xml:space="preserve">
+    <value>The email was successfully sent to reset the user's password.</value>
+  </data>
+  <data name="ShowScheduleToUser" xml:space="preserve">
+    <value>The dentist attends on {0}</value>
+  </data>
+  <data name="SuccessfulLogin" xml:space="preserve">
+    <value>You have successfully logged in.</value>
+  </data>
+  <data name="SuccessfullyCancelledAppointments" xml:space="preserve">
+    <value>The appointments were successfully cancelled.</value>
+  </data>
+  <data name="SuccessfullyScheduledAppointment" xml:space="preserve">
+    <value>Appointment successfully scheduled. {0}.</value>
+  </data>
+  <data name="ThanksForUsingService" xml:space="preserve">
+    <value>Thank you for using our service. 
+
+If you would like to schedule another appointment, please write something to start the process again.</value>
+  </data>
+  <data name="TotalHoursAvailable" xml:space="preserve">
+    <value>Total hours available: {0}.
+ 
+Select the time for your appointment:</value>
+  </data>
+  <data name="UnexpectedError" xml:space="preserve">
+    <value>An unexpected error occurred, please try again.</value>
+  </data>
+  <data name="UnexpectedErrors" xml:space="preserve">
+    <value>Unexpected errors were encountered, please try again.</value>
+  </data>
+  <data name="UniqueConstraintViolated" xml:space="preserve">
+    <value>A unique restriction violation has been detected from the database.</value>
+  </data>
+  <data name="UnrecognizableFile" xml:space="preserve">
+    <value>The file is unrecognizable. It cannot be recognized by the system.</value>
+  </data>
+  <data name="UpdatedAccessToken" xml:space="preserve">
+    <value>Access-token has been successfully updated.</value>
+  </data>
+  <data name="UpdateResource" xml:space="preserve">
+    <value>The resource was successfully updated.</value>
+  </data>
+  <data name="UsernameAlreadyExists" xml:space="preserve">
+    <value>The e-mail address you entered is being used by another user.</value>
+  </data>
+  <data name="UsernameNotFound" xml:space="preserve">
+    <value>User not found.</value>
+  </data>
+</root>
