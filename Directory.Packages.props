@@ -46,7 +46,7 @@
     <PackageVersion Include="Twilio" Version="6.2.1" />
     <PackageVersion Include="Respawn" Version="6.2.1" />
     <PackageVersion Include="coverlet.msbuild" Version="3.1.2" />
-    <PackageVersion Include="FluentAssertions" Version="6.10.0" />
+    <PackageVersion Include="FluentAssertions" Version="[7.0.0,8.0.0)" />
     <PackageVersion Include="JustMock" Version="2023.1.117.1" />
     <PackageVersion Include="Microsoft.Bot.Builder.Testing" Version="4.22.2" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
