@@ -2,7 +2,7 @@
 
 DentallApp is a web application with chatbot for appointment management, reminders and sending appointment cancellation messages for the dental office called [World Dental CO](https://www.tiktok.com/@worlddentalco).
 
-> The maintainer of this repository is [Dave Roman](https://github.com/MrDave1999).
+> The maintainer of this repository is [Dave Roman](https://github.com/DevD4v3).
 >
 > This project has been improved too much since its [first alpha version](https://github.com/DentallApp/back-end/tree/v0.1.0). 
 
@@ -82,7 +82,7 @@ Another of my reasons is that what I learn about software engineering, I like to
 - [EFCore.NamingConventions](https://github.com/efcore/EFCore.NamingConventions)
 - [linq2db.EntityFrameworkCore](https://github.com/linq2db/linq2db.EntityFrameworkCore)
 - [EntityFramework.Exceptions](https://github.com/Giorgi/EntityFramework.Exceptions)
-- [EFCore.CustomQueryPreprocessor](https://github.com/MrDave1999/EFCore.CustomQueryPreprocessor)
+- [EFCore.CustomQueryPreprocessor](https://github.com/DevD4v3/EFCore.CustomQueryPreprocessor)
 - [DelegateDecompiler](https://github.com/hazzik/DelegateDecompiler)
 - [Dapper](https://github.com/DapperLib/Dapper)
 - [Microsoft.VisualStudio.Threading.Analyzers](https://github.com/microsoft/vs-threading)
@@ -106,10 +106,10 @@ Another of my reasons is that what I learn about software engineering, I like to
 - [Microsoft.Bot.Builder.Testing](https://www.nuget.org/packages/Microsoft.Bot.Builder.Testing)
 
 ### Own libraries
-- [DotEnv.Core](https://github.com/MrDave1999/dotenv.core)
+- [DotEnv.Core](https://github.com/DevD4v3/dotenv.core)
 - [YeSql.Net](https://github.com/ose-net/yesql.net)
-- [SimpleResults](https://github.com/MrDave1999/SimpleResults)
-- [CPlugin.Net](https://github.com/MrDave1999/CPlugin.Net)
+- [SimpleResults](https://github.com/DevD4v3/SimpleResults)
+- [CPlugin.Net](https://github.com/DevD4v3/CPlugin.Net)
 - [CPlugin.Net.Attributes](https://www.nuget.org/packages/CPlugin.Net.Attributes)
 - [CopySqlFilesToOutputDirectory](https://www.nuget.org/packages/CopySqlFilesToOutputDirectory)
 - [CopyPluginsToPublishDirectory](https://www.nuget.org/packages/CopyPluginsToPublishDirectory)
@@ -264,7 +264,7 @@ This project uses [resource files](https://github.com/DentallApp/back-end/tree/d
 **Overview of each component:**
 - **Host Application.** Contains everything needed to run the application. It represents the entry point of the application.
   This layer performs other tasks such as:
-  - Load plugins from a configuration file (.env) using the library called [CPlugin.Net](https://github.com/MrDave1999/CPlugin.Net).
+  - Load plugins from a configuration file (.env) using the library called [CPlugin.Net](https://github.com/DevD4v3/CPlugin.Net).
   - Finds the types that implement the interfaces shared between the host application and the plugins to create instances of those types.
   - Add services to the service collection, register middleware, load SQL files, load the .env file, among other things.
 - **Shared Layer.** It contains common classes and interfaces between many components. This layer has [aspects](https://en.wikipedia.org/wiki/Aspect_(computer_programming)) (additional parts) that are not related to the main processes of the application.
